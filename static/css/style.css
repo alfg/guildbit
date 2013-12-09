@@ -1,0 +1,68 @@
+body {
+    background: #CECECE;
+}
+a:hover {
+    text-decoration: underline;
+}
+.btn a:hover {
+    text-decoration: none;
+}
+.head-logo h1 {
+    font-family: 'Patua One', cursive;
+    letter-spacing: -.03em;
+    text-align: center;
+    margin-left: -20px;
+    padding-bottom: 0;
+    font-size: 5.25em;
+}
+.head-logo a,
+.head-logo a:visited,
+.head-logo a:active {
+    color: #2a85dc;
+    /*
+    background-image: linear-gradient(#85B7E7, #2A85DC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    */
+}
+.head-logo a:hover {
+    text-decoration: none;
+    opacity: .90;
+}
+.head-logo .bit {
+    color: #3CA957;
+    /*
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(#80CB92, #3CA957);
+    */
+}
+.head-buttons {
+    margin-bottom: 10px;
+    padding-right: 1px;
+    float: right;
+    margin-top: 80px;
+}
+.content {
+    background: #DDD;
+    border: 1px solid #D0D0D0;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+.expire-picker {
+    top: 14px;
+}
+.mumble-buttons {
+    padding-bottom: 10px;
+}
+.mumble-buttons .btn.pretty.info {
+    background-image: linear-gradient(#B2B5B8, #6F7174);
+}
+.footer-links {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.footer-links ul li {
+    display: inline-block;
+    padding: 0 5px;
+}

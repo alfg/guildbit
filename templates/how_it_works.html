@@ -1,0 +1,58 @@
+{% extends"_layout/base.html" %}
+
+{% block title %}How It Works{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="ten columns centered content">
+            <div class="ten columns centered">
+                <h2>How It Works</h2>
+
+                <h4>The Idea</h4>
+                <p>Traditional VOIP hosts offer subscription-based and persistent servers, so generally a premium
+                is charged. <strong>GuildBit</strong> works on the idea of temporary servers to preserve system
+                resources, opening up more server slots which aren't being occupied. This helps lower hosting,
+                resources and bandwidth costs. Also, VPS hosting nowadays are much cheaper than they used to be. The
+                rest is supported by donations.</p>
+
+                <h4>The Process</h4>
+                <p>The process is simple:</p>
+                <ul class="disc">
+                    <li><strong>Set a duration</strong> &mdash; You can choose how long the server instance will live. From 4-24 hours. The
+                    less hours you use, the more resources open up for others. :)</li>
+                    <li><strong>Set a password</strong> &mdash; Password protected servers are required, due to the fact the server may be
+                    reused in the future.</li>
+                    <li><strong>Deploy</strong> &mdash; The server generally takes a few seconds to spin up.</li>
+                    <li><strong>Connect</strong> &mdash; That's all. The following page will give you the connection details.</li>
+                    <li><strong>Share</strong> &mdash; Use the server page to share the connection details, or just give them the credentials
+                    directly. The server page also monitors users in room and displays the expiration countdown.</li>
+                </ul>
+
+                <h4>FAQs</h4>
+                <dl>
+                    <dt>How is it free?</dt>
+                    <dd>Donations and low server/bandwidth costs. Remainders are paid of out pocket. :)</dd>
+
+                    <dt>Why temporary servers?</dt>
+                    <dd>The idea is targeted towards gamers who need a quick Mumble server for their group or raid
+                    without the hassle of setting up their own, or subscribing to a service. The server expires to not
+                    only save on resources, but to free up the slot for others.</dd>
+
+                    <dt>Why only offer Mumble and not Ventrilo or TeamSpeak?</dt>
+                    <dd>Mumble is <a href="https://github.com/mumble-voip/mumble/blob/master/LICENSE">free</a> and
+                    <a href="http://en.wikipedia.org/wiki/Open-source_software">open-source software</a>. So it doesn't
+                    cost me any licensing fees to host Mumble servers or offer it as a service.</dd>
+
+                    <dt>Do you plan on offering premium upgrades?</dt>
+                    <dd>Possibly in the future. It won't take away from the idea of free temporary servers, though.</dd>
+
+                    <dt>How can I contribute?</dt>
+                    <dd>We accept <a href="/donate">donations</a>, including Bitcoin! :) This keeps us going.</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

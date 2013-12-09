@@ -1,0 +1,53 @@
+{% extends"_layout/base.html" %}
+
+{% block title %}Free Mumble Hosting{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="ten columns centered content">
+            <h3 class="text-center">Deploy a server for your gaming session. It's free!</h3>
+
+            <form action="/" method="POST">
+                {{ form.csrf_token }}
+                <div class="field text-center">
+                      <div class="picker expire-picker">
+                        {{ form.duration }}
+                      </div>
+                    {{ form.password(size=20, class='narrow input', placeholder='Set a Password') }}
+                    <div class="btn primary medium pretty">
+                        <button type="submit" value="Submit"><i class="fa fa-cloud"></i> Deploy Server</button>
+                    </div>
+                </div>
+            </form>
+
+            {% if form.errors %}
+                <ul class="errors centered text-center eight columns">
+                    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                        {% for error in field_errors %}
+                            <li class="danger alert">{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="ten columns centered text-center">
+                <p>GuildBit is a free service to deploy temporary Mumble servers for your group. The service is completely
+                funded by donations. <a href="#">Learn how it works &raquo;</a></p>
+            </div>
+
+        </div>
+    </div>
+
+    {% include '_partials/_dont_have_mumble.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+    /*
+        $(document).ready(function() {
+            Ladda.bind( '.ladda-button' );
+        });
+        */
+    </script>
+{% endblock %}
