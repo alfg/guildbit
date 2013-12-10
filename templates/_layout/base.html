@@ -56,7 +56,7 @@
                     <a href="/"><i class="fa fa-home"></i> Home</a>
                 </div>
                 <div class="btn secondary pretty">
-                    <a href="/how-it-works"><i class="fa fa-cogs"></i> How it works</a>
+                    <a href="/how-it-works"><i class="fa fa-cogs"></i> How It Works</a>
                 </div>
                 <div class="btn warning pretty">
                     <a href="/donate"><i class="fa fa-btc"></i> Donate</a>
@@ -114,6 +114,27 @@
           load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
         });
 	</script>
+    <script type="text/javascript">
+        var os = navigator.platform;
+
+        if (os.indexOf("Linux") !== -1) {
+            $('#os-download #os-text').text('Linux Download');
+            $('#os-download i').addClass('fa-linux');
+            $('#os-download a').attr('href', 'http://mumble.sourceforge.net/Installing_Mumble#Linux');
+        }
+        else if (os.indexOf("Win") !== -1) {
+            $('#os-download #os-text').text('Windows Download');
+            $('#os-download i').addClass('fa-windows');
+            $('#os-download a').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.4/mumble-1.2.4.msi/download');
+        }
+        else if (os.indexOf("MacOS") !== -1) {
+            $('#os-download #os-text').text('OSX Download');
+            $('#os-download i').addClass('fa-apple');
+            $('#os-download a').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.4/Mumble-1.2.4.dmg/download');
+        }
+
+        console.log(os);
+    </script>
 
 	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
 	   chromium.org/developers/how-tos/chrome-frame-getting-started -->

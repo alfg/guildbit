@@ -1,0 +1,39 @@
+{% extends"_layout/base.html" %}
+
+{% block title %}Your Server is Ready!{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="ten columns centered content">
+            <div class="ten columns centered">
+                <h2>Your server has expired!</h2>
+                <p>Return to the <a href="/">homepage</a> to deploy another server.</p>
+                <table class="rounded centered">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Expired</td>
+                            <td><span id="expires-date"></span> (<span id="expires"></span>) </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/libs/moment.min.js"></script>
+
+    <script type="text/javascript">
+        // Format expiration date into human friendly
+        var expire_date = '{{ server.expiration }}';
+        $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
+        $("#expires").text(moment.utc(expire_date).fromNow());
+    </script>
+{% endblock %}

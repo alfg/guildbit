@@ -4,9 +4,9 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 
 from guildbit import app
-import config
+import settings
 
-app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URI
+app.config['SQLALCHEMY_DATABASE_URI'] = settings.DATABASE_URI
 db = SQLAlchemy(app)
 
 

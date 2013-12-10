@@ -2,18 +2,16 @@ import uuid
 
 from flask import Flask
 from flask import render_template, redirect, url_for, jsonify
-
 from flask.ext.classy import FlaskView, route
+import requests
 
 from forms import DeployServerForm
 from models import *
-
-import requests
-
-import config
+import settings
+import tasks
 
 app = Flask(__name__)
-app.secret_key = 'testkey'
+app.secret_key = settings.APP_SESSION_KEY
 
 
 class HomeView(FlaskView):
@@ -27,15 +25,25 @@ class HomeView(FlaskView):
         if form.validate_on_submit():
 
             try:
-                r = requests.post("http://localhost:5000/api/v1/servers/")
+                gen_uuid = str(uuid.uuid4())
+                # Create POST request to murmur-rest api to create a new server
+                welcome_msg = "Welcome. This is a temporary GuildBit Mumble instance. View details on this server by " \
+                              "<a href='http://guildbit.com/server/%s'>clicking here.</a>" % gen_uuid
+                payload = {'password': form.password.data, 'welcometext': welcome_msg}
+                r = requests.post(settings.MURMUR_REST_HOST + "/api/v1/servers/", data=payload)
+                server_id = r.json()['server']['id']
 
+                # Create database entry
                 s = Server()
                 s.duration = form.duration.data
                 s.password = form.password.data
-                s.uuid = str(uuid.uuid4())
-                s.mumble_instance = r.json()['server']['id']
+                s.uuid = gen_uuid
+                s.mumble_instance = server_id
                 db.session.add(s)
                 db.session.commit()
+
+                # Send task to delete server on expiration
+                tasks.delete_server.apply_async([server_id], eta=s.expiration)
                 return redirect(url_for('ServerView:get', id=s.uuid))
 
             except:
@@ -74,14 +82,17 @@ class ServerView(FlaskView):
 
     def get(self, id):
         server = Server.query.filter_by(uuid=id).first_or_404()
-        r = requests.get("http://localhost:5000/api/v1/servers/%i" % server.mumble_instance)
-        server_details = r.json()
+        r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
+        if r.status_code == 200:
+            server_details = r.json()
+        else:
+            return render_template('server_expired.html', server=server)
         return render_template('server.html', server=server, details=server_details)
 
     @route('/<id>/users')
     def users(self, id):
         server = Server.query.filter_by(uuid=id).first_or_404()
-        r = requests.get("http://localhost:5000/api/v1/servers/%i" % server.mumble_instance)
+        r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
         user_details = r.json()
         users = {
             'count': user_details['server']['users'],
@@ -95,4 +106,4 @@ HomeView.register(app, route_base='/')
 ServerView.register(app)
 
 if __name__ == '__main__':
-    app.run(debug=config.APP_DEBUG, host=config.APP_HOST, port=config.APP_PORT)
+    app.run(debug=settings.APP_DEBUG, host=settings.APP_HOST, port=settings.APP_PORT)
