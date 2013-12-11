@@ -5,7 +5,7 @@ from flask.ext.classy import FlaskView, route
 import requests
 
 import settings
-from app import app, tasks
+from app import app, db, tasks
 from app.forms import DeployServerForm
 from app.models import Server
 
