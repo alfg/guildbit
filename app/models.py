@@ -1,13 +1,7 @@
 import datetime
-from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property
 
-
-from guildbit import app
-import settings
-
-app.config['SQLALCHEMY_DATABASE_URI'] = settings.DATABASE_URI
-db = SQLAlchemy(app)
+from app import db
 
 
 class Server(db.Model):

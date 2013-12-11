@@ -1,17 +1,13 @@
 import uuid
 
-from flask import Flask
 from flask import render_template, redirect, url_for, jsonify
 from flask.ext.classy import FlaskView, route
 import requests
 
-from forms import DeployServerForm
-from models import *
 import settings
-import tasks
-
-app = Flask(__name__)
-app.secret_key = settings.APP_SESSION_KEY
+from app import app, tasks
+from app.forms import DeployServerForm
+from app.models import Server
 
 
 class HomeView(FlaskView):
@@ -101,9 +97,6 @@ class ServerView(FlaskView):
         return jsonify(users=users)
 
 
-
 HomeView.register(app, route_base='/')
 ServerView.register(app)
 
-if __name__ == '__main__':
-    app.run(debug=settings.APP_DEBUG, host=settings.APP_HOST, port=settings.APP_PORT)
