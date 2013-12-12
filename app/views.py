@@ -25,7 +25,12 @@ class HomeView(FlaskView):
                 # Create POST request to murmur-rest api to create a new server
                 welcome_msg = "Welcome. This is a temporary GuildBit Mumble instance. View details on this server by " \
                               "<a href='http://guildbit.com/server/%s'>clicking here.</a>" % gen_uuid
-                payload = {'password': form.password.data, 'welcometext': welcome_msg, 'users': settings.DEFAULT_MAX_USERS}
+                payload = {
+                    'password': form.password.data,
+                    'welcometext': welcome_msg,
+                    'users': settings.DEFAULT_MAX_USERS,
+                    'registername': settings.DEFAULT_CHANNEL_NAME
+                }
                 r = requests.post(settings.MURMUR_REST_HOST + "/api/v1/servers/", data=payload)
                 server_id = r.json()['server']['id']
 

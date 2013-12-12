@@ -8,3 +8,4 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 MURMUR_REST_HOST = 'http://localhost:5000'
 
 DEFAULT_MAX_USERS = 10
+DEFAULT_CHANNEL_NAME = 'GuildBit.com Mumble Server'
