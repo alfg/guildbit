@@ -8,12 +8,6 @@ app = Celery('tasks',
 
 
 @app.task
-def something():
-    print 'test'
-    return
-
-
-@app.task
 def delete_server(id):
     r = requests.delete("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, id))
     print "Deleting server instance: %s" % id

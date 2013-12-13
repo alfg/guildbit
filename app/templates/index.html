@@ -7,15 +7,15 @@
         <div class="ten columns centered content">
             <h3 class="text-center">Deploy a Mumble server for your group. It's free!</h3>
 
-            <form action="/" method="POST">
+            <form id="deploy-form" action="/" method="POST">
                 {{ form.csrf_token }}
                 <div class="field text-center">
                       <div class="picker expire-picker">
                         {{ form.duration }}
                       </div>
                     {{ form.password(size=20, class='narrow input', placeholder='Set a Password') }}
-                    <div class="btn primary medium pretty">
-                        <button type="submit" value="Submit"><i class="fa fa-cloud"></i> Deploy Server</button>
+                    <div id="deploy-button-wrapper" class="btn primary medium pretty">
+                        <button id="deploy-button" type="submit" value="Submit"><i class="fa fa-cloud"></i> Deploy Server</button>
                     </div>
                 </div>
             </form>
@@ -44,10 +44,16 @@
 
 {% block scripts %}
     <script type="text/javascript">
-    /*
+        /*
         $(document).ready(function() {
             Ladda.bind( '.ladda-button' );
         });
         */
+        $('#deploy-form').submit(function() {
+            $('#deploy-button').attr('disabled', 'disabled');
+            $('#deploy-button').html("<i class='fa fa-refresh fa-spin'></i> Deploying...");
+            $('#deploy-button-wrapper').addClass('disabled');
+        })
+
     </script>
 {% endblock %}
