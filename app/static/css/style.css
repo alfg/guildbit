@@ -84,6 +84,15 @@ a:hover {
 .mumble-buttons .btn.pretty.info {
     background-image: linear-gradient(#B2B5B8, #6F7174);
 }
+.description p {
+    margin-bottom: 0;
+}
+.description span {
+    font-size: 12px;
+}
+.faqs dd {
+    margin-bottom: 10px;
+}
 .footer-links {
     margin-top: 5px;
     margin-bottom: 10px;
