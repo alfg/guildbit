@@ -34,22 +34,24 @@ a:hover {
     cursor: not-allowed;
 }
 .head-logo h1 {
-    font-family: 'Patua One', cursive;
-    letter-spacing: -.03em;
-    text-align: center;
-    margin-left: -20px;
-    padding-bottom: 0;
-    font-size: 5.25em;
+    height: 60px;
+    width: 300px;
+    position: absolute;
+    overflow: hidden;
+    z-index: 10;
+    text-indent: 100%;
+    margin: 0;
+    padding: 0;
+    top: 50px;
 }
 .head-logo a,
 .head-logo a:visited,
 .head-logo a:active {
-    color: #2a85dc;
-    /*
-    background-image: linear-gradient(#85B7E7, #2A85DC);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    */
+    background: url(/static/img/guildbit_logo.png) no-repeat;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    display: block;
 }
 .head-logo a:hover {
     text-decoration: none;
