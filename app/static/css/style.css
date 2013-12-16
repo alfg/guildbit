@@ -33,8 +33,15 @@ a:hover {
 .btn.pretty.primary.disabled:hover button {
     cursor: not-allowed;
 }
+.btn {
+    vertical-align: bottom;
+}
+.head {
+    height: 120px;
+    position: relative;
+}
 .head-logo h1 {
-    height: 60px;
+    height: 56px;
     width: 300px;
     position: absolute;
     overflow: hidden;
@@ -44,6 +51,12 @@ a:hover {
     padding: 0;
     top: 50px;
 }
+@media screen and (max-width: 900px) {
+    .head-logo h1 {
+        top: 20px;
+    }
+}
+
 .head-logo a,
 .head-logo a:visited,
 .head-logo a:active {
@@ -68,8 +81,9 @@ a:hover {
 .head-buttons {
     margin-bottom: 10px;
     padding-right: 1px;
-    float: right;
-    margin-top: 80px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 .content {
     background: #DDD;
@@ -79,6 +93,9 @@ a:hover {
 }
 .expire-picker {
     top: 14px;
+}
+.expire-picker select {
+    width: 140%;
 }
 .mumble-buttons {
     padding-bottom: 10px;
