@@ -51,12 +51,12 @@
                     </thead>
                     <tbody>
                         <!-- ko foreach: users -->
-                        <tr data-bind="if: count > 0">
+                        <tr>
                             <td data-bind="text: name"></td>
                             <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
                         </tr>
                         <!-- /ko -->
-                        <tr><td class="text-center" colspan="2" data-bind="if: count == 0">No users are online</td></tr>
+                        <tr data-bind="if: count == 0"><td class="text-center" colspan="2">No users are online</td></tr>
                     </tbody>
                 </table>
             </div>
