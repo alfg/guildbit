@@ -17,11 +17,11 @@
                     <tbody>
                         <tr>
                             <td>Server</td>
-                            <td>mumble.guildbit.com</td>
+                            <td>{{ server.mumble_host }}</td>
                         </tr>
                         <tr>
                             <td>Port</td>
-                            <td>{{ details.server.config.port }}</td>
+                            <td>{{ details.port }}</td>
                         </tr>
                         <tr>
                             <td>Password</td>
@@ -29,7 +29,7 @@
                         </tr>
                         <tr>
                             <td>Direct Link</td>
-                            <td><a href="mumble://mumble.guildbit.com:{{ details.server.config.port }}">mumble://mumble.guildbit.com:{{ details.server.config.port }}</a></td>
+                            <td><a href="mumble://{{ server.mumble_host }}:{{ details.port }}">mumble://{{ server.mumble_host }}:{{ details.port }}</a></td>
                         </tr>
                         <tr>
                             <td>Expires</td>
@@ -37,7 +37,7 @@
                         </tr>
                         <tr>
                             <td>Slots</td>
-                            <td>{{ details.server.maxusers }}</td>
+                            <td>{{ details.maxusers }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -56,7 +56,10 @@
                             <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
                         </tr>
                         <!-- /ko -->
-                        <tr data-bind="if: count == 0"><td class="text-center" colspan="2">No users are online</td></tr>
+
+                        <!-- ko if: count == 0 -->
+                        <tr><td class="text-center" colspan="2">No users are online</td></tr>
+                        <!-- /ko -->
                     </tbody>
                 </table>
             </div>

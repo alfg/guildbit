@@ -10,6 +10,8 @@ class Server(db.Model):
     created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     duration = db.Column(db.Integer)
     password = db.Column(db.String)
+    status = db.Column(db.String, default='active')
+    mumble_host = db.Column(db.String, default="mumble.guildbit.com")
     mumble_instance = db.Column(db.Integer)
 
     @hybrid_property

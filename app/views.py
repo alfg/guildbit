@@ -21,7 +21,9 @@ class HomeView(FlaskView):
         if form.validate_on_submit():
 
             try:
+                # Generate UUID
                 gen_uuid = str(uuid.uuid4())
+
                 # Create POST request to murmur-rest api to create a new server
                 welcome_msg = "Welcome. This is a temporary GuildBit Mumble instance. View details on this server by " \
                               "<a href='http://guildbit.com/server/%s'>clicking here.</a>" % gen_uuid
@@ -32,7 +34,7 @@ class HomeView(FlaskView):
                     'registername': settings.DEFAULT_CHANNEL_NAME
                 }
                 r = requests.post(settings.MURMUR_REST_HOST + "/api/v1/servers/", data=payload)
-                server_id = r.json()['server']['id']
+                server_id = r.json()['id']
 
                 # Create database entry
                 s = Server()
@@ -44,7 +46,7 @@ class HomeView(FlaskView):
                 db.session.commit()
 
                 # Send task to delete server on expiration
-                tasks.delete_server.apply_async([server_id], eta=s.expiration)
+                tasks.delete_server.apply_async([server_id, gen_uuid], eta=s.expiration)
                 return redirect(url_for('ServerView:get', id=s.uuid))
 
             except:
@@ -86,20 +88,23 @@ class ServerView(FlaskView):
         r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
         if r.status_code == 200:
             server_details = r.json()
+            return render_template('server.html', server=server, details=server_details)
         else:
             return render_template('server_expired.html', server=server)
-        return render_template('server.html', server=server, details=server_details)
 
     @route('/<id>/users')
     def users(self, id):
         server = Server.query.filter_by(uuid=id).first_or_404()
         r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
-        user_details = r.json()
-        users = {
-            'count': user_details['server']['users'],
-            'users': user_details['server']['tree']['users']
-        }
-        return jsonify(users=users)
+        if r.status_code == 200:
+            user_details = r.json()
+            users = {
+                'count': user_details['user_count'],
+                'users': user_details['users']
+            }
+            return jsonify(users=users)
+        else:
+            return jsonify(users=None)
 
 
 HomeView.register(app, route_base='/')
