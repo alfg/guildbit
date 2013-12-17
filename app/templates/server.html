@@ -17,7 +17,7 @@
                     <tbody>
                         <tr>
                             <td>Server</td>
-                            <td>guildbit.com</td>
+                            <td>mumble.guildbit.com</td>
                         </tr>
                         <tr>
                             <td>Port</td>
@@ -29,7 +29,7 @@
                         </tr>
                         <tr>
                             <td>Direct Link</td>
-                            <td><a href="mumble://guildbit.com:{{ details.server.config.port }}">mumble://guildbit.com:{{ details.server.config.port }}</a></td>
+                            <td><a href="mumble://mumble.guildbit.com:{{ details.server.config.port }}">mumble://direct.guildbit.com:{{ details.server.config.port }}</a></td>
                         </tr>
                         <tr>
                             <td>Expires</td>
@@ -51,12 +51,12 @@
                     </thead>
                     <tbody>
                         <!-- ko foreach: users -->
-                        <tr>
+                        <tr data-bind="if: count > 0">
                             <td data-bind="text: name"></td>
                             <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
                         </tr>
                         <!-- /ko -->
-                        <tr><td class="text-center" colspan="2" data-bind="visible: count == 0">No users are online</td></tr>
+                        <tr><td class="text-center" colspan="2" data-bind="if: count == 0">No users are online</td></tr>
                     </tbody>
                 </table>
             </div>
