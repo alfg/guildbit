@@ -107,6 +107,13 @@ class ServerView(FlaskView):
             return jsonify(users=None)
 
 
+class LoginView(FlaskView):
+
+    def index(self):
+        return render_template('auth/login.html')
+
 HomeView.register(app, route_base='/')
 ServerView.register(app)
+LoginView.register(app)
+
 
