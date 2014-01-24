@@ -13,3 +13,52 @@ body {
 .login-view h1 {
     color: #4B4B4B;
 }
+
+.head-logo h1 {
+    height: 56px;
+    width: 300px;
+    overflow: hidden;
+    text-indent: 100%;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+.head-logo a,
+.head-logo a:visited,
+.head-logo a:active {
+    background: url(/static/img/guildbit_logo.png) no-repeat;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    display: block;
+}
+.head-logo a:hover {
+    text-decoration: none;
+    opacity: .90;
+}
+.head-logo .bit {
+    color: #3CA957;
+    /*
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(#80CB92, #3CA957);
+    */
+}
+.label {
+    margin: 0 0.1em;
+    padding: 0.3em 1em;
+    color: #fff;
+    background: #999;
+    font-size: 80%;
+}
+    .label-etc {
+        background: #5aba59;
+    }
+    .label-blue {
+        background: #4d85d1;
+    }
+    .label-green {
+        background: #8156a7;
+    }
+    .label-red {
+        background: #df2d4f;
+    }

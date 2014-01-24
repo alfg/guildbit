@@ -1,18 +1,31 @@
 import uuid
 
-from flask import render_template, redirect, url_for, jsonify
+from flask import render_template, request, redirect, session, url_for, jsonify, g, flash
 from flask.ext.classy import FlaskView, route
+from flask.ext.login import login_user, logout_user, current_user, login_required
 import requests
 
 import settings
-from app import app, db, tasks
-from app.forms import DeployServerForm
-from app.models import Server
+from app import app, db, tasks, lm, oid
+from app.forms import DeployServerForm, LoginForm
+from app.models import Server, User, ROLE_ADMIN, ROLE_USER
+
+
+@lm.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+
+@app.before_request
+def before_request():
+    g.user = current_user
 
 
 class HomeView(FlaskView):
 
+    @route('/', endpoint='home')
     def index(self):
+        user = g.user
         form = DeployServerForm()
         return render_template('index.html', form=form)
 
@@ -107,13 +120,50 @@ class ServerView(FlaskView):
             return jsonify(users=None)
 
 
-class LoginView(FlaskView):
+@app.route('/login', methods=['GET', 'POST'])
+@oid.loginhandler
+def login():
+    if g.user is not None and g.user.is_authenticated():
+        return redirect(url_for('home'))
 
-    def index(self):
-        return render_template('auth/login.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        session['remember_me'] = form.remember_me.data
+        return oid.try_login(form.openid.data, ask_for=['nickname', 'email'], ask_for_optional=['fullname'])
+    return render_template('auth/login.html',
+                           title='Sign In',
+                           form=form,
+                           providers=settings.OPENID_PROVIDERS)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+
+@oid.after_login
+def after_login(resp):
+    if resp.email is None or resp.email == "":
+        flash('Invalid login. Please try again.')
+        return redirect(url_for('login'))
+    user = User.query.filter_by(email=resp.email).first()
+    if user is None:
+        nickname = resp.nickname
+        if nickname is None or nickname == "":
+            nickname = resp.email.split('@')[0]
+        user = User(nickname=nickname, email=resp.email, role=ROLE_USER)
+        db.session.add(user)
+        db.session.commit()
+    remember_me = False
+    if 'remember_me' in session:
+        remember_me = session['remember_me']
+        session.pop('remember_me', None)
+    login_user(user, remember=remember_me)
+    return redirect(request.args.get('next') or url_for('home'))
+
+
 
 HomeView.register(app, route_base='/')
 ServerView.register(app)
-LoginView.register(app)
-
 

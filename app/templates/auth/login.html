@@ -3,27 +3,48 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
+<script type="text/javascript">
+    function set_openid(openid, pr) {
+        u = openid.search('<username>')
+        if (u != -1) {
+            // openid requires username
+            user = prompt('Enter your ' + pr + ' username:')
+            openid = openid.substr(0, u) + user
+        }
+        form = document.forms['login'];
+        form.elements['openid'].value = openid
+    }
+</script>
 
 <div class="login-view">
-        <form class="pure-form pure-form-aligned">
-            <h1>GuildBit Login</h1>
-            <fieldset>
-                <div class="pure-control-group">
-                    <label for="name">Username</label>
-                    <input id="name" type="text" placeholder="Username">
-                </div>
-
-                <div class="pure-control-group">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" placeholder="Password">
-                </div>
-
-                <div class="pure-controls">
-                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
-                </div>
-            </fieldset>
-        </form>
+    <div class="head-logo">
+        <h1><a href="/">GuildBit</a></h1>
     </div>
+    <form action="" method="post" name="login" class="pure-form pure-form-aligned">
+        {{ form.hidden_tag() }}
+        <fieldset>
+            <p>Please enter your OpenID or select one of the providers below:</p>
+            {% for error in form.errors.openid %}
+            <span class="label label-red">{{ error }}</span>
+            {% endfor %}
+            <div class="pure-control-group">
+                <label for="name">OpenID</label>
+                {{ form.openid }}
+            </div>
+            {% for pr in providers %}
+            <a href="javascript:set_openid('{{ pr.url}}', '{{pr.name }}');">{{ pr.name }}</a>
+            {% endfor %}
+
+            <div class="pure-control-group">
+                <label for="name">Remember Me</label>
+                {{ form.remember_me }}
+            </div>
+
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary">Submit</button>
+            </div>
+        </fieldset>
+    </form>
 </div>
 
 {% endblock %}

@@ -27,7 +27,7 @@ class Server(db.Model):
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True)
+    nickname = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(120), unique=True)
     role = db.Column(db.SmallInteger, default=ROLE_USER)
 
@@ -44,4 +44,4 @@ class User(db.Model):
         return unicode(self.id)
 
     def __repr__(self):
-        return '<User %r>' % (self.username)
+        return '<User %r>' % self.nickname

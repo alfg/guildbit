@@ -1,0 +1,44 @@
+{% extends"_layout/admin_base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+
+<div class="login-view">
+        <form class="pure-form pure-form-aligned">
+            <div class="head-logo">
+                <h1><a href="/">GuildBit</a></h1>
+            </div>
+            <fieldset>
+                <div class="pure-control-group">
+                    <label for="name">Username</label>
+                    <input id="name" type="text" placeholder="Username">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="text" placeholder="Email">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" placeholder="Password">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="password">Re-enter Password</label>
+                    <input id="password" type="password" placeholder="Password">
+                </div>
+
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

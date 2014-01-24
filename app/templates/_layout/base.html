@@ -56,15 +56,21 @@
 
     {% block body %}{% endblock %}
 
-    <!--
+    {% if g.user.is_authenticated() %}
     <div class="row">
         <div class="ten columns centered footer-links">
             <ul class="text-center">
-                <li><a href="#">About</a></li>
+                <li>Logged in as <strong>{{ g.user.email }}</strong></li>
+                <li>|</li>
+                {% if g.user.role == 1 %}
+                    <li><a href="/admin">Admin</a></li>
+                    <li>|</li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
         </div>
     </div>
-    -->
+    {% endif %}
 
 	<!-- Grab Google CDN's jQuery, fall back to local if offline -->
 	<!-- 2.0 for modern browsers, 1.10 for .oldie -->
