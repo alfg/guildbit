@@ -120,6 +120,19 @@ class ServerView(FlaskView):
             return jsonify(users=None)
 
 
+class AdminView(FlaskView):
+
+    def index(self):
+        return render_template('admin/home.html')
+
+
+class AdminServersView(FlaskView):
+
+    def index(self):
+        servers = Server.query.all()
+        return render_template('admin/servers.html', servers=servers, title="Servers")
+
+
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler
 def login():
@@ -166,4 +179,6 @@ def after_login(resp):
 
 HomeView.register(app, route_base='/')
 ServerView.register(app)
+AdminView.register(app)
+AdminServersView.register(app, route_prefix='/admin/', route_base='/servers')
 

@@ -1,0 +1,39 @@
+{% extends"_layout/admin_base.html" %}
+
+{% block title %}Admin Home{% endblock %}
+
+{% block body %}
+    <table class="pure-table pure-table-horizontal pure-table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>UUID</th>
+                <th>Created Date</th>
+                <th>Duration</th>
+                <th>Password</th>
+                <th>Status</th>
+                <th>Host</th>
+                <th>Instance</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for s in servers %}
+            <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.uuid }}</td>
+                <td>{{ s.created_date }}</td>
+                <td>{{ s.duration }}</td>
+                <td>{{ s.password }}</td>
+                <td>{{ s.status }}</td>
+                <td>{{ s.mumble_host }}</td>
+                <td>{{ s.mumble_instance }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+{% endblock %}

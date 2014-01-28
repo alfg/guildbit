@@ -8,11 +8,48 @@
     <title>GuildBit - {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
     <link rel="stylesheet" href="/static/css/admin.css">
+    <link rel="stylesheet" href="/combo/1.9.5?/css/layouts/side-menu.css">
 </head>
 <body>
+    <div id="layout">
+        <!-- Menu toggle -->
+        <a href="#menu" id="menuLink" class="menu-link">
+            <!-- Hamburger icon -->
+            <span></span>
+        </a>
+
+        <div id="menu">
+            <div class="pure-menu pure-menu-open">
+                <div class="head-logo">
+                    <h1><a href="/admin/">GuildBit</a></h1>
+                </div>
+
+                <ul>
+                    <li class="menu-item-divided pure-menu-selected"><a href="/admin/">Home</a></li>
+                    <li><a href="/admin/servers/">Servers</a></li>
+                    <li><a href="#">Database</a></li>
+                    <li><a href="#">Users</a></li>
+                    <li><a href="#">Stats</a></li>
+                    <hr />
+                    <li><a href="#">Logout</a></li>
 
 
-    {% block body %}{% endblock %}
+                </ul>
+            </div>
+        </div>
+
+        <div id="main">
+            <div class="header">
+                <h1>{{ title }}</h1>
+                <h2>A subtitle for your page goes here</h2>
+            </div>
+
+            <div class="content">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
     <script src="http://yui.yahooapis.com/3.12.0/build/yui/yui.js"></script>
     <script>
     YUI().use('node-base', 'node-event-delegate', function (Y) {
