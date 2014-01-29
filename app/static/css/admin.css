@@ -24,18 +24,28 @@ body {
     margin: 10px;
 }
 
+/* Servers View */
+table.servers-js tbody tr {
+    cursor: pointer;
+}
+table.servers-js tbody tr:hover td {
+    background-color: #e7e7e7;
+    cursor: pointer;
+}
+
 /* Logo */
 .head-logo h1 {
-    height: 25px;
+    height: 56px;
+    width: 300px;
     overflow: hidden;
     text-indent: 100%;
     margin: 0 auto;
-    padding: 20px 5px;
+    padding-bottom: 20px;
 }
 .head-logo a,
 .head-logo a:visited,
 .head-logo a:active {
-    background: url(/static/img/guildbit_logo_small.png) no-repeat;
+    background: url(/static/img/guildbit_logo.png) no-repeat;
     height: 100%;
     width: 100%;
     position: relative;
@@ -45,8 +55,27 @@ body {
     text-decoration: none;
     opacity: .90;
 }
-.head-logo .bit {
-    color: #3CA957;
+
+/* Logo small */
+.head-logo-small h1 {
+    height: 25px;
+    overflow: hidden;
+    text-indent: 100%;
+    margin: 0 auto;
+    padding: 20px 5px;
+}
+.head-logo-small a,
+.head-logo-small a:visited,
+.head-logo-small a:active {
+    background: url(/static/img/guildbit_logo_small.png) no-repeat;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    display: block;
+}
+.head-logo-small a:hover {
+    text-decoration: none;
+    opacity: .90;
 }
 
 /* Labels */

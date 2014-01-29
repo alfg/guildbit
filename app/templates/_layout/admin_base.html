@@ -20,18 +20,17 @@
 
         <div id="menu">
             <div class="pure-menu pure-menu-open">
-                <div class="head-logo">
+                <div class="head-logo-small">
                     <h1><a href="/admin/">GuildBit</a></h1>
                 </div>
 
                 <ul>
-                    <li class="menu-item-divided pure-menu-selected"><a href="/admin/">Home</a></li>
-                    <li><a href="/admin/servers/">Servers</a></li>
-                    <li><a href="#">Database</a></li>
+                    <li {% if title == "Dashboard" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/">Dashboard</a></li>
+                    <li {% if title == "Servers" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/servers/">Servers</a></li>
                     <li><a href="#">Users</a></li>
                     <li><a href="#">Stats</a></li>
                     <hr />
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="/logout">Logout</a></li>
 
 
                 </ul>
@@ -41,7 +40,6 @@
         <div id="main">
             <div class="header">
                 <h1>{{ title }}</h1>
-                <h2>A subtitle for your page goes here</h2>
             </div>
 
             <div class="content">

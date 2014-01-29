@@ -123,7 +123,7 @@ class ServerView(FlaskView):
 class AdminView(FlaskView):
 
     def index(self):
-        return render_template('admin/home.html')
+        return render_template('admin/dashboard.html', title="Dashboard")
 
 
 class AdminServersView(FlaskView):
