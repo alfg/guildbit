@@ -43,5 +43,10 @@ class User(db.Model):
     def get_id(self):
         return unicode(self.id)
 
+    def get_role(self):
+        return self.role
+
     def __repr__(self):
         return '<User %r>' % self.nickname
+
+

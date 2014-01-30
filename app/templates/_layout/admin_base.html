@@ -8,7 +8,6 @@
     <title>GuildBit - {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
     <link rel="stylesheet" href="/static/css/admin.css">
-    <link rel="stylesheet" href="/combo/1.9.5?/css/layouts/side-menu.css">
 </head>
 <body>
     <div id="layout">
@@ -48,6 +47,25 @@
         </div>
     </div>
 
+    <!-- Grab Google CDN's jQuery, fall back to local if offline -->
+    <!-- 2.0 for modern browsers, 1.10 for .oldie -->
+    <script>
+        var oldieCheck = Boolean(document.getElementsByTagName('html')[0].className.match(/\soldie\s/g));
+        if(!oldieCheck) {
+            document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"><\/script>');
+        } else {
+            document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"><\/script>');
+        }
+    </script>
+    <script>
+        if(!window.jQuery) {
+            if(!oldieCheck) {
+                document.write('<script src="js/libs/jquery-2.0.2.min.js"><\/script>');
+            } else {
+                document.write('<script src="js/libs/jquery-1.10.1.min.js"><\/script>');
+            }
+        }
+    </script>
     <script src="http://yui.yahooapis.com/3.12.0/build/yui/yui.js"></script>
     <script>
     YUI().use('node-base', 'node-event-delegate', function (Y) {

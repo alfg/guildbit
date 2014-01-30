@@ -6,6 +6,7 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 import requests
 
 import settings
+from util import admin_required
 from app import app, db, tasks, lm, oid
 from app.forms import DeployServerForm, LoginForm
 from app.models import Server, User, ROLE_ADMIN, ROLE_USER
@@ -120,17 +121,29 @@ class ServerView(FlaskView):
             return jsonify(users=None)
 
 
+
+
 class AdminView(FlaskView):
 
+    @login_required
+    @admin_required
     def index(self):
         return render_template('admin/dashboard.html', title="Dashboard")
 
 
 class AdminServersView(FlaskView):
 
+    @login_required
+    @admin_required
     def index(self):
         servers = Server.query.all()
         return render_template('admin/servers.html', servers=servers, title="Servers")
+
+    def get(self, id):
+        server = Server.query.filter_by(id=id).first_or_404()
+        r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
+        server_details = r.json()
+        return render_template('admin/server.html', server=server, details=server_details, title="Server: %s" % id)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -176,7 +189,7 @@ def after_login(resp):
     return redirect(request.args.get('next') or url_for('home'))
 
 
-
+# Register views
 HomeView.register(app, route_base='/')
 ServerView.register(app)
 AdminView.register(app)

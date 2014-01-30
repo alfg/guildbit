@@ -1,0 +1,159 @@
+{% extends"_layout/admin_base.html" %}
+
+{% block title %}Admin Home{% endblock %}
+
+{% block body %}
+    <div>
+        <button class="pure-button button-secondary">View</button>
+        <button class="pure-button button-error">Kill</button>
+    </div>
+    <br />
+    <table class="pure-table pure-table-horizontal pure-table-striped servers-js">
+        <thead>
+            <tr>
+                <th colspan="2">Server Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ID</td>
+                <td>{{ server.id }}</td>
+            </tr>
+            <tr>
+                <td>UUID</td>
+                <td>{{ server.uuid }}</td>
+            </tr>
+            <tr>
+                <td>Created</td>
+                <td>{{ server.created_date }}</td>
+            </tr>
+            <tr>
+                <td>Duration Hours</td>
+                <td>{{ server.duration }}</td>
+            </tr>
+            <tr>
+                <td>Mumble Password</td>
+                <td>{{ server.password }}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>{{ server.status }}</td>
+            </tr>
+            <tr>
+                <td>Mumble Host</td>
+                <td>{{ server.mumble_host }}</td>
+            </tr>
+            <tr>
+                <td>Mumble Instance ID</td>
+                <td>{{ server.mumble_instance }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table class="pure-table pure-table-horizontal pure-table-striped servers-js">
+        <thead>
+        <tr>
+            <th colspan="2">Mumble Details</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Server</td>
+                <td>{{ server.mumble_host }}</td>
+            </tr>
+            <tr>
+                <td>Port</td>
+                <td>{{ details.port }}</td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>{{ server.password }}</td>
+            </tr>
+            <tr>
+                <td>Direct Link</td>
+                <td><a href="mumble://{{ server.mumble_host }}:{{ details.port }}">mumble://{{ server.mumble_host }}:{{ details.port }}</a></td>
+            </tr>
+            <tr>
+                <td>Expires</td>
+                <td><span id="expires-date"></span> (<span id="expires"></span>) </td>
+            </tr>
+            <tr>
+                <td>Slots</td>
+                <td>{{ details.maxusers }}</td>
+            </tr>
+            <tr>
+                <td>Uptime</td>
+                <td>{{ details.uptime }}</td>
+            </tr>
+            <tr>
+                <td>Log length</td>
+                <td>{{ details.log_length }}</td>
+            </tr>
+            <tr>
+                <td>Welcome message</td>
+                <td>{{ details.welcometext }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table class="pure-table pure-table-horizontal pure-table-striped servers-js" data-bind="with: usersOnline">
+        <thead>
+        <tr>
+            <th>Users Online (<span data-bind="text: count"></span>)</th>
+            <th class="text-right">Duration</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- ko foreach: users -->
+        <tr>
+            <td data-bind="text: name"></td>
+            <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
+        </tr>
+        <!-- /ko -->
+
+        <!-- ko if: count == 0 -->
+        <tr><td class="text-center" colspan="2">No users are online</td></tr>
+        <!-- /ko -->
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+    <script src="/static/js/libs/knockout-3.0.0.js"></script>
+    <script src="/static/js/libs/moment.min.js"></script>
+
+    <script type="text/javascript">
+        // Format expiration date into human friendly
+        var base_url = '/server/{{ server.uuid }}'
+        var expire_date = '{{ server.expiration }}';
+        $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
+        $("#expires").text(moment.utc(expire_date).fromNow());
+
+        // Knockout Users Model for displaying and updated users online
+        function UsersViewModel() {
+            var self = this;
+
+            self.usersOnline = ko.observable(loadUsers());
+
+            // Load initial users into usersOnline observable, then set an interval
+            function loadUsers() {
+                var users = [];
+                $.ajax({
+                    url: base_url + "/users",
+                    async: false,
+                    dataType: "json",
+                    success: function (json) {
+                        users = json.users;
+                    }
+                });
+                return users;
+            }
+            setInterval(function() {
+                self.usersOnline(loadUsers());
+            }, 15000)
+
+        }
+        ko.applyBindings(new UsersViewModel());
+    </script>
+{% endblock %}
