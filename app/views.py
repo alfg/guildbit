@@ -136,10 +136,21 @@ class AdminServersView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-        servers = Server.query.all()
+        filter = request.args.get('filter')
+
+        if filter == "all":
+            servers = Server.query.all()
+        elif filter == "active":
+            servers = Server.query.filter_by(status="active").all()
+        elif filter == "expired":
+            servers = Server.query.filter_by(status="expired").all()
+        else:
+            servers = Server.query.all()
+
         return render_template('admin/servers.html', servers=servers, title="Servers")
 
     def get(self, id):
+
         server = Server.query.filter_by(id=id).first_or_404()
         r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
         server_details = r.json()
