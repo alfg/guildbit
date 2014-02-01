@@ -136,6 +136,7 @@ class AdminServersView(FlaskView):
     @login_required
     @admin_required
     def index(self):
+
         filter = request.args.get('filter')
 
         if filter == "all":
@@ -145,7 +146,7 @@ class AdminServersView(FlaskView):
         elif filter == "expired":
             servers = Server.query.filter_by(status="expired").all()
         else:
-            servers = Server.query.all()
+            servers = Server.query.filter_by(status="active").all()
 
         return render_template('admin/servers.html', servers=servers, title="Servers")
 
