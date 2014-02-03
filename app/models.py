@@ -46,6 +46,16 @@ class User(db.Model):
     def get_role(self):
         return self.role
 
+    def get_role_name(self):
+        if self.role == 0:
+            role_name = "user"
+        elif self.role == 1:
+            role_name = "admin"
+        else:
+            role_name = "unassigned"
+        return role_name
+
+
     def __repr__(self):
         return '<User %r>' % self.nickname
 

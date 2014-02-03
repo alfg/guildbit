@@ -26,18 +26,17 @@
                 <ul>
                     <li {% if title == "Dashboard" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/">Dashboard</a></li>
                     <li {% if title == "Servers" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/servers/">Servers</a></li>
-                    <li><a href="#">Users</a></li>
+                    <li {% if title == "Users" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/users/">Users</a></li>
                     <li><a href="#">Stats</a></li>
                     <hr />
                     <li><a href="/logout">Logout</a></li>
-
-
                 </ul>
             </div>
         </div>
 
         <div id="main">
             <div class="header">
+                <span>Logged in as {{ g.user.nickname }} - <a href="/logout">Logout</a></span>
                 <h1>{{ title }}</h1>
             </div>
 

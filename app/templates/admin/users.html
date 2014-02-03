@@ -1,0 +1,36 @@
+{% extends"_layout/admin_base.html" %}
+{% set filter = request.args.get('filter') %}
+
+{% block title %}Admin Home{% endblock %}
+
+{% block body %}
+    <table class="pure-table pure-table-horizontal pure-table-striped servers">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nickname</th>
+                <th>Email</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <td>{{ u.id }}</td>
+                <td><a href="/admin/users/{{ u.id }}">{{ u.nickname }}</a></td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.role }} ({{ u.get_role_name() }})</td>
+            </tr>
+            {% endfor %}
+            {% if users == [] %}
+            <tr><td class="text-center" colspan="8">No Users</td></tr>
+            {% endif %}
+
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+{% endblock %}

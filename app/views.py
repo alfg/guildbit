@@ -121,17 +121,29 @@ class ServerView(FlaskView):
             return jsonify(users=None)
 
 
-
-
 class AdminView(FlaskView):
+    """
+    All base admin views.
+    """
 
     @login_required
     @admin_required
     def index(self):
-        return render_template('admin/dashboard.html', title="Dashboard")
+
+        servers_running = requests.get("%s/api/v1/servers/" % settings.MURMUR_REST_HOST)
+        users_count = User.query.count()
+
+        ctx = {
+            'servers_count': len(servers_running.json()),
+            'users_count': users_count
+        }
+        return render_template('admin/dashboard.html', title="Dashboard", ctx=ctx)
 
 
 class AdminServersView(FlaskView):
+    """
+    Admin Server view.
+    """
 
     @login_required
     @admin_required
@@ -150,12 +162,24 @@ class AdminServersView(FlaskView):
 
         return render_template('admin/servers.html', servers=servers, title="Servers")
 
+    @login_required
+    @admin_required
     def get(self, id):
 
         server = Server.query.filter_by(id=id).first_or_404()
         r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
         server_details = r.json()
         return render_template('admin/server.html', server=server, details=server_details, title="Server: %s" % id)
+
+
+class AdminUsersView(FlaskView):
+
+    @login_required
+    @admin_required
+    def index(self):
+
+        users = User.query.all()
+        return render_template('admin/users.html', users=users, title="Users")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -206,4 +230,5 @@ HomeView.register(app, route_base='/')
 ServerView.register(app)
 AdminView.register(app)
 AdminServersView.register(app, route_prefix='/admin/', route_base='/servers')
+AdminUsersView.register(app, route_prefix='/admin/', route_base='/users')
 
