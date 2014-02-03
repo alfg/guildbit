@@ -58,10 +58,10 @@ body {
 }
 
 /* Servers View */
-table.servers-js tbody tr {
+table.servers tbody tr {
     cursor: pointer;
 }
-table.servers-js tbody tr:hover td {
+table.servers tbody tr:hover td {
     background-color: #e7e7e7;
     cursor: pointer;
 }
@@ -183,11 +183,11 @@ The content `<div>` is where all your content goes.
      margin: 0;
      color: #333;
      text-align: center;
-     padding: 2.5em 2em 0;
+     padding: 0.5em 2em 0;
      border-bottom: 1px solid #eee;
  }
     .header h1 {
-        margin: 0.2em 0;
+        margin: 0.6em 0;
         font-size: 2em;
         font-weight: 300;
     }
@@ -197,6 +197,9 @@ The content `<div>` is where all your content goes.
         padding: 0;
         margin-top: 0;
     }
+     .header span {
+         float: right;
+     }
 
 .content-subhead {
     margin: 50px 0 20px 0;
