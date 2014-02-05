@@ -3,6 +3,7 @@
 {% block title %}Admin Home{% endblock %}
 
 {% block body %}
+    <h3>Application Information</h3>
     <table class="pure-table pure-table-horizontal pure-table-striped">
         <tbody>
             <tr>
@@ -17,8 +18,77 @@
                 <td>Users (database):</td>
                 <td>{{ ctx.users_count }}</td>
             </tr>
+        </tbody>
+    </table>
+
+    <h3>Bandwidth Information</h3>
+    <img src="/static/img/info/vnstat_hourly.png" />
+    <img src="/static/img/info/vnstat_daily.png" />
+    <img src="/static/img/info/vnstat_monthly.png" />
+    <img src="/static/img/info/vnstat_summary.png" />
+    <img src="/static/img/info/vnstat_top10.png" />
+
+
+    <h3>System Information</h3>
+    <table class="pure-table pure-table-horizontal pure-table-striped">
+        <tbody>
             <tr>
-                <td>Bandwidth:</td>
+                <td colspan="2"><strong>Memory Info</strong></td>
+            </tr>
+            <tr>
+                <td>Memory Total:</td>
+                <td>{{ ctx.memory.total }}</td>
+            </tr>
+            <tr>
+                <td>Memory Available:</td>
+                <td>{{ ctx.memory.available }}</td>
+            </tr>
+            <tr>
+                <td>Memory %:</td>
+                <td>{{ ctx.memory.percent }}%</td>
+            </tr>
+            <tr>
+                <td>Memory Used:</td>
+                <td>{{ ctx.memory.used }}</td>
+            </tr>
+            <tr>
+                <td>Memory Total:</td>
+                <td>{{ ctx.memory.free }}</td>
+            </tr>
+            <tr>
+                <td>Memory Active:</td>
+                <td>{{ ctx.memory.active }}</td>
+            </tr>
+            <tr>
+                <td>Memory Inactive:</td>
+                <td>{{ ctx.memory.inactive }}</td>
+            </tr>
+            <tr>
+                <td>Memory Buffer:</td>
+                <td>{{ ctx.memory.buffers }}</td>
+            </tr>
+            <tr>
+                <td>Memory Cached:</td>
+                <td>{{ ctx.memory.cached }}</td>
+            </tr>
+            <tr>
+                <td colspan="2"><strong>Disk Info</strong></td>
+            </tr>
+            <tr>
+                <td>Disk Total:</td>
+                <td>{{ ctx.disk.total }}</td>
+            </tr>
+            <tr>
+                <td>Disk Used:</td>
+                <td>{{ ctx.disk.used }}</td>
+            </tr>
+            <tr>
+                <td>Disk Free:</td>
+                <td>{{ ctx.disk.free }}</td>
+            </tr>
+            <tr>
+                <td>Disk %:</td>
+                <td>{{ ctx.disk.percent }}%</td>
             </tr>
         </tbody>
     </table>

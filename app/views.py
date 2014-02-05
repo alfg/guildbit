@@ -4,6 +4,7 @@ from flask import render_template, request, redirect, session, url_for, jsonify,
 from flask.ext.classy import FlaskView, route
 from flask.ext.login import login_user, logout_user, current_user, login_required
 import requests
+import psutil
 
 import settings
 from util import admin_required
@@ -132,10 +133,14 @@ class AdminView(FlaskView):
 
         servers_running = requests.get("%s/api/v1/servers/" % settings.MURMUR_REST_HOST)
         users_count = User.query.count()
+        ps = psutil
+        print ps.virtual_memory()
 
         ctx = {
             'servers_count': len(servers_running.json()),
-            'users_count': users_count
+            'users_count': users_count,
+            'memory': ps.virtual_memory(),
+            'disk': ps.disk_usage('/')
         }
         return render_template('admin/dashboard.html', title="Dashboard", ctx=ctx)
 

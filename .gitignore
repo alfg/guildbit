@@ -53,3 +53,4 @@ docs/_build/
 # Config
 settings.py
 tmp
+app/static/img/info/
