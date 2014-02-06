@@ -11,6 +11,7 @@
                 <th>Nickname</th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Options</th>
             </tr>
         </thead>
 
@@ -21,6 +22,7 @@
                 <td><a href="/admin/users/{{ u.id }}">{{ u.nickname }}</a></td>
                 <td>{{ u.email }}</td>
                 <td>{{ u.role }} ({{ u.get_role_name() }})</td>
+                <td><a class="pure-button pure-button-primary button-small" href="#">Update Role</a></td>
             </tr>
             {% endfor %}
             {% if users == [] %}

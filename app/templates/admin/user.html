@@ -1,0 +1,63 @@
+{% extends"_layout/admin_base.html" %}
+
+{% block title %}Admin User{% endblock %}
+
+{% block body %}
+    <div>
+        <button class="pure-button button-secondary" data-toggle="modal" data-target="#userAdminModal">Update Role</button>
+    </div>
+    <br />
+    <table class="pure-table pure-table-horizontal pure-table-striped servers">
+        <tbody>
+            <tr>
+                <td>User ID</td>
+                <td>{{ u.id }}</td>
+            </tr>
+            <tr>
+                <td>Nickname</td>
+                <td>{{ u.nickname }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ u.email }}</td>
+            </tr>
+            <tr>
+                <td>Role</td>
+                <td>{{ u.get_role_name() }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- User Admin Modal -->
+    <div class="modal fade" id="userAdminModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="" method="post" name="role" class="pure-form pure-form-aligned">
+              <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Update User - {{ u.nickname }}</h4>
+              </div>
+              <div class="modal-body">
+                      {{ form.csrf_token }}
+                      <div class="pure-control-group">
+                          <label for="role">Role</label>
+                          {{ form.role }}
+                      </div>
+                      <fieldset>
+                          {% for error in form.errors.role %}
+                              <span class="label label-red">{{ error }}</span>
+                          {% endfor %}
+                      </fieldset>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="pure-button" data-dismiss="modal">Close</button>
+                <button type="submit" class="pure-button button-secondary">Save changes</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+{% endblock %}

@@ -132,6 +132,14 @@ table.servers tbody tr:hover td {
         background: #df2d4f;
 }
 
+/* Buttons */
+.button-blue {
+    background: #4d85d1;
+}
+.button-small {
+    font-size: 12px;
+}
+
 .pure-img-responsive {
     max-width: 100%;
     height: auto;

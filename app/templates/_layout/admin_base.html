@@ -8,6 +8,7 @@
     <title>GuildBit - {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
     <link rel="stylesheet" href="/static/css/admin.css">
+    <link rel="stylesheet" href="/static/css/modals.css">
 </head>
 <body>
     <div id="layout">
@@ -27,6 +28,7 @@
                     <li {% if title == "Dashboard" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/">Dashboard</a></li>
                     <li {% if title == "Servers" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/servers/">Servers</a></li>
                     <li {% if title == "Users" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/users/">Users</a></li>
+                    <li><a href="http://flower.guildbit.com" target="_blank">Tasks</a></li>
                     <li><a href="#">Stats</a></li>
                     <hr />
                     <li><a href="/logout">Logout</a></li>
@@ -66,6 +68,7 @@
         }
     </script>
     <script src="http://yui.yahooapis.com/3.12.0/build/yui/yui.js"></script>
+    <script src="/static/js/libs/modal.js"></script>
     <script>
     YUI().use('node-base', 'node-event-delegate', function (Y) {
         // This just makes sure that the href="#" attached to the <a> elements

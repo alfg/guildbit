@@ -9,7 +9,7 @@ import psutil
 import settings
 from util import admin_required
 from app import app, db, tasks, lm, oid
-from app.forms import DeployServerForm, LoginForm
+from app.forms import DeployServerForm, LoginForm, UserAdminForm
 from app.models import Server, User, ROLE_ADMIN, ROLE_USER
 
 
@@ -173,7 +173,12 @@ class AdminServersView(FlaskView):
 
         server = Server.query.filter_by(id=id).first_or_404()
         r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
-        server_details = r.json()
+        print r.status_code
+        if r.status_code == "200":
+            server_details = r.json()
+        else:
+            server_details = None
+
         return render_template('admin/server.html', server=server, details=server_details, title="Server: %s" % id)
 
 
@@ -185,6 +190,26 @@ class AdminUsersView(FlaskView):
 
         users = User.query.all()
         return render_template('admin/users.html', users=users, title="Users")
+
+    @login_required
+    @admin_required
+    def get(self, id):
+
+        user = User.query.filter_by(id=id).first_or_404()
+        form = UserAdminForm(role=user.role)
+        return render_template('admin/user.html', u=user, form=form, title="User: %s" % user.nickname)
+
+
+    @login_required
+    @admin_required
+    def post(self, id):
+        user = User.query.filter_by(id=id).first()
+        form = UserAdminForm(request.form, role=user.role)
+        if form.validate_on_submit():
+            user.role = form.role.data
+            db.session.commit()
+            return redirect('/admin/users/%s' % user.id)
+        return render_template('admin/user.html', u=user, form=form, title="User: %s" % user.nickname)
 
 
 @app.route('/login', methods=['GET', 'POST'])

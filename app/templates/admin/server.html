@@ -57,6 +57,7 @@
         </tr>
         </thead>
         <tbody>
+            {% if details != None %}
             <tr>
                 <td>Server</td>
                 <td>{{ server.mumble_host }}</td>
@@ -93,6 +94,11 @@
                 <td>Welcome message</td>
                 <td>{{ details.welcometext }}</td>
             </tr>
+            {% else %}
+            <tr>
+                <td class="text-center" colspan="2">Mumble server expired</td>
+            </tr>
+            {% endif %}
         </tbody>
     </table>
     <br />
