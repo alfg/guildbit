@@ -157,11 +157,11 @@ class AdminServersView(FlaskView):
         filter = request.args.get('filter')
 
         if filter == "all":
-            servers = Server.query.all()
+            servers = Server.query.order_by(Server.id.desc()).all()
         elif filter == "active":
             servers = Server.query.filter_by(status="active").all()
         elif filter == "expired":
-            servers = Server.query.filter_by(status="expired").all()
+            servers = Server.query.filter_by(status="expired").order_by(Server.id.desc()).all()
         else:
             servers = Server.query.filter_by(status="active").all()
 
