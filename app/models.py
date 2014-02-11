@@ -55,8 +55,18 @@ class User(db.Model):
             role_name = "unassigned"
         return role_name
 
-
     def __repr__(self):
         return '<User %r>' % self.nickname
 
+
+class Host(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    hostname = db.Column(db.String(120), unique=True, index=True)
+    status = db.Column(db.String, default='active')
+    contact_name = db.Column(db.String(120))
+    contact_email = db.Column(db.String(120))
+    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+    def __repr__(self):
+        return '<Host %r>' % self.hostname
 

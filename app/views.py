@@ -130,11 +130,9 @@ class AdminView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-
         servers_running = requests.get("%s/api/v1/servers/" % settings.MURMUR_REST_HOST)
         users_count = User.query.count()
         ps = psutil
-        print ps.virtual_memory()
 
         ctx = {
             'servers_count': len(servers_running.json()),
@@ -153,7 +151,6 @@ class AdminServersView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-
         filter = request.args.get('filter')
 
         if filter == "all":
@@ -170,10 +167,8 @@ class AdminServersView(FlaskView):
     @login_required
     @admin_required
     def get(self, id):
-
         server = Server.query.filter_by(id=id).first_or_404()
         r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
-        print r.status_code
         if r.status_code == "200":
             server_details = r.json()
         else:
@@ -181,20 +176,28 @@ class AdminServersView(FlaskView):
 
         return render_template('admin/server.html', server=server, details=server_details, title="Server: %s" % id)
 
+    @login_required
+    @admin_required
+    @route('/<id>/kill', methods=['POST'])
+    def kill_server(self, id):
+        server = Server.query.filter_by(id=id).first_or_404()
+        server.status = "expired"
+        db.session.commit()
+        r = requests.delete("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
+        return redirect('/admin/servers/%s' % id)
+
 
 class AdminUsersView(FlaskView):
 
     @login_required
     @admin_required
     def index(self):
-
         users = User.query.all()
         return render_template('admin/users.html', users=users, title="Users")
 
     @login_required
     @admin_required
     def get(self, id):
-
         user = User.query.filter_by(id=id).first_or_404()
         form = UserAdminForm(role=user.role)
         return render_template('admin/user.html', u=user, form=form, title="User: %s" % user.nickname)
@@ -210,6 +213,15 @@ class AdminUsersView(FlaskView):
             db.session.commit()
             return redirect('/admin/users/%s' % user.id)
         return render_template('admin/user.html', u=user, form=form, title="User: %s" % user.nickname)
+
+
+class AdminHostsView(FlaskView):
+
+    @login_required
+    @admin_required
+    def index(self):
+
+        return render_template('admin/hosts.html', title="Hosts")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -261,4 +273,5 @@ ServerView.register(app)
 AdminView.register(app)
 AdminServersView.register(app, route_prefix='/admin/', route_base='/servers')
 AdminUsersView.register(app, route_prefix='/admin/', route_base='/users')
+AdminHostsView.register(app, route_prefix='/admin/', route_base='/hosts')
 

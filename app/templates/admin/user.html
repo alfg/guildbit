@@ -4,7 +4,7 @@
 
 {% block body %}
     <div>
-        <button class="pure-button button-secondary" data-toggle="modal" data-target="#userAdminModal">Update Role</button>
+        <button class="pure-button button-secondary" data-toggle="modal" data-target="#userAdminModal" {% if u.id == 1 %}disabled="disabled" {% endif %}>Update Role</button>
     </div>
     <br />
     <table class="pure-table pure-table-horizontal pure-table-striped servers">

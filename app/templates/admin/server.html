@@ -4,8 +4,10 @@
 
 {% block body %}
     <div>
-        <button class="pure-button button-secondary">View</button>
-        <button class="pure-button button-error">Kill</button>
+        <a class="pure-button button-secondary" href="/server/{{ server.uuid }}" target="_BLANK">View</a>
+        <form action="/admin/servers/{{ server.id }}/kill" method="POST" style="display: inline-block;">
+            <button type="submit" class="pure-button button-error">Kill</button>
+        </form>
     </div>
     <br />
     <table class="pure-table pure-table-horizontal pure-table-striped servers-js">
