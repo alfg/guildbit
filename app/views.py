@@ -280,13 +280,6 @@ class AdminHostsView(FlaskView):
                 'capacity': i['capacity']
             })
 
-        print ctx
-
-        if r.status_code == 200:
-            stats = r.json()
-        else:
-            stats = None
-
         return render_template('admin/hosts.html', hosts=ctx, title="Hosts")
 
 
