@@ -9,7 +9,7 @@ import psutil
 import settings
 from util import admin_required
 from app import app, db, tasks, lm, oid
-from app.forms import DeployServerForm, LoginForm, UserAdminForm
+from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm
 from app.models import Server, User, ROLE_ADMIN, ROLE_USER
 
 
@@ -151,6 +151,7 @@ class AdminServersView(FlaskView):
     @login_required
     @admin_required
     def index(self):
+        form = DeployCustomServerForm()
         filter = request.args.get('filter')
 
         if filter == "all":
@@ -159,22 +160,66 @@ class AdminServersView(FlaskView):
             servers = Server.query.filter_by(status="active").all()
         elif filter == "expired":
             servers = Server.query.filter_by(status="expired").order_by(Server.id.desc()).all()
+        elif filter == "custom":
+            servers = Server.query.filter_by(type="custom").order_by(Server.id.desc()).all()
         else:
             servers = Server.query.filter_by(status="active").all()
 
-        return render_template('admin/servers.html', servers=servers, title="Servers")
+        return render_template('admin/servers.html', servers=servers, form=form, title="Servers")
 
     @login_required
     @admin_required
     def get(self, id):
         server = Server.query.filter_by(id=id).first_or_404()
         r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
-        if r.status_code == "200":
+        if r.status_code == 200:
             server_details = r.json()
         else:
             server_details = None
 
         return render_template('admin/server.html', server=server, details=server_details, title="Server: %s" % id)
+
+    @login_required
+    @admin_required
+    def post(self):
+        form = DeployCustomServerForm()
+        if form.validate_on_submit():
+
+            try:
+                # Generate UUID
+                gen_uuid = str(uuid.uuid4())
+
+                # Create POST request to murmur-rest api to create a new server
+                welcome_msg = "Welcome. This is a custom GuildBit Mumble instance. View details on this server by " \
+                              "<a href='http://guildbit.com/server/%s'>clicking here.</a>" % gen_uuid
+                payload = {
+                    'password': form.password.data,
+                    'welcometext': welcome_msg,
+                    'users': form.slots.data or 0,
+                    'registername': form.channel_name
+                }
+                r = requests.post(settings.MURMUR_REST_HOST + "/api/v1/servers/", data=payload)
+                server_id = r.json()['id']
+
+                # Create database entry
+                s = Server()
+                s.duration = 0
+                s.password = form.password.data
+                s.uuid = gen_uuid
+                s.mumble_instance = server_id
+                s.type = 'custom'
+                db.session.add(s)
+                db.session.commit()
+
+                return redirect('/admin/servers/%s' % s.id)
+
+            except:
+                import traceback
+                db.session.rollback()
+                traceback.print_exc()
+
+            return render_template('admin/server.html', form=form)
+        return render_template('admin/server.html', form=form)
 
     @login_required
     @admin_required
@@ -220,8 +265,29 @@ class AdminHostsView(FlaskView):
     @login_required
     @admin_required
     def index(self):
+        hosts = settings.MURMUR_HOSTS
+        print hosts
 
-        return render_template('admin/hosts.html', title="Hosts")
+        ctx = []
+        for i in hosts:
+            r = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
+            ctx.append({
+                'name': i['name'],
+                'address': i['address'],
+                'contact': i['contact'],
+                'status': i['status'],
+                'booted_servers': r.json()['booted_servers'],
+                'capacity': i['capacity']
+            })
+
+        print ctx
+
+        if r.status_code == 200:
+            stats = r.json()
+        else:
+            stats = None
+
+        return render_template('admin/hosts.html', hosts=ctx, title="Hosts")
 
 
 @app.route('/login', methods=['GET', 'POST'])

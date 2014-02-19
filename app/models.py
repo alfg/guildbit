@@ -14,6 +14,7 @@ class Server(db.Model):
     duration = db.Column(db.Integer)
     password = db.Column(db.String)
     status = db.Column(db.String, default='active')
+    type = db.Column(db.String, default='temp')
     mumble_host = db.Column(db.String, default="mumble.guildbit.com")
     mumble_instance = db.Column(db.Integer)
 
@@ -30,6 +31,7 @@ class User(db.Model):
     nickname = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(120), unique=True)
     role = db.Column(db.SmallInteger, default=ROLE_USER)
+    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     def is_authenticated(self):
         return True
@@ -59,14 +61,14 @@ class User(db.Model):
         return '<User %r>' % self.nickname
 
 
-class Host(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    hostname = db.Column(db.String(120), unique=True, index=True)
-    status = db.Column(db.String, default='active')
-    contact_name = db.Column(db.String(120))
-    contact_email = db.Column(db.String(120))
-    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-
-    def __repr__(self):
-        return '<Host %r>' % self.hostname
+# class Host(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     hostname = db.Column(db.String(120), unique=True, index=True)
+#     status = db.Column(db.String, default='active')
+#     contact_name = db.Column(db.String(120))
+#     contact_email = db.Column(db.String(120))
+#     created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+#
+#     def __repr__(self):
+#         return '<Host %r>' % self.hostname
 

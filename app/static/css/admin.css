@@ -8,6 +8,12 @@ body {
 .text-right {
     text-align: right;
 }
+.pull-right {
+    float: right;
+}
+.pull-left {
+    float: left;
+}
 
 /* Buttons */
 .button-success,

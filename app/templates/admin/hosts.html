@@ -6,10 +6,24 @@
     <table class="pure-table pure-table-horizontal pure-table-striped servers">
         <thead>
             <tr>
+                <th>Name</th>
+                <th>Host</th>
+                <th>Contact</th>
+                <th>Active</th>
+                <th>Capacity</th>
             </tr>
         </thead>
 
         <tbody>
+            {% for host in hosts %}
+            <tr>
+                <td>{{ host.name }}</td>
+                <td>{{ host.address }}</td>
+                <td>{{ host.contact }}</td>
+                <td>{{ host.status }}</td>
+                <td>{{ host.booted_servers }} / {{ host.capacity }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}

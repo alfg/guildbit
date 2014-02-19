@@ -4,11 +4,15 @@
 {% block title %}Admin Home{% endblock %}
 
 {% block body %}
+    <div class="pull-right">
+        <a class="pure-button button-secondary" data-toggle="modal" data-target="#createServerModal">Create Custom Server</a>
+    </div>
     <div class="pure-menu pure-menu-open pure-menu-horizontal">
         <ul>
             <li {% if filter == "active" or filter == None %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=active">Active</a></li>
             <li {% if filter == "expired" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=expired">Expired</a></li>
             <li {% if filter == "all" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=all">All</a></li>
+            <li {% if filter == "custom" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=custom">Custom Servers</a></li>
         </ul>
     </div>
     <br />
@@ -22,6 +26,7 @@
                 <th>Password</th>
                 <th>Status</th>
                 <th>Host</th>
+                <th>Type</th>
                 <th>Instance</th>
             </tr>
         </thead>
@@ -36,6 +41,7 @@
                 <td>{{ s.password }}</td>
                 <td>{{ s.status }}</td>
                 <td>{{ s.mumble_host }}</td>
+                <td>{{ s.type }}</td>
                 <td>{{ s.mumble_instance }}</td>
             </tr>
             {% endfor %}
@@ -45,6 +51,44 @@
 
         </tbody>
     </table>
+
+    <!-- Create Server Modal -->
+    <div class="modal fade" id="createServerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="" method="post" name="role" class="pure-form pure-form-aligned">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Create a custom server</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{ form.csrf_token }}
+                        <div class="pure-control-group">
+                            <label for="role">Channel Name</label>
+                            {{ form.channel_name }}
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="role">Password</label>
+                            {{ form.password }}
+                        </div>
+                        <div class="pure-control-group">
+                            <label for="role">Slots</label>
+                            {{ form.slots }}
+                            (leave blank for no limit)
+                        </div>
+                        <fieldset>
+                            {% for error in form.errors.role %}
+                                <span class="label label-red">{{ error }}</span>
+                            {% endfor %}
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="pure-button" data-dismiss="modal">Close</button>
+                        <button type="submit" class="pure-button button-secondary">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}

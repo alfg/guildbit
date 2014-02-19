@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import TextField, SelectField, BooleanField
+from wtforms import TextField, SelectField, BooleanField, IntegerField
 from wtforms.validators import DataRequired, Required
 
 
@@ -13,6 +13,12 @@ class DeployServerForm(Form):
                                ('24', '24 Hours')
                            ])
     password = TextField('password', validators=[DataRequired('Password is required.')])
+
+
+class DeployCustomServerForm(Form):
+    slots = IntegerField('slots')
+    password = TextField('password', validators=[DataRequired('Password is required.')])
+    channel_name = TextField('channel_name')
 
 
 class LoginForm(Form):

@@ -3,6 +3,8 @@ from functools import wraps
 from flask.ext.login import current_user
 from flask import redirect
 
+from settings import MURMUR_HOSTS
+
 
 def admin_required(fn):
     """
@@ -14,3 +16,7 @@ def admin_required(fn):
             return redirect("/")
         return fn(*args, **kwargs)
     return decorated_view
+
+
+def host_balancer():
+    return
