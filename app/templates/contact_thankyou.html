@@ -1,0 +1,26 @@
+{% extends"_layout/base.html" %}
+
+{% block title %}Contact or Report an Issue{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="ten columns centered content">
+            <div class="ten columns centered">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <ul>
+                    {% for message in messages %}
+                      <li class="secondary alert">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %}
+                <h2>Thank you!</h2>
+                <p>Thanks for submitting your question, comment or bug report! Your feedback is appreciated!</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

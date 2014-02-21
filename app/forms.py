@@ -1,6 +1,6 @@
 from flask_wtf import Form
-from wtforms import TextField, SelectField, BooleanField, IntegerField
-from wtforms.validators import DataRequired, Required
+from wtforms import TextField, SelectField, BooleanField, IntegerField, TextAreaField
+from wtforms.validators import DataRequired, Required, Email
 
 
 class DeployServerForm(Form):
@@ -33,3 +33,9 @@ class UserAdminForm(Form):
                            ('0', 'User'),
                            ('1', 'Admin')
                        ])
+
+
+class ContactForm(Form):
+    subject = TextField('subject', validators=[DataRequired('Subject is required.')])
+    email = TextField('email', validators=[Email('Invalid email address.'), DataRequired('Email is required.')])
+    message = TextAreaField('message', validators=[DataRequired('Message is required.')])

@@ -3,13 +3,14 @@ import uuid
 from flask import render_template, request, redirect, session, url_for, jsonify, g, flash
 from flask.ext.classy import FlaskView, route
 from flask.ext.login import login_user, logout_user, current_user, login_required
+from flask.ext.mail import Message
 import requests
 import psutil
 
 import settings
 from util import admin_required
-from app import app, db, tasks, lm, oid
-from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm
+from app import app, db, tasks, lm, oid, mail
+from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm
 from app.models import Server, User, ROLE_ADMIN, ROLE_USER
 
 
@@ -79,6 +80,33 @@ class HomeView(FlaskView):
     @route('/donate')
     def donate(self):
         return render_template('donate.html')
+
+    @route('/contact', methods=['POST', 'GET'])
+    def contact(self):
+        form = ContactForm()
+        if form.validate_on_submit():
+            try:
+                template = """
+                              This is a contact form submission from Guildbit.com/contact \n
+                              Email: %s \n
+                              Comment/Question: %s \n
+                           """ % (form.email.data, form.message.data)
+
+                msg = Message(
+                    form.subject.data,
+                    sender=settings.DEFAULT_MAIL_SENDER,
+                    recipients=settings.EMAIL_RECIPIENTS)
+
+                msg.body = template
+                mail.send(msg)
+            except:
+                import traceback
+                traceback.print_exc()
+                flash("Something went wrong!")
+                return redirect('/contact')
+
+            return render_template('contact_thankyou.html')
+        return render_template('contact.html', form=form)
 
     @route('/about')
     def about(self):
