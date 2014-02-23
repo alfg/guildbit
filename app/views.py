@@ -158,6 +158,7 @@ class AdminView(FlaskView):
     @login_required
     @admin_required
     def index(self):
+        stats = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
         servers_running = requests.get("%s/api/v1/servers/" % settings.MURMUR_REST_HOST)
         users_count = User.query.count()
         ps = psutil
@@ -165,6 +166,7 @@ class AdminView(FlaskView):
         ctx = {
             'servers_count': len(servers_running.json()),
             'users_count': users_count,
+            'users_online_count': stats.json()['users_online'],
             'memory': ps.virtual_memory(),
             'disk': ps.disk_usage('/')
         }
