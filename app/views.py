@@ -120,6 +120,11 @@ class HomeView(FlaskView):
     def privacy(self):
         return render_template('privacy.html')
 
+    @route('/test')
+    def test(self):
+        asdf()
+        return render_template('test')
+
 
 class ServerView(FlaskView):
 
@@ -161,12 +166,14 @@ class AdminView(FlaskView):
         stats = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
         servers_running = requests.get("%s/api/v1/servers/" % settings.MURMUR_REST_HOST)
         users_count = User.query.count()
+        servers_count = Server.query.count()
         ps = psutil
 
         ctx = {
-            'servers_count': len(servers_running.json()),
-            'users_count': users_count,
-            'users_online_count': stats.json()['users_online'],
+            'servers_online': len(servers_running.json()),
+            'users_online': stats.json()['users_online'],
+            'users': users_count,
+            'servers': servers_count,
             'memory': ps.virtual_memory(),
             'disk': ps.disk_usage('/')
         }

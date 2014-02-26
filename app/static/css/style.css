@@ -116,7 +116,14 @@ a:hover {
     margin-top: 5px;
     margin-bottom: 10px;
 }
+.footer-links ul {
+    float: right;
+}
 .footer-links ul li {
     display: inline-block;
     padding: 0 3px;
+}
+.footer-social {
+    float: left;
+    margin-top: 5px;
 }

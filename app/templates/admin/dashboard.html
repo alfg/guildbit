@@ -7,8 +7,12 @@
     <table class="pure-table pure-table-horizontal pure-table-striped">
         <tbody>
             <tr>
-                <td>Servers Running:</td>
-                <td>{{ ctx.servers_count }}</td>
+                <td>Servers Online:</td>
+                <td>{{ ctx.servers_online }}</td>
+            </tr>
+            <tr>
+                <td>Users Online:</td>
+                <td>{{ ctx.users_online }}</td>
             </tr>
             <tr>
                 <td>Servers (database):</td>
@@ -16,11 +20,7 @@
             </tr>
             <tr>
                 <td>Users (database):</td>
-                <td>{{ ctx.users_count }}</td>
-            </tr>
-            <tr>
-                <td>Users Online:</td>
-                <td>{{ ctx.users_online_count }}</td>
+                <td>{{ ctx.users }}</td>
             </tr>
         </tbody>
     </table>
