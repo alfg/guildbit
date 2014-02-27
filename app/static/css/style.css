@@ -57,6 +57,39 @@ a:hover {
     }
 }
 
+/* Mobile and iOS browser */
+@media screen and (max-width: 368px) {
+    .content h3 {
+        font-size: 1.475rem;
+    }
+    .description span {
+        font-size: 10px;
+    }
+    .footer-links {
+        font-size: 10px;
+    }
+    .head-buttons {
+        min-width: 289px !important;
+        text-align: center;
+    }
+    .head-buttons .btn,
+    .mumble-buttons .btn {
+        font-size: 0.625rem;
+        height: 23px;
+        line-height: 21px;
+    }
+    .head-buttons .btn > a,
+    .mumble-buttons .btn > a {
+        padding: 0 13px;
+    }
+    #deploy-form .picker,
+    #deploy-form input#password,
+    #deploy-form #deploy-button-wrapper {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
 .head-logo a,
 .head-logo a:visited,
 .head-logo a:active {
