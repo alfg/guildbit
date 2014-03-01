@@ -73,15 +73,15 @@ class HomeView(FlaskView):
             return render_template('index.html', form=form)
         return render_template('index.html', form=form)
 
-    @route('/how-it-works')
+    @route('/how-it-works/')
     def how_it_works(self):
         return render_template('how_it_works.html')
 
-    @route('/donate')
+    @route('/donate/')
     def donate(self):
         return render_template('donate.html')
 
-    @route('/contact', methods=['POST', 'GET'])
+    @route('/contact/', methods=['POST', 'GET'])
     def contact(self):
         form = ContactForm()
         if form.validate_on_submit():
@@ -108,28 +108,23 @@ class HomeView(FlaskView):
             return render_template('contact_thankyou.html')
         return render_template('contact.html', form=form)
 
-    @route('/about')
+    @route('/about/')
     def about(self):
         return render_template('about.html')
 
-    @route('/terms')
+    @route('/terms/')
     def terms(self):
         return render_template('terms.html')
 
-    @route('/privacy')
+    @route('/privacy/')
     def privacy(self):
         return render_template('privacy.html')
-
-    @route('/test')
-    def test(self):
-        asdf()
-        return render_template('test')
 
 
 class ServerView(FlaskView):
 
     def index(self):
-        return render_template('server.html')
+        return redirect(url_for('home'))
 
     def get(self, id):
         server = Server.query.filter_by(uuid=id).first_or_404()
@@ -140,7 +135,7 @@ class ServerView(FlaskView):
         else:
             return render_template('server_expired.html', server=server)
 
-    @route('/<id>/users')
+    @route('/<id>/users/')
     def users(self, id):
         server = Server.query.filter_by(uuid=id).first_or_404()
         r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
@@ -164,13 +159,12 @@ class AdminView(FlaskView):
     @admin_required
     def index(self):
         stats = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
-        servers_running = requests.get("%s/api/v1/servers/" % settings.MURMUR_REST_HOST)
         users_count = User.query.count()
         servers_count = Server.query.count()
         ps = psutil
 
         ctx = {
-            'servers_online': len(servers_running.json()),
+            'servers_online': stats.json()['booted_servers'],
             'users_online': stats.json()['users_online'],
             'users': users_count,
             'servers': servers_count,
@@ -190,19 +184,25 @@ class AdminServersView(FlaskView):
     def index(self):
         form = DeployCustomServerForm()
         filter = request.args.get('filter')
+        stats = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
+        stats_ctx = {
+            'servers_online': stats.json()['booted_servers'],
+            'users_online': stats.json()['users_online']
+        }
+
 
         if filter == "all":
             servers = Server.query.order_by(Server.id.desc()).all()
         elif filter == "active":
-            servers = Server.query.filter_by(status="active").all()
+            servers = Server.query.filter_by(status="active").order_by(Server.id.desc()).all()
         elif filter == "expired":
             servers = Server.query.filter_by(status="expired").order_by(Server.id.desc()).all()
         elif filter == "custom":
             servers = Server.query.filter_by(type="custom").order_by(Server.id.desc()).all()
         else:
-            servers = Server.query.filter_by(status="active").all()
+            servers = Server.query.filter_by(status="active").order_by(Server.id.desc()).all()
 
-        return render_template('admin/servers.html', servers=servers, form=form, title="Servers")
+        return render_template('admin/servers.html', servers=servers, form=form, stats=stats_ctx, title="Servers")
 
     @login_required
     @admin_required

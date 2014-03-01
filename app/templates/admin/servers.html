@@ -15,7 +15,22 @@
             <li {% if filter == "custom" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=custom">Custom Servers</a></li>
         </ul>
     </div>
-    <br />
+    <div class="pure-u-1-3 spacer">
+        <table class="pure-table pure-table-horizontal pure-table-striped">
+            <thead>
+                <tr>
+                    <th>Servers Online</th>
+                    <th>Users Online</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ stats.servers_online }}</td>
+                    <td>{{ stats.users_online }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <table class="pure-table pure-table-horizontal pure-table-striped servers">
         <thead>
             <tr>
