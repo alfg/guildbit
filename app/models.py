@@ -61,6 +61,23 @@ class User(db.Model):
         return '<User %r>' % self.nickname
 
 
+class Notice(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    active = db.Column(db.Boolean, default=False)
+    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    message_type = db.Column(db.String(120), index=True)
+    message = db.Column(db.String)
+    location = db.Column(db.String(120), index=True, unique=True)
+
+    def __init__(self, message_type, message, location):
+        self.message_type = message_type
+        self.message = message
+        self.location = location
+
+    def __repr__(self):
+        return '<Notice %r>' % self.id
+
+
 # class Host(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     hostname = db.Column(db.String(120), unique=True, index=True)

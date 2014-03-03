@@ -52,4 +52,3 @@ from app import views
 
 db.create_all()
 
-

@@ -37,7 +37,7 @@ a:hover {
     vertical-align: bottom;
 }
 .head {
-    height: 120px;
+    height: 100px;
     position: relative;
 }
 .head-logo h1 {
@@ -49,7 +49,10 @@ a:hover {
     text-indent: 100%;
     margin: 0;
     padding: 0;
-    top: 50px;
+    top: 35px;
+}
+.message {
+    margin-top: 5px;
 }
 @media screen and (max-width: 900px) {
     .head-logo h1 {

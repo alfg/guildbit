@@ -10,18 +10,33 @@ import psutil
 import settings
 from util import admin_required
 from app import app, db, tasks, lm, oid, mail
-from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm
-from app.models import Server, User, ROLE_ADMIN, ROLE_USER
+from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm, NoticeForm
+from app.models import Server, User, Notice, ROLE_ADMIN, ROLE_USER
 
 
 @lm.user_loader
 def load_user(id):
+    """
+    Required user loader for flask-login
+    """
     return User.query.get(int(id))
 
 
 @app.before_request
 def before_request():
+    """
+    Required user loader for flask-login
+    """
     g.user = current_user
+
+
+@app.context_processor
+def display_notice():
+    """
+    Context processor for displaying a notice (if enabled) on the base template header area
+    """
+    notice = Notice.query.get(1)  # First entry is the base header notice
+    return dict(notice=notice)
 
 
 class HomeView(FlaskView):
@@ -320,6 +335,37 @@ class AdminHostsView(FlaskView):
         return render_template('admin/hosts.html', hosts=ctx, title="Hosts")
 
 
+class AdminToolsView(FlaskView):
+
+    @login_required
+    @admin_required
+    def index(self):
+        notice = Notice.query.filter_by(location='base').first()
+        notice_form = NoticeForm(obj=notice)
+        return render_template('admin/tools.html', notice_form=notice_form, title="Tools")
+
+    @login_required
+    @admin_required
+    @route('/header-message', methods=['POST'])
+    def update_header_message(self):
+        notice = Notice.query.filter_by(location='base').first()
+        form = NoticeForm(obj=notice)
+        if form.validate_on_submit():
+
+            if notice is None:
+                notice = Notice(form.message_type.data, form.message.data, 'base')
+            else:
+                notice.active = form.active.data
+                notice.message_type = form.message_type.data
+                notice.message = form.message.data
+                notice.location = 'base'
+
+            db.session.add(notice)
+            db.session.commit()
+            return redirect('/admin/tools/')
+        return redirect('/admin/tools/')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler
 def login():
@@ -370,4 +416,5 @@ AdminView.register(app)
 AdminServersView.register(app, route_prefix='/admin/', route_base='/servers')
 AdminUsersView.register(app, route_prefix='/admin/', route_base='/users')
 AdminHostsView.register(app, route_prefix='/admin/', route_base='/hosts')
+AdminToolsView.register(app, route_prefix='/admin/', route_base='/tools')
 

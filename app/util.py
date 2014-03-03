@@ -20,6 +20,16 @@ def admin_required(fn):
     return decorated_view
 
 
+def get_or_create(session, model, **kwargs):
+    instance = session.query(model).filter_by(**kwargs).first()
+    if instance:
+        return instance
+    else:
+        instance = model(**kwargs)
+        session.add(instance)
+        return instance
+
+
 def host_balancer():
     """
     Checks the amount of murmur hosts in settings and returns a server depending on server instances load. Used for

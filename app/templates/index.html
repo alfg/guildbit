@@ -45,16 +45,10 @@
 
 {% block scripts %}
     <script type="text/javascript">
-        /*
-        $(document).ready(function() {
-            Ladda.bind( '.ladda-button' );
-        });
-        */
         $('#deploy-form').submit(function() {
             $('#deploy-button').attr('disabled', 'disabled');
             $('#deploy-button').html("<i class='fa fa-refresh fa-spin'></i> Deploying...");
             $('#deploy-button-wrapper').addClass('disabled');
-        })
-
+        });
     </script>
 {% endblock %}

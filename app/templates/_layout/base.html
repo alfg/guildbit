@@ -36,6 +36,9 @@
 
 <body>
     <div class="row">
+        {% if notice and notice.active %}
+        <div class="{{ notice.message_type }} alert ten columns centered message">{{ notice.message }}</div>
+        {% endif %}
         <div class="ten columns special head centered">
             <div class="five columns head-logo">
                 <h1><a href="/">GuildBit</a></h1>

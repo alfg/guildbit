@@ -35,6 +35,21 @@ class UserAdminForm(Form):
                        ])
 
 
+class NoticeForm(Form):
+        message = TextField('message', validators=[DataRequired()])
+        active = BooleanField('active')
+        message_type = SelectField('type', validators=[DataRequired()],
+                           choices=[
+                               ('primary', 'primary'),
+                               ('secondary', 'secondary'),
+                               ('default', 'default'),
+                               ('info', 'info'),
+                               ('danger', 'danger'),
+                               ('warning', 'warning'),
+                               ('success', 'success')
+                           ])
+
+
 class ContactForm(Form):
     subject = TextField('subject', validators=[DataRequired('Subject is required.')])
     email = TextField('email', validators=[Email('Invalid email address.'), DataRequired('Email is required.')])

@@ -1,0 +1,22 @@
+{% extends"_layout/admin_base.html" %}
+
+{% block title %}Admin Tools{% endblock %}
+
+{% block body %}
+    <form action="header-message" method="post" name="role" class="pure-form">
+    {{ notice_form.csrf_token }}
+    <fieldset>
+        <legend>Set a header message</legend>
+        {{ notice_form.message(class="pure-input-1-2") }}
+        {{ notice_form.message_type }}
+        <label for="active">
+            {{ notice_form.active }} Enabled
+        </label>
+        <button type="submit" class="pure-button pure-button-primary">Update</button>
+    </fieldset>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+{% endblock %}
