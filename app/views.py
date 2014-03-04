@@ -409,6 +409,16 @@ def after_login(resp):
     return redirect(request.args.get('next') or url_for('home'))
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('_error_pages/404.html'), 404
+
+
+@app.errorhandler(500)
+def page_not_found(error):
+    return render_template('_error_pages/500.html'), 500
+
+
 # Register views
 HomeView.register(app, route_base='/')
 ServerView.register(app)

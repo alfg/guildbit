@@ -1,0 +1,18 @@
+{% extends"_layout/base.html" %}
+
+{% block title %}Page Not Found - 404{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="ten columns centered content">
+            <div class="ten columns centered">
+                <h2>Ruh roh! 404 &mdash; Not Found</h2>
+                <p>This is not the page you are looking for.</p>
+                <a href="{{ url_for('home') }}">Return Home</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
