@@ -14,22 +14,19 @@ from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomSe
 from app.models import Server, User, Notice, ROLE_ADMIN, ROLE_USER
 
 
+## Flask-Login required user loaders
 @lm.user_loader
 def load_user(id):
-    """
-    Required user loader for flask-login
-    """
     return User.query.get(int(id))
 
 
+## Request processing
 @app.before_request
 def before_request():
-    """
-    Required user loader for flask-login
-    """
-    g.user = current_user
+    g.user = current_user  # Required for flask-login
 
 
+## Context processors
 @app.context_processor
 @cache.cached(timeout=100, key_prefix='display_notice')
 def display_notice():
@@ -40,6 +37,7 @@ def display_notice():
     return dict(notice=notice)
 
 
+## Home views
 class HomeView(FlaskView):
 
     @route('/', endpoint='home')
@@ -137,6 +135,7 @@ class HomeView(FlaskView):
         return render_template('privacy.html')
 
 
+## Server views
 class ServerView(FlaskView):
 
     def index(self):
@@ -166,6 +165,7 @@ class ServerView(FlaskView):
             return jsonify(users=None)
 
 
+## Admin views
 class AdminView(FlaskView):
     """
     All base admin views.
@@ -364,6 +364,7 @@ class AdminToolsView(FlaskView):
         return redirect('/admin/tools/')
 
 
+## Login/Logout views
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler
 def login():
@@ -386,6 +387,7 @@ def logout():
     return redirect(url_for('home'))
 
 
+## Open ID after_login handler
 @oid.after_login
 def after_login(resp):
     if resp.email is None or resp.email == "":
@@ -407,6 +409,7 @@ def after_login(resp):
     return redirect(request.args.get('next') or url_for('home'))
 
 
+## Error views
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('_error_pages/404.html'), 404
@@ -417,7 +420,7 @@ def page_not_found(error):
     return render_template('_error_pages/500.html'), 500
 
 
-# Register views
+## Register flask-classy views
 HomeView.register(app, route_base='/')
 ServerView.register(app)
 AdminView.register(app)
