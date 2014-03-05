@@ -10,6 +10,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE_URI = 'sqlite:////tmp/test.db'
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CACHE_BACKEND = 'redis'
 MURMUR_REST_HOST = 'http://localhost:5000'
 
 DEFAULT_MAX_USERS = 10

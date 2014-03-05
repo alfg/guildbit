@@ -4,6 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.openid import OpenID
 from flask.ext.mail import Mail
+from flask.ext.cache import Cache
 
 import settings
 
@@ -27,6 +28,10 @@ app.config['MAIL_USE_TLS'] = settings.MAIL_USE_TLS
 app.config['MAIL_USERNAME'] = settings.MAIL_USERNAME
 app.config['MAIL_PASSWORD'] = settings.MAIL_PASSWORD
 mail = Mail(app)
+
+# Configure Flask-Cache
+app.config['CACHE_TYPE'] = settings.CACHE_BACKEND
+cache = Cache(app)
 
 # Configure email error handler
 if not app.debug:

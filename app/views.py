@@ -9,7 +9,7 @@ import psutil
 
 import settings
 from util import admin_required
-from app import app, db, tasks, lm, oid, mail
+from app import app, db, tasks, lm, oid, mail, cache
 from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm, NoticeForm
 from app.models import Server, User, Notice, ROLE_ADMIN, ROLE_USER
 
@@ -31,6 +31,7 @@ def before_request():
 
 
 @app.context_processor
+@cache.cached(timeout=100, key_prefix='display_notice')
 def display_notice():
     """
     Context processor for displaying a notice (if enabled) on the base template header area
@@ -205,7 +206,6 @@ class AdminServersView(FlaskView):
             'users_online': stats.json()['users_online']
         }
 
-
         if filter == "all":
             servers = Server.query.order_by(Server.id.desc()).all()
         elif filter == "active":
@@ -299,7 +299,6 @@ class AdminUsersView(FlaskView):
         form = UserAdminForm(role=user.role)
         return render_template('admin/user.html', u=user, form=form, title="User: %s" % user.nickname)
 
-
     @login_required
     @admin_required
     def post(self, id):
@@ -318,7 +317,6 @@ class AdminHostsView(FlaskView):
     @admin_required
     def index(self):
         hosts = settings.MURMUR_HOSTS
-        print hosts
 
         ctx = []
         for i in hosts:
@@ -427,4 +425,3 @@ AdminServersView.register(app, route_prefix='/admin/', route_base='/servers')
 AdminUsersView.register(app, route_prefix='/admin/', route_base='/users')
 AdminHostsView.register(app, route_prefix='/admin/', route_base='/hosts')
 AdminToolsView.register(app, route_prefix='/admin/', route_base='/tools')
-
