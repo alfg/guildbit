@@ -162,4 +162,8 @@ a:hover {
 .footer-social {
     float: left;
     margin-top: 5px;
+    width: 150px;
+}
+.footer-social div {
+    margin-bottom: 12px;
 }
