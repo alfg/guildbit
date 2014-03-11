@@ -127,11 +127,12 @@ a:hover {
     padding: 20px;
     margin-bottom: 10px;
 }
-.expire-picker {
+.select-picker {
     top: 14px;
+    margin-left: 1px;
 }
-.expire-picker select {
-    width: 140%;
+.select-picker select {
+    width: 100%;
 }
 .mumble-buttons {
     padding-bottom: 10px;

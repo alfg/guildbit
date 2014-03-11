@@ -2,8 +2,24 @@ from flask_wtf import Form
 from wtforms import TextField, SelectField, BooleanField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Required, Email
 
+from settings import MURMUR_HOSTS
+
+
+def build_hosts_list():
+    hosts_list = []
+    for i in MURMUR_HOSTS:
+        for k, v in i.iteritems():
+            if k == "location" and i['status'] == 'active':
+                hosts_list.append((v, i['location_name']))
+    return hosts_list
+
 
 class DeployServerForm(Form):
+    _server_locations = build_hosts_list()
+
+    location = SelectField('location',
+                           validators=[DataRequired()],
+                           choices=_server_locations)
     duration = SelectField('duration',
                            validators=[DataRequired()],
                            choices=[
@@ -16,7 +32,12 @@ class DeployServerForm(Form):
 
 
 class DeployCustomServerForm(Form):
-    slots = IntegerField('slots')
+    _server_locations = build_hosts_list()
+
+    location = SelectField('location',
+                           validators=[DataRequired()],
+                           choices=_server_locations)
+    slots = IntegerField('slots', default=10)
     password = TextField('password', validators=[DataRequired('Password is required.')])
     channel_name = TextField('channel_name')
 

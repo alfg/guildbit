@@ -31,10 +31,14 @@ OPENID_PROVIDERS = [
 
 MURMUR_HOSTS = [
     {
-        'name': 'GuildBit',
+        'name': 'localhost',
         'address': 'localhost:5000',
         'uri': 'http://localhost:5000',
+        'hostname': 'localhost',
+        'http_uri': 'http://localhost:4000/static/img',
         'contact': 'alf.g.jr@gmail.com',
+        'location': 'local',
+        'location_name': 'Local',
         'status': 'active',
         'capacity': 100,
     }

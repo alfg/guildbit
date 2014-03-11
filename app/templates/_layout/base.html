@@ -17,12 +17,12 @@
 
 	<!-- Facebook Metadata /-->
 	<meta property="og:image" content="http://guildbit.com/static/img/screenshot_home.png" />
-	<meta property="og:description" content="GuildBit - Free Mumble Hosting"/>
+	<meta property="og:description" content="GuildBit - Free Mumble Server Hosting"/>
 	<meta property="og:title" content="GuildBit" />
 
 	<!-- Google+ Metadata /-->
 	<meta itemprop="name" content="GuildBit">
-	<meta itemprop="description" content="Free Mumble Hosting">
+	<meta itemprop="description" content="Free Mumble Server Hosting">
 	<meta itemprop="image" content="http://guildbit.com/static/img/screenshot_home.png">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -73,6 +73,7 @@
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
                 {% endif %}
             </ul>
+            {% if not config['DEBUG']  %}
             <div class="footer-social">
                 <a href="https://twitter.com/share" class="twitter-share-button"
                    data-lang="en"
@@ -81,6 +82,7 @@
                 <div class="fb-like" data-href="http://guildbit.com" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
                 <div class="g-plusone" data-size="medium" data-href="http://guildbit.com"></div>
             </div>
+            {% endif %}
         </div>
     </div>
 
@@ -111,6 +113,7 @@
         }
 	</script>
 
+    {% if not config['DEBUG']  %}
     <!-- Twitter -->
     <script>
         !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];
@@ -127,6 +130,7 @@
         js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
+    {% endif %}
 
 	<script gumby-touch="/static/js/libs" src="/static/js/libs/gumby.min.js"></script>
 	<script src="/static/js/plugins.js"></script>

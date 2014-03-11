@@ -10,7 +10,10 @@
             <form id="deploy-form" action="/" method="POST">
                 {{ form.csrf_token }}
                 <div class="field text-center">
-                      <div class="picker expire-picker">
+                      <div class="picker select-picker">
+                        {{ form.location }}
+                      </div>
+                      <div class="picker select-picker">
                         {{ form.duration }}
                       </div>
                     {{ form.password(size=20, class='narrow input', placeholder='Set a Password', autocomplete='off') }}

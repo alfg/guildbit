@@ -13,6 +13,13 @@
             <li {% if filter == "expired" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=expired">Expired</a></li>
             <li {% if filter == "all" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=all">All</a></li>
             <li {% if filter == "custom" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=custom">Custom Servers</a></li>
+            <li>
+                <form class="pure-form">
+                    <select>
+                        <option>All Hosts</option>
+                    </select>
+                </form>
+            </li>
         </ul>
     </div>
     <div class="pure-u-1-3 spacer">
@@ -78,6 +85,10 @@
                     <div class="modal-body">
                         {{ form.csrf_token }}
                         <div class="pure-control-group">
+                            <label for="role">Host</label>
+                            {{ form.location }}
+                        </div>
+                        <div class="pure-control-group">
                             <label for="role">Channel Name</label>
                             {{ form.channel_name }}
                         </div>
@@ -88,7 +99,7 @@
                         <div class="pure-control-group">
                             <label for="role">Slots</label>
                             {{ form.slots }}
-                            (leave blank for no limit)
+                            (required)
                         </div>
                         <fieldset>
                             {% for error in form.errors.role %}

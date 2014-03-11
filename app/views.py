@@ -4,14 +4,17 @@ from flask import render_template, request, redirect, session, url_for, jsonify,
 from flask.ext.classy import FlaskView, route
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext.mail import Message
-import requests
 import psutil
 
 import settings
 from util import admin_required
 from app import app, db, tasks, lm, oid, mail, cache
 from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm, NoticeForm
+from app.forms import build_hosts_list
 from app.models import Server, User, Notice, ROLE_ADMIN, ROLE_USER
+# from app.murmur import create_server_by_location, get_murmur_hostname, get_murmur_uri, get_server, \
+#     get_all_server_stats, get_server_stats, delete_server, get_http_uri
+import app.murmur as murmur
 
 
 ## Flask-Login required user loaders
@@ -63,8 +66,10 @@ class HomeView(FlaskView):
                     'users': settings.DEFAULT_MAX_USERS,
                     'registername': settings.DEFAULT_CHANNEL_NAME
                 }
-                r = requests.post(settings.MURMUR_REST_HOST + "/api/v1/servers/", data=payload)
-                server_id = r.json()['id']
+
+                server_id = murmur.create_server_by_location(form.location.data, payload)
+                # r = requests.post(settings.MURMUR_REST_HOST + "/api/v1/servers/", data=payload)
+                # server_id = r.json()['id']
 
                 # Create database entry
                 s = Server()
@@ -72,11 +77,12 @@ class HomeView(FlaskView):
                 s.password = form.password.data
                 s.uuid = gen_uuid
                 s.mumble_instance = server_id
+                s.mumble_host = murmur.get_murmur_hostname(form.location.data)
                 db.session.add(s)
                 db.session.commit()
 
                 # Send task to delete server on expiration
-                tasks.delete_server.apply_async([server_id, gen_uuid], eta=s.expiration)
+                tasks.delete_server.apply_async([gen_uuid], eta=s.expiration)
                 return redirect(url_for('ServerView:get', id=s.uuid))
 
             except:
@@ -143,26 +149,43 @@ class ServerView(FlaskView):
 
     def get(self, id):
         server = Server.query.filter_by(uuid=id).first_or_404()
-        r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
-        if r.status_code == 200:
-            server_details = r.json()
+        # uri = get_murmur_uri(server.mumble_host)
+        # r = requests.get("%s/api/v1/servers/%i" % (uri, server.mumble_instance))
+
+        server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
+        if server_details is not None:
             return render_template('server.html', server=server, details=server_details)
         else:
             return render_template('server_expired.html', server=server)
 
+        # if r.status_code == 200:
+        #     server_details = r.json()
+        #     return render_template('server.html', server=server, details=server_details)
+        # else:
+        #     return render_template('server_expired.html', server=server)
+
     @route('/<id>/users/')
     def users(self, id):
         server = Server.query.filter_by(uuid=id).first_or_404()
-        r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
-        if r.status_code == 200:
-            user_details = r.json()
+        server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
+        if server_details is not None:
             users = {
-                'count': user_details['user_count'],
-                'users': user_details['users']
+                'count': server_details['user_count'],
+                'users': server_details['users']
             }
             return jsonify(users=users)
         else:
             return jsonify(users=None)
+        # r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
+        # if r.status_code == 200:
+        #     user_details = r.json()
+        #     users = {
+        #         'count': user_details['user_count'],
+        #         'users': user_details['users']
+        #     }
+        #     return jsonify(users=users)
+        # else:
+        #     return jsonify(users=None)
 
 
 ## Admin views
@@ -174,20 +197,26 @@ class AdminView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-        stats = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
+        #stats = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
+        filter = request.args.get('filter', 'local')
+        stats = murmur.get_all_server_stats()
         users_count = User.query.count()
         servers_count = Server.query.count()
         ps = psutil
 
+        http_uri = murmur.get_http_uri(filter)
+        server_list = build_hosts_list()
+
         ctx = {
-            'servers_online': stats.json()['booted_servers'],
-            'users_online': stats.json()['users_online'],
+            'servers_online': stats['servers_online'],
+            'users_online': stats['users_online'],
             'users': users_count,
             'servers': servers_count,
             'memory': ps.virtual_memory(),
-            'disk': ps.disk_usage('/')
+            'disk': ps.disk_usage('/'),
+            'http_uri': http_uri
         }
-        return render_template('admin/dashboard.html', title="Dashboard", ctx=ctx)
+        return render_template('admin/dashboard.html', title="Dashboard", ctx=ctx, server_list=server_list)
 
 
 class AdminServersView(FlaskView):
@@ -200,10 +229,15 @@ class AdminServersView(FlaskView):
     def index(self):
         form = DeployCustomServerForm()
         filter = request.args.get('filter')
-        stats = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
+        # stats = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
+        # stats_ctx = {
+        #     'servers_online': stats.json()['booted_servers'],
+        #     'users_online': stats.json()['users_online']
+        # }
+        stats = murmur.get_all_server_stats()
         stats_ctx = {
-            'servers_online': stats.json()['booted_servers'],
-            'users_online': stats.json()['users_online']
+            'servers_online': stats.get('servers_online'),
+            'users_online': stats.get('users_online')
         }
 
         if filter == "all":
@@ -223,11 +257,12 @@ class AdminServersView(FlaskView):
     @admin_required
     def get(self, id):
         server = Server.query.filter_by(id=id).first_or_404()
-        r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
-        if r.status_code == 200:
-            server_details = r.json()
-        else:
-            server_details = None
+        server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
+        # r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
+        # if r.status_code == 200:
+        #     server_details = r.json()
+        # else:
+        #     server_details = None
 
         return render_template('admin/server.html', server=server, details=server_details, title="Server: %s" % id)
 
@@ -236,7 +271,6 @@ class AdminServersView(FlaskView):
     def post(self):
         form = DeployCustomServerForm()
         if form.validate_on_submit():
-
             try:
                 # Generate UUID
                 gen_uuid = str(uuid.uuid4())
@@ -247,14 +281,16 @@ class AdminServersView(FlaskView):
                 payload = {
                     'password': form.password.data,
                     'welcometext': welcome_msg,
-                    'users': form.slots.data or 0,
-                    'registername': form.channel_name
+                    'users': form.slots.data,
+                    'registername': form.channel_name.data
                 }
-                r = requests.post(settings.MURMUR_REST_HOST + "/api/v1/servers/", data=payload)
-                server_id = r.json()['id']
+                server_id = murmur.create_server_by_location(form.location.data, payload)
+                #r = requests.post(settings.MURMUR_REST_HOST + "/api/v1/servers/", data=payload)
+                #server_id = r.json()['id']
 
                 # Create database entry
                 s = Server()
+                s.mumble_host = murmur.get_murmur_hostname(form.location.data)
                 s.duration = 0
                 s.password = form.password.data
                 s.uuid = gen_uuid
@@ -278,9 +314,16 @@ class AdminServersView(FlaskView):
     @route('/<id>/kill', methods=['POST'])
     def kill_server(self, id):
         server = Server.query.filter_by(id=id).first_or_404()
-        server.status = "expired"
-        db.session.commit()
-        r = requests.delete("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
+        #r = requests.delete("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
+        try:
+            murmur.delete_server(server.mumble_host, server.mumble_instance)
+            server.status = "expired"
+            db.session.commit()
+        except:
+            import traceback
+            db.session.rollback()
+            traceback.print_exc()
+
         return redirect('/admin/servers/%s' % id)
 
 
@@ -320,13 +363,17 @@ class AdminHostsView(FlaskView):
 
         ctx = []
         for i in hosts:
-            r = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
+            #r = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
+            print i['hostname']
+            r = murmur.get_server_stats(i['hostname'])
+            print r
+
             ctx.append({
                 'name': i['name'],
                 'address': i['address'],
                 'contact': i['contact'],
                 'status': i['status'],
-                'booted_servers': r.json()['booted_servers'],
+                'booted_servers': r.get('servers_online', 0),
                 'capacity': i['capacity']
             })
 
