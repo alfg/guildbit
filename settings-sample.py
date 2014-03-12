@@ -27,7 +27,8 @@ EMAIL_RECIPIENTS = ['alf.g.jr@gmail.com']
 
 OPENID_PROVIDERS = [
     {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},
-    {'name': 'Yahoo', 'url': 'https://me.yahoo.com'}]
+    {'name': 'Yahoo', 'url': 'https://me.yahoo.com'}
+]
 
 MURMUR_HOSTS = [
     {
@@ -41,5 +42,7 @@ MURMUR_HOSTS = [
         'location_name': 'Local',
         'status': 'active',
         'capacity': 100,
+        'username': '',
+        'password': ''
     }
 ]
