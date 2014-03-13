@@ -132,7 +132,7 @@ a:hover {
     margin-left: 1px;
 }
 .select-picker select {
-    width: 100%;
+    width: 140%;
 }
 .mumble-buttons {
     padding-bottom: 10px;
@@ -167,4 +167,7 @@ a:hover {
 }
 .footer-social div {
     margin-bottom: 12px;
+}
+.footer-links .share-js {
+    width: 145px !important;
 }
