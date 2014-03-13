@@ -198,14 +198,17 @@ class AdminView(FlaskView):
     @admin_required
     def index(self):
         #stats = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
-        filter = request.args.get('filter', 'local')
+        filter = request.args.get('filter')
         stats = murmur.get_all_server_stats()
         users_count = User.query.count()
         servers_count = Server.query.count()
         ps = psutil
 
-        http_uri = murmur.get_http_uri(filter)
         server_list = build_hosts_list()
+        if filter is not None:
+            http_uri = murmur.get_http_uri(filter)
+        else:
+            http_uri = murmur.get_http_uri(server_list[0][0])
 
         ctx = {
             'servers_online': stats['servers_online'],
