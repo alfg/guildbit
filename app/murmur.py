@@ -12,6 +12,7 @@ from settings import MURMUR_HOSTS
 ## Helper functions to load configs from settings
 ##
 
+
 def get_host_by_location(location):
     """
     Searches MURMUR_HOSTS settings and returns tuple of address, uri, and hostname for given location.

@@ -12,8 +12,6 @@ from app import app, db, tasks, lm, oid, mail, cache
 from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm, NoticeForm
 from app.forms import build_hosts_list
 from app.models import Server, User, Notice, ROLE_ADMIN, ROLE_USER
-# from app.murmur import create_server_by_location, get_murmur_hostname, get_murmur_uri, get_server, \
-#     get_all_server_stats, get_server_stats, delete_server, get_http_uri
 import app.murmur as murmur
 
 
@@ -68,8 +66,6 @@ class HomeView(FlaskView):
                 }
 
                 server_id = murmur.create_server_by_location(form.location.data, payload)
-                # r = requests.post(settings.MURMUR_REST_HOST + "/api/v1/servers/", data=payload)
-                # server_id = r.json()['id']
 
                 # Create database entry
                 s = Server()
@@ -149,20 +145,12 @@ class ServerView(FlaskView):
 
     def get(self, id):
         server = Server.query.filter_by(uuid=id).first_or_404()
-        # uri = get_murmur_uri(server.mumble_host)
-        # r = requests.get("%s/api/v1/servers/%i" % (uri, server.mumble_instance))
 
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
         if server_details is not None:
             return render_template('server.html', server=server, details=server_details)
         else:
             return render_template('server_expired.html', server=server)
-
-        # if r.status_code == 200:
-        #     server_details = r.json()
-        #     return render_template('server.html', server=server, details=server_details)
-        # else:
-        #     return render_template('server_expired.html', server=server)
 
     @route('/<id>/users/')
     def users(self, id):
@@ -176,16 +164,6 @@ class ServerView(FlaskView):
             return jsonify(users=users)
         else:
             return jsonify(users=None)
-        # r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
-        # if r.status_code == 200:
-        #     user_details = r.json()
-        #     users = {
-        #         'count': user_details['user_count'],
-        #         'users': user_details['users']
-        #     }
-        #     return jsonify(users=users)
-        # else:
-        #     return jsonify(users=None)
 
 
 ## Admin views
@@ -197,7 +175,6 @@ class AdminView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-        #stats = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
         filter = request.args.get('filter')
         stats = murmur.get_all_server_stats()
         users_count = User.query.count()
@@ -232,11 +209,6 @@ class AdminServersView(FlaskView):
     def index(self):
         form = DeployCustomServerForm()
         filter = request.args.get('filter')
-        # stats = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
-        # stats_ctx = {
-        #     'servers_online': stats.json()['booted_servers'],
-        #     'users_online': stats.json()['users_online']
-        # }
         stats = murmur.get_all_server_stats()
         stats_ctx = {
             'servers_online': stats.get('servers_online'),
@@ -261,11 +233,6 @@ class AdminServersView(FlaskView):
     def get(self, id):
         server = Server.query.filter_by(id=id).first_or_404()
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
-        # r = requests.get("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
-        # if r.status_code == 200:
-        #     server_details = r.json()
-        # else:
-        #     server_details = None
 
         return render_template('admin/server.html', server=server, details=server_details, title="Server: %s" % id)
 
@@ -288,8 +255,6 @@ class AdminServersView(FlaskView):
                     'registername': form.channel_name.data
                 }
                 server_id = murmur.create_server_by_location(form.location.data, payload)
-                #r = requests.post(settings.MURMUR_REST_HOST + "/api/v1/servers/", data=payload)
-                #server_id = r.json()['id']
 
                 # Create database entry
                 s = Server()
@@ -317,7 +282,7 @@ class AdminServersView(FlaskView):
     @route('/<id>/kill', methods=['POST'])
     def kill_server(self, id):
         server = Server.query.filter_by(id=id).first_or_404()
-        #r = requests.delete("%s/api/v1/servers/%i" % (settings.MURMUR_REST_HOST, server.mumble_instance))
+
         try:
             murmur.delete_server(server.mumble_host, server.mumble_instance)
             server.status = "expired"
@@ -366,7 +331,6 @@ class AdminHostsView(FlaskView):
 
         ctx = []
         for i in hosts:
-            #r = requests.get("%s/api/v1/stats/" % settings.MURMUR_REST_HOST)
             print i['hostname']
             r = murmur.get_server_stats(i['hostname'])
             print r
