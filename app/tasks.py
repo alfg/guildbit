@@ -16,7 +16,7 @@ def delete_server(uuid):
     s.status = 'expired'
 
     # Delete the server via Murmur
-    delete_server(s.host, s.mumble_instance)
+    delete_server(s.mumble_host, s.mumble_instance)
     db.session.commit()
     print "Deleting server instance: %s" % id
     return
