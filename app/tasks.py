@@ -2,7 +2,7 @@ from celery import Celery
 
 from app import db
 from app.models import Server
-from murmur import delete_server
+import murmur
 import settings
 
 app = Celery('tasks',
@@ -16,7 +16,7 @@ def delete_server(uuid):
     s.status = 'expired'
 
     # Delete the server via Murmur
-    delete_server(s.mumble_host, s.mumble_instance)
+    murmur.delete_server(s.mumble_host, s.mumble_instance)
     db.session.commit()
     print "Deleting server instance: %s" % id
     return

@@ -141,7 +141,7 @@ def get_server_stats(host):
                 'servers_online': r.json()['booted_servers'],
                 'users_online': r.json()['users_online']
             }
-        return stats
+            return stats
     except requests.exceptions.ConnectionError as e:
         pass
     stats = {
