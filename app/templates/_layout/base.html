@@ -63,6 +63,8 @@
         <div class="ten columns centered footer-links">
             <ul class="text-center">
                 <li><a href="{{ url_for('HomeView:contact') }}">Found a bug?</a></li>
+                <li>|</li>
+                <li><a href="{{ url_for('HomeView:updates') }}">Updates</a></li>
                 {% if g.user.is_authenticated() %}
                 <li>Logged in as <strong>{{ g.user.email }}</strong></li>
                 <li>|</li>

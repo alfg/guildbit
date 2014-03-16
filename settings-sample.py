@@ -37,6 +37,7 @@ MURMUR_HOSTS = [
         'uri': 'http://localhost:5000',
         'hostname': 'localhost',
         'http_uri': 'http://localhost:4000/static/img',
+        'monitor_uri': 'http://localhost:5555',
         'contact': 'alf.g.jr@gmail.com',
         'location': 'local',
         'location_name': 'Local',

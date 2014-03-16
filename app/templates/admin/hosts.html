@@ -11,6 +11,7 @@
                 <th>Contact</th>
                 <th>Active</th>
                 <th>Capacity</th>
+                <th>Monitor</th>
             </tr>
         </thead>
 
@@ -22,6 +23,7 @@
                 <td>{{ host.contact }}</td>
                 <td>{{ host.status }}</td>
                 <td>{{ host.booted_servers }} / {{ host.capacity }}</td>
+                <td><a href="{{ host.monitor_url }}">{{ host.monitor_url }}</a></td>
             </tr>
             {% endfor %}
         </tbody>

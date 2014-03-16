@@ -136,6 +136,10 @@ class HomeView(FlaskView):
     def privacy(self):
         return render_template('privacy.html')
 
+    @route('/updates/')
+    def updates(self):
+        return render_template('updates.html')
+
 
 ## Server views
 class ServerView(FlaskView):
@@ -341,7 +345,8 @@ class AdminHostsView(FlaskView):
                 'contact': i['contact'],
                 'status': i['status'],
                 'booted_servers': r.get('servers_online', 0),
-                'capacity': i['capacity']
+                'capacity': i['capacity'],
+                'monitor_url': i['monitor_uri']
             })
 
         return render_template('admin/hosts.html', hosts=ctx, title="Hosts")
