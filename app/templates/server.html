@@ -40,8 +40,8 @@
                             </td>
                             <td>
                                 <div class="copy-url append field">
-                                    <input id="copy-text" class="xwide input" type="text" value="Host: {{ server.mumble_host }} Port: {{ details.port }} Pass: {{ server.password }}" readonly="readonly" />
-                                    <div class="medium primary btn" style="display: none;"><button id="copy-button" >Copy</button></div>
+                                    <input id="copy-text" class="wide input" type="text" value="Host: {{ server.mumble_host }} Port: {{ details.port }} Pass: {{ server.password }}" readonly="readonly" />
+                                    <div class="medium primary btn" style=""><a id="copy-button" href="#">Copy</a></div>
                                 </div>
                             </td>
                         </tr>
@@ -89,7 +89,7 @@
 {% block scripts %}
     <script src="/static/js/libs/knockout-3.0.0.js"></script>
     <script src="/static/js/libs/moment.min.js"></script>
-    <script src="/static/js/libs/jquery.zclip.min.js"></script>
+    <script src="/static/js/libs/ZeroClipboard.min.js"></script>
 
     <script type="text/javascript">
         // Format expiration date into human friendly
@@ -98,14 +98,18 @@
         $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
         $("#expires").text(moment.utc(expire_date).fromNow());
 
+        //ZeroClipboard for copying mumble server credentials easily
         $(document).ready(function() {
-            $('#copy-button').zclip({
-                path: '/static/js/libs/ZeroClipboard.swf',
-                copy: function(){
-                    var text = $('#copy-text').val();
-                    console.log('copied');
-                    return text
-                }
+            var client = new ZeroClipboard( document.getElementById("copy-button"), {
+              moviePath: "/static/js/libs/ZeroClipboard.swf"
+            });
+            client.on("load", function(client) {
+                client.on("complete", function(client, args) {
+                    $(this).text("Copied!");
+                });
+                client.on('dataRequested', function (client, args) {
+                    client.setText($('#copy-text').val());
+                });
             });
         });
 

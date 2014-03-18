@@ -181,3 +181,8 @@ a:hover {
 .content .ttip:after {
     min-width: 210px;
 }
+.content .copy-url .btn {
+    margin-bottom: 1px;
+}
+.content .copy-url.field {
+}
