@@ -171,3 +171,13 @@ a:hover {
 .footer-links .share-js {
     width: 145px !important;
 }
+
+/*
+ * Server Page */
+.content .copy-url {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.content .ttip:after {
+    min-width: 210px;
+}
