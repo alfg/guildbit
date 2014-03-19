@@ -15,8 +15,33 @@
         <button type="submit" class="pure-button pure-button-primary">Update</button>
     </fieldset>
     </form>
+
+    <form action="send-channel-message" method="post" name="role" class="pure-form">
+        {{ notice_form.csrf_token }}
+        <fieldset>
+            <legend>Send message to all Mumble channels in server</legend>
+            {{ message_form.message(class="pure-input-1-2") }}
+            {{ message_form.location }}
+            <button type="submit" class="pure-button pure-button-primary channel-message-button" disabled="disabled">Send</button>
+            <label for="toggle">
+                <input id="toggle" type="checkbox" /> Enable
+            </label>
+        </fieldset>
+    </form>
 {% endblock %}
 
 {% block scripts %}
     <script src="/static/js/admin.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#toggle').click(enable_cb);
+        });
+        function enable_cb() {
+            if (this.checked) {
+                $("button.channel-message-button").removeAttr("disabled");
+            } else {
+                $("button.channel-message-button").attr("disabled", true);
+            }
+        }
+    </script>
 {% endblock %}

@@ -10,7 +10,7 @@ import settings
 from util import admin_required
 from app import app, db, tasks, lm, oid, mail, cache
 from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm, NoticeForm
-from app.forms import build_hosts_list
+from app.forms import SendChannelMessageForm, build_hosts_list
 from app.models import Server, User, Notice, ROLE_ADMIN, ROLE_USER
 import app.murmur as murmur
 
@@ -365,7 +365,8 @@ class AdminToolsView(FlaskView):
     def index(self):
         notice = Notice.query.filter_by(location='base').first()
         notice_form = NoticeForm(obj=notice)
-        return render_template('admin/tools.html', notice_form=notice_form, title="Tools")
+        message_form = SendChannelMessageForm()
+        return render_template('admin/tools.html', notice_form=notice_form, message_form=message_form, title="Tools")
 
     @login_required
     @admin_required
@@ -373,8 +374,8 @@ class AdminToolsView(FlaskView):
     def update_header_message(self):
         notice = Notice.query.filter_by(location='base').first()
         form = NoticeForm(obj=notice)
-        if form.validate_on_submit():
 
+        if form.validate_on_submit():
             if notice is None:
                 notice = Notice(form.message_type.data, form.message.data, 'base')
             else:
@@ -385,6 +386,17 @@ class AdminToolsView(FlaskView):
 
             db.session.add(notice)
             db.session.commit()
+            return redirect('/admin/tools/')
+        return redirect('/admin/tools/')
+
+    @login_required
+    @admin_required
+    @route('/send-channel-message', methods=['POST'])
+    def send_channel_message(self):
+        form = SendChannelMessageForm()
+        if form.validate_on_submit():
+            message = form.message.data
+            murmur.send_message_all_channels('local', message)
             return redirect('/admin/tools/')
         return redirect('/admin/tools/')
 

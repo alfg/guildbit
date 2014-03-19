@@ -183,3 +183,24 @@ def get_server_logs(host, instance_id):
         pass
     logs = []
     return logs
+
+
+def send_message_all_channels(host, message):
+    """
+    Send a message to all channels on host.
+    """
+    uri = get_murmur_uri(host)
+    auth = get_murmur_credentials(host)
+    servers_list = requests.get('%s/api/v1/servers/' % uri)
+    server_ids_list = [i['id'] for i in servers_list.json()]
+
+    for i in server_ids_list:
+        try:
+            r = requests.post("%s/api/v1/servers/%s/sendmessage" % (uri, i),
+                              data={'message': message},
+                              auth=HTTPDigestAuth(auth['username'], auth['password']))
+        except requests.exceptions.ConnectionError as e:
+            import traceback
+            traceback.print_exc()
+    return
+

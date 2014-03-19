@@ -57,18 +57,27 @@ class UserAdminForm(Form):
 
 
 class NoticeForm(Form):
-        message = TextField('message', validators=[DataRequired()])
-        active = BooleanField('active')
-        message_type = SelectField('type', validators=[DataRequired()],
-                           choices=[
-                               ('primary', 'primary'),
-                               ('secondary', 'secondary'),
-                               ('default', 'default'),
-                               ('info', 'info'),
-                               ('danger', 'danger'),
-                               ('warning', 'warning'),
-                               ('success', 'success')
-                           ])
+    message = TextField('message', validators=[DataRequired()])
+    active = BooleanField('active')
+    message_type = SelectField('type', validators=[DataRequired()],
+                       choices=[
+                           ('primary', 'primary'),
+                           ('secondary', 'secondary'),
+                           ('default', 'default'),
+                           ('info', 'info'),
+                           ('danger', 'danger'),
+                           ('warning', 'warning'),
+                           ('success', 'success')
+                       ])
+
+
+class SendChannelMessageForm(Form):
+    _server_locations = build_hosts_list()
+
+    message = TextField('message', validators=[DataRequired()])
+    location = SelectField('location',
+                           validators=[DataRequired()],
+                           choices=_server_locations)
 
 
 class ContactForm(Form):
