@@ -80,7 +80,6 @@ def create_server_by_location(location, payload):
     """
     host = get_host_by_location(location)['uri']
     auth = get_murmur_credentials(location)
-    print auth
     try:
         r = requests.post(host + "/api/v1/servers/", data=payload, auth=HTTPDigestAuth(auth['username'],
                                                                                        auth['password']))
@@ -88,7 +87,6 @@ def create_server_by_location(location, payload):
             server_id = r.json()['id']
             return server_id
     except requests.exceptions.ConnectionError as e:
-        print "error"
         import traceback
         traceback.print_exc()
         return None
@@ -167,3 +165,21 @@ def get_all_server_stats():
         except:
             pass
     return stats
+
+
+def get_server_logs(host, instance_id):
+    """
+    Get server logs for specified host and instance.
+    """
+    uri = get_murmur_uri(host)
+    auth = get_murmur_credentials(host)
+    try:
+        r = requests.get("%s/api/v1/servers/%s/logs" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
+                                                                                               auth['password']))
+        if r.status_code == 200:
+            logs = r.json()
+            return logs
+    except requests.exceptions.ConnectionError as e:
+        pass
+    logs = []
+    return logs

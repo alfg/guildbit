@@ -298,6 +298,14 @@ class AdminServersView(FlaskView):
 
         return redirect('/admin/servers/%s' % id)
 
+    @login_required
+    @admin_required
+    @route('/<id>/logs', methods=['GET'])
+    def server_log(self, id):
+        server = Server.query.filter_by(id=id).first_or_404()
+        logs = murmur.get_server_logs(server.mumble_host, server.mumble_instance)
+        return jsonify(logs=logs)
+
 
 class AdminUsersView(FlaskView):
 
@@ -335,9 +343,7 @@ class AdminHostsView(FlaskView):
 
         ctx = []
         for i in hosts:
-            print i['hostname']
             r = murmur.get_server_stats(i['hostname'])
-            print r
 
             ctx.append({
                 'name': i['name'],

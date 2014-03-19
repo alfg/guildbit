@@ -128,6 +128,23 @@
         <!-- /ko -->
         </tbody>
     </table>
+    <br />
+    <table class="pure-table pure-table-horizontal pure-table-striped servers-js" >
+        <thead>
+        <tr>
+            <th>Server Logs</th>
+            <th class="text-right">Timestamp</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- ko foreach: serverLogs -->
+        <tr>
+            <td data-bind="text: message"></td>
+            <td id="duration" class="text-right" data-bind="text: moment.unix(timestamp)"></td>
+        </tr>
+        <!-- /ko -->
+        </tbody>
+    </table>
 {% endblock %}
 
 {% block scripts %}
@@ -138,6 +155,7 @@
     <script type="text/javascript">
         // Format expiration date into human friendly
         var base_url = '/server/{{ server.uuid }}'
+        var base_url_id = '/admin/servers/{{ server.id }}'
         var expire_date = '{{ server.expiration }}';
         $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
         $("#expires").text(moment.utc(expire_date).fromNow());
@@ -147,6 +165,7 @@
             var self = this;
 
             self.usersOnline = ko.observable(loadUsers());
+            self.serverLogs = ko.observable(loadLogs());
 
             // Load initial users into usersOnline observable, then set an interval
             function loadUsers() {
@@ -163,6 +182,23 @@
             }
             setInterval(function() {
                 self.usersOnline(loadUsers());
+            }, 15000)
+
+            // Load initial users into usersOnline observable, then set an interval
+            function loadLogs() {
+                var logs = [];
+                $.ajax({
+                    url: base_url_id + "/logs",
+                    async: false,
+                    dataType: "json",
+                    success: function (json) {
+                        logs = json.logs;
+                    }
+                });
+                return logs;
+            }
+            setInterval(function() {
+                self.serverLogs(loadLogs());
             }, 15000)
 
         }
