@@ -1,9 +1,5 @@
 <!doctype html>
-<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
-<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html class="no-js" lang="en" itemscope itemtype="http://schema.org/Product"> <!--<![endif]-->
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -13,7 +9,7 @@
 	<meta name="keywords" content="mumble, voip, hosting, guild, mmo, ffxiv, server, murmur" />
 	<meta name="author" content="alfg.co">
 
-	<link rel="shortcut icon" href="/static/img/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="/static/img/guildbit_ico.png" type="image/x-icon" />
 
 	<!-- Facebook Metadata /-->
 	<meta property="og:image" content="http://guildbit.com/static/img/screenshot_home.png" />
@@ -27,87 +23,53 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-	<link rel="stylesheet" href="/static/css/gumby.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
 	<link rel="stylesheet" href="/static/css/style.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-	<script src="/static/js/libs/modernizr-2.6.2.min.js"></script>
-
+    <script src="/static/js/libs/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
-    <div class="row">
+    <div class="header">
         {% if notice and notice.active %}
         <div class="{{ notice.message_type }} alert ten columns centered message text-center">{{ notice.message }}</div>
         {% endif %}
-        <div class="ten columns special head centered">
-            <div class="five columns head-logo">
+        <div class="head centered">
+            <div class="head-logo">
                 <h1><a href="/">GuildBit</a></h1>
             </div>
-            <div class="columns head-buttons">
-                <div class="btn primary pretty">
-                    <a href="/"><i class="fa fa-home"></i> Home</a>
-                </div>
-                <div class="btn secondary pretty">
-                    <a href="/how-it-works"><i class="fa fa-cogs"></i> How It Works</a>
-                </div>
-                <div class="btn warning pretty">
-                    <a href="/donate"><i class="fa fa-btc"></i> Donate</a>
-                </div>
+            <div class="header-links">
+                <ul>
+                    <li><a class="pure-button button-small pure-button-primary" href="/"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a class="pure-button button-small button-success" href="/how-it-works"><i class="fa fa-cogs"></i> How It Works</a></li>
+                    <li><a class="pure-button button-small button-warning" href="/donate"><i class="fa fa-btc"></i> Donate</a></li>
+                </ul>
             </div>
         </div>
     </div>
 
     {% block body %}{% endblock %}
 
-    <div class="row">
-        <div class="ten columns centered footer-links">
-            <ul class="text-center">
-                <li><a href="{{ url_for('HomeView:contact') }}">Found a bug?</a></li>
+    <div class="footer-links">
+        <ul class="text-center">
+            <li><a href="{{ url_for('HomeView:contact') }}">Found a bug?</a></li>
+            <li>|</li>
+            <li><a href="{{ url_for('HomeView:updates') }}">Updates</a></li>
+            {% if g.user.is_authenticated() %}
+            <li>Logged in as <strong>{{ g.user.email }}</strong></li>
+            <li>|</li>
+            {% if g.user.role == 1 %}
+                <li><a href="/admin">Admin</a></li>
                 <li>|</li>
-                <li><a href="{{ url_for('HomeView:updates') }}">Updates</a></li>
-                {% if g.user.is_authenticated() %}
-                <li>Logged in as <strong>{{ g.user.email }}</strong></li>
-                <li>|</li>
-                {% if g.user.role == 1 %}
-                    <li><a href="/admin">Admin</a></li>
-                    <li>|</li>
-                {% endif %}
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                {% endif %}
-            </ul>
-            <div class="share-js"></div>
-        </div>
+            {% endif %}
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% endif %}
+        </ul>
+        <div class="share-js"></div>
     </div>
 
-    <script type="text/javascript">
-        (function() {
-          var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-          po.src = 'https://apis.google.com/js/platform.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-        })();
-
-        <!-- Grab Google CDN's jQuery, fall back to local if offline -->
-        <!-- 2.0 for modern browsers, 1.10 for .oldie -->
-        var oldieCheck = Boolean(document.getElementsByTagName('html')[0].className.match(/\soldie\s/g));
-        if(!oldieCheck) {
-            document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"><\/script>');
-        } else {
-            document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"><\/script>');
-        }
-
-        if(!window.jQuery) {
-            if(!oldieCheck) {
-              document.write('<script src="/static/js/libs/jquery-2.0.2.min.js"><\/script>');
-            } else {
-              document.write('<script src="/static/js/libs/jquery-1.10.1.min.js"><\/script>');
-            }
-        }
-	</script>
-
-	<script gumby-touch="/static/js/libs" src="/static/js/libs/gumby.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="/static/js/libs/share.min.js"></script>
-	<script src="/static/js/plugins.js"></script>
-	<script src="/static/js/main.js"></script>
 
     {% block scripts %}{% endblock %}
 
@@ -124,8 +86,7 @@
         $('.share-js').share({
             url: 'http://guildbit.com',
             text: 'Guildbit - Free 10 slot Mumble servers. No registration required!',
-            button_text: 'Share Us!',
-            flyout: 'bottom center'
+            button_text: 'Share Us!'
         });
     </script>
 
@@ -135,18 +96,18 @@
 
         if (os.indexOf("Linux") !== -1) {
             $('#os-download #os-text').text('Linux Download');
-            $('#os-download i').addClass('fa-linux');
-            $('#os-download a').attr('href', 'http://mumble.sourceforge.net/Installing_Mumble#Linux');
+            $('#os-download #download-link i').addClass('fa-linux');
+            $('#os-download #download-link a').attr('href', 'http://mumble.sourceforge.net/Installing_Mumble#Linux');
         }
         else if (os.indexOf("Win") !== -1) {
             $('#os-download #os-text').text('Windows Download');
-            $('#os-download i').addClass('fa-windows');
-            $('#os-download a').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.5/mumble-1.2.5.msi/download');
+            $('#os-download #download-link i').addClass('fa-windows');
+            $('#os-download #download-link a').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.5/mumble-1.2.5.msi/download');
         }
         else if (os.indexOf("MacOS") !== -1) {
             $('#os-download #os-text').text('OSX Download');
-            $('#os-download i').addClass('fa-apple');
-            $('#os-download a').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.5/Mumble-1.2.5.dmg/download');
+            $('#os-download #download-link i').addClass('fa-apple');
+            $('#os-download #download-link a').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.5/Mumble-1.2.5.dmg/download');
         }
     </script>
   </body>

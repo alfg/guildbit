@@ -3,83 +3,83 @@
 {% block title %}Your Server is Ready!{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="ten columns centered content">
-            <div class="ten columns centered">
-                <h2>Your server is ready!</h2>
-                <p>Use the details below to connect. Bookmark this page to save the details.</p>
-                <table class="rounded centered">
-                    <thead>
-                        <tr>
-                            <th colspan="2">Mumble Connection Details</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Server</td>
-                            <td>{{ server.mumble_host }}</td>
-                        </tr>
-                        <tr>
-                            <td>Port</td>
-                            <td>{{ details.port }}</td>
-                        </tr>
-                        <tr>
-                            <td>Password</td>
-                            <td>{{ server.password }}</td>
-                        </tr>
-                        <tr>
-                            <td>Direct Link</td>
-                            <td><a href="mumble://{{ server.mumble_host }}:{{ details.port }}">mumble://{{ server.mumble_host }}:{{ details.port }}</a></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="ttip" data-tooltip="Share the connection details easily by copying the snippet to your clipboard">
-                                    Copy Text
-                                    <i class="fa fa-question-circle"></i>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="copy-url append field">
-                                    <input id="copy-text" class="wide input" type="text" value="Host: {{ server.mumble_host }} Port: {{ details.port }} Pass: {{ server.password }}" readonly="readonly" />
-                                    <div class="medium primary btn"><a id="copy-button" href="#">Copy</a></div>
-                                </div>
-                            </td>
-                        </tr>
-                        {% if server.type == 'temp' %}
-                        <tr>
-                            <td>Expires</td>
-                            <td><span id="expires-date"></span> (<span id="expires"></span>) </td>
-                        </tr>
-                        {% endif %}
-                        <tr>
-                            <td>Slots</td>
-                            <td>{{ details.maxusers }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <table class="rounded centered" data-bind="with: usersOnline">
-                    <thead>
-                        <tr>
-                            <th>Users Online (<span data-bind="text: count"></span>)</th>
-                            <th class="text-right">Duration</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- ko foreach: users -->
-                        <tr>
-                            <td data-bind="text: name"></td>
-                            <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
-                        </tr>
-                        <!-- /ko -->
-
-                        <!-- ko if: count == 0 -->
-                        <tr><td class="text-center" colspan="2">No users are online</td></tr>
-                        <!-- /ko -->
-                    </tbody>
-                </table>
-            </div>
+    <div class="content server">
+        <div class="title">
+            <h1>Your server is ready!</h1>
+            <p>Use the details below to connect.</p>
         </div>
+        <table class="rounded">
+            <thead>
+                <tr>
+                    <th colspan="2">Mumble Connection Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Server</td>
+                    <td>{{ server.mumble_host }}</td>
+                </tr>
+                <tr>
+                    <td>Port</td>
+                    <td>{{ details.port }}</td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td>{{ server.password }}</td>
+                </tr>
+                <tr>
+                    <td>Direct Link</td>
+                    <td><a href="mumble://{{ server.mumble_host }}:{{ details.port }}">mumble://{{ server.mumble_host }}:{{ details.port }}</a></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="ttip" data-tooltip="Share the connection details easily by copying the snippet to your clipboard">
+                            Copy Text
+                            <i class="fa fa-question-circle"></i>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="copy-url append field">
+                            <form class="pure-form">
+                                <input id="copy-text" class="pure-u-2-3" type="text" value="Host: {{ server.mumble_host }} Port: {{ details.port }} Pass: {{ server.password }}" readonly="readonly" />
+                                <a class="pure-button pure-button-primary" id="copy-button" href="#">Copy</a>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% if server.type == 'temp' %}
+                <tr>
+                    <td>Expires</td>
+                    <td><span id="expires-date"></span> (<span id="expires"></span>) </td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td>Slots</td>
+                    <td>{{ details.maxusers }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="rounded centered" data-bind="with: usersOnline">
+            <thead>
+                <tr>
+                    <th>Users Online (<span data-bind="text: count"></span>)</th>
+                    <th class="text-right">Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ko foreach: users -->
+                <tr>
+                    <td data-bind="text: name"></td>
+                    <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
+                </tr>
+                <!-- /ko -->
+
+                <!-- ko if: count == 0 -->
+                <tr><td class="text-center" colspan="2">No users are online</td></tr>
+                <!-- /ko -->
+            </tbody>
+        </table>
     </div>
 
     {% include '_partials/_dont_have_mumble.html' %}

@@ -3,38 +3,34 @@
 {% block title %}Donate{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="ten columns centered content">
-            <div class="ten columns centered">
-                <h2>Donate</h2>
-                <p>GuildBit completely operates on donations. Please consider donating with any of the services below.</p>
+    <div class="content">
+        <h1>Donate</h1>
+        <p>GuildBit completely operates on donations. Please consider donating with any of the services below.</p>
 
-                <div class="row">
-                    <!-- Paypal -->
-                    <h4><i class="icon-paypal"></i> Paypal</h4>
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="margin-top: 10px;">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="T23YUJXQXVDUC">
-                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                    </form>
-                </div>
-
-                <div class="row">
-                    <!-- Bitcoin -->
-                    <h4><i class="fa fa-bitcoin"></i> Bitcoin</h4>
-                    <p>187BWbT4ppH8W2sYE5WknUxtYxc1hBmhEJ</p>
-                    <img src="https://chart.googleapis.com/chart?cht=qr&chl=bitcoin%3A187BWbT4ppH8W2sYE5WknUxtYxc1hBmhEJ&choe=UTF-8&chs=200x200" />
-                </div>
-
-                <div class="row">
-                    <!-- Dogcoin -->
-                    <h4><strong>Ɖ</strong> Dogcoin</h4>
-                    <p>DLyF5Yte6D8J8fPTraSHggEVq3235q8owC</p>
-                </div>
-
-            </div>
+        <div>
+            <!-- Paypal -->
+            <h2><i class="icon-paypal"></i> Paypal</h2>
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="margin-top: 10px;">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="T23YUJXQXVDUC">
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+            </form>
         </div>
+
+        <div>
+            <!-- Bitcoin -->
+            <h2><i class="fa fa-bitcoin"></i> Bitcoin</h2>
+            <p>187BWbT4ppH8W2sYE5WknUxtYxc1hBmhEJ</p>
+            <img src="https://chart.googleapis.com/chart?cht=qr&chl=bitcoin%3A187BWbT4ppH8W2sYE5WknUxtYxc1hBmhEJ&choe=UTF-8&chs=200x200" />
+        </div>
+
+        <div>
+            <!-- Dogcoin -->
+            <h2><strong>Ɖ</strong> Dogcoin</h2>
+            <p>DLyF5Yte6D8J8fPTraSHggEVq3235q8owC</p>
+        </div>
+
     </div>
 {% endblock %}
 

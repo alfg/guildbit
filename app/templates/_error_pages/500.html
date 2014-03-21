@@ -3,15 +3,11 @@
 {% block title %}Server Error - 500{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="ten columns centered content">
-            <div class="ten columns centered">
-                <h2>Great, you broke it. &mdash; 500 Error</h2>
-                <p>This error has been reported and hopefully someone fixes it. But if you can reproduce this
-                error, then feel free to <a href="{{ url_for('HomeView:contact') }}">report it here!</a></p>
-                <a href="{{ url_for('home') }}">Return Home</a></p>
-            </div>
-        </div>
+    <div class="content">
+        <h1>Great, you broke it. &mdash; 500 Error</h1>
+        <p>This error has been reported and hopefully someone fixes it. But if you can reproduce this
+        error, then feel free to <a href="{{ url_for('HomeView:contact') }}">report it here!</a></p>
+        <a href="{{ url_for('home') }}">Return Home</a></p>
     </div>
 {% endblock %}
 

@@ -3,26 +3,24 @@
 {% block title %}Your Server is Ready!{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="ten columns centered content">
-            <div class="ten columns centered">
-                <h2>Your server has expired!</h2>
-                <p>Return to the <a href="/">homepage</a> to deploy another server.</p>
-                <table class="rounded centered">
-                    <thead>
-                        <tr>
-                            <th colspan="2">Details</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Expired</td>
-                            <td><span id="expires-date"></span> (<span id="expires"></span>) </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="content server">
+        <div class="title">
+            <h1>Your server has expired!</h1>
+            <p>Return to the <a href="/">homepage</a> to deploy another server.</p>
         </div>
+        <table class="rounded centered">
+            <thead>
+                <tr>
+                    <th colspan="2">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Expired</td>
+                    <td><span id="expires-date"></span> (<span id="expires"></span>) </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 {% endblock %}

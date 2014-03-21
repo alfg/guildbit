@@ -3,28 +3,19 @@
 {% block title %}Free Mumble Server Hosting{% endblock %}
 
 {% block body %}
-    <div class="row">
         <div class="ten columns centered content">
-            <h3 class="text-center">Deploy a Mumble server for your group. It's free!</h3>
+            <h1 class="text-center">Deploy a Mumble server for your group. It's free!</h1>
 
-            <form id="deploy-form" action="/" method="POST">
+            <form id="deploy-form" class="pure-form deploy-form" action="/" method="POST">
                 {{ form.csrf_token }}
-                <div class="field text-center">
-                      <div class="picker select-picker">
-                        {{ form.location }}
-                      </div>
-                      <div class="picker select-picker">
-                        {{ form.duration }}
-                      </div>
-                    {{ form.password(size=20, class='narrow input', placeholder='Set a Password', autocomplete='off') }}
-                    <div id="deploy-button-wrapper" class="btn primary medium pretty">
-                        <button id="deploy-button" type="submit" value="Submit"><i class="fa fa-cloud"></i> Deploy Server</button>
-                    </div>
-                </div>
+                    {{ form.location }}
+                    {{ form.duration }}
+                    {{ form.password(size=20, class='', placeholder='Set a Password', autocomplete='off') }}
+                    <button id="deploy-button" class="pure-button pure-button-primary" type="submit" value="Submit"><i class="fa fa-cloud"></i> Deploy Server</button>
             </form>
 
             {% if form.errors %}
-                <ul class="errors centered text-center eight columns">
+                <ul class="errors text-center">
                     {% for field_name, field_errors in form.errors|dictsort if field_errors %}
                         {% for error in field_errors %}
                             <li class="danger alert">{{ error }}</li>
@@ -33,13 +24,11 @@
                 </ul>
             {% endif %}
 
-            <div class="description ten columns centered text-center">
+            <div class="description text-center">
                 <p>GuildBit is a free service to deploy temporary Mumble servers for your group. The service is completely
                 funded by donations. <a href="/how-it-works">Learn how it works &raquo;</a></p>
                 <span>*Servers are currently limited to 10 slots</span>
             </div>
-
-        </div>
     </div>
 
     {% include '_partials/_dont_have_mumble.html' %}
