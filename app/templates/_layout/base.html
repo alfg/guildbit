@@ -29,6 +29,14 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <script src="/static/js/libs/modernizr-2.6.2.min.js"></script>
+
+    <!-- Google Analytics -->
+    <script>
+        window._gaq = [['_setAccount','UA-46282781-1'],['_trackPageview'],['_trackPageLoadTime']];
+        Modernizr.load({
+            load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+        });
+    </script>
 </head>
 <body>
     <div class="header">
@@ -75,13 +83,6 @@
 
     {% block scripts %}{% endblock %}
 
-    <!-- Google Analytics -->
-	<script>
-        window._gaq = [['_setAccount','UA-46282781-1'],['_trackPageview'],['_trackPageLoadTime']];
-        Modernizr.load({
-          load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-        });
-	</script>
 
     <!-- Share plugin -->
     <script>
