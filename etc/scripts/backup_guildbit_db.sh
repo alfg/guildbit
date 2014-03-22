@@ -11,11 +11,12 @@ NOW=$(date +"%m-%d-%Y")
 echo "Dumping Guildbit database..."
 pg_dump -U postgres -h localhost guildbit > /tmp/test.sql
 echo "Database dumped to /tmp/ Creating tarball from DB dump..."
-tar -cvzf $NOW.tar.gz /tmp/test.sql
+tar -cvzf /tmp/$NOW.tar.gz /tmp/test.sql
 echo "Tarball created. Removing dump file..."
 rm -rf /tmp/test.sql
 echo "Dump file removed. Backing up to S3..."
-s3cmd put $NOW.tar.gz s3://guildbit/backups/db/guildbit_$NOW.tar.gz
+s3cmd put /tmp/$NOW.tar.gz s3://guildbit/backups/db/guildbit_$NOW.tar.gz
 echo "Backup successfully completed."
+rm -rf /tmp/$NOW.tar.gz
 
 exit 0
