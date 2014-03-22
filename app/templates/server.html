@@ -16,7 +16,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Server</td>
+                    <td width="20%">Server</td>
                     <td>{{ server.mumble_host }}</td>
                 </tr>
                 <tr>
@@ -33,7 +33,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <div class="ttip" data-tooltip="Share the connection details easily by copying the snippet to your clipboard">
+                        <div class="ttip" data-toggle="tooltip" title="Share the connection details easily by copying the snippet to your clipboard">
                             Copy Text
                             <i class="fa fa-question-circle"></i>
                         </div>
@@ -111,6 +111,9 @@
                     client.setText($('#copy-text').val());
                 });
             });
+
+            //Tooltips
+            $('.ttip').tooltip({trigger: 'hover'});
         });
 
         // Knockout Users Model for displaying and updated users online

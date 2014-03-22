@@ -1,16 +1,16 @@
 @charset "UTF-8";
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
-/*
- * Base Styles */
+
+/* Base Styles */
 body {
     background: #CECECE;
-    font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
     font-weight: 400;
     color: #555;
     -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
     font-weight: 300;
     color: #444;
     text-rendering: optimizeLegibility;
@@ -30,39 +30,11 @@ a {
 a:hover {
     text-decoration: underline;
 }
-.btn a:hover {
+.pure-button:hover {
     text-decoration: none;
 }
-.btn.pretty.primary.disabled,
-.btn.pretty.primary.disabled:hover {
-    border: 0;
-    cursor: not-allowed;
-    background-image: none;
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-    filter: alpha(opacity=70);
-    -khtml-opacity: .7;
-    -moz-opacity: .7;
-    opacity: .7;
-    cursor: not-allowed;
-    box-shadow: none;
-    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #A2D4FC), color-stop(100%, #54B2FE));
-    background-image: -webkit-linear-gradient(#A2D4FC, #54B2FE);
-    background-image: -moz-linear-gradient(#a2d4fc, #54b2fe);
-    background-image: -o-linear-gradient(#a2d4fc, #54b2fe);
-    background-image: linear-gradient(#A2D4FC, #54B2FE);
-    -webkit-box-shadow: inset 0 0 3px #FFF;
-    -moz-box-shadow: inset 0 0 3px white;
-    box-shadow: inset 0 0 3px #FFF;
-    border: 1px solid #0E90F8;
-}
-.btn.pretty.primary.disabled button,
-.btn.pretty.primary.disabled:hover button {
-    cursor: not-allowed;
-}
 
-
-/*
- * Layout */
+/* Layout */
 .content {
     margin: 0 auto;
     max-width: 800px;
@@ -107,21 +79,6 @@ a:hover {
     padding: 0;
     top: 35px;
 }
-/* Reposition logo if on mobile */
-@media screen and (max-width: 580px) {
-    .head-logo h1 {
-        top: 0;
-        margin: 0 auto;
-    }
-    .header-links ul {
-        margin: 0 auto;
-        float: none !important;
-    }
-}
-.message {
-    margin-top: 5px;
-}
-
 .head-logo a,
 .head-logo a:visited,
 .head-logo a:active {
@@ -134,14 +91,6 @@ a:hover {
 .head-logo a:hover {
     text-decoration: none;
     opacity: .90;
-}
-.head-logo .bit {
-    color: #3CA957;
-    /*
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(#80CB92, #3CA957);
-    */
 }
 .head-buttons {
     margin-bottom: 10px;
@@ -162,12 +111,6 @@ a:hover {
 .header-links ul li {
     display: inline-block;
     padding: 0 3px;
-}
-.mumble-buttons {
-    padding-bottom: 10px;
-}
-.mumble-buttons .btn.pretty.info {
-    background-image: linear-gradient(#B2B5B8, #6F7174);
 }
 .description {
     margin: 0 auto;
@@ -194,6 +137,7 @@ a:hover {
 .footer-links ul {
     float: right;
     margin: 0;
+    padding: 0;
 }
 .footer-links ul li {
     display: inline-block;
@@ -212,22 +156,28 @@ a:hover {
 }
 
 /* Components */
+.mumble-buttons .pure-button {
+    margin-bottom: 10px;
+}
 .deploy-form {
     text-align: center;
 }
 .deploy-form input,
-.deploy-form select {
+.deploy-form select,
+.deploy-form button {
     display: inline-block !important;
     margin-bottom: 10px;
 }
 .errors {
     width: 50%;
-    margin: 0 auto;
+    margin: 10px auto;
     padding: 0;
 }
+.message {
+    margin-top: 5px;
+}
 
-/*
- * Server Page */
+/* Server Page */
 .content .copy-url {
     margin-bottom: 0;
     padding-bottom: 0;
@@ -322,8 +272,6 @@ a:hover {
     background: rgb(178, 181, 184); /* this is a light blue */
 }
 
-/*
- * Tables */
 /* Tables */
 table { display: table; background-color: white; border-collapse: collapse; border-spacing: 0; margin-bottom: 20px; width: 100%; border: 1px solid #e5e5e5; }
 table caption { text-align: center; font-size: 30px; padding: .75em; }
@@ -351,4 +299,23 @@ table.rounded thead th, table.rounded thead td, table.rounded caption + tbody tr
 }
 .text-left {
     text-align: left;
+}
+
+/*
+ * Mobile Specific Adjustments */
+@media screen and (max-width: 348px) {
+    .header-links .pure-button {
+        font-size: 70%;
+    }
+}
+/* Reposition logo if on mobile */
+@media screen and (max-width: 580px) {
+    .head-logo h1 {
+        top: 0;
+        margin: 0 auto;
+    }
+    .header-links ul {
+        margin: 0 auto;
+        float: none !important;
+    }
 }

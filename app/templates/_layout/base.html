@@ -25,6 +25,7 @@
 
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
 	<link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/tooltips.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <script src="/static/js/libs/modernizr-2.6.2.min.js"></script>
@@ -70,6 +71,7 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="/static/js/libs/share.min.js"></script>
+    <script src="/static/js/libs/tooltips.min.js"></script>
 
     {% block scripts %}{% endblock %}
 
@@ -93,21 +95,36 @@
     <!-- Download Mumble OS chooser -->
     <script type="text/javascript">
         var os = navigator.platform;
+        var ua = navigator.userAgent.toLowerCase();
 
-        if (os.indexOf("Linux") !== -1) {
+        if (os.indexOf("Linux") !== -1 && ua.indexOf("android") === -1) {
             $('#os-download #os-text').text('Linux Download');
+            $('#os-download #download-link i').removeClass('fa-windows');
             $('#os-download #download-link i').addClass('fa-linux');
-            $('#os-download #download-link a').attr('href', 'http://mumble.sourceforge.net/Installing_Mumble#Linux');
+            $('#os-download #download-link').attr('href', 'http://mumble.sourceforge.net/Installing_Mumble#Linux');
         }
         else if (os.indexOf("Win") !== -1) {
             $('#os-download #os-text').text('Windows Download');
             $('#os-download #download-link i').addClass('fa-windows');
-            $('#os-download #download-link a').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.5/mumble-1.2.5.msi/download');
+            $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.5/mumble-1.2.5.msi/download');
         }
         else if (os.indexOf("MacOS") !== -1) {
             $('#os-download #os-text').text('OSX Download');
+            $('#os-download #download-link i').removeClass('fa-windows');
             $('#os-download #download-link i').addClass('fa-apple');
-            $('#os-download #download-link a').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.5/Mumble-1.2.5.dmg/download');
+            $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.5/Mumble-1.2.5.dmg/download');
+        }
+        else if (ua.indexOf("android") > -1) {
+            $('#os-download #os-text').text('Android Download');
+            $('#os-download #download-link i').removeClass('fa-windows');
+            $('#os-download #download-link i').addClass('fa-android');
+            $('#os-download #download-link').attr('href', 'https://play.google.com/store/apps/details?id=com.morlunk.mumbleclient');
+        }
+        else if (os === 'iPad' || os == 'iPhone' || os === 'iPod') {
+            $('#os-download #os-text').text('iOS Download');
+            $('#os-download #download-link i').removeClass('fa-windows');
+            $('#os-download #download-link i').addClass('fa-apple');
+            $('#os-download #download-link').attr('href', 'https://itunes.apple.com/us/app/mumble/id443472808');
         }
     </script>
   </body>
