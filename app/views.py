@@ -10,7 +10,7 @@ import settings
 from util import admin_required
 from app import app, db, tasks, lm, oid, mail, cache
 from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm, NoticeForm
-from app.forms import SendChannelMessageForm, LeaveFeedbackForm, build_hosts_list
+from app.forms import SendChannelMessageForm, build_hosts_list
 from app.models import Server, User, Notice, Rating, ROLE_USER
 import app.murmur as murmur
 
