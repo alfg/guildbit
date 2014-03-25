@@ -18,6 +18,8 @@ class Server(db.Model):
     mumble_host = db.Column(db.String, default="mumble.guildbit.com")
     mumble_instance = db.Column(db.Integer)
 
+    ratings = db.relationship('Rating', backref='server', lazy='dynamic')
+
     @hybrid_property
     def expiration(self):
         return self.created_date + datetime.timedelta(hours=self.duration)
@@ -76,6 +78,18 @@ class Notice(db.Model):
 
     def __repr__(self):
         return '<Notice %r>' % self.id
+
+
+class Rating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    server_id = db.Column(db.Integer, db.ForeignKey('server.id'))
+    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    ip = db.Column(db.String(64))
+    stars = db.Column(db.Integer)
+    feedback = db.Column(db.String())
+
+    def __repr__(self):
+        return '<Rating %r>' % self.id
 
 
 # class Host(db.Model):
