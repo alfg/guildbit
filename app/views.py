@@ -150,7 +150,7 @@ class ServerView(FlaskView):
     def get(self, id):
         ip = request.remote_addr
         server = Server.query.filter_by(uuid=id).first_or_404()
-        rating = Rating.query.filter_by(server_id=id, ip=ip).first()
+        rating = Rating.query.filter_by(server_uuid=id, ip=ip).first()
 
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
         if server_details is not None:
@@ -176,13 +176,13 @@ class ServerView(FlaskView):
         ip = request.remote_addr
         stars = request.form['stars']
 
-        r = Rating.query.filter_by(server_id=id, ip=ip).first()
+        r = Rating.query.filter_by(server_uuid=id, ip=ip).first()
         print r
 
         if r is None:
             try:
                 r = Rating()
-                r.server_id = id
+                r.server_uuid = id
                 r.ip = ip
                 r.stars = stars
                 db.session.add(r)
@@ -206,7 +206,7 @@ class ServerView(FlaskView):
 
         if feedback:
             try:
-                r = Rating.query.filter_by(server_id=id, ip=ip).first()
+                r = Rating.query.filter_by(server_uuid=id, ip=ip).first()
                 r.feedback = feedback
                 db.session.commit()
             except:

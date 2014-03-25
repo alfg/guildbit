@@ -82,7 +82,7 @@ class Notice(db.Model):
 
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    server_id = db.Column(db.Integer, db.ForeignKey('server.id'))
+    server_uuid = db.Column(db.String, db.ForeignKey('server.uuid'), index=True)
     created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     ip = db.Column(db.String(64))
     stars = db.Column(db.Integer)
