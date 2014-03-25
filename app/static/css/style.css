@@ -176,6 +176,42 @@ a:hover {
 .message {
     margin-top: 5px;
 }
+.rating {
+    unicode-bidi:bidi-override;
+    direction:rtl;
+    font-size:30px;
+}
+.rating span.star {
+    font-family:FontAwesome;
+    font-weight:normal;
+    font-style:normal;
+    display:inline-block;
+}
+.rating span.star:hover {
+    cursor:pointer;
+}
+.rating span.star:before {
+    content:"\f006";
+    padding-right:5px;
+    color:#999;
+}
+.rating span.star:hover:before,
+.rating span.star:hover ~ span.star:before {
+    content:"\f005";
+    color: rgb(214, 156, 48);
+}
+
+.rating span.star.starred:before,
+.rating span.star.starred ~ span.star:before {
+    content:"\f005";
+    color: rgb(214, 156, 48);
+}
+.feedback-quality #feedback-form {
+    margin-top: 15px;
+}
+.feedback-quality h2 {
+    margin: 5px 0;
+}
 
 /* Server Page */
 .content .copy-url {
@@ -194,13 +230,22 @@ a:hover {
     margin: 20px auto;
     width: 90%;
 }
-.content.server h1 {
-    font-size: 44px;
-    margin: 10px 0;
-}
 .content.server .title {
     width: 90%;
     margin: 0 auto;
+    text-align: center;
+}
+.content.server .title h1,
+.content.server .title h2 {
+    margin: 0;
+}
+.content.server .title h1 {
+    font-size: 44px;
+}
+.content.server .feedback-quality {
+    margin: 0 auto;
+    width: 90%;
+    text-align: center;
 }
 
 /* Labels */

@@ -10,8 +10,8 @@ import settings
 from util import admin_required
 from app import app, db, tasks, lm, oid, mail, cache
 from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm, NoticeForm
-from app.forms import SendChannelMessageForm, build_hosts_list
-from app.models import Server, User, Notice, ROLE_ADMIN, ROLE_USER
+from app.forms import SendChannelMessageForm, LeaveFeedbackForm, build_hosts_list
+from app.models import Server, User, Notice, Rating, ROLE_USER
 import app.murmur as murmur
 
 
@@ -148,11 +148,13 @@ class ServerView(FlaskView):
         return redirect(url_for('home'))
 
     def get(self, id):
+        ip = request.remote_addr
         server = Server.query.filter_by(uuid=id).first_or_404()
+        rating = Rating.query.filter_by(server_id=id, ip=ip).first()
 
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
         if server_details is not None:
-            return render_template('server.html', server=server, details=server_details)
+            return render_template('server.html', server=server, details=server_details, rating=rating)
         else:
             return render_template('server_expired.html', server=server)
 
@@ -168,6 +170,53 @@ class ServerView(FlaskView):
             return jsonify(users=users)
         else:
             return jsonify(users=None)
+
+    @route('/<id>/rating', methods=['POST'])
+    def rating(self, id):
+        ip = request.remote_addr
+        stars = request.form['stars']
+
+        r = Rating.query.filter_by(server_id=id, ip=ip).first()
+        print r
+
+        if r is None:
+            try:
+                r = Rating()
+                r.server_id = id
+                r.ip = ip
+                r.stars = stars
+                db.session.add(r)
+                db.session.commit()
+            except:
+                import traceback
+                db.session.rollback()
+                traceback.print_exc()
+
+            return jsonify(message='success')
+        else:
+            r.stars = stars
+            db.session.commit()
+
+        return jsonify(message=r.stars)
+
+    @route('/<id>/feedback', methods=['POST'])
+    def feedback(self, id):
+        ip = request.remote_addr
+        feedback = request.form['feedback']
+
+        if feedback:
+            try:
+                r = Rating.query.filter_by(server_id=id, ip=ip).first()
+                r.feedback = feedback
+                db.session.commit()
+            except:
+                import traceback
+                db.session.rollback()
+                traceback.print_exc()
+
+            return jsonify(message='success')
+
+        return jsonify(message='error')
 
 
 ## Admin views

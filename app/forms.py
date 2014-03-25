@@ -84,3 +84,4 @@ class ContactForm(Form):
     subject = TextField('subject', validators=[DataRequired('Subject is required.')])
     email = TextField('email', validators=[Email('Invalid email address.'), DataRequired('Email is required.')])
     message = TextAreaField('message', validators=[DataRequired('Message is required.')])
+
