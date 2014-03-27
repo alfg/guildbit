@@ -58,7 +58,7 @@
             <tr>
                 <td>{{ s.id }}</td>
                 <td><a href="/admin/servers/{{ s.id }}">{{ s.uuid }}</a></td>
-                <td>{{ s.created_date }}</td>
+                <td class="created-date">{{ s.created_date }}</td>
                 <td>{{ s.duration }}</td>
                 <td>{{ s.password }}</td>
                 <td>{{ s.status }}</td>
@@ -119,4 +119,11 @@
 
 {% block scripts %}
     <script src="/static/js/admin.js"></script>
+    <script src="/static/js/libs/moment.min.js"></script>
+    <script type="text/javascript">
+        // Moment.js time formatting
+        $(".created-date").text(function(index, value) {
+            return moment(value).utc().local().format("MM/DD h:mm:ss a");
+        });
+    </script>
 {% endblock %}
