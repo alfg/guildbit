@@ -50,7 +50,7 @@
                 {% if server.type == 'temp' %}
                 <tr>
                     <td>Expires</td>
-                    <td><span id="expires-date"></span> (<span id="expires"></span>) </td>
+                    <td><span id="expires-date"></span> (<span id="expires" data-bind="text: remainingTime"></span>) </td>
                 </tr>
                 {% endif %}
                 <tr>
@@ -115,7 +115,6 @@
         var base_url = '{{ request.base_url }}'
         var expire_date = '{{ server.expiration }}';
         $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
-        $("#expires").text(moment.utc(expire_date).fromNow());
 
         //ZeroClipboard for copying mumble server credentials easily
         $(document).ready(function() {
@@ -163,10 +162,27 @@
         });
 
         // Knockout Users Model for displaying and updated users online
-        function UsersViewModel() {
+        function ServerViewModel() {
             var self = this;
 
             self.usersOnline = ko.observable(loadUsers());
+            self.remainingTime = ko.observable(loadExpires());
+
+
+            function loadExpires() {
+                var expires = moment.utc(expire_date).fromNow();
+
+                var unix_now = moment.utc().unix();
+                var unix_expires = moment.utc(expire_date).unix();
+
+                // If expired
+                if (unix_now > unix_expires) {
+                    window.location = base_url + "/expired";
+{#                    location.reload(false);#}
+                } else {
+                }
+                return expires
+            }
 
             // Load initial users into usersOnline observable, then set an interval
             function loadUsers() {
@@ -183,9 +199,10 @@
             }
             setInterval(function() {
                 self.usersOnline(loadUsers());
+                self.remainingTime(loadExpires());
             }, 15000)
 
         }
-        ko.applyBindings(new UsersViewModel());
+        ko.applyBindings(new ServerViewModel());
     </script>
 {% endblock %}

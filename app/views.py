@@ -156,7 +156,14 @@ class ServerView(FlaskView):
         if server_details is not None:
             return render_template('server.html', server=server, details=server_details, rating=rating)
         else:
-            return render_template('server_expired.html', server=server)
+            return render_template('server_expired.html', server=server, rating=rating)
+
+    @route('/<id>/expired')
+    def expired(self, id):
+        ip = request.remote_addr
+        server = Server.query.filter_by(uuid=id).first_or_404()
+        rating = Rating.query.filter_by(server_uuid=id, ip=ip).first()
+        return render_template('server_expired.html', server=server, rating=rating)
 
     @route('/<id>/users/')
     def users(self, id):
@@ -172,12 +179,12 @@ class ServerView(FlaskView):
             return jsonify(users=None)
 
     @route('/<id>/rating', methods=['POST'])
+    @route('/<id>/expired/rating', methods=['POST'])
     def rating(self, id):
         ip = request.remote_addr
         stars = request.form['stars']
 
         r = Rating.query.filter_by(server_uuid=id, ip=ip).first()
-        print r
 
         if r is None:
             try:
@@ -200,6 +207,7 @@ class ServerView(FlaskView):
         return jsonify(message=r.stars)
 
     @route('/<id>/feedback', methods=['POST'])
+    @route('/<id>/expired/feedback', methods=['POST'])
     def feedback(self, id):
         ip = request.remote_addr
         feedback = request.form['feedback']

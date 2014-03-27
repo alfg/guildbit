@@ -21,6 +21,25 @@
                 </tr>
             </tbody>
         </table>
+
+        <div class="feedback-quality">
+            <h3>How was the quality of your Mumble session?</h3>
+            <div id="rating" class="rating">
+                <span class="star {% if rating.stars == 5 %}starred{% endif %}" data-star="5"></span>
+                <span class="star {% if rating.stars == 4 %}starred{% endif %}" data-star="4"></span>
+                <span class="star {% if rating.stars == 3 %}starred{% endif %}" data-star="3"></span>
+                <span class="star {% if rating.stars == 2 %}starred{% endif %}" data-star="2"></span>
+                <span class="star {% if rating.stars == 1 %}starred{% endif %}" data-star="1"></span>
+            </div>
+            <form id="feedback-form" class="pure-form" style="display: none;">
+                <textarea id="message" cols="40" rows="3" name="message" placeholder="Can you provide any additional details?"></textarea>
+                <button class="pure-button pure-button-primary" type="submit">Submit</button>
+            </form>
+            <div id="thankyou-message" style="display: none;">
+                <h2>Thank you!</h2>
+                <p>Your feedback is appreciated for the quality of GuildBit.com!</p>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
@@ -30,8 +49,41 @@
 
     <script type="text/javascript">
         // Format expiration date into human friendly
+        var base_url = '{{ request.base_url }}'
         var expire_date = '{{ server.expiration }}';
         $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
         $("#expires").text(moment.utc(expire_date).fromNow());
+        setInterval(function() {
+            $("#expires").text(moment.utc(expire_date).fromNow());
+        }, 15000)
+
+        $(document).ready(function() {
+            // Leave feedback ratings
+            $('#rating span').on('click', function() {
+                var stars = $(this).data('star');
+                $('#rating span').removeClass('starred');
+                $(this).addClass('starred');
+
+                $.post(base_url + "/rating", { stars: stars })
+                    .done(function(data) {
+                        console.log(data);
+                        $('#feedback-form').slideDown();
+                    });
+            });
+
+            // Leave feedback message
+            $('#feedback-form').submit(function(event) {
+                event.preventDefault();
+                var message = $('#feedback-form #message').val();
+                $.post(base_url + "/feedback", { feedback: message })
+                    .done(function(data) {
+                        console.log(data);
+                        $('#feedback-form').slideUp();
+                        $('.feedback-quality h3').slideUp();
+                        $('.feedback-quality #rating').slideUp();
+                        $('#thankyou-message').fadeIn();
+                    });
+            })
+        });
     </script>
 {% endblock %}
