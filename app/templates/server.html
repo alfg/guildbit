@@ -91,7 +91,7 @@
                 <span class="star {% if rating.stars == 1 %}starred{% endif %}" data-star="1"></span>
             </div>
             <form id="feedback-form" class="pure-form" style="display: none;">
-                <textarea id="message" cols="40" rows="3" name="message" placeholder="Can you provide any additional details?"></textarea>
+                <textarea id="message" cols="40" rows="3" name="message" placeholder="How can we improve GuildBit?"></textarea>
                 <button class="pure-button pure-button-primary" type="submit">Submit</button>
             </form>
             <div id="thankyou-message" style="display: none;">
@@ -141,7 +141,6 @@
 
                 $.post(base_url + "/rating", { stars: stars })
                     .done(function(data) {
-                        console.log(data);
                         $('#feedback-form').slideDown();
                 });
             })
@@ -152,7 +151,6 @@
                 var message = $('#feedback-form #message').val();
                 $.post(base_url + "/feedback", { feedback: message })
                     .done(function(data) {
-                        console.log(data);
                         $('#feedback-form').slideUp();
                         $('.feedback-quality h3').slideUp();
                         $('.feedback-quality #rating').slideUp();
