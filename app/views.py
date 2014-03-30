@@ -458,6 +458,15 @@ class AdminToolsView(FlaskView):
         return redirect('/admin/tools/')
 
 
+class AdminFeedbackView(FlaskView):
+
+    @login_required
+    @admin_required
+    def index(self):
+        feedback = Rating.query.all()
+        return render_template('admin/feedback.html', feedback=feedback, title="Feedback")
+
+
 ## Login/Logout views
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler
@@ -522,3 +531,4 @@ AdminServersView.register(app, route_prefix='/admin/', route_base='/servers')
 AdminUsersView.register(app, route_prefix='/admin/', route_base='/users')
 AdminHostsView.register(app, route_prefix='/admin/', route_base='/hosts')
 AdminToolsView.register(app, route_prefix='/admin/', route_base='/tools')
+AdminFeedbackView.register(app, route_prefix='/admin/', route_base='/feedback')

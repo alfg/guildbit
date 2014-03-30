@@ -45,7 +45,7 @@ def host_balancer():
     servers_list = []
     for host in hosts:
         try:
-            r = requests.get("%s/api/v1/stats/" % host['uri'])
+            r = requests.get("%s/stats/" % host['uri'])
 
             if r.status_code == 200:
                 host['booted_servers'] = r.json()['booted_servers']

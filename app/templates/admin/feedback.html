@@ -1,0 +1,46 @@
+{% extends"_layout/admin_base.html" %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block body %}
+    <table class="pure-table pure-table-horizontal pure-table-striped servers">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Server UUID</th>
+                <th>Created</th>
+                <th>IP</th>
+                <th>Stars</th>
+                <th>Feedback</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i in feedback %}
+            <tr>
+                <td>{{ i.id }}</td>
+                <td><a href="/admin/servers/{{ i.id }}">{{ i.server_uuid }}</a></td>
+                <td class="created-date">{{ i.created_date }}</td>
+                <td>{{ i.ip }}</td>
+                <td>{{ i.stars }}</td>
+                <td>{{ i.feedback }}</td>
+            </tr>
+            {% endfor %}
+            {% if feedback == [] %}
+                <tr><td class="text-center" colspan="9">No Feedback</td></tr>
+            {% endif %}
+
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+    <script src="/static/js/libs/moment.min.js"></script>
+    <script type="text/javascript">
+        // Moment.js time formatting
+        $(".created-date").text(function(index, value) {
+            return moment.utc(value).local().format("MM/DD h:mm:ss a");
+        });
+    </script>
+{% endblock %}
