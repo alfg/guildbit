@@ -69,7 +69,7 @@ def create_server(host, payload):
     Accepts host and POST data payload as parameters and returns the id of the server created at host.
     """
     auth = get_murmur_credentials(host)
-    r = requests.post(host + "/api/v1/servers/", data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
+    r = requests.post(host + "/servers/", data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
     server_id = r.json()['id']
     return server_id
 
@@ -81,7 +81,7 @@ def create_server_by_location(location, payload):
     host = get_host_by_location(location)['uri']
     auth = get_murmur_credentials(location)
     try:
-        r = requests.post(host + "/api/v1/servers/", data=payload, auth=HTTPDigestAuth(auth['username'],
+        r = requests.post(host + "/servers/", data=payload, auth=HTTPDigestAuth(auth['username'],
                                                                                        auth['password']))
         if r.status_code == 200:
             server_id = r.json()['id']
@@ -100,7 +100,7 @@ def get_server(host, instance_id):
     uri = get_murmur_uri(host)
     auth = get_murmur_credentials(host)
     try:
-        r = requests.get("%s/api/v1/servers/%i" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
+        r = requests.get("%s/servers/%i" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
                                                                                           auth['password']))
         if r.status_code == 200:
             return r.json()
@@ -116,7 +116,7 @@ def delete_server(host, instance_id):
     uri = get_murmur_uri(host)
     auth = get_murmur_credentials(host)
     try:
-        r = requests.delete("%s/api/v1/servers/%i" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
+        r = requests.delete("%s/servers/%i" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
                                                                                              auth['password']))
         if r.status_code == 200:
             return r.json()
@@ -132,7 +132,7 @@ def get_server_stats(host):
     uri = get_murmur_uri(host)
     auth = get_murmur_credentials(host)
     try:
-        r = requests.get("%s/api/v1/stats/" % uri, auth=HTTPDigestAuth(auth['username'],
+        r = requests.get("%s/stats/" % uri, auth=HTTPDigestAuth(auth['username'],
                                                                        auth['password']))
         if r.status_code == 200:
             stats = {
@@ -174,7 +174,7 @@ def get_server_logs(host, instance_id):
     uri = get_murmur_uri(host)
     auth = get_murmur_credentials(host)
     try:
-        r = requests.get("%s/api/v1/servers/%s/logs" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
+        r = requests.get("%s/servers/%s/logs" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
                                                                                                auth['password']))
         if r.status_code == 200:
             logs = r.json()
@@ -191,12 +191,12 @@ def send_message_all_channels(host, message):
     """
     uri = get_murmur_uri(host)
     auth = get_murmur_credentials(host)
-    servers_list = requests.get('%s/api/v1/servers/' % uri)
+    servers_list = requests.get('%s/servers/' % uri)
     server_ids_list = [i['id'] for i in servers_list.json()]
 
     for i in server_ids_list:
         try:
-            r = requests.post("%s/api/v1/servers/%s/sendmessage" % (uri, i),
+            r = requests.post("%s/servers/%s/sendmessage" % (uri, i),
                               data={'message': message},
                               auth=HTTPDigestAuth(auth['username'], auth['password']))
         except requests.exceptions.ConnectionError as e:
