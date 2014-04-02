@@ -5,7 +5,7 @@
 {% block body %}
     <div>
         <a class="pure-button button-secondary" href="/server/{{ server.uuid }}" target="_BLANK">View</a>
-        <form action="/admin/servers/{{ server.id }}/kill" method="POST" style="display: inline-block;">
+        <form id="kill-server" action="/admin/servers/{{ server.id }}/kill" method="POST" style="display: inline-block;">
             <button type="submit" class="pure-button button-error">Kill</button>
         </form>
     </div>
@@ -159,6 +159,11 @@
         var expire_date = '{{ server.expiration }}';
         $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
         $("#expires").text(moment.utc(expire_date).fromNow());
+        $("#kill-server").on('submit', function() {
+            if (!confirm('Are you sure you want to kill this server?')) {
+                event.preventDefault();
+            }
+        });
 
         // Knockout Users Model for displaying and updated users online
         function UsersViewModel() {

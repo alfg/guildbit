@@ -28,35 +28,44 @@ def get_host_by_location(location):
                     'username': i['username'],
                     'password': i['password']
                 }
+            else:
+                pass
+    return {}
 
 
 def get_murmur_hostname(location):
     """
     Shortcut for getting murmur's hostname.
     """
-    return get_host_by_location(location)['hostname']
+    host = get_host_by_location(location)
+    return host.get('hostname', None)
 
 
 def get_http_uri(location):
     """
     Shortcut for getting murmur's hostname.
     """
-    return get_host_by_location(location)['http_uri']
+    host = get_host_by_location(location)
+    return host.get('http_uri', None)
 
 
 def get_murmur_uri(location):
     """
     Shortcut for getting murmur's uri.
+    @rtype : dict
     """
-    return get_host_by_location(location)['uri']
+    host = get_host_by_location(location)
+    return host.get('uri', None)
 
 
 def get_murmur_credentials(location):
     """
     Shortcut for getting murmur's credentials for specified location.
     """
-    username = get_host_by_location(location)['username']
-    password = get_host_by_location(location)['password']
+
+    host = get_host_by_location(location)
+    username = host.get('username', None)
+    password = host.get('password', None)
     return {'username': username, 'password': password}
 
 
@@ -99,14 +108,17 @@ def get_server(host, instance_id):
     """
     uri = get_murmur_uri(host)
     auth = get_murmur_credentials(host)
-    try:
-        r = requests.get("%s/servers/%i" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
-                                                                                          auth['password']))
-        if r.status_code == 200:
-            return r.json()
-    except requests.exceptions.ConnectionError as e:
+
+    if uri is not None:
+        try:
+            r = requests.get("%s/servers/%i" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
+                                                                                       auth['password']))
+            if r.status_code == 200:
+                return r.json()
+        except requests.exceptions.ConnectionError as e:
+            return None
+    else:
         return None
-    return None
 
 
 def delete_server(host, instance_id):
@@ -117,7 +129,7 @@ def delete_server(host, instance_id):
     auth = get_murmur_credentials(host)
     try:
         r = requests.delete("%s/servers/%i" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
-                                                                                             auth['password']))
+                                                                                      auth['password']))
         if r.status_code == 200:
             return r.json()
     except requests.exceptions.ConnectionError as e:
@@ -173,14 +185,15 @@ def get_server_logs(host, instance_id):
     """
     uri = get_murmur_uri(host)
     auth = get_murmur_credentials(host)
-    try:
-        r = requests.get("%s/servers/%s/logs" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
-                                                                                               auth['password']))
-        if r.status_code == 200:
-            logs = r.json()
-            return logs
-    except requests.exceptions.ConnectionError as e:
-        pass
+    if uri is not None:
+        try:
+            r = requests.get("%s/servers/%s/logs" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
+                                                                                                   auth['password']))
+            if r.status_code == 200:
+                logs = r.json()
+                return logs
+        except requests.exceptions.ConnectionError as e:
+            pass
     logs = []
     return logs
 
