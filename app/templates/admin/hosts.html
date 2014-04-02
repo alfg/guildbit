@@ -12,6 +12,7 @@
                 <th>Active</th>
                 <th>Capacity</th>
                 <th>Monitor</th>
+                <th>API Route</th>
             </tr>
         </thead>
 
@@ -24,6 +25,7 @@
                 <td>{{ host.status }}</td>
                 <td>{{ host.booted_servers }} / {{ host.capacity }}</td>
                 <td><a href="{{ host.monitor_url }}">{{ host.monitor_url }}</a></td>
+                <td><a href="{{ host.uri }}">{{ host.uri }}</a></td>
             </tr>
             {% endfor %}
         </tbody>
