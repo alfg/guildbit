@@ -463,7 +463,7 @@ class AdminFeedbackView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-        feedback = Rating.query.all()
+        feedback = Rating.query.order_by(Rating.id.desc()).all()
         return render_template('admin/feedback.html', feedback=feedback, title="Feedback")
 
 
