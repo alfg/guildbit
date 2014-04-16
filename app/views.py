@@ -364,6 +364,30 @@ class AdminServersView(FlaskView):
         return jsonify(logs=logs)
 
 
+class AdminPortsView(FlaskView):
+    """
+    Admin Ports view.
+    """
+
+    @login_required
+    @admin_required
+    def index(self):
+        filter = request.args.get('filter')
+        stats = murmur.get_all_server_stats()
+        stats_ctx = {
+            'servers_online': stats.get('servers_online'),
+            'users_online': stats.get('users_online')
+        }
+        server_list = build_hosts_list()
+        if filter is not None:
+            ports = murmur.list_all_servers(filter)
+        else:
+            ports = murmur.list_all_servers(server_list[0][0])
+
+
+        return render_template('admin/ports.html', ports=ports, stats=stats_ctx, server_list=server_list, title="Ports")
+
+
 class AdminUsersView(FlaskView):
 
     @login_required
@@ -528,6 +552,7 @@ HomeView.register(app, route_base='/')
 ServerView.register(app)
 AdminView.register(app)
 AdminServersView.register(app, route_prefix='/admin/', route_base='/servers')
+AdminPortsView.register(app, route_prefix='/admin/', route_base='/ports')
 AdminUsersView.register(app, route_prefix='/admin/', route_base='/users')
 AdminHostsView.register(app, route_prefix='/admin/', route_base='/hosts')
 AdminToolsView.register(app, route_prefix='/admin/', route_base='/tools')

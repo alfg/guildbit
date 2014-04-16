@@ -11,10 +11,11 @@ DATABASE_URI = 'sqlite:////tmp/test.db'
 BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CACHE_BACKEND = 'redis'
-MURMUR_REST_HOST = 'http://localhost:5000'
 
+# Murmur default settings
 DEFAULT_MAX_USERS = 10
 DEFAULT_CHANNEL_NAME = 'GuildBit.com Mumble Server'
+DEFAULT_MURMUR_PORT = 50000  # Murmur server port
 
 MAIL_SERVER = 'email-smtp.us-east-1.amazonaws.com'
 MAIL_PORT = 587
