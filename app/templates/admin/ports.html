@@ -1,0 +1,83 @@
+{% extends"_layout/admin_base.html" %}
+{% set filter = request.args.get('filter') %}
+
+{% block title %}Admin Home{% endblock %}
+
+{% block body %}
+    <form class="pure-form" method="get">
+        <select id="select-host" name="filter">
+            {% for k, v in server_list %}
+                <option value="{{ k }}" {% if request.args.get('filter') == k %}selected="selected"{% endif %}>{{ v }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    <div class="pure-u-1-3 spacer">
+        <table class="pure-table pure-table-horizontal pure-table-striped">
+            <thead>
+                <tr>
+                    <th>Total Servers Online</th>
+                    <th>Total Users Online</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ stats.servers_online }}</td>
+                    <td>{{ stats.users_online }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div class="pure-u-2-3">
+    <table class="pure-table pure-table-horizontal pure-table-striped servers">
+        <thead>
+            <tr>
+                <th width="5%">Port</th>
+                <th width="5%">ID</th>
+                <th width="20%">Uptime</th>
+                <th>Logs</th>
+                <th>Channels</th>
+                <th>Max Users</th>
+                <th>Users Online</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for s in ports|sort(attribute='port') %}
+            <tr>
+                <td>{{ s.port }}</td>
+                <td>{{ s.id }}</td>
+                <td>{{ s.uptime }}</td>
+                <td>{{ s.log_length }}</td>
+                <td>{{ s.channels }}</td>
+                <td>{{ s.maxusers }}</td>
+                <td>{{ s.users }}</td>
+            </tr>
+            {% endfor %}
+            {% if ports == [] %}
+                <tr><td class="text-center" colspan="9">No Open Ports</td></tr>
+            {% endif %}
+
+        </tbody>
+    </table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+    <script src="/static/js/libs/moment.min.js"></script>
+    <script type="text/javascript">
+        // Moment.js time formatting
+        $(".created-date").text(function(index, value) {
+            return moment.utc(value).local().format("MM/DD h:mm:ss a");
+        });
+    </script>
+    <script>
+        $(function() {
+            // Update Bandwidth Info on select change
+            $('#select-host').change(function() {
+                this.form.submit();
+            })
+        })
+    </script>
+{% endblock %}

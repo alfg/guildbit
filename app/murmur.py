@@ -6,7 +6,7 @@ All murmur utility functions and logic for interfacing with configured murmur se
 import requests
 from requests.auth import HTTPDigestAuth
 
-from settings import MURMUR_HOSTS
+from settings import MURMUR_HOSTS, DEFAULT_MURMUR_PORT
 
 ##
 ## Helper functions to load configs from settings
@@ -89,9 +89,14 @@ def create_server_by_location(location, payload):
     """
     host = get_host_by_location(location)['uri']
     auth = get_murmur_credentials(location)
+    port_check = find_available_port(location)
+
+    # Set port if there's an open port
+    if port_check is not None:
+        payload["port"] = port_check
+
     try:
-        r = requests.post(host + "/servers/", data=payload, auth=HTTPDigestAuth(auth['username'],
-                                                                                       auth['password']))
+        r = requests.post(host + "/servers/", data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
         if r.status_code == 200:
             server_id = r.json()['id']
             return server_id
@@ -217,3 +222,72 @@ def send_message_all_channels(host, message):
             traceback.print_exc()
     return
 
+
+def list_all_servers(location):
+    """
+    Lists all servers for specified location
+    @param location: location from config
+    @return: list
+    """
+    uri = get_murmur_uri(location)
+    auth = get_murmur_credentials(location)
+
+    if uri is not None:
+        try:
+            r = requests.get("%s/servers/" % uri, auth=HTTPDigestAuth(auth['username'], auth['password']))
+            if r.status_code == 200:
+                return r.json()
+        except requests.exceptions.ConnectionError as e:
+            return None
+    else:
+        return None
+
+
+##
+## Utilities for interfacing with murmur servers
+##
+
+def find_available_port(location):
+    """
+    Scans all active ports in use and selects the next available port.
+    @param location: location of mumble server instance from config
+    @return: Port number
+    """
+
+    start_port = DEFAULT_MURMUR_PORT
+
+    # Query list of active ports
+    servers = list_all_servers(location)
+
+    # Set active and inactive port lists. Initialize the start port.
+    active_ports = [start_port]
+    inactive_ports = []
+
+    # Add all active ports to the active list
+    for i in servers:
+        active_ports.append(i["port"])
+
+    # Find missing ports within port range
+    for i in active_ports:
+        if i - 1 not in active_ports:
+            inactive_ports.append(i - 1)
+
+    # Pop first item from list since first item will always be -1 of the port range
+    if inactive_ports:
+        inactive_ports.pop(0)
+
+    # Sort lists
+    active_ports = sorted(active_ports)
+    inactive_ports = sorted(inactive_ports)
+
+    print "Active ports:", active_ports
+    print "Inactive ports: ", inactive_ports
+
+    # If any inactive ports, then use the first item. Otherwise, use the last active port + 1
+    if inactive_ports:
+        chosen_port = inactive_ports[0]
+    else:
+        chosen_port = active_ports[-1] + 1
+
+    print "Next available port: %s" % chosen_port
+    return chosen_port

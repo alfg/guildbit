@@ -21,7 +21,7 @@ def admin_required(fn):
 
 
 def get_or_create(session, model, **kwargs):
-    """
+    """ INACTIVE
     A get or create helper for SQLAlchemy
     """
     instance = session.query(model).filter_by(**kwargs).first()
@@ -34,7 +34,7 @@ def get_or_create(session, model, **kwargs):
 
 
 def host_balancer():
-    """
+    """ INACTIVE
     Checks the amount of murmur hosts in settings and returns a server depending on server instances load. Used for
     deciding which murmur host to use when deploying a new mumble instance.
     """
@@ -62,3 +62,5 @@ def host_balancer():
         lowest = None
 
     return lowest
+
+
