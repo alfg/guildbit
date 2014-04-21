@@ -261,20 +261,16 @@ def find_available_port(location):
 
     # Set active and inactive port lists. Initialize the start port.
     active_ports = [start_port]
-    inactive_ports = []
 
     # Add all active ports to the active list
     for i in servers:
         active_ports.append(i["port"])
 
-    # Find missing ports within port range
-    for i in active_ports:
-        if i - 1 not in active_ports:
-            inactive_ports.append(i - 1)
-
-    # Pop first item from list since first item will always be -1 of the port range
-    if inactive_ports:
-        inactive_ports.pop(0)
+    # Find inactive ports and build a set
+    lowest_item = min(active_ports)
+    highest_item = max(active_ports)
+    full_set = set(xrange(lowest_item, highest_item + 1))
+    inactive_ports = full_set - set(active_ports)
 
     # Sort lists
     active_ports = sorted(active_ports)
