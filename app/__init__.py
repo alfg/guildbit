@@ -5,6 +5,7 @@ from flask.ext.login import LoginManager
 from flask.ext.openid import OpenID
 from flask.ext.mail import Mail
 from flask.ext.cache import Cache
+from flask.ext.babel import Babel
 
 import settings
 
@@ -32,6 +33,9 @@ mail = Mail(app)
 # Configure Flask-Cache
 app.config['CACHE_TYPE'] = settings.CACHE_BACKEND
 cache = Cache(app)
+
+# Configure Babel
+babel = Babel(app)
 
 # Configure email error handler
 if not app.debug:

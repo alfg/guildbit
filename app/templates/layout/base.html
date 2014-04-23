@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
 	<title>{% block title %}{% endblock %} &mdash; GuildBit.com</title>
-	<meta name="description" content="GuildBit - Free Mumble Hosting" />
+	<meta name="description" content="{{ _('GuildBit - Free Mumble Hosting') }}" />
 	<meta name="keywords" content="mumble, voip, hosting, guild, mmo, ffxiv, server, murmur" />
 	<meta name="author" content="alfg.co">
 
@@ -13,12 +13,12 @@
 
 	<!-- Facebook Metadata /-->
 	<meta property="og:image" content="http://guildbit.com/static/img/screenshot_home.png" />
-	<meta property="og:description" content="GuildBit - Free Mumble Server Hosting"/>
+	<meta property="og:description" content="{{ _('GuildBit - Free Mumble Server Hosting') }}"/>
 	<meta property="og:title" content="GuildBit" />
 
 	<!-- Google+ Metadata /-->
 	<meta itemprop="name" content="GuildBit">
-	<meta itemprop="description" content="Free Mumble Server Hosting">
+	<meta itemprop="description" content="{{ _('GuildBit - Free Mumble Server Hosting') }}">
 	<meta itemprop="image" content="http://guildbit.com/static/img/screenshot_home.png">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -49,9 +49,9 @@
             </div>
             <div class="header-links">
                 <ul>
-                    <li><a class="pure-button button-small pure-button-primary" href="/"><i class="fa fa-home"></i> Home</a></li>
-                    <li><a class="pure-button button-small button-success" href="/how-it-works"><i class="fa fa-cogs"></i> How It Works</a></li>
-                    <li><a class="pure-button button-small button-warning" href="/donate"><i class="fa fa-btc"></i> Donate</a></li>
+                    <li><a class="pure-button button-small pure-button-primary" href="/"><i class="fa fa-home"></i> {{ _('Home') }}</a></li>
+                    <li><a class="pure-button button-small button-success" href="/how-it-works"><i class="fa fa-cogs"></i> {{ _('How It Works') }}</a></li>
+                    <li><a class="pure-button button-small button-warning" href="/donate"><i class="fa fa-btc"></i> {{ _('Donate') }}</a></li>
                 </ul>
             </div>
         </div>
@@ -61,17 +61,17 @@
 
     <div class="footer-links">
         <ul class="text-center">
-            <li><a href="{{ url_for('HomeView:contact') }}">Found a bug?</a></li>
+            <li><a href="{{ url_for('HomeView:contact') }}">{{ _('Found a bug?') }}</a></li>
             <li>|</li>
-            <li><a href="{{ url_for('HomeView:updates') }}">Updates</a></li>
+            <li><a href="{{ url_for('HomeView:updates') }}">{{ _('Updates') }}</a></li>
             {% if g.user.is_authenticated() %}
-            <li>Logged in as <strong>{{ g.user.email }}</strong></li>
+            <li>{{ _('Logged in as ') }} <strong>{{ g.user.email }}</strong></li>
             <li>|</li>
             {% if g.user.role == 1 %}
                 <li><a href="/admin">Admin</a></li>
                 <li>|</li>
             {% endif %}
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li><a href="{{ url_for('logout') }}">{{ _('Logout') }}</a></li>
             {% endif %}
         </ul>
         <div class="share-js"></div>
@@ -98,7 +98,7 @@
         $('.share-js').share({
             url: 'http://guildbit.com',
             text: 'Guildbit - Free 10 slot Mumble servers. No registration required!',
-            button_text: 'Share Us!'
+            button_text: '{{ _('Share Us!') }}'
         });
     </script>
 
@@ -107,31 +107,37 @@
         var os = navigator.platform;
         var ua = navigator.userAgent.toLowerCase();
 
+        var _LinuxDownload = '{{ _('Linux Download') }}';
+        var _WindowsDownload = '{{ _('Windows Download') }}';
+        var _OSXDownload = '{{ _('OSX Download') }}';
+        var _AndroidDownload = '{{ _('Android Download') }}';
+        var _iOSDownload = '{{ _('iOS Download') }}';
+
         if (os.indexOf("Linux") !== -1 && ua.indexOf("android") === -1) {
-            $('#os-download #os-text').text('Linux Download');
+            $('#os-download #os-text').text(_LinuxDownload);
             $('#os-download #download-link i').removeClass('fa-windows');
             $('#os-download #download-link i').addClass('fa-linux');
             $('#os-download #download-link').attr('href', 'http://mumble.sourceforge.net/Installing_Mumble#Linux');
         }
         else if (os.indexOf("Win") !== -1) {
-            $('#os-download #os-text').text('Windows Download');
+            $('#os-download #os-text').text(_WindowsDownload);
             $('#os-download #download-link i').addClass('fa-windows');
             $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.5/mumble-1.2.5.msi/download');
         }
         else if (os.indexOf("MacOS") !== -1) {
-            $('#os-download #os-text').text('OSX Download');
+            $('#os-download #os-text').text(_OSXDownload);
             $('#os-download #download-link i').removeClass('fa-windows');
             $('#os-download #download-link i').addClass('fa-apple');
             $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.5/Mumble-1.2.5.dmg/download');
         }
         else if (ua.indexOf("android") > -1) {
-            $('#os-download #os-text').text('Android Download');
+            $('#os-download #os-text').text(_AndroidDownload);
             $('#os-download #download-link i').removeClass('fa-windows');
             $('#os-download #download-link i').addClass('fa-android');
             $('#os-download #download-link').attr('href', 'https://play.google.com/store/apps/details?id=com.morlunk.mumbleclient');
         }
         else if (os === 'iPad' || os == 'iPhone' || os === 'iPod') {
-            $('#os-download #os-text').text('iOS Download');
+            $('#os-download #os-text').text(_iOSDownload);
             $('#os-download #download-link i').removeClass('fa-windows');
             $('#os-download #download-link i').addClass('fa-apple');
             $('#os-download #download-link').attr('href', 'https://itunes.apple.com/us/app/mumble/id443472808');

@@ -1,17 +1,19 @@
-{% extends"_layout/base.html" %}
+{% extends"layout/base.html" %}
 
 {% block title %}Free Mumble Server Hosting{% endblock %}
 
 {% block body %}
         <div class="ten columns centered content">
-            <h1 class="text-center">Deploy a Mumble server for your group. It's free!</h1>
+            <h1 class="text-center">{{ _('Deploy a Mumble server for your group. It&apos;s free!') }}</h1>
 
             <form id="deploy-form" class="pure-form deploy-form" action="/" method="POST">
                 {{ form.csrf_token }}
                     {{ form.location }}
                     {{ form.duration }}
                     {{ form.password(size=20, class='', placeholder='Set a Password', autocomplete='off') }}
-                    <button id="deploy-button" class="pure-button pure-button-primary" type="submit" value="Submit"><i class="fa fa-cloud"></i> Deploy Server</button>
+                    <button id="deploy-button" class="pure-button pure-button-primary" type="submit" value="Submit">
+                        <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
+                    </button>
             </form>
 
             {% if form.errors %}
@@ -25,13 +27,13 @@
             {% endif %}
 
             <div class="description text-center">
-                <p>GuildBit is a free service to deploy temporary Mumble servers for your group. The service is completely
-                funded by donations. <a href="/how-it-works">Learn how it works &raquo;</a></p>
-                <span>*Servers are currently limited to 10 slots</span>
+                <p>{{ _('GuildBit is a free service to deploy temporary Mumble servers for your group. The service is completely
+                funded by donations. <a href="/how-it-works">Learn how it works &raquo;</a>') }}</p>
+                <span>{{ _('*Servers are currently limited to 10 slots') }}</span>
             </div>
     </div>
 
-    {% include '_partials/_dont_have_mumble.html' %}
+    {% include 'partials/_dont_have_mumble.html' %}
 
 {% endblock %}
 
@@ -39,7 +41,7 @@
     <script type="text/javascript">
         $('#deploy-form').submit(function() {
             $('#deploy-button').attr('disabled', 'disabled');
-            $('#deploy-button').html("<i class='fa fa-refresh fa-spin'></i> Deploying...");
+            $('#deploy-button').html("<i class='fa fa-refresh fa-spin'></i> {{ _('Deploying...') }}");
         });
     </script>
 {% endblock %}
