@@ -8,11 +8,17 @@ import psutil
 
 import settings
 from util import admin_required
-from app import app, db, tasks, lm, oid, mail, cache
+from app import app, db, tasks, lm, oid, mail, cache, babel
 from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm, NoticeForm
 from app.forms import SendChannelMessageForm, build_hosts_list
 from app.models import Server, User, Notice, Rating, ROLE_USER
 import app.murmur as murmur
+
+
+## Flask-babel
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(settings.LANGUAGES.keys())
 
 
 ## Flask-Login required user loaders
@@ -539,12 +545,12 @@ def after_login(resp):
 ## Error views
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template('_error_pages/404.html'), 404
+    return render_template('error_pages/404.html'), 404
 
 
 @app.errorhandler(500)
 def page_not_found(error):
-    return render_template('_error_pages/500.html'), 500
+    return render_template('error_pages/500.html'), 500
 
 
 ## Register flask-classy views

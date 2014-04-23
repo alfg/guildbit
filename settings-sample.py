@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 
 APP_HOST = '0.0.0.0'
@@ -30,6 +32,11 @@ OPENID_PROVIDERS = [
     {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},
     {'name': 'Yahoo', 'url': 'https://me.yahoo.com'}
 ]
+
+LANGUAGES = {
+    'en': 'English',
+    'es': 'Español'
+}
 
 MURMUR_HOSTS = [
     {
