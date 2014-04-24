@@ -18,7 +18,7 @@ import app.murmur as murmur
 ## Flask-babel
 @babel.localeselector
 def get_locale():
-    return request.accept_languages.best_match(settings.LANGUAGES.keys())
+    return "es" #request.accept_languages.best_match(settings.LANGUAGES.keys())
 
 
 ## Flask-Login required user loaders

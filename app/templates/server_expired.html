@@ -1,29 +1,29 @@
 {% extends"layout/base.html" %}
 
-{% block title %}Your Server is Ready!{% endblock %}
+{% block title %}{{ _('Your Server Has Expired!') }}{% endblock %}
 
 {% block body %}
     <div class="content server">
         <div class="title">
-            <h1>Your server has expired!</h1>
-            <p>Return to the <a href="/">homepage</a> to deploy another server.</p>
+            <h1>{{ _('Your server has expired!') }}</h1>
+            <p>{{ _('Return to the <a href="/">homepage</a> to deploy another server.') }}</p>
         </div>
         <table class="rounded centered">
             <thead>
                 <tr>
-                    <th colspan="2">Details</th>
+                    <th colspan="2">{{ _('Details') }}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Expired</td>
+                    <td>{{ _('Expired') }}</td>
                     <td><span id="expires-date"></span> (<span id="expires"></span>) </td>
                 </tr>
             </tbody>
         </table>
 
         <div class="feedback-quality">
-            <h3>How was the quality of your Mumble session?</h3>
+            <h3>{{ _('How was the quality of your Mumble session?') }}</h3>
             <div id="rating" class="rating">
                 <span class="star {% if rating.stars == 5 %}starred{% endif %}" data-star="5"></span>
                 <span class="star {% if rating.stars == 4 %}starred{% endif %}" data-star="4"></span>
@@ -32,12 +32,12 @@
                 <span class="star {% if rating.stars == 1 %}starred{% endif %}" data-star="1"></span>
             </div>
             <form id="feedback-form" class="pure-form" style="display: none;">
-                <textarea id="message" cols="40" rows="3" name="message" placeholder="How can we improve GuildBit?"></textarea>
-                <button class="pure-button pure-button-primary" type="submit">Submit</button>
+                <textarea id="message" cols="40" rows="3" name="message" placeholder="{{ _('How can we improve GuildBit?') }}"></textarea>
+                <button class="pure-button pure-button-primary" type="submit">{{ _('Submit') }}</button>
             </form>
             <div id="thankyou-message" style="display: none;">
-                <h2>Thank you!</h2>
-                <p>Your feedback is appreciated for the quality of GuildBit.com!</p>
+                <h2>{{ _('Thank you!') }}</h2>
+                <p>{{ _('Your feedback is appreciated for the quality of GuildBit.com!') }}</p>
             </div>
         </div>
     </div>

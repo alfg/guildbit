@@ -1,6 +1,6 @@
 {% extends"layout/base.html" %}
 
-{% block title %}Contact or Report an Issue{% endblock %}
+{% block title %}{{ _('Contact or Report an Issue') }}{% endblock %}
 
 {% block body %}
     <div class="content">
@@ -13,8 +13,8 @@
             </ul>
           {% endif %}
         {% endwith %}
-        <h1>Thank you!</h1>
-        <p>Thanks for submitting your question, comment or bug report! Your feedback is appreciated!</p>
+        <h1>{{ _('Thank you!') }}</h1>
+        <p>{{ _('Thanks for submitting your question, comment or bug report! Your feedback is appreciated!') }}</p>
     </div>
 {% endblock %}
 

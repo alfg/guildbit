@@ -1,40 +1,40 @@
 {% extends"layout/base.html" %}
 
-{% block title %}Your Server is Ready!{% endblock %}
+{% block title %}{{ _('Your Server is Ready!') }}{% endblock %}
 
 {% block body %}
     <div class="content server">
         <div class="title">
-            <h1>Your server is ready!</h1>
-            <h2>Use the details below to connect</h2>
+            <h1>{{ _('Your server is ready!') }}</h1>
+            <h2>{{ _('Use the details below to connect') }}</h2>
         </div>
         <table class="rounded">
             <thead>
                 <tr>
-                    <th colspan="2">Mumble Connection Details</th>
+                    <th colspan="2">{{ _('Mumble Connection Details') }}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td width="20%">Server</td>
+                    <td width="20%">{{ _('Server') }}</td>
                     <td>{{ server.mumble_host }}</td>
                 </tr>
                 <tr>
-                    <td>Port</td>
+                    <td>{{ _('Port') }}</td>
                     <td>{{ details.port }}</td>
                 </tr>
                 <tr>
-                    <td>Password</td>
+                    <td>{{ _('Password') }}</td>
                     <td>{{ server.password }}</td>
                 </tr>
                 <tr>
-                    <td>Direct Link</td>
+                    <td>{{ _('Direct Link') }}</td>
                     <td><a href="mumble://{{ server.mumble_host }}:{{ details.port }}">mumble://{{ server.mumble_host }}:{{ details.port }}</a></td>
                 </tr>
                 <tr>
                     <td>
                         <div class="ttip" data-toggle="tooltip" title="Share the connection details easily by copying the snippet to your clipboard">
-                            Copy Text
+                            {{ _('Copy Text') }}
                             <i class="fa fa-question-circle"></i>
                         </div>
                     </td>
@@ -42,19 +42,19 @@
                         <div class="copy-url append field">
                             <form class="pure-form">
                                 <input id="copy-text" class="pure-u-2-3" type="text" value="Host: {{ server.mumble_host }} Port: {{ details.port }} Pass: {{ server.password }}" readonly="readonly" />
-                                <a class="pure-button pure-button-primary" id="copy-button" href="#">Copy</a>
+                                <a class="pure-button pure-button-primary" id="copy-button" href="#">{{ _('Copy') }}</a>
                             </form>
                         </div>
                     </td>
                 </tr>
                 {% if server.type == 'temp' %}
                 <tr>
-                    <td>Expires</td>
+                    <td>{{ _('Expires') }}</td>
                     <td><span id="expires-date"></span> (<span id="expires" data-bind="text: remainingTime"></span>) </td>
                 </tr>
                 {% endif %}
                 <tr>
-                    <td>Slots</td>
+                    <td>{{ _('Slots') }}</td>
                     <td>{{ details.maxusers }}</td>
                 </tr>
             </tbody>
@@ -63,8 +63,8 @@
         <table class="rounded centered" data-bind="with: usersOnline">
             <thead>
                 <tr>
-                    <th>Users Online (<span data-bind="text: count"></span>)</th>
-                    <th class="text-right">Duration</th>
+                    <th>{{ _('Users Online') }} (<span data-bind="text: count"></span>)</th>
+                    <th class="text-right">{{ _('Duration') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,13 +76,13 @@
                 <!-- /ko -->
 
                 <!-- ko if: count == 0 -->
-                <tr><td class="text-center" colspan="2">No users are online</td></tr>
+                <tr><td class="text-center" colspan="2">{{ _('No users are online') }}</td></tr>
                 <!-- /ko -->
             </tbody>
         </table>
 
         <div class="feedback-quality">
-            <h3>How was the quality of your Mumble session?</h3>
+            <h3>{{ _('How was the quality of your Mumble session?') }}</h3>
             <div id="rating" class="rating">
                 <span class="star {% if rating.stars == 5 %}starred{% endif %}" data-star="5"></span>
                 <span class="star {% if rating.stars == 4 %}starred{% endif %}" data-star="4"></span>
@@ -91,12 +91,12 @@
                 <span class="star {% if rating.stars == 1 %}starred{% endif %}" data-star="1"></span>
             </div>
             <form id="feedback-form" class="pure-form" style="display: none;">
-                <textarea id="message" cols="40" rows="3" name="message" placeholder="How can we improve GuildBit?"></textarea>
-                <button class="pure-button pure-button-primary" type="submit">Submit</button>
+                <textarea id="message" cols="40" rows="3" name="message" placeholder="{{ _('How can we improve GuildBit?') }}"></textarea>
+                <button class="pure-button pure-button-primary" type="submit">{{ _('Submit') }}</button>
             </form>
             <div id="thankyou-message" style="display: none;">
-                <h2>Thank you!</h2>
-                <p>Your feedback is appreciated for the quality of GuildBit.com!</p>
+                <h2>{{ _('Thank you!') }}</h2>
+                <p>{{ _('Your feedback is appreciated for the quality of GuildBit.com!') }}</p>
             </div>
         </div>
     </div>
