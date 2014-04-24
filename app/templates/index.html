@@ -1,6 +1,6 @@
 {% extends"layout/base.html" %}
 
-{% block title %}Free Mumble Server Hosting{% endblock %}
+{% block title %}{{ _('Free Mumble Server Hosting') }}{% endblock %}
 
 {% block body %}
         <div class="ten columns centered content">
@@ -10,7 +10,7 @@
                 {{ form.csrf_token }}
                     {{ form.location }}
                     {{ form.duration }}
-                    {{ form.password(size=20, class='', placeholder='Set a Password', autocomplete='off') }}
+                    {{ form.password(size=20, class='', placeholder='%s' % _('Set a Password'), autocomplete='off') }}
                     <button id="deploy-button" class="pure-button pure-button-primary" type="submit" value="Submit">
                         <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
                     </button>

@@ -1,6 +1,6 @@
 {% extends"layout/base.html" %}
 
-{% block title %}Contact or Report an Issue{% endblock %}
+{% block title %}{{ _('Contact or Report an Issue') }}{% endblock %}
 
 {% block body %}
     <div class="content">
@@ -22,25 +22,25 @@
             </ul>
           {% endif %}
         {% endwith %}
-        <h1>Contact</h1>
-        <p>Found a bug? Please report the issue by submitting the form below. You can also use this form
-        if you have any general inquires.</p>
+        <h1>{{ _('Contact') }}</h1>
+        <p>{{ _('Found a bug? Please report the issue by submitting the form below. You can also use this form
+        if you have any general inquires.') }}</p>
         <form action="" method="post" name="contact" class="pure-form pure-form-aligned">
             {{ form.hidden_tag() }}
             <div class="pure-control-group">
-                <label for="subject">Subject</label>
-                {{ form.subject(class="pure-input-2-3", placeholder="Subject") }}
+                <label for="subject">{{ _('Subject') }}</label>
+                {{ form.subject(class="pure-input-2-3", placeholder="%s" % _('Subject')) }}
             </div>
             <div class="pure-control-group">
-                <label for="email">Email</label>
-                {{ form.email(class="pure-input-2-3", placeholder="Email") }}
+                <label for="email">{{ _('Email') }}</label>
+                {{ form.email(class="pure-input-2-3", placeholder="%s" % _('Email')) }}
             </div>
             <div class="pure-control-group">
-                <label for="message">Message</label>
-                {{ form.message(class="pure-input-2-3", placeholder="Message", rows='4') }}
+                <label for="message">{{ _('Message') }}</label>
+                {{ form.message(class="pure-input-2-3", placeholder="%s" % _('Message'), rows='4') }}
             </div>
             <div class="pure-controls">
-                <button class="pure-button pure-button-primary" type="submit" value="Submit">Send</button>
+                <button class="pure-button pure-button-primary" type="submit" value="Submit">{{ _('Send') }}</button>
             </div>
 
         </form>

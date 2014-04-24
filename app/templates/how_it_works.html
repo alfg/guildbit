@@ -1,67 +1,70 @@
 {% extends"layout/base.html" %}
 
-{% block title %}How It Works{% endblock %}
+{% block title %}{{ _('How It Works') }}{% endblock %}
 
 {% block body %}
     <div class="content">
-        <h1>How It Works</h1>
+        <h1>{{ _('How It Works') }}</h1>
 
-        <p>Traditional VOIP hosts offer subscription-based and persistent servers, so generally a premium
+        <p>{{ _('Traditional VOIP hosts offer subscription-based and persistent servers, so generally a premium
         is charged. <strong>GuildBit</strong> works on the idea of temporary servers to preserve system
-        resources, opening up more server slots which aren't being occupied. This helps lower hosting,
+        resources, opening up more server slots which aren&apos;t being occupied. This helps lower hosting,
         resources and bandwidth costs. Also, VPS hosting nowadays are much cheaper than they used to be. The
-        rest is supported by donations.</p>
+        rest is supported by donations.') }}</p>
 
-        <h2>The Process</h2>
+        <h2>{{ _('The Process') }}</h2>
         <ul>
-            <li><strong>Set a location</strong> &mdash; Choose a server location closest to your group to minimize latency.</li>
-            <li><strong>Set a duration</strong> &mdash; You can choose how long the server instance will live. From 4-24 hours. The
-            less hours you use, the more resources open up for others. :)</li>
-            <li><strong>Set a password</strong> &mdash; Password protected servers are required, due to the fact the server may be
-            reused in the future.</li>
-            <li><strong>Deploy</strong> &mdash; The server generally takes a few seconds to spin up.</li>
-            <li><strong>Connect</strong> &mdash; That's all. The following page will give you the connection details.</li>
-            <li><strong>Share</strong> &mdash; Share the connection details, or use the copy feature to copy/paste the credentials
-            directly. The server page also monitors users in room and displays the expiration countdown.</li>
+            <li><strong>{{ _('Set a location') }}</strong> &mdash; {{ _('Choose a server location closest to your group to minimize latency.') }}</li>
+            <li><strong>{{ _('Set a duration') }}</strong> &mdash; {{ ('You can choose how long the server instance will live. From 4-24 hours. The
+            less hours you use, the more resources open up for others. :)') }}</li>
+            <li><strong>{{ _('Set a password') }}</strong> &mdash; {{ _('Password protected servers are required, due to the fact the server may be
+            reused in the future.') }}</li>
+            <li><strong>{{ _('Deploy') }}</strong> &mdash; {{ _('The server generally takes a few seconds to spin up.') }}</li>
+            <li><strong>{{ _('Connect') }}</strong> &mdash; {{ _('That&apos;s all. The following page will give you the connection details.') }}</li>
+            <li><strong>{{ _('Share') }}</strong> &mdash; {{ _('Share the connection details, or use the copy feature to copy/paste the credentials
+            directly. The server page also monitors users in room and displays the expiration countdown.') }}</li>
         </ul>
 
-        <h2>FAQs</h2>
+        <h2>{{ _('FAQs') }}</h2>
         <dl class="faqs">
-            <dt>How is it free?</dt>
-            <dd>Donations and low server/bandwidth costs. This is still in an experimental phase. Remainders
-                are paid of out pocket. :)</dd>
+            <dt>{{ _('How is it free?') }}</dt>
+            <dd>{{ _('Donations and low server/bandwidth costs. This is still in an experimental phase. Remainders
+                are paid of out pocket. :)') }}</dd>
 
-            <dt>Why temporary servers?</dt>
-            <dd>The idea is targeted towards gamers who need a quick Mumble server for their group or raid
+            <dt>{{ _('Why temporary servers?') }}</dt>
+            <dd>{{ _('The idea is targeted towards gamers who need a quick Mumble server for their group or raid
             without the hassle of setting up their own, or subscribing to a service. The server expires to not
-            only save on resources, but to free up the slot for others.</dd>
+            only save on resources, but to free up the slot for others.') }}</dd>
 
-            <dt>Why only 10 slots?</dt>
-            <dd>For now we're limiting servers to 10 slots as the service is new and experimental.</dd>
+            <dt>{{ _('Why only 10 slots?') }}</dt>
+            <dd>{{ _('For now we&apos;re limiting servers to 10 slots as the service is new and experimental.') }}</dd>
 
-            <dt>Why only offer Mumble and not Ventrilo or TeamSpeak?</dt>
-            <dd>Mumble is <a href="https://github.com/mumble-voip/mumble/blob/master/LICENSE">free</a> and
-            <a href="http://en.wikipedia.org/wiki/Open-source_software">open-source software</a>. So it doesn't
-            cost me any licensing fees to host Mumble servers or offer it as a service.</dd>
+            <dt>{{ _('Why only offer Mumble and not Ventrilo or TeamSpeak?') }}</dt>
+            <dd>{{ _('Mumble is <a href="https://github.com/mumble-voip/mumble/blob/master/LICENSE">free</a> and
+            <a href="http://en.wikipedia.org/wiki/Open-source_software">open-source software</a>. So it doesn&apos;t
+            cost me any licensing fees to host Mumble servers or offer it as a service.') }}</dd>
 
-            <dt>Do you plan on offering premium upgrades?</dt>
-            <dd>Possibly in the future. It won't take away from the idea of free temporary servers, though.</dd>
+            <dt>{{ _('Do you plan on offering premium upgrades?') }}</dt>
+            <dd>{{ _('Possibly in the future. It won&apos;t take away from the idea of free temporary servers, though.') }}</dd>
 
-            <dt>How can I contribute?</dt>
+            <dt>{{ _('How can I contribute?') }}</dt>
             <dd>
                 <p>
-                    We accept <a href="/donate">donations</a>, including Bitcoin and Dogecoin! :) This keeps us
-                    going.
+                    {{ _('We accept <a href="/donate">donations</a>, including Bitcoin and Dogecoin! :) This keeps us
+                    going.') }}
                 </p>
                 <p>
-                   Are you a developer? Check out the
-                   <a href="https://github.com/alfg/murmur-rest">Murmur-REST</a> project on Github and contribute!
+                   {{ _('Are you a developer? Check out the
+                   <a href="https://github.com/alfg/murmur-rest">Murmur-REST</a> project on Github and contribute!') }}
+                </p>
+                <p>
+                    {{ _('Help us improve or add translations. <a href="/contact/">Contact us</a> for more details!') }}
                 </p>
             </dd>
 
-            <dt>How can I contact you?</dt>
-            <dd>Feel free to use the <a href="{{ url_for('HomeView:contact') }}">contact form</a> to report any
-                bugs or to contact me with any questions or comments!</dd>
+            <dt>{{ _('How can I contact you?') }}</dt>
+            <dd>{{ _('Feel free to use the <a href="%s">contact form</a> to report any
+                bugs or to contact me with any questions or comments!' % url_for('HomeView:contact')) }}</dd>
         </dl>
     </div>
 {% endblock %}
