@@ -24,16 +24,16 @@
         {% endwith %}
         <h1>{{ _('Contact') }}</h1>
         <p>{{ _('Found a bug? Please report the issue by submitting the form below. You can also use this form
-        if you have any general inquires.') }}</p>
+        if you have any general inquires or translation corrections.') }}</p>
         <form action="" method="post" name="contact" class="pure-form pure-form-aligned">
             {{ form.hidden_tag() }}
             <div class="pure-control-group">
-                <label for="subject">{{ _('Subject') }}</label>
-                {{ form.subject(class="pure-input-2-3", placeholder="%s" % _('Subject')) }}
+                <label for="email">{{ _('Your Email') }}</label>
+                {{ form.email(class="pure-input-2-3", placeholder="%s" % _('Your Email')) }}
             </div>
             <div class="pure-control-group">
-                <label for="email">{{ _('Email') }}</label>
-                {{ form.email(class="pure-input-2-3", placeholder="%s" % _('Email')) }}
+                <label for="subject">{{ _('Subject') }}</label>
+                {{ form.subject(class="pure-input-2-3", placeholder="%s" % _('Subject')) }}
             </div>
             <div class="pure-control-group">
                 <label for="message">{{ _('Message') }}</label>

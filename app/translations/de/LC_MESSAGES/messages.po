@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-23 20:33-0700\n"
-"PO-Revision-Date: 2014-04-23 20:54-0700\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2014-04-23 21:41-0700\n"
+"PO-Revision-Date: 2014-04-23 21:45-0800\n"
+"Last-Translator: Alfred Gutierrez <alf.g.jr@gmail.com>\n"
 "Language-Team: de <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
@@ -224,7 +223,13 @@ msgid ""
 "\">Murmur-REST</a> project on Github and contribute!"
 msgstr ""
 
-#: app/templates/how_it_works.html:62
+#: app/templates/how_it_works.html:61
+msgid ""
+"Help us improve or add translations. <a href=\"/contact/\">Contact us</a>"
+" for more details!"
+msgstr ""
+
+#: app/templates/how_it_works.html:65
 msgid "How can I contact you?"
 msgstr ""
 
