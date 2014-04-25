@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-23 20:33-0700\n"
-"PO-Revision-Date: 2014-04-22 19:51-0800\n"
+"POT-Creation-Date: 2014-04-23 21:41-0700\n"
+"PO-Revision-Date: 2014-04-23 21:53-0800\n"
 "Last-Translator: Alfred Gutierrez <alf.g.jr@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -223,7 +223,13 @@ msgid ""
 "\">Murmur-REST</a> project on Github and contribute!"
 msgstr ""
 
-#: app/templates/how_it_works.html:62
+#: app/templates/how_it_works.html:61
+msgid ""
+"Help us improve or add translations. <a href=\"/contact/\">Contact us</a>"
+" for more details!"
+msgstr ""
+
+#: app/templates/how_it_works.html:65
 msgid "How can I contact you?"
 msgstr ""
 
@@ -233,7 +239,7 @@ msgstr ""
 
 #: app/templates/index.html:7
 msgid "Deploy a Mumble server for your group. It&apos;s free!"
-msgstr ""
+msgstr "Implementar un servidor Mumble para su grupo.<br /> Es gratis!"
 
 #: app/templates/index.html:13
 msgid "Set a Password"
@@ -412,70 +418,4 @@ msgstr ""
 #: app/templates/partials/_dont_have_mumble.html:6
 msgid "Mumble Homepage"
 msgstr ""
-
-#~ msgid "Don&apos;t have Mumble?"
-#~ msgstr ""
-
-#~ msgid "Mumble Homepage"
-#~ msgstr ""
-
-#~ msgid "GuildBit - Free Mumble Hosting"
-#~ msgstr ""
-
-#~ msgid "GuildBit - Free Mumble Server Hosting"
-#~ msgstr ""
-
-#~ msgid "Home"
-#~ msgstr ""
-
-#~ msgid "How It Works"
-#~ msgstr ""
-
-#~ msgid "Donate"
-#~ msgstr ""
-
-#~ msgid "Found a bug?"
-#~ msgstr ""
-
-#~ msgid "Updates"
-#~ msgstr ""
-
-#~ msgid "Logged in as "
-#~ msgstr ""
-
-#~ msgid "Logout"
-#~ msgstr ""
-
-#~ msgid "Share Us!"
-#~ msgstr ""
-
-#~ msgid "Linux Download"
-#~ msgstr ""
-
-#~ msgid "OSX Download"
-#~ msgstr ""
-
-#~ msgid "Android Download"
-#~ msgstr ""
-
-#~ msgid "iOS Download"
-#~ msgstr ""
-
-#~ msgid "Deploy a Mumble server for your group. It&apos;s free!"
-#~ msgstr "Implementar un servidor Mumble para su grupo. Es gratis!"
-
-#~ msgid "Deploy Server"
-#~ msgstr ""
-
-#~ msgid ""
-#~ msgstr ""
-
-#~ msgid "*Servers are currently limited to 10 slots"
-#~ msgstr ""
-
-#~ msgid "Deploying..."
-#~ msgstr ""
-
-#~ msgid "Windows Download"
-#~ msgstr ""
 

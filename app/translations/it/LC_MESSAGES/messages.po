@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-23 20:33-0700\n"
+"POT-Creation-Date: 2014-04-23 21:41-0700\n"
 "PO-Revision-Date: 2014-04-23 20:45-0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: it <LL@li.org>\n"
@@ -224,7 +224,13 @@ msgid ""
 "\">Murmur-REST</a> project on Github and contribute!"
 msgstr ""
 
-#: app/templates/how_it_works.html:62
+#: app/templates/how_it_works.html:61
+msgid ""
+"Help us improve or add translations. <a href=\"/contact/\">Contact us</a>"
+" for more details!"
+msgstr ""
+
+#: app/templates/how_it_works.html:65
 msgid "How can I contact you?"
 msgstr ""
 
