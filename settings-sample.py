@@ -55,3 +55,11 @@ MURMUR_HOSTS = [
         'password': ''
     }
 ]
+
+PACKAGES = [
+    {
+        'name': 'TEST10SLOT30DAYS',
+        'slots': 10,
+        'duration': 720  # 30 * 24 = 30 Days
+    }
+]
