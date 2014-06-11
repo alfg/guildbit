@@ -1,4 +1,6 @@
 import uuid
+import json
+import datetime
 
 from flask import render_template, request, redirect, session, url_for, jsonify, g, flash
 from flask.ext.classy import FlaskView, route
@@ -7,27 +9,30 @@ from flask.ext.mail import Message
 import psutil
 
 import settings
-from util import admin_required
+from util import admin_required, get_package_by_name
 from app import app, db, tasks, lm, oid, mail, cache, babel
 from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm, NoticeForm
-from app.forms import SendChannelMessageForm, build_hosts_list
-from app.models import Server, User, Notice, Rating, ROLE_USER
+from app.forms import SendChannelMessageForm, DeployTokenServerForm, build_hosts_list, duration_choices
+from app.models import Server, User, Notice, Rating, Token, ROLE_USER
 import app.murmur as murmur
 
 
-## Flask-babel
+# # Flask-babel
 @babel.localeselector
 def get_locale():
+    language = request.cookies.get('language')
+    if language:
+        return language
     return request.accept_languages.best_match(settings.LANGUAGES.keys())
 
 
-## Flask-Login required user loaders
+# # Flask-Login required user loaders
 @lm.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
 
-## Request processing
+# # Request processing
 @app.before_request
 def before_request():
     g.user = current_user  # Required for flask-login
@@ -46,11 +51,11 @@ def display_notice():
 
 ## Home views
 class HomeView(FlaskView):
-
     @route('/', endpoint='home')
     def index(self):
         user = g.user
         form = DeployServerForm()
+        form.duration.choices = duration_choices()
         return render_template('index.html', form=form)
 
     def post(self):
@@ -89,6 +94,7 @@ class HomeView(FlaskView):
 
             except:
                 import traceback
+
                 db.session.rollback()
                 traceback.print_exc()
 
@@ -102,6 +108,10 @@ class HomeView(FlaskView):
     @route('/donate/')
     def donate(self):
         return render_template('donate.html')
+
+    @route('/upgrade')
+    def upgrade(self):
+        return render_template('upgrade.html')
 
     @route('/contact/', methods=['POST', 'GET'])
     def contact(self):
@@ -123,6 +133,7 @@ class HomeView(FlaskView):
                 mail.send(msg)
             except:
                 import traceback
+
                 traceback.print_exc()
                 flash("Something went wrong!")
                 return redirect('/contact')
@@ -149,7 +160,6 @@ class HomeView(FlaskView):
 
 ## Server views
 class ServerView(FlaskView):
-
     def index(self):
         return redirect(url_for('home'))
 
@@ -202,6 +212,7 @@ class ServerView(FlaskView):
                 db.session.commit()
             except:
                 import traceback
+
                 db.session.rollback()
                 traceback.print_exc()
 
@@ -225,6 +236,7 @@ class ServerView(FlaskView):
                 db.session.commit()
             except:
                 import traceback
+
                 db.session.rollback()
                 traceback.print_exc()
 
@@ -338,6 +350,7 @@ class AdminServersView(FlaskView):
 
             except:
                 import traceback
+
                 db.session.rollback()
                 traceback.print_exc()
 
@@ -356,6 +369,7 @@ class AdminServersView(FlaskView):
             db.session.commit()
         except:
             import traceback
+
             db.session.rollback()
             traceback.print_exc()
 
@@ -390,12 +404,10 @@ class AdminPortsView(FlaskView):
         else:
             ports = murmur.list_all_servers(server_list[0][0])
 
-
         return render_template('admin/ports.html', ports=ports, stats=stats_ctx, server_list=server_list, title="Ports")
 
 
 class AdminUsersView(FlaskView):
-
     @login_required
     @admin_required
     def index(self):
@@ -422,7 +434,6 @@ class AdminUsersView(FlaskView):
 
 
 class AdminHostsView(FlaskView):
-
     @login_required
     @admin_required
     def index(self):
@@ -446,7 +457,6 @@ class AdminHostsView(FlaskView):
 
 
 class AdminToolsView(FlaskView):
-
     @login_required
     @admin_required
     def index(self):
@@ -489,12 +499,194 @@ class AdminToolsView(FlaskView):
 
 
 class AdminFeedbackView(FlaskView):
-
     @login_required
     @admin_required
     def index(self):
         feedback = Rating.query.order_by(Rating.id.desc()).all()
         return render_template('admin/feedback.html', feedback=feedback, title="Feedback")
+
+
+class PaymentView(FlaskView):
+    def index(self):
+
+        example = {
+            "order": {
+                "id": None,
+                "created_at": None,
+                "status": "completed",
+                "event": None,
+                "total_btc": {
+                    "cents": 100000000,
+                    "currency_iso": "BTC"
+                },
+                "total_native": {
+                    "cents": 65273,
+                    "currency_iso": "USD"
+                },
+                "total_payout": {
+                    "cents": 65273,
+                    "currency_iso": "USD"
+                },
+                "custom": "123456789",
+                "receive_address": "1DwUndActWKnjfSYX2DP5GU3PtJAFaqAYJ",
+                "button": {
+                    "type": "buy_now",
+                    "name": "Test Item",
+                    "description": None,
+                    "id": None
+                },
+                "transaction": {
+                    "id": "53928c785fdf9bb7e6000024",
+                    "hash": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+                    "confirmations": 0
+                }
+            }
+        }
+
+        # import json
+        # test = json.loads(example)
+
+        # example = example.get("order", None)
+        #
+        # order_id = example.get("id", None)
+        # order_created_date = example.get("created_at", None)
+        # order_status = example.get("status", None)
+        #
+        # print order_id
+        # print order_created_date
+        # print order_status
+
+        return jsonify({
+            "example": example
+        })
+
+    def post(self):
+        print request.data["order"]
+        return jsonify({
+            "status": "received"
+        })
+
+    @route('/success')
+    def success(self):
+        return render_template('payment/success.html')
+
+    @route('/create/<id>', methods=['GET', 'POST'])
+    def create(self, id):
+        form = DeployTokenServerForm()
+        token = Token.query.filter_by(uuid=id).first_or_404()
+        package = get_package_by_name(token.package)
+
+        ctx = {
+            'slots': package.get('slots', None),
+            'duration': package.get('duration', None)
+        }
+
+        if form.validate_on_submit():
+
+            try:
+                # Generate UUID
+                gen_uuid = str(uuid.uuid4())
+
+                # Create POST request to murmur-rest api to create a new server
+                welcome_msg = "Welcome. Test Server. View details on this server by " \
+                              "<a href='http://guildbit.com/server/%s'>clicking here.</a>" % gen_uuid
+                payload = {
+                    'password': form.password.data,
+                    'welcometext': welcome_msg,
+                    'users': ctx['slots'],
+                    'registername': form.channel_name.data
+                }
+
+                server_id = murmur.create_server_by_location(form.location.data, payload)
+
+                # Create database entry
+                s = Server()
+                s.duration = ctx['duration']
+                s.password = form.password.data
+                s.uuid = gen_uuid
+                s.type = 'upgrade'
+                s.mumble_instance = server_id
+                s.mumble_host = murmur.get_murmur_hostname(form.location.data)
+
+                # Expire token
+                token.activation_date = datetime.datetime.utcnow()
+                token.active = False
+                db.session.add(s)
+                db.session.add(token)
+                db.session.commit()
+
+                # Send task to delete server on expiration
+                tasks.delete_server.apply_async([gen_uuid], eta=s.expiration)
+                return redirect(url_for('ServerView:get', id=s.uuid))
+
+            except:
+                import traceback
+                db.session.rollback()
+                traceback.print_exc()
+
+        return render_template('payment/create.html', form=form, token=token, ctx=ctx)
+
+    @route('/callback', methods=['GET', 'POST'])
+    def callback(self):
+        """
+        Callback receiver. Generates token and sends the code via email to user.
+        @return:
+        """
+
+        ## Gather information from callback response
+
+        data = json.loads(request.data)
+        order = data.get("order", None)
+        customer = data.get("customer", None)
+
+        email = customer["email"]
+        id = order["id"]
+        status = order["status"]
+        custom = order["custom"]
+        button = order["button"]
+        button_name = button["name"]
+
+        ## Generate Token and store in database
+        gen_uuid = str(uuid.uuid4())
+
+        try:
+            t = Token()
+            t.uuid = gen_uuid
+            t.email = email
+            t.active = True
+            t.package = custom
+
+            db.session.add(t)
+            db.session.commit()
+        except:
+            import traceback
+            db.session.rollback()
+            traceback.print_exc()
+
+        ## Send email to user with unique link
+        try:
+            template = """
+                        <p>Thank you for your order with Guildbit</p>
+                        <p>You have ordered the package: <strong>%s</strong></p>
+                        <p>Please use the following link to create your server:<br />
+                        <a href='http://guildbit.com/payment/create/%s'>http://guildbit.com/payment/create/%s</a></p><br />
+                        <p>If you have any questions, please feel free to respond to this email.</p>
+                       """ % (button_name, gen_uuid, gen_uuid)
+
+            msg = Message(
+                "Guildbit - Order Confirmation",
+                sender=settings.DEFAULT_MAIL_SENDER,
+                recipients=[email])
+
+            msg.html = template
+            mail.send(msg)
+        except:
+            import traceback
+            traceback.print_exc()
+
+        return jsonify({
+            "status": "received"
+        })
 
 
 ## Login/Logout views
@@ -556,6 +748,7 @@ def page_not_found(error):
 ## Register flask-classy views
 HomeView.register(app, route_base='/')
 ServerView.register(app)
+PaymentView.register(app)
 AdminView.register(app)
 AdminServersView.register(app, route_prefix='/admin/', route_base='/servers')
 AdminPortsView.register(app, route_prefix='/admin/', route_base='/ports')

@@ -1,0 +1,67 @@
+{% extends"layout/base.html" %}
+
+{% block title %}{{ _('Create Your Server') }}{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <h1>{{ _('Create Your Server') }}</h1>
+        <p>Create your server using the form below. The </p>
+
+        <form id="deploy-form" class="pure-form pure-form-aligned" action="" method="POST">
+          <fieldset>
+            {{ form.csrf_token }}
+            <div class="pure-control-group">
+              <label><strong>Package</strong></label>
+              <span><strong>{{ token.package }}</strong></span>
+            </div>
+            <div class="pure-control-group">
+              <label>Slots</label>
+              <span>{{ ctx.slots }}</span>
+            </div>
+            <div class="pure-control-group">
+              <label>Duration</label>
+              <span>{{ ctx.duration }}</span>
+            </div>
+
+            <div class="pure-control-group">
+              <label for="location">Server Location</label>
+              {{ form.location }}
+            </div>
+            <div class="pure-control-group">
+              <label for="channel_name">Channel Name</label>
+              {{ form.channel_name(size=20, class='', placeholder='%s' % _('Channel Name'), autocomplete='off') }}
+            </div>
+            <div class="pure-control-group">
+              <label for="password">Set Password</label>
+              {{ form.password(size=20, class='', placeholder='%s' % _('Set a Password'), autocomplete='off') }}
+            </div>
+            <div class="pure-controls">
+              <button id="deploy-button" class="pure-button pure-button-primary" type="submit" value="Submit">
+                <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
+              </button>
+            </div>
+          </fieldset>
+        </form>
+
+        {% if form.errors %}
+          <ul class="errors text-center">
+            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+              {% for error in field_errors %}
+                <li class="danger alert">{{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://coinbase.com/assets/button.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $('#deploy-form').submit(function() {
+    $('#deploy-button').attr('disabled', 'disabled');
+    $('#deploy-button').html("<i class='fa fa-refresh fa-spin'></i> {{ _('Deploying...') }}");
+    });
+  </script>
+{% endblock %}

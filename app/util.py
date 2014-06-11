@@ -5,7 +5,7 @@ from flask import redirect
 import requests
 from requests import ConnectionError
 
-from settings import MURMUR_HOSTS
+from settings import MURMUR_HOSTS, PACKAGES
 
 
 def admin_required(fn):
@@ -62,5 +62,22 @@ def host_balancer():
         lowest = None
 
     return lowest
+
+
+def get_package_by_name(name):
+    """
+    Searches MURMUR_HOSTS settings and returns tuple of address, uri, and hostname for given location.
+    """
+    for i in PACKAGES:
+        for k, v in i.iteritems():
+            if v == name:
+                return {
+                    'name': i['name'],
+                    'slots': i['slots'],
+                    'duration': i['duration']
+                }
+            else:
+                pass
+    return {}
 
 

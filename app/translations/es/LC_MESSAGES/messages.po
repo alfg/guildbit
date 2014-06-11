@@ -7,15 +7,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-23 21:41-0700\n"
-"PO-Revision-Date: 2014-04-23 21:53-0800\n"
+"POT-Creation-Date: 2014-04-26 20:26-0700\n"
+"PO-Revision-Date: 2014-04-26 20:33-0800\n"
 "Last-Translator: Alfred Gutierrez <alf.g.jr@gmail.com>\n"
 "Language-Team: es <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: es\n"
+
+#: app/forms.py:27 app/forms.py:28 app/forms.py:29 app/forms.py:30
+msgid "Hours"
+msgstr "Horas"
 
 #: app/templates/contact.html:3 app/templates/contact_thankyou.html:3
 msgid "Contact or Report an Issue"
@@ -27,17 +33,17 @@ msgstr ""
 
 #: app/templates/contact.html:26
 msgid ""
-"Found a bug? Please report the issue by submitting the form below. You "
-"can also use this form\n"
-"        if you have any general inquires."
+"Found a bug? Please report the issue by submitting the form below. You can "
+"also use this form\n"
+"        if you have any general inquires or translation corrections."
 msgstr ""
 
 #: app/templates/contact.html:31 app/templates/contact.html:32
-msgid "Subject"
+msgid "Your Email"
 msgstr ""
 
 #: app/templates/contact.html:35 app/templates/contact.html:36
-msgid "Email"
+msgid "Subject"
 msgstr ""
 
 #: app/templates/contact.html:39 app/templates/contact.html:40
@@ -55,8 +61,8 @@ msgstr ""
 
 #: app/templates/contact_thankyou.html:17
 msgid ""
-"Thanks for submitting your question, comment or bug report! Your feedback"
-" is appreciated!"
+"Thanks for submitting your question, comment or bug report! Your feedback is "
+"appreciated!"
 msgstr ""
 
 #: app/templates/donate.html:3 app/templates/donate.html:7
@@ -66,8 +72,8 @@ msgstr ""
 
 #: app/templates/donate.html:8
 msgid ""
-"GuildBit completely operates on donations. Please consider donating with "
-"any of the services below."
+"GuildBit completely operates on donations. Please consider donating with any "
+"of the services below."
 msgstr ""
 
 #: app/templates/how_it_works.html:3 app/templates/how_it_works.html:7
@@ -77,14 +83,14 @@ msgstr ""
 
 #: app/templates/how_it_works.html:9
 msgid ""
-"Traditional VOIP hosts offer subscription-based and persistent servers, "
-"so generally a premium\n"
-"        is charged. <strong>GuildBit</strong> works on the idea of "
-"temporary servers to preserve system\n"
+"Traditional VOIP hosts offer subscription-based and persistent servers, so "
+"generally a premium\n"
+"        is charged. <strong>GuildBit</strong> works on the idea of temporary "
+"servers to preserve system\n"
 "        resources, opening up more server slots which aren&apos;t being "
 "occupied. This helps lower hosting,\n"
-"        resources and bandwidth costs. Also, VPS hosting nowadays are "
-"much cheaper than they used to be. The\n"
+"        resources and bandwidth costs. Also, VPS hosting nowadays are much "
+"cheaper than they used to be. The\n"
 "        rest is supported by donations."
 msgstr ""
 
@@ -110,8 +116,7 @@ msgstr ""
 
 #: app/templates/how_it_works.html:20
 msgid ""
-"Password protected servers are required, due to the fact the server may "
-"be\n"
+"Password protected servers are required, due to the fact the server may be\n"
 "            reused in the future."
 msgstr ""
 
@@ -128,7 +133,8 @@ msgid "Connect"
 msgstr ""
 
 #: app/templates/how_it_works.html:23
-msgid "That&apos;s all. The following page will give you the connection details."
+msgid ""
+"That&apos;s all. The following page will give you the connection details."
 msgstr ""
 
 #: app/templates/how_it_works.html:24
@@ -153,8 +159,8 @@ msgstr ""
 
 #: app/templates/how_it_works.html:31
 msgid ""
-"Donations and low server/bandwidth costs. This is still in an "
-"experimental phase. Remainders\n"
+"Donations and low server/bandwidth costs. This is still in an experimental "
+"phase. Remainders\n"
 "                are paid of out pocket. :)"
 msgstr ""
 
@@ -164,10 +170,10 @@ msgstr ""
 
 #: app/templates/how_it_works.html:35
 msgid ""
-"The idea is targeted towards gamers who need a quick Mumble server for "
-"their group or raid\n"
-"            without the hassle of setting up their own, or subscribing to"
-" a service. The server expires to not\n"
+"The idea is targeted towards gamers who need a quick Mumble server for their "
+"group or raid\n"
+"            without the hassle of setting up their own, or subscribing to a "
+"service. The server expires to not\n"
 "            only save on resources, but to free up the slot for others."
 msgstr ""
 
@@ -177,8 +183,8 @@ msgstr ""
 
 #: app/templates/how_it_works.html:40
 msgid ""
-"For now we&apos;re limiting servers to 10 slots as the service is new and"
-" experimental."
+"For now we&apos;re limiting servers to 10 slots as the service is new and "
+"experimental."
 msgstr ""
 
 #: app/templates/how_it_works.html:42
@@ -187,12 +193,12 @@ msgstr ""
 
 #: app/templates/how_it_works.html:43
 msgid ""
-"Mumble is <a href=\"https://github.com/mumble-"
-"voip/mumble/blob/master/LICENSE\">free</a> and\n"
+"Mumble is <a href=\"https://github.com/mumble-voip/mumble/blob/master/LICENSE"
+"\">free</a> and\n"
 "            <a href=\"http://en.wikipedia.org/wiki/Open-source_software"
 "\">open-source software</a>. So it doesn&apos;t\n"
-"            cost me any licensing fees to host Mumble servers or offer it"
-" as a service."
+"            cost me any licensing fees to host Mumble servers or offer it as "
+"a service."
 msgstr ""
 
 #: app/templates/how_it_works.html:47
@@ -219,14 +225,14 @@ msgstr ""
 #: app/templates/how_it_works.html:57
 msgid ""
 "Are you a developer? Check out the\n"
-"                   <a href=\"https://github.com/alfg/murmur-rest"
-"\">Murmur-REST</a> project on Github and contribute!"
+"                   <a href=\"https://github.com/alfg/murmur-rest\">Murmur-"
+"REST</a> project on Github and contribute!"
 msgstr ""
 
 #: app/templates/how_it_works.html:61
 msgid ""
-"Help us improve or add translations. <a href=\"/contact/\">Contact us</a>"
-" for more details!"
+"Help us improve or add translations. <a href=\"/contact/\">Contact us</a> "
+"for more details!"
 msgstr ""
 
 #: app/templates/how_it_works.html:65
@@ -239,7 +245,7 @@ msgstr ""
 
 #: app/templates/index.html:7
 msgid "Deploy a Mumble server for your group. It&apos;s free!"
-msgstr "Implementar un servidor Mumble para su grupo.<br /> Es gratis!"
+msgstr ""
 
 #: app/templates/index.html:13
 msgid "Set a Password"
@@ -253,8 +259,8 @@ msgstr ""
 msgid ""
 "GuildBit is a free service to deploy temporary Mumble servers for your "
 "group. The service is completely\n"
-"                funded by donations. <a href=\"/how-it-works\">Learn how "
-"it works &raquo;</a>"
+"                funded by donations. <a href=\"/how-it-works\">Learn how it "
+"works &raquo;</a>"
 msgstr ""
 
 #: app/templates/index.html:32
@@ -368,7 +374,7 @@ msgstr ""
 
 #: app/templates/layout/base.html:52
 msgid "Home"
-msgstr ""
+msgstr "Casa"
 
 #: app/templates/layout/base.html:64
 msgid "Found a bug?"
@@ -418,4 +424,3 @@ msgstr ""
 #: app/templates/partials/_dont_have_mumble.html:6
 msgid "Mumble Homepage"
 msgstr ""
-
