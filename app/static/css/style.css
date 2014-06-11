@@ -347,6 +347,55 @@ table.rounded thead th, table.rounded thead td, table.rounded caption + tbody tr
 }
 
 /*
+ * Pricing chart */
+.pricing-chart {
+    list-style: none;
+    border: 1px solid #DDD;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+.pricing-chart .title {
+    background-color: #0078E7;
+    padding: 0.9375em 1.25em;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.pricing-chart .price {
+    background-color: #EEE;
+    padding: 0.9375em 1.25em;
+    text-align: center;
+    color: #333;
+    font-weight: normal;
+    font-size: 1em;
+}
+.pricing-chart .desc {
+    background-color: #FFF;
+    padding: 0.9375em;
+    text-align: center;
+    color: #777;
+    font-weight: normal;
+    font-size: 1em;
+    line-height: 1.4;
+    border-bottom: dotted 1px #DDD;
+}
+.pricing-chart .bullet-item {
+    background-color: #FFF;
+    padding: 0.9375em;
+    text-align: center;
+    color: #333;
+    font-weight: normal;
+    font-size: 0.875em;
+    border-bottom: dotted 1px #DDD;
+}
+.pricing-chart .cta-button {
+    background-color: #F5F5F5;
+    text-align: center;
+    padding: 1.25em 1.25em;
+}
+
+/*
  * Mobile Specific Adjustments */
 @media screen and (max-width: 348px) {
     .header-links .pure-button {

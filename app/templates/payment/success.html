@@ -1,0 +1,17 @@
+{% extends"layout/base.html" %}
+
+{% block title %}{{ _('Upgrade') }}{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <h1>{{ _('Thank you!') }}</h1>
+        <h3>Thank you for your payment. An email will be sent out shortly with instructions on creating your
+        upgraded server.</h3>
+        <h3>If you do not receive an email within an hour, please contact <a href="/contact">support</a>.</h3>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://coinbase.com/assets/button.js" type="text/javascript"></script>
+{% endblock %}

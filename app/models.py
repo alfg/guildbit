@@ -92,6 +92,20 @@ class Rating(db.Model):
         return '<Rating %r>' % self.id
 
 
+class Token(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    uuid = db.Column(db.String, unique=True, index=True)
+    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    activation_date = db.Column(db.DateTime)
+    active = db.Column(db.Boolean, default=True)
+    email = db.Column(db.String(120))
+    package = db.Column(db.String(32))
+
+    def __repr__(self):
+        return '<Token %r>' % self.id
+
+
+
 # class Host(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     hostname = db.Column(db.String(120), unique=True, index=True)

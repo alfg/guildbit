@@ -47,7 +47,7 @@
                         </div>
                     </td>
                 </tr>
-                {% if server.type == 'temp' %}
+                {% if server.type == 'temp' or server.type == 'upgrade' %}
                 <tr>
                     <td>{{ _('Expires') }}</td>
                     <td><span id="expires-date"></span> (<span id="expires" data-bind="text: remainingTime"></span>) </td>
