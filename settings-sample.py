@@ -58,8 +58,23 @@ MURMUR_HOSTS = [
 
 PACKAGES = [
     {
-        'name': 'TEST10SLOT30DAYS',
+        'name': 'PACKAGE-Test',
         'slots': 10,
-        'duration': 720  # 30 * 24 = 30 Days
+        'duration': 48  # Days in hours
+    },
+    {
+        'name': 'PACKAGE-A',
+        'slots': 25,
+        'duration': 168  # Days in hours
+    },
+    {
+        'name': 'PACKAGE-B',
+        'slots': 25,
+        'duration': 336  # Days in hours
+    },
+    {
+        'name': 'PACKAGE-C',
+        'slots': 25,
+        'duration': 720 # Days in hours
     }
 ]
