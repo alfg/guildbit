@@ -5,7 +5,7 @@
 {% block body %}
     <div class="content">
         <h1>{{ _('Create Your Server') }}</h1>
-        <p>Create your server using the form below. The </p>
+        <p>Create your server using the form below. The duration will begin when server is deployed.</p>
 
         <form id="deploy-form" class="pure-form pure-form-aligned" action="" method="POST">
           <fieldset>
@@ -20,7 +20,7 @@
             </div>
             <div class="pure-control-group">
               <label>Duration</label>
-              <span>{{ ctx.duration }}</span>
+              <span>{{ ctx.duration }} Hours</span>
             </div>
 
             <div class="pure-control-group">
