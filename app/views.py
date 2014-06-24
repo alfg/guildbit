@@ -12,12 +12,12 @@ import settings
 from util import admin_required, get_package_by_name
 from app import app, db, tasks, lm, oid, mail, cache, babel
 from app.forms import DeployServerForm, LoginForm, UserAdminForm, DeployCustomServerForm, ContactForm, NoticeForm
-from app.forms import SendChannelMessageForm, DeployTokenServerForm, build_hosts_list, duration_choices
+from app.forms import SendChannelMessageForm, DeployTokenServerForm, CreateTokenForm, build_hosts_list, duration_choices
 from app.models import Server, User, Notice, Rating, Token, ROLE_USER
 import app.murmur as murmur
 
 
-# # Flask-babel
+## Flask-babel
 @babel.localeselector
 def get_locale():
     language = request.cookies.get('language')
@@ -26,13 +26,13 @@ def get_locale():
     return request.accept_languages.best_match(settings.LANGUAGES.keys())
 
 
-# # Flask-Login required user loaders
+## Flask-Login required user loaders
 @lm.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
 
-# # Request processing
+## Request processing
 @app.before_request
 def before_request():
     g.user = current_user  # Required for flask-login
@@ -506,6 +506,46 @@ class AdminFeedbackView(FlaskView):
         return render_template('admin/feedback.html', feedback=feedback, title="Feedback")
 
 
+class AdminTokensView(FlaskView):
+    @login_required
+    @admin_required
+    def index(self):
+        form = CreateTokenForm()
+        tokens = Token.query.order_by(Token.id.desc()).all()
+        return render_template('admin/tokens.html', form=form, tokens=tokens, title="Tokens")
+
+    @login_required
+    @admin_required
+    def post(self):
+        form = CreateTokenForm()
+        tokens = Token.query.order_by(Token.id.desc()).all()
+        if form.validate_on_submit():
+            try:
+                # Generate UUID
+                gen_uuid = str(uuid.uuid4())
+
+                # Create database entry
+                t = Token()
+                t.uuid = gen_uuid
+                t.email = None
+                t.active = True
+                t.package = form.package.data
+
+                db.session.add(t)
+                db.session.commit()
+
+            except:
+                import traceback
+                db.session.rollback()
+                traceback.print_exc()
+
+                return redirect('/admin/tokens/')
+
+
+            return render_template('admin/tokens.html', form=form, tokens=tokens)
+        return render_template('admin/tokens.html', form=form, tokens=tokens)
+
+
 class PaymentView(FlaskView):
     def index(self):
 
@@ -756,3 +796,4 @@ AdminUsersView.register(app, route_prefix='/admin/', route_base='/users')
 AdminHostsView.register(app, route_prefix='/admin/', route_base='/hosts')
 AdminToolsView.register(app, route_prefix='/admin/', route_base='/tools')
 AdminFeedbackView.register(app, route_prefix='/admin/', route_base='/feedback')
+AdminTokensView.register(app, route_prefix='/admin/', route_base='/tokens')

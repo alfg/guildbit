@@ -1,0 +1,80 @@
+{% extends"layout/admin_base.html" %}
+
+{% block title %}Tokens{% endblock %}
+
+{% block body %}
+  <div class="spacer">
+    <a class="pure-button button-secondary" data-toggle="modal" data-target="#createTokenModal">Create Token</a>
+  </div>
+  <table class="pure-table pure-table-horizontal pure-table-striped">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>UUID</th>
+              <th>Created</th>
+              <th>Active</th>
+              <th>Activation Date</th>
+              <th>Email</th>
+              <th>Package</th>
+          </tr>
+      </thead>
+
+      <tbody>
+          {% for i in tokens %}
+          <tr>
+              <td>{{ i.id }}</td>
+              <td><a href="/payment/create/{{ i.uuid }}" target="_blank">{{ i.uuid }}</a></td>
+              <td class="created-date">{{ i.created_date }}</td>
+              <td>{{ i.active }}</td>
+              <td class="created-date">{{ i.activation_date }}</td>
+              <td>{{ i.email }}</td>
+              <td>{{ i.package }}</td>
+          </tr>
+          {% endfor %}
+          {% if tokens == [] %}
+              <tr><td class="text-center" colspan="9">No Tokens</td></tr>
+          {% endif %}
+
+      </tbody>
+  </table>
+
+  <!-- Create Token Modal -->
+  <div class="modal fade" id="createTokenModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="" method="post" name="role" class="pure-form pure-form-aligned">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Create a custom token</h4>
+          </div>
+          <div class="modal-body">
+            {{ form.csrf_token }}
+            <div class="pure-control-group">
+              <label for="role">Package</label>
+              {{ form.package }}
+            </div>
+            <fieldset>
+              {% for error in form.errors.role %}
+                <span class="label label-red">{{ error }}</span>
+              {% endfor %}
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="pure-button" data-dismiss="modal">Close</button>
+            <button type="submit" class="pure-button button-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+    <script src="/static/js/libs/moment.min.js"></script>
+    <script type="text/javascript">
+        // Moment.js time formatting
+        $(".created-date").text(function(index, value) {
+            return moment.utc(value).local().format("MM/DD h:mm:ss a");
+        });
+    </script>
+{% endblock %}

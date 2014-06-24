@@ -3,7 +3,7 @@ from wtforms import TextField, SelectField, BooleanField, IntegerField, TextArea
 from wtforms.validators import DataRequired, Required, Email
 from flask.ext.babel import lazy_gettext as __
 
-from settings import MURMUR_HOSTS
+from settings import MURMUR_HOSTS, PACKAGES
 
 
 def build_hosts_list():
@@ -13,6 +13,15 @@ def build_hosts_list():
             if k == "location" and i['status'] == 'active':
                 hosts_list.append((v, i['location_name']))
     return hosts_list
+
+
+def build_packages_list():
+    packages_list = []
+    for i in PACKAGES:
+        for k, v in i.iteritems():
+            if k == "name":
+                packages_list.append((v, i['name']))
+    return packages_list
 
 
 def duration_choices():
@@ -62,6 +71,14 @@ class DeployTokenServerForm(Form):
                            choices=_server_locations)
     password = TextField('password', validators=[DataRequired('Password is required.')])
     channel_name = TextField('channel_name', validators=[DataRequired('Channel name is required.')])
+
+
+class CreateTokenForm(Form):
+    _packages = build_packages_list()
+
+    package = SelectField('package',
+                          validators=[DataRequired()],
+                          choices=_packages)
 
 
 class LoginForm(Form):
