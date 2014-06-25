@@ -10,7 +10,7 @@
         is charged. <strong>GuildBit</strong> works on the idea of temporary servers to preserve system
         resources, opening up more server slots which aren&apos;t being occupied. This helps lower hosting,
         resources and bandwidth costs. Also, VPS hosting nowadays are much cheaper than they used to be. The
-        rest is supported by donations.') }}</p>
+        rest is supported by donations and upgrades.') }}</p>
 
         <h2>{{ _('The Process') }}</h2>
         <ul>
@@ -28,7 +28,7 @@
         <h2>{{ _('FAQs') }}</h2>
         <dl class="faqs">
             <dt>{{ _('How is it free?') }}</dt>
-            <dd>{{ _('Donations and low server/bandwidth costs. This is still in an experimental phase. Remainders
+            <dd>{{ _('Donations, paid upgrades and low server/bandwidth costs. This is still in an experimental phase. Remainders
                 are paid of out pocket. :)') }}</dd>
 
             <dt>{{ _('Why temporary servers?') }}</dt>
@@ -37,7 +37,8 @@
             only save on resources, but to free up the slot for others.') }}</dd>
 
             <dt>{{ _('Why only 10 slots?') }}</dt>
-            <dd>{{ _('For now we&apos;re limiting servers to 10 slots as the service is new and experimental.') }}</dd>
+            <dd>{{ _('For now we&apos;re limiting free servers to 10 slots as the service is experimental. Check out
+            the <a href="/upgrade">upgrades</a> page if you&apos;re looking for more than 10 slots.') }}</dd>
 
             <dt>{{ _('Why can&apos;t I use the same port when creating a server?') }}</dt>
             <dd>{{ _('Servers are created according to the next port available. ') }}</dd>
@@ -47,11 +48,18 @@
             <a href="http://en.wikipedia.org/wiki/Open-source_software">open-source software</a>. So it doesn&apos;t
             cost me any licensing fees to host Mumble servers or offer it as a service.') }}</dd>
 
-            <dt>{{ _('Do you plan on offering premium upgrades?') }}</dt>
-            <dd>{{ _('Possibly in the future. It won&apos;t take away from the idea of free temporary servers, though.') }}</dd>
+            <dt>{{ _('Do you offer premium upgrades?') }}</dt>
+            <dd>{{ _('Yes! We now offer server upgrades via Bitcoin(by Coinbase) to increase slot count, duration and a reserved port.
+            <a href="/upgrade">Click here</a> to get started.') }}</dd>
+
+            <dt>{{ _('Do you plan on offering other methods of payment?') }}</dt>
+            <dd>{{ _('We&apos;re looking into Paypal and Stripe integration. :)') }}</dd>
 
             <dt>{{ _('How can I contribute?') }}</dt>
             <dd>
+                <p>
+                  {{ _('Purchase upgrades via Bitcoin. <a href="/upgrade">Click here</a> to get started.') }}
+                </p>
                 <p>
                     {{ _('We accept <a href="/donate">donations</a>, including Bitcoin and Dogecoin! :) This keeps us
                     going.') }}

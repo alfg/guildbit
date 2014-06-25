@@ -42,7 +42,7 @@
 <body>
     <div class="header">
         {% if notice and notice.active %}
-        <div class="{{ notice.message_type }} alert ten columns centered message text-center">{{ notice.message }}</div>
+        <div class="{{ notice.message_type }} alert ten columns centered message text-center">{{ notice.message|safe }}</div>
         {% endif %}
         <div class="head centered">
             <div class="head-logo">
@@ -52,7 +52,8 @@
                 <ul>
                     <li><a class="pure-button button-small pure-button-primary" href="/"><i class="fa fa-home"></i> {{ _('Home') }}</a></li>
                     <li><a class="pure-button button-small button-success" href="/how-it-works"><i class="fa fa-cogs"></i> {{ _('How It Works') }}</a></li>
-                    <li><a class="pure-button button-small button-warning" href="/donate"><i class="fa fa-btc"></i> {{ _('Donate') }}</a></li>
+                    <li><a class="pure-button button-small button-warning" href="/donate"><i class="fa fa-money"></i> {{ _('Donate') }}</a></li>
+                    <li><a class="pure-button button-small button-secondary" href="/upgrade"><i class="fa fa-bolt"></i> {{ _('Upgrade') }}</a></li>
                 </ul>
             </div>
         </div>
