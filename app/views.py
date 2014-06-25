@@ -258,6 +258,9 @@ class AdminView(FlaskView):
         stats = murmur.get_all_server_stats()
         users_count = User.query.count()
         servers_count = Server.query.count()
+        feedback_count = Rating.query.count()
+        tokens_count = Token.query.count()
+
         ps = psutil
 
         server_list = build_hosts_list()
@@ -271,6 +274,8 @@ class AdminView(FlaskView):
             'users_online': stats['users_online'],
             'users': users_count,
             'servers': servers_count,
+            'feedback': feedback_count,
+            'tokens': tokens_count,
             'memory': ps.virtual_memory(),
             'disk': ps.disk_usage('/'),
             'http_uri': http_uri
