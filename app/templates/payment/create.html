@@ -4,44 +4,48 @@
 
 {% block body %}
     <div class="content">
-        <h1>{{ _('Create Your Server') }}</h1>
-        <p>Create your server using the form below. The duration will begin when server is deployed.</p>
 
-        <form id="deploy-form" class="pure-form pure-form-aligned" action="" method="POST">
-          <fieldset>
-            {{ form.csrf_token }}
-            <div class="pure-control-group">
-              <label><strong>Package</strong></label>
-              <span><strong>{{ token.package }}</strong></span>
-            </div>
-            <div class="pure-control-group">
-              <label>Slots</label>
-              <span>{{ ctx.slots }}</span>
-            </div>
-            <div class="pure-control-group">
-              <label>Duration</label>
-              <span>{{ ctx.duration }} Hours ({{ ctx.duration // 24 }} Days)</span>
-            </div>
+        {% if token.active %}
+          <h1>{{ _('Create Your Server') }}</h1>
+          <p>Create your server using the form below. The duration will begin when server is deployed.</p>
+          <form id="deploy-form" class="pure-form pure-form-aligned" action="" method="POST">
+            <fieldset>
+              {{ form.csrf_token }}
+              <div class="pure-control-group">
+                <label><strong>Package</strong></label>
+                <span><strong>{{ token.package }}</strong></span>
+              </div>
+              <div class="pure-control-group">
+                <label>Slots</label>
+                <span>{{ ctx.slots }}</span>
+              </div>
+              <div class="pure-control-group">
+                <label>Duration</label>
+                <span>{{ ctx.duration }} Hours ({{ ctx.duration // 24 }} Days)</span>
+              </div>
 
-            <div class="pure-control-group">
-              <label for="location">Server Location</label>
-              {{ form.location }}
-            </div>
-            <div class="pure-control-group">
-              <label for="channel_name">Channel Name</label>
-              {{ form.channel_name(size=20, class='', placeholder='%s' % _('Channel Name'), autocomplete='off') }}
-            </div>
-            <div class="pure-control-group">
-              <label for="password">Set Password</label>
-              {{ form.password(size=20, class='', placeholder='%s' % _('Set a Password'), autocomplete='off') }}
-            </div>
-            <div class="pure-controls">
-              <button id="deploy-button" class="pure-button pure-button-primary" type="submit" value="Submit">
-                <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
-              </button>
-            </div>
-          </fieldset>
-        </form>
+              <div class="pure-control-group">
+                <label for="location">Server Location</label>
+                {{ form.location }}
+              </div>
+              <div class="pure-control-group">
+                <label for="channel_name">Channel Name</label>
+                {{ form.channel_name(size=20, class='', placeholder='%s' % _('Channel Name'), autocomplete='off') }}
+              </div>
+              <div class="pure-control-group">
+                <label for="password">Set Password</label>
+                {{ form.password(size=20, class='', placeholder='%s' % _('Set a Password'), autocomplete='off') }}
+              </div>
+              <div class="pure-controls">
+                <button id="deploy-button" class="pure-button pure-button-primary" type="submit" value="Submit">
+                  <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        {% else %}
+          <h1>Token Expired</h1>
+        {% endif %}
 
         {% if form.errors %}
           <ul class="errors text-center">

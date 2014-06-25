@@ -305,6 +305,8 @@ class AdminServersView(FlaskView):
             servers = Server.query.filter_by(status="active").order_by(Server.id.desc()).all()
         elif filter == "expired":
             servers = Server.query.filter_by(status="expired").order_by(Server.id.desc()).all()
+        elif filter == "upgrade":
+            servers = Server.query.filter_by(type="upgrade").order_by(Server.id.desc()).all()
         elif filter == "custom":
             servers = Server.query.filter_by(type="custom").order_by(Server.id.desc()).all()
         else:
