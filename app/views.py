@@ -3,11 +3,14 @@ from flask.ext.login import login_user, logout_user, current_user
 
 import settings
 from app import app, db, lm, oid, cache, babel
+
 from app.controllers.home import HomeView
 from app.controllers.server import ServerView
 from app.controllers.admin import AdminView, AdminServersView, AdminPortsView, AdminHostsView, AdminFeedbackView
 from app.controllers.admin import AdminTokensView, AdminToolsView, AdminUsersView
 from app.controllers.payment import PaymentView
+from app.controllers.stats import StatsView
+
 from app.forms import LoginForm
 from app.models import User, Notice, ROLE_USER
 
@@ -104,6 +107,7 @@ def page_not_found(error):
 HomeView.register(app, route_base='/')
 ServerView.register(app)
 PaymentView.register(app)
+StatsView.register(app)
 AdminView.register(app)
 AdminServersView.register(app, route_prefix='/admin/', route_base='/servers')
 AdminPortsView.register(app, route_prefix='/admin/', route_base='/ports')

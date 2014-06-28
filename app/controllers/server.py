@@ -6,7 +6,6 @@ from app.models import Server, Rating
 import app.murmur as murmur
 
 
-
 ## Server views
 class ServerView(FlaskView):
     def index(self):
