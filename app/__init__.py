@@ -6,6 +6,7 @@ from flask.ext.openid import OpenID
 from flask.ext.mail import Mail
 from flask.ext.cache import Cache
 from flask.ext.babel import Babel
+from flask.ext.assets import Environment, Bundle
 
 import settings
 
@@ -36,6 +37,18 @@ cache = Cache(app)
 
 # Configure Babel
 babel = Babel(app)
+
+
+# Configure Flask-Assets
+assets = Environment(app)
+app.config['ASSETS_DEBUG'] = settings.ASSETS_DEBUG
+
+js = Bundle('js/libs/share.min.js', 'js/libs/tooltips.min.js', 'js/main.js',
+            filters='jsmin', output='gen/packed.js')
+css = Bundle('css/style.css', 'css/tooltips.css',
+             filters='cssmin', output='gen/packed.css')
+assets.register('js_all', js)
+assets.register('css_all', css)
 
 # Configure email error handler
 if not app.debug:

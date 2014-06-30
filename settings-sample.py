@@ -7,6 +7,7 @@ APP_PORT = 4000
 APP_DEBUG = True
 APP_SESSION_KEY = 'super-secret'
 CSRF_ENABLED = True
+ASSETS_DEBUG = True
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 DATABASE_URI = 'sqlite:////tmp/test.db'

@@ -8,6 +8,7 @@
 	<meta name="description" content="{{ _('GuildBit - Free Mumble Server Hosting') }}" />
 	<meta name="keywords" content="mumble, voip, hosting, guild, mmo, ffxiv, server, murmur" />
 	<meta name="author" content="alfg.co">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <meta name="google-site-verification" content="6LyHPdggxteOxGctt9IDNoad82I2ONWI0dAuJqyNJMs" />
 
 	<link rel="shortcut icon" href="/static/img/guildbit_ico.png" type="image/x-icon" />
@@ -22,15 +23,17 @@
 	<meta itemprop="description" content="{{ _('GuildBit - Free Mumble Server Hosting') }}">
 	<meta itemprop="image" content="http://guildbit.com/static/img/screenshot_home.png">
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
+  <!-- CDN loaded styles -->
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
-
-	<link rel="stylesheet" href="/static/css/style.css">
-  <link rel="stylesheet" href="/static/css/tooltips.css">
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+  {% assets "css_all" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
+  {% endassets %}
+
+  <!-- Modernizr for older browsers -->
   <script src="/static/js/libs/modernizr.custom.js"></script>
 
   <!-- Google Analytics -->
@@ -85,70 +88,19 @@
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="/static/js/libs/share.min.js"></script>
-    <script src="/static/js/libs/tooltips.min.js"></script>
+    {% assets "js_all" %}
+      <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
 
     {% block scripts %}{% endblock %}
 
-    <script type="text/javascript">
-        if (!Modernizr.input.placeholder) {
-            var script = document.createElement( 'script' );
-            script.type = "text/javascript";
-            script.src = '/static/js/libs/jquery.placeholder.js';
-            $('body').append(script);
-            $('input').placeholder();
-        }
-    </script>
-
-    <!-- Share plugin -->
-    <script type="text/javascript">
-        $('.share-js').share({
-            url: 'http://guildbit.com',
-            text: 'Guildbit - Free 10 slot Mumble servers. No registration required!',
-            button_text: '{{ _('Share Us!') }}'
-        });
-    </script>
-
     <!-- Download Mumble OS chooser -->
     <script type="text/javascript">
-        var os = navigator.platform;
-        var ua = navigator.userAgent.toLowerCase();
-
         var _LinuxDownload = '{{ _('Linux Download') }}';
         var _WindowsDownload = '{{ _('Windows Download') }}';
         var _OSXDownload = '{{ _('OSX Download') }}';
         var _AndroidDownload = '{{ _('Android Download') }}';
         var _iOSDownload = '{{ _('iOS Download') }}';
-
-        if (os.indexOf("Linux") !== -1 && ua.indexOf("android") === -1) {
-            $('#os-download #os-text').text(_LinuxDownload);
-            $('#os-download #download-link i').removeClass('fa-windows');
-            $('#os-download #download-link i').addClass('fa-linux');
-            $('#os-download #download-link').attr('href', 'http://mumble.sourceforge.net/Installing_Mumble#Linux');
-        }
-        else if (os.indexOf("Win") !== -1) {
-            $('#os-download #os-text').text(_WindowsDownload);
-            $('#os-download #download-link i').addClass('fa-windows');
-            $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.6/mumble-1.2.6.msi/download');
-        }
-        else if (os.indexOf("MacOS") !== -1 || os.indexOf("MacIntel") !== -1) {
-            $('#os-download #os-text').text(_OSXDownload);
-            $('#os-download #download-link i').removeClass('fa-windows');
-            $('#os-download #download-link i').addClass('fa-apple');
-            $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.6/Mumble-1.2.6.dmg/download');
-        }
-        else if (ua.indexOf("android") > -1) {
-            $('#os-download #os-text').text(_AndroidDownload);
-            $('#os-download #download-link i').removeClass('fa-windows');
-            $('#os-download #download-link i').addClass('fa-android');
-            $('#os-download #download-link').attr('href', 'https://play.google.com/store/apps/details?id=com.morlunk.mumbleclient');
-        }
-        else if (os === 'iPad' || os == 'iPhone' || os === 'iPod') {
-            $('#os-download #os-text').text(_iOSDownload);
-            $('#os-download #download-link i').removeClass('fa-windows');
-            $('#os-download #download-link i').addClass('fa-apple');
-            $('#os-download #download-link').attr('href', 'https://itunes.apple.com/us/app/mumble/id443472808');
-        }
     </script>
   </body>
 </html>
