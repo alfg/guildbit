@@ -54,3 +54,5 @@ docs/_build/
 settings.py
 tmp
 app/static/img/info/
+app/static/gen/
+app/static/.webassets-cache/
