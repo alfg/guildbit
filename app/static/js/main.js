@@ -1,20 +1,21 @@
 $(document).ready(function() {
+
     if (!Modernizr.input.placeholder) {
         var script = document.createElement( 'script' );
         script.type = "text/javascript";
         script.src = '/static/js/libs/jquery.placeholder.js';
         $('body').append(script);
         $('input').placeholder();
-        }
+    }
 
-    <!-- Share plugin -->
+    // Share plugin
     $('.share-js').share({
         url: 'http://guildbit.com',
         text: 'Guildbit - Free 10 slot Mumble servers. No registration required!',
         button_text: 'Share Us!'
-        });
+    });
 
-    <!-- Download Mumble OS chooser -->
+    // Download Mumble OS chooser
     if (os.indexOf("Linux") !== -1 && ua.indexOf("android") === -1) {
         $('#os-download #os-text').text(_LinuxDownload);
         $('#os-download #download-link i').removeClass('fa-windows');
