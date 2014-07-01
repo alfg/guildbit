@@ -70,6 +70,7 @@
     {% block body %}{% endblock %}
 
     <div class="footer-links">
+        <div class="share-js"></div>
         <ul class="text-center">
             <li><a href="{{ url_for('HomeView:contact') }}">{{ _('Found a bug?') }}</a></li>
             <li>|</li>
@@ -84,7 +85,7 @@
             <li><a href="{{ url_for('logout') }}">{{ _('Logout') }}</a></li>
             {% endif %}
         </ul>
-        <div class="share-js"></div>
+        <span class="update-stamp">{{ config.version }} {{ config.last_updated }}</span>
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>

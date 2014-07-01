@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
@@ -12,6 +13,10 @@ import settings
 
 app = Flask(__name__)
 app.secret_key = settings.APP_SESSION_KEY
+
+# Version
+app.config.version = '1.2.0'
+app.config.last_updated = datetime.now()
 
 # Configure Flask-login
 lm = LoginManager()

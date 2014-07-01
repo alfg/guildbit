@@ -150,7 +150,13 @@ a:hover {
     margin-bottom: 12px;
 }
 .footer-links .share-js {
+    float: left;
     width: 145px !important;
+}
+.footer-links .update-stamp {
+    color: #BABABA;
+    float: right;
+    margin-top: 10px;
 }
 
 /* Components */
