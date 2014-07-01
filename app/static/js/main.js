@@ -15,10 +15,6 @@ $(document).ready(function() {
         });
 
     <!-- Download Mumble OS chooser -->
-    var os = navigator.platform;
-    var ua = navigator.userAgent.toLowerCase();
-
-
     if (os.indexOf("Linux") !== -1 && ua.indexOf("android") === -1) {
         $('#os-download #os-text').text(_LinuxDownload);
         $('#os-download #download-link i').removeClass('fa-windows');

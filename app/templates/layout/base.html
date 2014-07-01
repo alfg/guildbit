@@ -97,6 +97,8 @@
 
     <!-- Download Mumble OS chooser -->
     <script type="text/javascript">
+        var os = navigator.platform;
+        var ua = navigator.userAgent.toLowerCase();
         var _LinuxDownload = '{{ _('Linux Download') }}';
         var _WindowsDownload = '{{ _('Windows Download') }}';
         var _OSXDownload = '{{ _('OSX Download') }}';
