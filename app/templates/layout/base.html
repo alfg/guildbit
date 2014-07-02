@@ -87,7 +87,7 @@
             <li><a href="{{ url_for('logout') }}">{{ _('Logout') }}</a></li>
         </ul>
         {% endif %}
-        <span class="update-stamp">{{ config.version }} {{ config.last_updated }}</span>
+        <span class="update-stamp" title="Last updated timestamp">{{ config.version }} {{ config.last_updated }}</span>
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
