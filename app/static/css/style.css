@@ -36,13 +36,12 @@ a:hover {
 
 /* Layout */
 .content {
-    margin: 0 auto;
     max-width: 800px;
     line-height: 1.6em;
     background: #DDD;
     border: 1px solid #D0D0D0;
     padding: 20px;
-    margin-bottom: 10px;
+    margin: 0 auto 10px;
 }
 
 .header {
@@ -82,7 +81,7 @@ a:hover {
 .head-logo a,
 .head-logo a:visited,
 .head-logo a:active {
-    background: url(/static/img/guildbit_logo_sm.png) no-repeat;
+    background: url('../img/guildbit_logo_sm.png') no-repeat;
     height: 100%;
     width: 100%;
     position: relative;
@@ -139,7 +138,7 @@ a:hover {
 }
 .footer-links ul li {
     display: inline-block;
-    padding: 0 3px;
+    padding: 0 6px;
 }
 .footer-social {
     float: left;
@@ -155,8 +154,9 @@ a:hover {
 }
 .footer-links .update-stamp {
     color: #BABABA;
-    float: right;
     margin-top: 10px;
+    float: right;
+    clear: both;
 }
 
 /* Components */
@@ -348,6 +348,9 @@ table.rounded thead th, table.rounded thead td, table.rounded caption + tbody tr
 }
 .text-left {
     text-align: left;
+}
+.clear {
+    clear: both;
 }
 
 /*

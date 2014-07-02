@@ -72,19 +72,21 @@
     <div class="footer-links">
         <div class="share-js"></div>
         <ul class="text-center">
-            <li><a href="{{ url_for('HomeView:contact') }}">{{ _('Found a bug?') }}</a></li>
-            <li>|</li>
+            <li><a href="{{ url_for('HomeView:contact') }}"><i class="fa fa-bug"></i> {{ _('Found a bug?') }}</a></li>
             <li><a href="{{ url_for('HomeView:updates') }}">{{ _('Updates') }}</a></li>
-            {% if g.user.is_authenticated() %}
+            <li><a href="{{ url_for('HomeView:terms') }}">{{ _('Terms') }}</a></li>
+            <li><a href="{{ url_for('HomeView:privacy') }}">{{ _('Privacy') }}</a></li>
+        </ul>
+
+        {% if g.user.is_authenticated() %}
+        <ul class="text-center clear">
             <li>{{ _('Logged in as ') }} <strong>{{ g.user.email }}</strong></li>
-            <li>|</li>
             {% if g.user.role == 1 %}
                 <li><a href="/admin">Admin</a></li>
-                <li>|</li>
             {% endif %}
             <li><a href="{{ url_for('logout') }}">{{ _('Logout') }}</a></li>
-            {% endif %}
         </ul>
+        {% endif %}
         <span class="update-stamp">{{ config.version }} {{ config.last_updated }}</span>
     </div>
 
