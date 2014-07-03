@@ -16,7 +16,7 @@
         </thead>
 
         <tbody>
-            {% for i in feedback %}
+            {% for i in feedback.items %}
             <tr>
                 <td>{{ i.id }}</td>
                 <td>{{ i.server_uuid }}</td>
@@ -32,6 +32,19 @@
 
         </tbody>
     </table>
+    <ul class="pagination">
+      {%- for page in feedback.iter_pages() %}
+        {% if page %}
+          {% if page != feedback.page %}
+            <li><a href="{{ url_for('AdminFeedbackView:index', page=page) }}">{{ page }}</a></li>
+          {% else %}
+            <li class="active"><a href="{{ url_for('AdminFeedbackView:index', page=page) }}">{{ page }}</a></li>
+          {% endif %}
+        {% else %}
+          <li class="disabled"><a href="#">…</a></li>
+        {% endif %}
+      {%- endfor %}
+    </ul>
 {% endblock %}
 
 {% block scripts %}
