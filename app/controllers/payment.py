@@ -16,54 +16,6 @@ import app.murmur as murmur
 
 class PaymentView(FlaskView):
     def index(self):
-
-        example = {
-            "order": {
-                "id": None,
-                "created_at": None,
-                "status": "completed",
-                "event": None,
-                "total_btc": {
-                    "cents": 100000000,
-                    "currency_iso": "BTC"
-                },
-                "total_native": {
-                    "cents": 65273,
-                    "currency_iso": "USD"
-                },
-                "total_payout": {
-                    "cents": 65273,
-                    "currency_iso": "USD"
-                },
-                "custom": "123456789",
-                "receive_address": "1DwUndActWKnjfSYX2DP5GU3PtJAFaqAYJ",
-                "button": {
-                    "type": "buy_now",
-                    "name": "Test Item",
-                    "description": None,
-                    "id": None
-                },
-                "transaction": {
-                    "id": "53928c785fdf9bb7e6000024",
-                    "hash": "4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
-                    "confirmations": 0
-                }
-            }
-        }
-
-        # import json
-        # test = json.loads(example)
-
-        # example = example.get("order", None)
-        #
-        # order_id = example.get("id", None)
-        # order_created_date = example.get("created_at", None)
-        # order_status = example.get("status", None)
-        #
-        # print order_id
-        # print order_created_date
-        # print order_status
-
         return jsonify({
             "example": example
         })

@@ -55,7 +55,7 @@
         </thead>
 
         <tbody>
-            {% for s in servers %}
+            {% for s in servers.items %}
             <tr>
                 <td>{{ s.id }}</td>
                 <td><a href="/admin/servers/{{ s.id }}">{{ s.uuid }}</a></td>
@@ -74,6 +74,20 @@
 
         </tbody>
     </table>
+
+  <ul class="pagination">
+  {%- for page in servers.iter_pages() %}
+    {% if page %}
+      {% if page != servers.page %}
+        <li><a href="{{ url_for('AdminServersView:index', page=page, filter=filter) }}">{{ page }}</a></li>
+      {% else %}
+        <li class="active"><a href="{{ url_for('AdminServersView:index', page=page, filter=filter) }}">{{ page }}</a></li>
+      {% endif %}
+    {% else %}
+      <li class="disabled"><a href="#">…</a></li>
+    {% endif %}
+  {%- endfor %}
+  </ul>
 
     <!-- Create Server Modal -->
     <div class="modal fade" id="createServerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

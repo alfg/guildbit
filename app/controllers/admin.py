@@ -13,6 +13,8 @@ from app.forms import SendChannelMessageForm, CreateTokenForm, build_hosts_list
 from app.models import Server, User, Notice, Rating, Token
 import app.murmur as murmur
 
+ITEMS_PER_PAGE = 50
+
 
 ## Admin views
 class AdminView(FlaskView):
@@ -62,6 +64,7 @@ class AdminServersView(FlaskView):
     def index(self):
         form = DeployCustomServerForm()
         filter = request.args.get('filter')
+        page = int(request.args.get('page', 1))
         stats = murmur.get_all_server_stats()
         stats_ctx = {
             'servers_online': stats.get('servers_online'),
@@ -69,17 +72,17 @@ class AdminServersView(FlaskView):
         }
 
         if filter == "all":
-            servers = Server.query.order_by(Server.id.desc()).all()
+            servers = Server.query.order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
         elif filter == "active":
-            servers = Server.query.filter_by(status="active").order_by(Server.id.desc()).all()
+            servers = Server.query.filter_by(status="active").order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
         elif filter == "expired":
-            servers = Server.query.filter_by(status="expired").order_by(Server.id.desc()).all()
+            servers = Server.query.filter_by(status="expired").order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
         elif filter == "upgrade":
-            servers = Server.query.filter_by(type="upgrade").order_by(Server.id.desc()).all()
+            servers = Server.query.filter_by(type="upgrade").order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
         elif filter == "custom":
-            servers = Server.query.filter_by(type="custom").order_by(Server.id.desc()).all()
+            servers = Server.query.filter_by(type="custom").order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
         else:
-            servers = Server.query.filter_by(status="active").order_by(Server.id.desc()).all()
+            servers = Server.query.filter_by(status="active").order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
 
         return render_template('admin/servers.html', servers=servers, form=form, stats=stats_ctx, title="Servers")
 
@@ -278,7 +281,8 @@ class AdminFeedbackView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-        feedback = Rating.query.order_by(Rating.id.desc()).all()
+        page = int(request.args.get('page', 1))
+        feedback = Rating.query.order_by(Rating.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
         return render_template('admin/feedback.html', feedback=feedback, title="Feedback")
 
 
