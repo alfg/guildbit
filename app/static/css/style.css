@@ -2,8 +2,11 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
 
 /* Base Styles */
+html {
+    height: 100%;
+    background: #CECECE url('../img/bg/skulls.png') repeat;
+}
 body {
-    background: #CECECE;
     font-family: "Open Sans", sans-serif;
     font-weight: 400;
     color: #555;
@@ -38,10 +41,12 @@ a:hover {
 .content {
     max-width: 800px;
     line-height: 1.6em;
-    background: #DDD;
     border: 1px solid #D0D0D0;
     padding: 20px;
     margin: 0 auto 10px;
+    background: #DDD url('../img/bg/grey.png') repeat;
+}
+.content.home {
 }
 
 .header {
@@ -130,6 +135,7 @@ a:hover {
 .footer-links {
     max-width: 840px;
     margin: 20px auto 10px;
+    height: 80px;
 }
 .footer-links ul {
     float: right;
@@ -357,9 +363,12 @@ table.rounded thead th, table.rounded thead td, table.rounded caption + tbody tr
  * Pricing chart */
 .pricing-chart {
     list-style: none;
-    border: 1px solid #DDD;
     margin-bottom: 20px;
     padding: 0 20px;
+}
+.pricing-chart li {
+    border-left: 1px solid #DDD;
+    border-right: 1px solid #DDD;
 }
 .pricing-chart .title {
     background-color: #0078E7;
