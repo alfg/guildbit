@@ -42,6 +42,9 @@
         $('#deploy-form').submit(function() {
             $('#deploy-button').attr('disabled', 'disabled');
             $('#deploy-button').html("<i class='fa fa-refresh fa-spin'></i> {{ _('Deploying...') }}");
+
+            // Analytics event
+            ga('send', 'event', 'home', 'deploy server');
         });
     </script>
 {% endblock %}

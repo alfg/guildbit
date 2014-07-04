@@ -4,7 +4,7 @@
 /* Base Styles */
 html {
     height: 100%;
-    background: #CECECE url('../img/bg/skulls.png') repeat;
+    background: #CECECE url('../img/bg/skulls.png') repeat fixed;
 }
 body {
     font-family: "Open Sans", sans-serif;
@@ -20,6 +20,7 @@ h1, h2, h3, h4, h5, h6 {
     padding-top: 0.223em;
     line-height: 1.15538em;
     padding-bottom: 0.223em;
+    text-shadow: 0px 0px 0.01em;
 }
 p {
     margin: 0.5em 0;
@@ -45,6 +46,8 @@ a:hover {
     padding: 20px;
     margin: 0 auto 10px;
     background: #DDD url('../img/bg/grey.png') repeat;
+    box-shadow: 0 0 15px -5px #AAA;
+    border-radius: 4px;
 }
 .content.home {
 }
@@ -73,8 +76,8 @@ a:hover {
     position: relative;
 }
 .head-logo h1 {
-    height: 48px;
-    width: 250px;
+    height: 58px;
+    width: 230px;
     position: relative;
     overflow: hidden;
     z-index: 10;
@@ -86,7 +89,7 @@ a:hover {
 .head-logo a,
 .head-logo a:visited,
 .head-logo a:active {
-    background: url('../img/guildbit_logo_sm.png') no-repeat;
+    background: url('../img/guildbit_logo_sm_v2.png') no-repeat;
     height: 100%;
     width: 100%;
     position: relative;
@@ -104,7 +107,7 @@ a:hover {
     right: 0;
 }
 .header-links {
-    margin-top: 5px;
+    margin-top: -5px;
     margin-bottom: 10px;
 }
 .header-links ul {
