@@ -15,6 +15,25 @@ $(document).ready(function() {
         button_text: 'Share Us!'
     });
 
+    // GA link event tracking wrapper
+    $(".track").click(function () {
+        var label =  $(this).attr("data-event-label");
+        ga('send', 'event', 'link', 'click', label);
+        window.setTimeout("window.location.href='" + this.href + "'", 100);
+        return false;
+    });
+
+    // GA submit event tracking wrapper
+    $(".track-submit").click(function () {
+        var label =  $(this).attr("data-event-label");
+        ga('send', 'event', 'button', 'click', label);
+        var form = this;
+        e.preventDefault();
+        setTimeout(function() {
+            form.submit();
+        }, 200);
+    });
+
     // Download Mumble OS chooser
     if (os.indexOf("Linux") !== -1 && ua.indexOf("android") === -1) {
         $('#os-download #os-text').text(_LinuxDownload);
