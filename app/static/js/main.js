@@ -24,13 +24,13 @@ $(document).ready(function() {
     });
 
     // GA submit event tracking wrapper
-    $(".track-submit").click(function () {
+    $(".track-submit").click(function (e) {
+        e.preventDefault();
         var label =  $(this).attr("data-event-label");
         ga('send', 'event', 'button', 'click', label);
-        var form = this;
-        e.preventDefault();
+        var form = $(this);
         setTimeout(function() {
-            form.submit();
+            form.closest("form").submit();
         }, 200);
     });
 
