@@ -11,7 +11,8 @@
                     {{ form.location }}
                     {{ form.duration }}
                     {{ form.password(size=20, class='', placeholder='%s' % _('Set a Password'), autocomplete='off') }}
-                    <button id="deploy-button" class="pure-button pure-button-primary" type="submit" value="Submit">
+                    <button id="deploy-button" class="pure-button pure-button-primary track-submit" type="submit" value="Submit"
+                        data-event-label="deploy-server">
                         <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
                     </button>
             </form>
@@ -39,12 +40,9 @@
 
 {% block scripts %}
     <script type="text/javascript">
-        $('#deploy-form').submit(function() {
+        $('#deploy-form').submit(function(e) {
             $('#deploy-button').attr('disabled', 'disabled');
             $('#deploy-button').html("<i class='fa fa-refresh fa-spin'></i> {{ _('Deploying...') }}");
-
-            // Analytics event
-            ga('send', 'event', 'home', 'deploy server');
         });
     </script>
 {% endblock %}
