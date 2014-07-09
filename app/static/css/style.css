@@ -411,7 +411,7 @@ table.rounded thead th, table.rounded thead td, table.rounded caption + tbody tr
 .pricing-chart .cta-button {
     background-color: #F5F5F5;
     text-align: center;
-    padding: 1.25em 1.25em;
+    padding: 0.75em 1.25em;
 }
 
 /*
