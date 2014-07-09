@@ -130,8 +130,8 @@ class PaymentView(FlaskView):
                         <p>You have ordered the package: <strong>%s</strong></p>
                         <p>Please use the following link to create your server:<br />
                         <a href='http://guildbit.com/payment/create/%s'>http://guildbit.com/payment/create/%s</a></p><br />
-                        <p>If you have any questions, please feel free to respond to this email.</p>
-                       """ % (button_name, gen_uuid, gen_uuid)
+                        <p>If you have any questions, please feel free to <a href='http://guildbit.com/contact'>contact
+                        us</a>.</p>""" % (button_name, gen_uuid, gen_uuid)
 
             msg = Message(
                 "Guildbit - Order Confirmation",
@@ -190,8 +190,8 @@ class PaymentView(FlaskView):
                         <p>You have ordered the package: <strong>%s</strong></p>
                         <p>Please use the following link to create your server:<br />
                         <a href='http://guildbit.com/payment/create/%s'>http://guildbit.com/payment/create/%s</a></p><br />
-                        <p>If you have any questions, please feel free to respond to this email.</p>
-                       """ % (item_name, gen_uuid, gen_uuid)
+                        <p>If you have any questions, please feel free to <a href='http://guildbit.com/contact'>contact
+                        us</a>.</p>""" % (item_name, gen_uuid, gen_uuid)
 
             msg = Message(
                 "Guildbit - Order Confirmation",
