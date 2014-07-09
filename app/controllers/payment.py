@@ -17,7 +17,7 @@ import app.murmur as murmur
 class PaymentView(FlaskView):
     def index(self):
         return jsonify({
-            "example": example
+            "example": "example"
         })
 
     def post(self):
@@ -26,7 +26,7 @@ class PaymentView(FlaskView):
             "status": "received"
         })
 
-    @route('/success')
+    @route('/success', methods=['GET', 'POST'])
     def success(self):
         return render_template('payment/success.html')
 
@@ -89,7 +89,7 @@ class PaymentView(FlaskView):
     @route('/callback', methods=['GET', 'POST'])
     def callback(self):
         """
-        Callback receiver. Generates token and sends the code via email to user.
+        Coinbase callback receiver. Generates token and sends the code via email to user.
         @return:
         """
 
@@ -137,6 +137,66 @@ class PaymentView(FlaskView):
                 "Guildbit - Order Confirmation",
                 sender=settings.DEFAULT_MAIL_SENDER,
                 recipients=[email])
+
+            msg.html = template
+            mail.send(msg)
+        except:
+            import traceback
+            traceback.print_exc()
+
+        return jsonify({
+            "status": "received"
+        })
+
+
+    @route('/paypal-gateway', methods=['GET', 'POST'])
+    def paypal_gateway(self):
+        """
+        Paypal callback receiver. Generates token and sends the code via email to user.
+        @return:
+        """
+
+        print request.form
+        first_name = request.form.get("first_name", None)
+        last_name = request.form.get("last_name", None)
+        payer_id = request.form.get("payer_id", None)
+        payer_email = request.form.get("payer_email", None)
+        item_name = request.form.get("item_name", None)
+        item_number = request.form.get("item_number", None)
+        custom = request.form.get("custom", None)
+        payment_gross = request.form.get("payment_gross", None)
+
+        ## Generate Token and store in database
+        gen_uuid = str(uuid.uuid4())
+
+        try:
+            t = Token()
+            t.uuid = gen_uuid
+            t.email = payer_email
+            t.active = True
+            t.package = item_name
+
+            db.session.add(t)
+            db.session.commit()
+        except:
+            import traceback
+            db.session.rollback()
+            traceback.print_exc()
+
+        ## Send email to user with unique link
+        try:
+            template = """
+                        <p>Thank you for your order with Guildbit</p>
+                        <p>You have ordered the package: <strong>%s</strong></p>
+                        <p>Please use the following link to create your server:<br />
+                        <a href='http://guildbit.com/payment/create/%s'>http://guildbit.com/payment/create/%s</a></p><br />
+                        <p>If you have any questions, please feel free to respond to this email.</p>
+                       """ % (item_name, gen_uuid, gen_uuid)
+
+            msg = Message(
+                "Guildbit - Order Confirmation",
+                sender=settings.DEFAULT_MAIL_SENDER,
+                recipients=[payer_email])
 
             msg.html = template
             mail.send(msg)

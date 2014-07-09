@@ -64,6 +64,20 @@
               <li class="cta-button">
                 <a id="package-TEST" class="pure-button pure-button-primary"><i class="fa fa-bitcoin"></i> Pay with Bitcoin</a>
               </li>
+              <li class="cta-button">
+                <script async src="static/js/libs/paypal.js?merchant=alf.g.jr@gmail.com"
+                        data-button="buynow"
+                        data-size="small"
+                        data-type="form"
+                        data-name="TEST"
+                        data-amount="0.01"
+                        data-currency="USD"
+                        data-no_shipping="1"
+                        data-callback="http://guildbit.com/payment/paypal-gateway"
+                        data-return="http://guildbit.com/payment/success"
+                        data-rm="1"
+                        data-host="www.sandbox.paypal.com"></script>
+              </li>
             </ul>
           </div>
           {% endif %}
