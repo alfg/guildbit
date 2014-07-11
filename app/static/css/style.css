@@ -420,6 +420,9 @@ table.rounded thead th, table.rounded thead td, table.rounded caption + tbody tr
     .header-links .pure-button {
         font-size: 55%;
     }
+    .mobile-hide {
+        display: none;
+    }
 }
 /* Reposition logo if on mobile */
 @media screen and (max-width: 700px) {
