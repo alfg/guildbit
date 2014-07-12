@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from wtforms import TextField, SelectField, BooleanField, IntegerField, TextAreaField
-from wtforms.validators import DataRequired, Required, Email
+from wtforms.validators import DataRequired, Required, Email, Length
 from flask.ext.babel import lazy_gettext as __
 
 from settings import MURMUR_HOSTS, PACKAGES
@@ -49,7 +49,9 @@ class DeployServerForm(Form):
                                ('16', '16 Hours'),
                                ('24', '24 Hours')
                            ])
-    password = TextField('password', validators=[DataRequired('Password is required.')])
+    password = TextField('password',
+                         validators=[DataRequired('Password is required.'),
+                                     Length(min=3, max=25, message="Password must be between 3 and 25 characters long.")])
 
 
 class DeployCustomServerForm(Form):

@@ -75,6 +75,19 @@
                 </tr>
                 <!-- /ko -->
 
+                <!-- ko foreach: sub_channels -->
+                <tr style="background: #42B8DD; color: white; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); font-weight: bold;">
+                  <td colspan="2" data-bind="text: c.name + ' (Subchannel)'"></td>
+                </tr>
+
+                <!-- ko foreach: users -->
+                <tr>
+                  <td data-bind="text: name"></td>
+                  <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
+                </tr>
+                <!-- /ko -->
+                <!-- /ko -->
+
                 <!-- ko if: count == 0 -->
                 <tr><td class="text-center" colspan="2">{{ _('No users are online') }}</td></tr>
                 <!-- /ko -->
@@ -159,7 +172,7 @@
             })
         });
 
-        // Knockout Users Model for displaying and updated users online
+        // Knockout Users Model for displaying and updating users online
         function ServerViewModel() {
             var self = this;
 
