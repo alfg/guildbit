@@ -36,7 +36,8 @@ class ServerView(FlaskView):
         if server_details is not None:
             users = {
                 'count': server_details['user_count'],
-                'users': server_details['users']
+                'users': server_details['users'],
+                'sub_channels': server_details['sub_channels']
             }
             return jsonify(users=users)
         else:
