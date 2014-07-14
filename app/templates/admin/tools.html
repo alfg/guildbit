@@ -17,7 +17,7 @@
     </form>
 
     <form action="send-channel-message" method="post" name="role" class="pure-form">
-        {{ notice_form.csrf_token }}
+        {{ message_form.csrf_token }}
         <fieldset>
             <legend>Send message to all Mumble channels in server</legend>
             {{ message_form.message(class="pure-input-1-2") }}
@@ -27,6 +27,17 @@
                 <input id="toggle" type="checkbox" /> Enable
             </label>
         </fieldset>
+    </form>
+
+    <form action="set-superuser-pw" method="post" name="role" class="pure-form">
+      {{ superuser_pw_form.csrf_token }}
+      <fieldset>
+        <legend>Sets SuperUser password for server</legend>
+        {{ superuser_pw_form.password(class="pure-input-1-2") }}
+        {{ superuser_pw_form.location }}
+        {{ superuser_pw_form.instance(placeholder='id', size=1) }}
+        <button type="submit" class="pure-button pure-button-primary">Send</button>
+      </fieldset>
     </form>
 {% endblock %}
 

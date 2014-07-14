@@ -71,7 +71,9 @@ class DeployTokenServerForm(Form):
     location = SelectField('location',
                            validators=[DataRequired()],
                            choices=_server_locations)
-    password = TextField('password', validators=[DataRequired('Password is required.')])
+    password = TextField('password',
+                         validators=[DataRequired('Password is required.'),
+                                     Length(min=3, max=25, message="Password must be between 3 and 25 characters long.")])
     channel_name = TextField('channel_name', validators=[DataRequired('Channel name is required.')])
 
 
@@ -119,6 +121,17 @@ class SendChannelMessageForm(Form):
     location = SelectField('location',
                            validators=[DataRequired()],
                            choices=_server_locations)
+
+
+class SuperuserPasswordForm(Form):
+    _server_locations = build_hosts_list()
+    password = TextField('password',
+                         validators=[DataRequired('Password is required.'),
+                                     Length(min=3, max=25, message="Password must be between 3 and 25 characters long.")])
+    location = SelectField('location',
+                           validators=[DataRequired()],
+                           choices=_server_locations)
+    instance = IntegerField('instance')
 
 
 class ContactForm(Form):

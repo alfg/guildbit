@@ -69,6 +69,21 @@ def get_murmur_credentials(location):
     return {'username': username, 'password': password}
 
 
+def list_murmur_instances(location):
+    """
+    Lists all instances and ports for specified location.
+    @param location:
+    @return: list of instances and ports
+    """
+    servers = list_all_servers(location)
+    instances = []
+
+    for i in servers:
+        instances.append(i['id'])
+
+    return instances
+
+
 ##
 ## Functions to interface with murmur-rest server
 ##
@@ -241,6 +256,29 @@ def list_all_servers(location):
             return None
     else:
         return None
+
+
+def set_superuser_password(location, password, instance_id):
+    """
+    Sets SuperUser password.
+    @param location: server location from config
+    @param password: password
+    @param instance_id: instance id of virtual mumble server
+    @return:
+    """
+    host = get_host_by_location(location)['uri']
+    auth = get_murmur_credentials(location)
+    payload = {'password': password}
+
+    try:
+        r = requests.post(host + "/servers/%i/setsuperuserpw" % instance_id, data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
+        if r.status_code == 200:
+            return "SuperUser password set."
+    except requests.exceptions.ConnectionError as e:
+        import traceback
+        traceback.print_exc()
+        return None
+    return None
 
 
 ##

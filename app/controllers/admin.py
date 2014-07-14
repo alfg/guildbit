@@ -8,7 +8,7 @@ import psutil
 import settings
 from app.util import admin_required
 from app import db
-from app.forms import UserAdminForm, DeployCustomServerForm, NoticeForm
+from app.forms import UserAdminForm, DeployCustomServerForm, NoticeForm, SuperuserPasswordForm
 from app.forms import SendChannelMessageForm, CreateTokenForm, build_hosts_list
 from app.models import Server, User, Notice, Rating, Token
 import app.murmur as murmur
@@ -242,7 +242,9 @@ class AdminToolsView(FlaskView):
         notice = Notice.query.filter_by(location='base').first()
         notice_form = NoticeForm(obj=notice)
         message_form = SendChannelMessageForm()
-        return render_template('admin/tools.html', notice_form=notice_form, message_form=message_form, title="Tools")
+        superuser_pw_form = SuperuserPasswordForm()
+        return render_template('admin/tools.html', notice_form=notice_form, message_form=message_form,
+                               superuser_pw_form=superuser_pw_form, title="Tools")
 
     @login_required
     @admin_required
@@ -271,10 +273,31 @@ class AdminToolsView(FlaskView):
     def send_channel_message(self):
         form = SendChannelMessageForm()
         if form.validate_on_submit():
+            location = form.location.data
             message = form.message.data
-            murmur.send_message_all_channels('local', message)
+            murmur.send_message_all_channels(location, message)
             return redirect('/admin/tools/')
         return redirect('/admin/tools/')
+
+    @login_required
+    @admin_required
+    @route('/set-superuser-pw', methods=['POST'])
+    def set_superuser_password(self):
+        form = SuperuserPasswordForm()
+        if form.validate_on_submit():
+            location = form.location.data
+            password = form.password.data
+            instance = form.instance.data
+            murmur.set_superuser_password(location, password, instance)
+            return redirect('/admin/tools/')
+        return redirect('/admin/tools/')
+
+    @login_required
+    @admin_required
+    @route('/list-instances', methods=['GET', 'POST'])
+    def list_instances(self):
+        instances = murmur.list_murmur_instances("atom")
+        return jsonify(instances=instances)
 
 
 class AdminFeedbackView(FlaskView):
