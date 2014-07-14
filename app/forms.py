@@ -66,6 +66,10 @@ class DeployCustomServerForm(Form):
 
 
 class DeployTokenServerForm(Form):
+    """
+    Form used for creating upgraded server (premium users).
+    """
+
     _server_locations = build_hosts_list()
 
     location = SelectField('location',
@@ -75,6 +79,9 @@ class DeployTokenServerForm(Form):
                          validators=[DataRequired('Password is required.'),
                                      Length(min=3, max=25, message="Password must be between 3 and 25 characters long.")])
     channel_name = TextField('channel_name', validators=[DataRequired('Channel name is required.')])
+    superuser_password = TextField('password',
+                                   validators=[DataRequired('Password is required.'),
+                                   Length(min=3, max=25, message="Password must be between 3 and 25 characters long.")])
 
 
 class CreateTokenForm(Form):

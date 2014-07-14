@@ -31,6 +31,14 @@ a {
     outline: 0;
     line-height: inherit;
 }
+hr {
+    width: 95%;
+    margin: 20px auto;
+    border-top: 1px solid #CFCFCF;
+    border-bottom: 1px solid #FCFCFC;
+    border-left: 0;
+    border-right: 0;
+}
 a:hover {
     text-decoration: underline;
 }
@@ -358,6 +366,12 @@ table .subchannels { background: #42B8DD; color: white; text-shadow: 0 1px 1px r
 }
 .text-left {
     text-align: left;
+}
+.text-underline {
+    border-bottom: 1px dotted #444;
+}
+.text-underline:hover {
+    cursor: help;
 }
 .clear {
     clear: both;
