@@ -11,7 +11,7 @@
         <table class="rounded">
             <thead>
                 <tr>
-                    <th colspan="2">{{ _('Mumble Connection Details') }}</th>
+                    <th colspan="2"><i class="fa fa-signal"></i> {{ _('Mumble Connection Details') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,26 +63,26 @@
         <table class="rounded centered" data-bind="with: usersOnline">
             <thead>
                 <tr>
-                    <th>{{ _('Users Online') }} (<span data-bind="text: count"></span>)</th>
-                    <th class="text-right">{{ _('Duration') }}</th>
+                    <th><i class="fa fa-users"></i> {{ _('Users Online') }} (<span data-bind="text: count"></span>) &mdash; Lobby</th>
+                    <th class="text-right"><i class="fa fa-clock-o"></i> {{ _('Duration') }}</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- ko foreach: users -->
                 <tr>
-                    <td data-bind="text: name"></td>
+                    <td><i class="fa fa-user"></i> <span data-bind="text: name"></span></td>
                     <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
                 </tr>
                 <!-- /ko -->
 
                 <!-- ko foreach: sub_channels -->
                 <tr class="subchannels">
-                  <td colspan="2" data-bind="text: c.name + ' (Subchannel)'"></td>
+                  <td colspan="2"><i class="fa fa-comments"></i> <span data-bind="text: 'Channel &mdash; ' + c.name"></span></td>
                 </tr>
 
                 <!-- ko foreach: users -->
                 <tr>
-                  <td data-bind="text: name"></td>
+                  <td><i class="fa fa-user"></i> <span data-bind="text: name"></span></td>
                   <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
                 </tr>
                 <!-- /ko -->

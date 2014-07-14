@@ -30,11 +30,19 @@
               </div>
               <div class="pure-control-group">
                 <label for="channel_name">Channel Name</label>
-                {{ form.channel_name(size=20, class='', placeholder='%s' % _('Channel Name'), autocomplete='off') }}
+                {{ form.channel_name(size=20, placeholder='%s' % _('Channel Name'), autocomplete='off') }}
               </div>
               <div class="pure-control-group">
-                <label for="password">Set Password</label>
-                {{ form.password(size=20, class='', placeholder='%s' % _('Set a Password'), autocomplete='off') }}
+                <label for="password">Set Server Password</label>
+                {{ form.password(size=20, placeholder='%s' % _('Set a Server Password'), autocomplete='off') }}
+              </div>
+              <hr>
+              <div class="pure-control-group">
+                <label for="password">Set SuperUser Password</label>
+                {{ form.superuser_password(size=20, placeholder='%s' % _('Set a SuperUser Password'), autocomplete='off') }}
+                <i class="fa fa-info-circle"></i>
+                <span class="ttip text-underline" data-toggle="tooltip" title="" data-original-title="A SuperUser is a user with admin
+                  privileges. You can use this account to create sub-channels, moderate users and channels, and grant privileges to other users."> What is a SuperUser?</span>
               </div>
               <div class="pure-controls">
                 <button id="deploy-button" class="pure-button pure-button-primary" type="submit" value="Submit">
@@ -63,6 +71,10 @@
 {% block scripts %}
   <script src="https://coinbase.com/assets/button.js" type="text/javascript"></script>
   <script type="text/javascript">
+    // Tooltips
+    $('.ttip').tooltip({trigger: 'hover', placement: 'right'});
+
+    // Forms
     $('#deploy-form').submit(function() {
     $('#deploy-button').attr('disabled', 'disabled');
     $('#deploy-button').html("<i class='fa fa-refresh fa-spin'></i> {{ _('Deploying...') }}");

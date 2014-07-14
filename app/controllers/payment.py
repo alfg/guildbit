@@ -50,6 +50,8 @@ class PaymentView(FlaskView):
                 # Create POST request to murmur-rest api to create a new server
                 welcome_msg = "Welcome to Guildbit Mumble Hosting. View details on this server by " \
                               "<a href='http://guildbit.com/server/%s'>clicking here.</a>" % gen_uuid
+
+                # Initialize payload for murmur-rest request
                 payload = {
                     'password': form.password.data,
                     'welcometext': welcome_msg,
@@ -57,7 +59,10 @@ class PaymentView(FlaskView):
                     'registername': form.channel_name.data
                 }
 
+                # Create virtual murmur server and set SuperUser password
                 server_id = murmur.create_server_by_location(form.location.data, payload)
+                murmur.set_superuser_password(form.location.data, form.superuser_password.data, server_id)
+
 
                 # Create database entry
                 s = Server()
