@@ -76,9 +76,11 @@
                 <!-- /ko -->
 
                 <!-- ko foreach: sub_channels -->
+                <!-- ko if: users.length > 0 -->
                 <tr class="subchannels">
                   <td colspan="2"><i class="fa fa-comments"></i> <span data-bind="text: 'Channel &mdash; ' + c.name"></span></td>
                 </tr>
+                <!-- /ko -->
 
                 <!-- ko foreach: users -->
                 <tr>
