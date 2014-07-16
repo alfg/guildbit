@@ -336,12 +336,12 @@ class AdminTokensView(FlaskView):
 
                 db.session.add(t)
                 db.session.commit()
+                return redirect('/admin/tokens/')
 
             except:
                 import traceback
                 db.session.rollback()
                 traceback.print_exc()
-
                 return redirect('/admin/tokens/')
 
 

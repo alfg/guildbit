@@ -11,7 +11,12 @@
         <table class="rounded">
             <thead>
                 <tr>
-                    <th colspan="2"><i class="fa fa-signal"></i> {{ _('Mumble Connection Details') }}</th>
+                    <th colspan="2">
+                      <i class="fa fa-signal"></i> {{ _('Mumble Connection Details') }}
+                      {% if server.type == 'upgrade' %}
+                        <span class="pull-right label light"><i class="fa fa-bolt"></i> {{ _('Upgraded Server') }}</span>
+                      {% endif %}
+                    </th>
                 </tr>
             </thead>
             <tbody>

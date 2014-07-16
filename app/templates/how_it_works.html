@@ -3,7 +3,7 @@
 {% block title %}{{ _('How It Works') }}{% endblock %}
 
 {% block body %}
-    <div class="content">
+    <div class="content how-it-works">
         <h1>{{ _('How It Works') }}</h1>
 
         <p>{{ _('Traditional VOIP hosts offer subscription-based and persistent servers, so generally a premium
@@ -11,19 +11,56 @@
         resources, opening up more server slots which aren&apos;t being occupied. This helps lower hosting,
         resources and bandwidth costs. Also, VPS hosting nowadays are much cheaper than they used to be. The
         rest is supported by donations and upgrades.') }}</p>
+        <hr>
 
-        <h2>{{ _('The Process') }}</h2>
-        <ul>
-            <li><strong>{{ _('Set a location') }}</strong> &mdash; {{ _('Choose a server location closest to your group to minimize latency.') }}</li>
-            <li><strong>{{ _('Set a duration') }}</strong> &mdash; {{ ('You can choose how long the server instance will live. From 4-24 hours. The
-            less hours you use, the more resources open up for others. :)') }}</li>
-            <li><strong>{{ _('Set a password') }}</strong> &mdash; {{ _('Password protected servers are required, due to the fact the server may be
-            reused in the future.') }}</li>
-            <li><strong>{{ _('Deploy') }}</strong> &mdash; {{ _('The server generally takes a few seconds to spin up.') }}</li>
-            <li><strong>{{ _('Connect') }}</strong> &mdash; {{ _('That&apos;s all. The following page will give you the connection details.') }}</li>
-            <li><strong>{{ _('Share') }}</strong> &mdash; {{ _('Share the connection details, or use the copy feature to copy/paste the credentials
-            directly. The server page also monitors users in room and displays the expiration countdown.') }}</li>
-        </ul>
+        <div class="pure-g text-center">
+            <div class="pure-u-1-3">
+              <h2>{{ _('Set a location') }}</h2>
+              <h4>{{ _('Choose a server location closest to your group to minimize latency.') }}</h4>
+            </div>
+            <div class="pure-u-1-3">
+              <h2>{{ _('Set a duration') }}</h2>
+              <h4>{{ ('You can choose how long the server instance will live. From 4-24 hours. The
+              less hours you use, the more resources open up for others. :)') }}</h4>
+            </div>
+            <div class="pure-u-1-3">
+              <h2>{{ _('Set a password') }}</h2>
+              <h4>{{ _('Password protected servers are required, due to the fact the server may be
+              reused in the future.') }}</h4>
+            </div>
+        </div>
+        <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_home.png">
+          <img class="pure-img" src="../static/img/screenshots/howitworks_home.png" />
+        </a>
+        <hr />
+
+        <h2 class="text-center">Connection Details</h2>
+        <h4>{{ _('Share the connection details, or use the copy feature to copy/paste the credentials
+            directly. The server page also monitors users in room (including subchannels) and displays the expiration countdown.') }}</h4>
+        <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_connection_details.png">
+          <img class="pure-img" src="../static/img/screenshots/howitworks_connection_details.png" alt="{{ _('Share the connection details, or use the copy feature to copy/paste the credentials
+            directly. The server page also monitors users in room (including subchannels) and displays the expiration countdown.') }}" />
+        </a>
+        <hr>
+
+        <h4 class="text-center">Clicking direct link opens Mumble and connects to server</h4>
+        <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_connected_mumble.png">
+          <img class="pure-img" src="../static/img/screenshots/howitworks_connect_mumble.png" alt="Clicking direct link opens Mumble and connects to server" />
+        </a>
+        <hr>
+
+        <h4 class="text-center">Connected to Mumble with users in lobby</h4>
+        <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_connected_mumble.png">
+          <img class="pure-img" src="../static/img/screenshots/howitworks_connected_mumble.png" alt="Connected to Mumble with users in lobby" />
+        </a>
+        <hr>
+
+        <h4 class="text-center">Server page live updates with users in server as well as server timer expiration</h4>
+        <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_users.png">
+          <img class="pure-img" src="../static/img/screenshots/howitworks_users.png" alt="Server page live updates with users in server as well as server timer expiration" />
+        </a>
+        <hr />
+
 
         <h2>{{ _('FAQs') }}</h2>
         <dl class="faqs">
@@ -49,8 +86,12 @@
             cost me any licensing fees to host Mumble servers or offer it as a service.') }}</dd>
 
             <dt>{{ _('Do you offer premium upgrades?') }}</dt>
-            <dd>{{ _('Yes! We now offer server upgrades via Bitcoin and Paypal to increase slot count, duration and a reserved port.
-            <a href="/upgrade">Click here</a> to get started.') }}</dd>
+            <dd>{{ _('Yes! We now offer server upgrades via Bitcoin and Paypal to increase slot count, duration, subchannels
+            and a SuperUser admin capabilities. <a href="/upgrade">Click here</a> to get started.') }}</dd>
+
+            <dt>{{ _('What is a SuperUser?') }}</dt>
+            <dd>{{ _('A SuperUser is an admin account on your Mumble server to grant permissions and roles to users and
+            groups as well as setting up channels.') }}</dd>
 
             <dt>{{ _('Do you plan on offering other methods of payment?') }}</dt>
             <dd>{{ _('We&apos;re looking into Stripe or Balanced Payments integration. :)') }}</dd>
@@ -81,4 +122,16 @@
 {% endblock %}
 
 {% block scripts %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".fancybox").fancybox({
+        beforeShow : function() {
+          var alt = this.element.find('img').attr('alt');
+          this.inner.find('img').attr('alt', alt);
+          this.title = alt;
+          console.log(this.prev);
+      }
+      });
+    });
+  </script>
 {% endblock %}
