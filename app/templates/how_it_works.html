@@ -30,40 +30,40 @@
             </div>
         </div>
         <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_home.png">
-          <img class="pure-img" src="../static/img/screenshots/howitworks_home.png" />
+          <img class="pure-img lazy" data-original="../static/img/screenshots/howitworks_home.png" width="800" />
         </a>
         <hr />
 
-        <h2 class="text-center">Connection Details</h2>
+        <h2 class="text-center"><i class="fa fa-signal"></i> Connection Details</h2>
         <h4>{{ _('Share the connection details, or use the copy feature to copy/paste the credentials
             directly. The server page also monitors users in room (including subchannels) and displays the expiration countdown.') }}</h4>
         <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_connection_details.png">
-          <img class="pure-img" src="../static/img/screenshots/howitworks_connection_details.png" alt="{{ _('Share the connection details, or use the copy feature to copy/paste the credentials
-            directly. The server page also monitors users in room (including subchannels) and displays the expiration countdown.') }}" />
+          <img class="pure-img lazy" data-original="../static/img/screenshots/howitworks_connection_details.png" alt="{{ _('Share the connection details, or use the copy feature to copy/paste the credentials
+            directly. The server page also monitors users in room (including subchannels) and displays the expiration countdown.') }}" width="800" />
         </a>
         <hr>
 
         <h4 class="text-center">Clicking direct link opens Mumble and connects to server</h4>
-        <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_connected_mumble.png">
-          <img class="pure-img" src="../static/img/screenshots/howitworks_connect_mumble.png" alt="Clicking direct link opens Mumble and connects to server" />
+        <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_connect_mumble.png">
+          <img class="pure-img lazy" data-original="../static/img/screenshots/howitworks_connect_mumble.png" alt="Clicking direct link opens Mumble and connects to server" width="800" />
         </a>
         <hr>
 
         <h4 class="text-center">Connected to Mumble with users in lobby</h4>
         <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_connected_mumble.png">
-          <img class="pure-img" src="../static/img/screenshots/howitworks_connected_mumble.png" alt="Connected to Mumble with users in lobby" />
+          <img class="pure-img lazy" data-original="../static/img/screenshots/howitworks_connected_mumble.png" alt="Connected to Mumble with users in lobby" width="800"/>
         </a>
         <hr>
 
         <h4 class="text-center">Server page live updates with users in server as well as server timer expiration</h4>
         <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_users.png">
-          <img class="pure-img" src="../static/img/screenshots/howitworks_users.png" alt="Server page live updates with users in server as well as server timer expiration" />
+          <img class="pure-img lazy" data-original="../static/img/screenshots/howitworks_users.png" alt="Server page live updates with users in server as well as server timer expiration" width="800" />
         </a>
         <hr />
 
         <h4 class="text-center">Server page updates when Mumble server expires</h4>
         <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_expired.png">
-          <img class="pure-img" src="../static/img/screenshots/howitworks_expired.png" alt="Server page updates when Mumbe server expires" />
+          <img class="pure-img lazy" data-original="../static/img/screenshots/howitworks_expired.png" alt="Server page updates when Mumbe server expires" width="800" />
         </a>
         <hr />
 
@@ -128,8 +128,12 @@
 {% endblock %}
 
 {% block scripts %}
+
+  <script src="../static/js/libs/jquery.lazyload.min.js" type="text/javascript"></script>
   <script type="text/javascript">
     $(document).ready(function() {
+
+      // Fancybox gallery
       $(".fancybox").fancybox({
         beforeShow : function() {
           var alt = this.element.find('img').attr('alt');
@@ -138,6 +142,18 @@
           console.log(this.prev);
       }
       });
+
+      // Initialize lazyloading of images
+      $("img.lazy").lazyload({
+        effect: "fadeIn"
+      });
+    });
+
+    // Delay lazy load a bit
+    $(window).bind("load", function() {
+      var timeout = setTimeout(function() {
+          $("img.lazy").trigger("sporty")
+      }, 5000);
     });
   </script>
 {% endblock %}
