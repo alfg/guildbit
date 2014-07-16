@@ -48,9 +48,9 @@ babel = Babel(app)
 assets = Environment(app)
 app.config['ASSETS_DEBUG'] = settings.ASSETS_DEBUG
 
-js = Bundle('js/libs/share.min.js', 'js/libs/tooltips.min.js', 'js/main.js',
+js = Bundle('js/libs/share.min.js', 'js/libs/tooltips.min.js', 'js/main.js', 'js/libs/jquery.fancybox.js',
             filters='jsmin', output='gen/packed.js')
-css = Bundle('css/style.css', 'css/tooltips.css',
+css = Bundle('css/style.css', 'css/tooltips.css', 'css/jquery.fancybox.css',
              filters='cssmin', output='gen/packed.css')
 assets.register('js_all', js)
 assets.register('css_all', css)

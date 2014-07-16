@@ -269,6 +269,21 @@ a:hover {
     text-align: center;
 }
 
+/* How It Works */
+.content.how-it-works {
+
+}
+.content.how-it-works h3 {
+    margin: 0;
+    font-weight: 400 !important;
+}
+.content.how-it-works h4 {
+    margin: 10px 0;
+}
+.content.how-it-works img.pure-img {
+    margin: 0 auto;
+}
+
 /* Labels */
 .badge, .label { height: 20px; display: inline-block; font-family: Helvetica, arial, verdana, sans-serif; font-weight: bold; line-height: 20px; text-align: center; color: #fff; }
 .badge a, .label a { color: #fff; }
