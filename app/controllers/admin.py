@@ -330,7 +330,7 @@ class AdminTokensView(FlaskView):
                 # Create database entry
                 t = Token()
                 t.uuid = gen_uuid
-                t.email = None
+                t.email = form.email.data or None
                 t.active = True
                 t.package = form.package.data
 

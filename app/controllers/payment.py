@@ -82,6 +82,23 @@ class PaymentView(FlaskView):
 
                 # Send task to delete server on expiration
                 tasks.delete_server.apply_async([gen_uuid], eta=s.expiration)
+
+                # Send email to user if email was set
+                if token.email is not None:
+                    email_ctx = {
+                        'url': 'http://guildbit.com/server/%s' % gen_uuid,
+                        'package': token.package,
+                        'expiration': 'expiration here',
+                        'superuser_password': form.superuser_password.data
+                    }
+                    msg = Message(
+                        "Guildbit - Server Created",
+                        sender=settings.DEFAULT_MAIL_SENDER,
+                        recipients=[token.email])
+
+                    msg.html = render_template("emails/payment_server_created.html", ctx=email_ctx)
+                    mail.send(msg)
+
                 return redirect(url_for('ServerView:get', id=s.uuid))
 
             except:
@@ -98,8 +115,7 @@ class PaymentView(FlaskView):
         @return:
         """
 
-        ## Gather information from callback response
-
+        # Gather information from callback response
         data = json.loads(request.data)
         order = data.get("order", None)
         customer = data.get("customer", None)
@@ -130,20 +146,13 @@ class PaymentView(FlaskView):
 
         ## Send email to user with unique link
         try:
-            template = """
-                        <p>Thank you for your order with Guildbit</p>
-                        <p>You have ordered the package: <strong>%s</strong></p>
-                        <p>Please use the following link to create your server:<br />
-                        <a href='http://guildbit.com/payment/create/%s'>http://guildbit.com/payment/create/%s</a></p><br />
-                        <p>If you have any questions, please feel free to <a href='http://guildbit.com/contact'>contact
-                        us</a>.</p>""" % (button_name, gen_uuid, gen_uuid)
-
             msg = Message(
                 "Guildbit - Order Confirmation",
                 sender=settings.DEFAULT_MAIL_SENDER,
                 recipients=[email])
 
-            msg.html = template
+            # msg.html = template
+            msg.html = render_template("emails/payment_thankyou.html", package=button_name, uuid=gen_uuid)
             mail.send(msg)
         except:
             import traceback
@@ -161,7 +170,7 @@ class PaymentView(FlaskView):
         @return:
         """
 
-        print request.form
+        # Gather information from callback response
         first_name = request.form.get("first_name", None)
         last_name = request.form.get("last_name", None)
         payer_id = request.form.get("payer_id", None)
@@ -190,20 +199,12 @@ class PaymentView(FlaskView):
 
         ## Send email to user with unique link
         try:
-            template = """
-                        <p>Thank you for your order with Guildbit</p>
-                        <p>You have ordered the package: <strong>%s</strong></p>
-                        <p>Please use the following link to create your server:<br />
-                        <a href='http://guildbit.com/payment/create/%s'>http://guildbit.com/payment/create/%s</a></p><br />
-                        <p>If you have any questions, please feel free to <a href='http://guildbit.com/contact'>contact
-                        us</a>.</p>""" % (item_name, gen_uuid, gen_uuid)
-
             msg = Message(
                 "Guildbit - Order Confirmation",
                 sender=settings.DEFAULT_MAIL_SENDER,
                 recipients=[payer_email])
 
-            msg.html = template
+            msg.html = render_template("emails/payment_thankyou.html", package=item_name, uuid=gen_uuid)
             mail.send(msg)
         except:
             import traceback

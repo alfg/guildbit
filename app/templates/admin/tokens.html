@@ -25,7 +25,7 @@
               <td>{{ i.id }}</td>
               <td><a href="/payment/create/{{ i.uuid }}" target="_blank">{{ i.uuid }}</a></td>
               <td class="created-date">{{ i.created_date }}</td>
-              <td>{{ i.active }}</td>
+              <td><span class="label {% if i.active == True %}label-green{% else %}label-red{% endif %}">{{ i.active }}</span></td>
               <td class="created-date">{{ i.activation_date }}</td>
               <td>{{ i.email }}</td>
               <td>{{ i.package }}</td>
@@ -51,6 +51,10 @@
             <div class="pure-control-group">
               <label for="role">Package</label>
               {{ form.package }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Email</label>
+              {{ form.email }}
             </div>
             <fieldset>
               {% for error in form.errors.role %}
