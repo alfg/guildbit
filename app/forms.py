@@ -51,7 +51,8 @@ class DeployServerForm(Form):
                            ])
     password = TextField('password',
                          validators=[DataRequired('Password is required.'),
-                                     Length(min=3, max=25, message="Password must be between 3 and 25 characters long.")])
+                                     Length(min=3, max=25,
+                                            message="Password must be between 3 and 25 characters long.")])
 
 
 class DeployCustomServerForm(Form):
@@ -77,16 +78,19 @@ class DeployTokenServerForm(Form):
                            choices=_server_locations)
     password = TextField('password',
                          validators=[DataRequired('Password is required.'),
-                                     Length(min=3, max=25, message="Password must be between 3 and 25 characters long.")])
+                                     Length(min=3, max=25,
+                                            message="Password must be between 3 and 25 characters long.")])
     channel_name = TextField('channel_name', validators=[DataRequired('Channel name is required.')])
     superuser_password = TextField('password',
                                    validators=[DataRequired('Password is required.'),
-                                   Length(min=3, max=25, message="Password must be between 3 and 25 characters long.")])
+                                               Length(min=3, max=25,
+                                                      message="Password must be between 3 and 25 characters long.")])
 
 
 class CreateTokenForm(Form):
     _packages = build_packages_list()
 
+    email = TextField('email')
     package = SelectField('package',
                           validators=[DataRequired()],
                           choices=_packages)
@@ -110,15 +114,15 @@ class NoticeForm(Form):
     message = TextField('message', validators=[DataRequired()])
     active = BooleanField('active')
     message_type = SelectField('type', validators=[DataRequired()],
-                       choices=[
-                           ('primary', 'primary'),
-                           ('secondary', 'secondary'),
-                           ('default', 'default'),
-                           ('info', 'info'),
-                           ('danger', 'danger'),
-                           ('warning', 'warning'),
-                           ('success', 'success')
-                       ])
+                               choices=[
+                                   ('primary', 'primary'),
+                                   ('secondary', 'secondary'),
+                                   ('default', 'default'),
+                                   ('info', 'info'),
+                                   ('danger', 'danger'),
+                                   ('warning', 'warning'),
+                                   ('success', 'success')
+                               ])
 
 
 class SendChannelMessageForm(Form):
@@ -134,7 +138,8 @@ class SuperuserPasswordForm(Form):
     _server_locations = build_hosts_list()
     password = TextField('password',
                          validators=[DataRequired('Password is required.'),
-                                     Length(min=3, max=25, message="Password must be between 3 and 25 characters long.")])
+                                     Length(min=3, max=25,
+                                            message="Password must be between 3 and 25 characters long.")])
     location = SelectField('location',
                            validators=[DataRequired()],
                            choices=_server_locations)
