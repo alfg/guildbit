@@ -105,6 +105,7 @@ class ServerView(FlaskView):
         root_channel = server_details['parent_channel']
         sub_channels = server_details['sub_channels']
         root_channel['channels'] = sub_channels
+        root_channel['users'] = server_details['users']
 
         # channels = [dict(root_channel)] + sub_channels
 
