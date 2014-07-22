@@ -1,7 +1,8 @@
+import json
 from functools import wraps
 
+from flask import redirect, request, current_app
 from flask.ext.login import current_user
-from flask import redirect
 import requests
 from requests import ConnectionError
 
@@ -80,4 +81,19 @@ def get_package_by_name(name):
                 pass
     return {}
 
+
+def support_jsonp(f):
+    """
+    Wraps JSONified output for JSONP
+    Copied from https://gist.github.com/aisipos/1094140
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        callback = request.args.get('callback', False)
+        if callback:
+            content = str(callback) + '(' + str(f(*args, **kwargs).data) + ')'
+            return current_app.response_class(content, mimetype='application/javascript')
+        else:
+            return f(*args, **kwargs)
+    return decorated_function
 
