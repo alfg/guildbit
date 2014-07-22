@@ -1,9 +1,12 @@
-from flask import render_template, request, redirect, url_for, jsonify
+import json
+
+from flask import render_template, request, redirect, url_for, jsonify, Response
 from flask.ext.classy import FlaskView, route
 
 from app import db
 from app.models import Server, Rating
 import app.murmur as murmur
+from app.util import support_jsonp
 
 
 ## Server views
@@ -92,3 +95,29 @@ class ServerView(FlaskView):
             return jsonify(message='success')
 
         return jsonify(message='error')
+
+    @support_jsonp
+    @route('/<id>/cvp/')
+    def cvp(self, id):
+        server = Server.query.filter_by(uuid=id).first_or_404()
+        server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
+
+        root_channel = server_details['parent_channel']
+        sub_channels = server_details['sub_channels']
+        root_channel['channels'] = sub_channels
+
+        # channels = [dict(root_channel)] + sub_channels
+
+        if server_details is not None:
+            cvp = {
+                'root': root_channel,
+                'id': server_details['id'],
+                'name': server_details['name'],
+                "x_connecturl": "mumble://",
+                'x_uptime': server_details['uptime']
+            }
+            # return jsonify(users=users)
+            return Response(json.dumps(cvp, sort_keys=True, indent=4), mimetype='application/json')
+
+        else:
+            return jsonify(users=None)
