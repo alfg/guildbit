@@ -63,7 +63,6 @@ class PaymentView(FlaskView):
                 server_id = murmur.create_server_by_location(form.location.data, payload)
                 murmur.set_superuser_password(form.location.data, form.superuser_password.data, server_id)
 
-
                 # Create database entry
                 s = Server()
                 s.duration = ctx['duration']
@@ -72,6 +71,7 @@ class PaymentView(FlaskView):
                 s.type = 'upgrade'
                 s.mumble_instance = server_id
                 s.mumble_host = murmur.get_murmur_hostname(form.location.data)
+                s.cvp_uuid = str(uuid.uuid4())
 
                 # Expire token
                 token.activation_date = datetime.datetime.utcnow()

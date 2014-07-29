@@ -268,6 +268,9 @@ a:hover {
     width: 90%;
     text-align: center;
 }
+.content.server .cvp-popover .popover {
+    max-width: 400px !important;
+}
 
 /* How It Works */
 .content.how-it-works {

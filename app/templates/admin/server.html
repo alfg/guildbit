@@ -53,6 +53,10 @@
                 <td>Mumble Instance ID</td>
                 <td>{{ server.mumble_instance }}</td>
             </tr>
+            <tr>
+              <td>CVP Endpoint </td>
+              <td><a href="{{ request.url_root }}server/cvp/{{ server.cvp_uuid }}/json">{{ request.url_root }}server/cvp/{{ server.cvp_uuid }}/json</a></td>
+            </tr>
         </tbody>
     </table>
     <br />
@@ -189,7 +193,7 @@
             function loadUsers() {
                 var users = [];
                 $.ajax({
-                    url: base_url + "/users",
+                    url: base_url + "/users/",
                     async: false,
                     dataType: "json",
                     success: function (json) {
