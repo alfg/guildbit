@@ -2,6 +2,8 @@ import os
 from datetime import datetime
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.script import Manager
+from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.login import LoginManager
 from flask.ext.openid import OpenID
 from flask.ext.mail import Mail
@@ -27,6 +29,11 @@ oid = OpenID(app, os.path.join(settings.BASE_DIR, 'tmp'))
 # Configure database
 app.config['SQLALCHEMY_DATABASE_URI'] = settings.DATABASE_URI
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+# Configure Flask-Script
+manager = Manager(app)
+manager.add_command('db', MigrateCommand)
 
 # Configure Flask-Mail
 app.config['MAIL_SERVER'] = settings.MAIL_SERVER
@@ -78,4 +85,3 @@ if not app.debug:
 from app import views
 
 db.create_all()
-

@@ -3,7 +3,7 @@ import json
 from flask import render_template, request, redirect, url_for, jsonify, Response
 from flask.ext.classy import FlaskView, route
 
-from app import db
+from app import db, cache
 from app.models import Server, Rating
 import app.murmur as murmur
 from app.util import support_jsonp
@@ -97,53 +97,56 @@ class ServerView(FlaskView):
         return jsonify(message='error')
 
     @support_jsonp
-    @route('/<id>/cvp/')
+    @cache.cached(timeout=10)
+    @route('/cvp/<id>/')
+    @route('/cvp/<id>/json/')
     def cvp(self, id):
         """
         CVP endpoint provides the Channel Viewer Protocol Specification according to Mumble documentation to allow
         embeddable widgets display live users on their websites.
         http://mumble.sourceforge.net/Channel_Viewer_Protocol
-        @param id:
-        @return:
+        @param id: server id
+        @return: json response for cvp
         """
-        server = Server.query.filter_by(uuid=id).first_or_404()
+
+        server = Server.query.filter_by(cvp_uuid=id).first_or_404()
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
 
-        root_channel = server_details['parent_channel']
-        sub_channels = server_details['sub_channels']
-
-        # Iterate through channels to transform json response to cvp specification
-        for i in sub_channels:
-            i['description'] = i['c']['description']
-            i['id'] = i['c']['id']
-            i['links'] = i['c']['links']
-            i['name'] = i['c']['name']
-            i['parent'] = i['c']['parent']
-            i['position'] = i['c']['position']
-            i['temporary'] = i['c']['temporary']
-            i['channels'] = i.pop('children')
-            i['x_connecturl'] = "mumble://%s:%i" % (server.mumble_host, server_details['port'])
-
-            i.pop("c", None)
-            # Iterate through channels' sub-channels to transform json response to cvp specification
-            for j in i['channels']:
-                j['description'] = j['c']['description']
-                j['id'] = j['c']['id']
-                j['links'] = j['c']['links']
-                j['name'] = j['c']['name']
-                j['parent'] = j['c']['parent']
-                j['position'] = j['c']['position']
-                j['temporary'] = j['c']['temporary']
-                j['x_connecturl'] = "mumble://%s:%i" % (server.mumble_host, server_details['port'])
-                j.pop("c", None)
-                j['channels'] = j.pop('children')
-
-        # More reforming of json data to CVP spec.
-        root_channel['channels'] = sub_channels
-        root_channel['users'] = server_details['users']
-
-        # Prepare json response context
         if server_details is not None:
+            root_channel = server_details['parent_channel']
+            sub_channels = server_details['sub_channels']
+
+            # Iterate through channels to transform json response to cvp specification
+            for i in sub_channels:
+                i['description'] = i['c']['description']
+                i['id'] = i['c']['id']
+                i['links'] = i['c']['links']
+                i['name'] = i['c']['name']
+                i['parent'] = i['c']['parent']
+                i['position'] = i['c']['position']
+                i['temporary'] = i['c']['temporary']
+                i['channels'] = i.pop('children')
+                i['x_connecturl'] = "mumble://%s:%i" % (server.mumble_host, server_details['port'])
+
+                i.pop("c", None)
+                # Iterate through channels' sub-channels to transform json response to cvp specification
+                for j in i['channels']:
+                    j['description'] = j['c']['description']
+                    j['id'] = j['c']['id']
+                    j['links'] = j['c']['links']
+                    j['name'] = j['c']['name']
+                    j['parent'] = j['c']['parent']
+                    j['position'] = j['c']['position']
+                    j['temporary'] = j['c']['temporary']
+                    j['x_connecturl'] = "mumble://%s:%i" % (server.mumble_host, server_details['port'])
+                    j.pop("c", None)
+                    j['channels'] = j.pop('children')
+
+            # More reforming of json data to CVP spec.
+            root_channel['channels'] = sub_channels
+            root_channel['users'] = server_details['users']
+
+            # Prepare json response context
             cvp = {
                 'root': root_channel,
                 'id': server_details['id'],

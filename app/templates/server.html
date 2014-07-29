@@ -62,6 +62,23 @@
                     <td>{{ _('Slots') }}</td>
                     <td>{{ details.maxusers }}</td>
                 </tr>
+
+                {% if server.cvp_uuid %}
+                <tr>
+                  <td>
+                    CVP Endpoint<br>
+                    <span class="text-underline cvp-popover" data-toggle="popover" data-trigger="hover" title="What's a CVP Endpoint?">What's this?</span>
+                  </td>
+                  <td>
+                    <div class="copy-url append field">
+                      <form class="pure-form">
+                        <input id="copy-text-cvp" class="pure-u-2-3" type="text" value="{{ request.url_root }}server/cvp/{{ server.cvp_uuid }}/json" readonly="readonly" />
+                        <a class="pure-button pure-button-primary" id="copy-button-cvp" href="#">{{ _('Copy') }}</a>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+                {% endif %}
             </tbody>
         </table>
 
@@ -141,6 +158,9 @@
             var client = new ZeroClipboard( document.getElementById("copy-button"), {
               moviePath: "/static/js/libs/ZeroClipboard.swf"
             });
+            var clientCvp = new ZeroClipboard( document.getElementById("copy-button-cvp"), {
+              moviePath: "/static/js/libs/ZeroClipboard.swf"
+            });
             client.on("load", function(client) {
                 client.on("complete", function(client, args) {
                     $(this).text("Copied!");
@@ -149,9 +169,24 @@
                     client.setText($('#copy-text').val());
                 });
             });
+            clientCvp.on("load", function(client) {
+              client.on("complete", function(client, args) {
+                $(this).text("Copied!");
+              });
+              client.on('dataRequested', function (client, args) {
+                client.setText($('#copy-text-cvp').val());
+              });
+            });
 
             // Tooltips
             $('.ttip').tooltip({trigger: 'hover'});
+            $('.cvp-popover').popover({
+              trigger: 'hover',
+              html: true,
+              container: '.cvp-popover',
+              content: 'A CVP (Channel Viewer Protocol) endpoint is a URL required by Mumble Channel Viewers used to embed' +
+                      ' a web-based widget on guild websites. You can read more about it <a href="http://mumble.sourceforge.net/Channel_Viewer_Protocol" target="_BLANK">here</a>.'
+            });
 
             // Leave feedback ratings
             $('#rating span').on('click', function() {
@@ -206,7 +241,7 @@
             function loadUsers() {
                 var users = [];
                 $.ajax({
-                    url: base_url + "/users",
+                    url: base_url + "/users/",
                     async: false,
                     dataType: "json",
                     success: function (json) {

@@ -17,6 +17,7 @@ class Server(db.Model):
     type = db.Column(db.String, default='temp')
     mumble_host = db.Column(db.String, default="mumble.guildbit.com")
     mumble_instance = db.Column(db.Integer)
+    cvp_uuid = db.Column(db.String, unique=True, index=True, default=None)
 
     ratings = db.relationship('Rating', backref='server', lazy='dynamic')
 
