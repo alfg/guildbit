@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.secret_key = settings.APP_SESSION_KEY
 
 # Version
-app.config.version = '1.2.1'
+app.config.version = '1.3.0'
 app.config.last_updated = datetime.now()
 
 # Configure Flask-login
