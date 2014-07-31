@@ -48,8 +48,7 @@ class PaymentView(FlaskView):
                 gen_uuid = str(uuid.uuid4())
 
                 # Create POST request to murmur-rest api to create a new server
-                welcome_msg = "Welcome to Guildbit Mumble Hosting. View details on this server by " \
-                              "<a href='http://guildbit.com/server/%s'>clicking here.</a>" % gen_uuid
+                welcome_msg = render_template("mumble/upgrade_welcome_message.html", gen_uuid=gen_uuid)
 
                 # Initialize payload for murmur-rest request
                 payload = {
