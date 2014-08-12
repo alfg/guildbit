@@ -52,7 +52,7 @@
                         </div>
                     </td>
                 </tr>
-                {% if server.type == 'temp' or server.type == 'upgrade' %}
+                {% if server.type == 'temp' or server.type == 'upgrade' or server.type == 'custom' %}
                 <tr>
                     <td>{{ _('Expires') }}</td>
                     <td><span id="expires-date"></span> (<span id="expires" data-bind="text: remainingTime"></span>) </td>
@@ -64,15 +64,18 @@
                 </tr>
 
                 {% if server.cvp_uuid %}
-                <tr>
+                <tr class="mobile-hide">
                   <td>
-                    CVP Endpoint<br>
-                    <span class="text-underline cvp-popover" data-toggle="popover" data-trigger="hover" title="What's a CVP Endpoint?">What's this?</span>
+                    Embed Widget<br>
+                    <span class="text-underline cvp-popover" data-toggle="popover" data-trigger="hover" title="What's a widget?">What's this?</span>
                   </td>
                   <td>
                     <div class="copy-url append field">
                       <form class="pure-form">
-                        <input id="copy-text-cvp" class="pure-u-2-3" type="text" value="{{ request.url_root }}server/cvp/{{ server.cvp_uuid }}/json" readonly="readonly" />
+{#                        <input id="copy-text-cvp" class="pure-u-2-3" type="text" value="{{ request.url_root }}server/cvp/{{ server.cvp_uuid }}/json" readonly="readonly" />#}
+                        <textarea id="copy-text-cvp" class="pure-u-2-3">
+<script class="mumble-widget" src="//cdn.guildbit.com/dist/mumble-widget/mumble-widget.cdn.min.js" type="text/javascript" data-key="{{ server.cvp_uuid }}" data-width="400"></script><div id="mumble-widget-container"></div>
+                        </textarea>
                         <a class="pure-button pure-button-primary" id="copy-button-cvp" href="#">{{ _('Copy') }}</a>
                       </form>
                     </div>
@@ -184,8 +187,8 @@
               trigger: 'hover',
               html: true,
               container: '.cvp-popover',
-              content: 'A CVP (Channel Viewer Protocol) endpoint is a URL required by Mumble Channel Viewers used to embed' +
-                      ' a web-based widget on guild websites. You can read more about it <a href="http://mumble.sourceforge.net/Channel_Viewer_Protocol" target="_BLANK">here</a>.'
+              content: 'Copy and paste this script to your guild&apos;s website to display a live widget of active users.' +
+                      'You can read more about it <a href="http://mumble-widget.guildbit.com" target="_BLANK">here</a>.'
             });
 
             // Leave feedback ratings
