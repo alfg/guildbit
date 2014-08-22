@@ -11,7 +11,7 @@ $(document).ready(function() {
     // Share plugin
     $('.share-js').share({
         url: 'http://guildbit.com',
-        text: 'Guildbit - Free 10 slot Mumble servers. No registration required!',
+        text: 'Guildbit - Free 15 slot Mumble servers. No registration required!',
         button_text: 'Share Us!'
     });
 
