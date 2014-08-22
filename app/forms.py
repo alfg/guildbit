@@ -61,7 +61,7 @@ class DeployCustomServerForm(Form):
     location = SelectField('location',
                            validators=[DataRequired()],
                            choices=_server_locations)
-    slots = IntegerField('slots', default=10)
+    slots = IntegerField('slots', default=15)
     password = TextField('password', validators=[DataRequired('Password is required.')])
     channel_name = TextField('channel_name')
 
