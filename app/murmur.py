@@ -136,6 +136,8 @@ def get_server(host, instance_id):
             if r.status_code == 200:
                 return r.json()
         except requests.exceptions.ConnectionError as e:
+            import traceback
+            traceback.print_exc()
             return None
     else:
         return None
@@ -153,6 +155,8 @@ def delete_server(host, instance_id):
         if r.status_code == 200:
             return r.json()
     except requests.exceptions.ConnectionError as e:
+        import traceback
+        traceback.print_exc()
         return None
     return None
 
@@ -173,6 +177,8 @@ def get_server_stats(host):
             }
             return stats
     except requests.exceptions.ConnectionError as e:
+        import traceback
+        traceback.print_exc()
         pass
     stats = {
         'servers_online': 0,
@@ -213,6 +219,8 @@ def get_server_logs(host, instance_id):
                 logs = r.json()
                 return logs
         except requests.exceptions.ConnectionError as e:
+            import traceback
+            traceback.print_exc()
             pass
     logs = []
     return logs
@@ -253,6 +261,8 @@ def list_all_servers(location):
             if r.status_code == 200:
                 return r.json()
         except requests.exceptions.ConnectionError as e:
+            import traceback
+            traceback.print_exc()
             return None
     else:
         return None
@@ -280,6 +290,24 @@ def set_superuser_password(location, password, instance_id):
         return None
     return None
 
+
+def stop_server(host, instance_id):
+    """
+    Stops a server by host and id.
+    @param host:
+    @param instance_id:
+    @return:
+    """
+    return
+
+def start_server(host, instance_id):
+    """
+    Starts server by host and id.
+    @param host:
+    @param instance_id:
+    @return:
+    """
+    return
 
 ##
 ## Utilities for interfacing with murmur servers

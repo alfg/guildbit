@@ -21,7 +21,7 @@ class ServerView(FlaskView):
 
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
         if server_details is not None:
-            return render_template('server.html', server=server, details=server_details, rating=rating)
+            return render_template('server.html', server=server, details=server_details, rating=rating, ip=ip)
         else:
             return render_template('server_expired.html', server=server, rating=rating)
 

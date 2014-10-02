@@ -1,6 +1,6 @@
 import uuid
 
-from flask import render_template, redirect, url_for, g, flash
+from flask import render_template, redirect, url_for, g, flash, request
 from flask.ext.classy import FlaskView, route
 from flask.ext.mail import Message
 
@@ -28,6 +28,7 @@ class HomeView(FlaskView):
             try:
                 # Generate UUID
                 gen_uuid = str(uuid.uuid4())
+                ip = request.remote_addr
 
                 # Create POST request to murmur-rest api to create a new server
                 welcome_msg = render_template("mumble/temp_welcome_message.html", gen_uuid=gen_uuid)
@@ -48,6 +49,7 @@ class HomeView(FlaskView):
                 s.uuid = gen_uuid
                 s.mumble_instance = server_id
                 s.mumble_host = murmur.get_murmur_hostname(form.location.data)
+                s.ip = ip
                 db.session.add(s)
                 db.session.commit()
 
