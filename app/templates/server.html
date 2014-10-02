@@ -72,7 +72,6 @@
                   <td>
                     <div class="copy-url append field">
                       <form class="pure-form">
-{#                        <input id="copy-text-cvp" class="pure-u-2-3" type="text" value="{{ request.url_root }}server/cvp/{{ server.cvp_uuid }}/json" readonly="readonly" />#}
                         <textarea id="copy-text-cvp" class="pure-u-2-3">
 <script class="mumble-widget" src="//cdn.guildbit.com/dist/mumble-widget/mumble-widget.cdn.min.js" type="text/javascript" data-key="{{ server.cvp_uuid }}" data-width="400"></script><div id="mumble-widget-container"></div>
                         </textarea>
@@ -84,6 +83,10 @@
                 {% endif %}
             </tbody>
         </table>
+
+      {% if ip == server.ip %}
+        {% include 'partials/_admin_controls.html' %}
+      {% endif %}
 
         <table class="rounded centered" data-bind="with: usersOnline">
             <thead>
