@@ -195,7 +195,7 @@
             });
 
             // Leave feedback ratings
-            $('#rating span').on('click', function() {
+            $('#rating').find('span').on('click', function() {
                 var stars = $(this).data('star');
                 $('#rating span').removeClass('starred');
                 $(this).addClass('starred');
@@ -209,7 +209,7 @@
             // Leave feedback message
             $('#feedback-form').submit(function(event) {
                 event.preventDefault();
-                var message = $('#feedback-form #message').val();
+                var message = $('#feedback-form').find('#message').val();
                 $.post(base_url + "/feedback", { feedback: message })
                     .done(function(data) {
                         $('#feedback-form').slideUp();
@@ -218,6 +218,11 @@
                         $('#thankyou-message').fadeIn();
                 });
             })
+
+            // Delete server request
+            $("#delete-action").on("click", function() {
+
+            });
         });
 
         // Knockout Users Model for displaying and updating users online
