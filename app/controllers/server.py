@@ -158,3 +158,32 @@ class ServerView(FlaskView):
 
         else:
             return jsonify({'code': 404, 'message': 'Not Found'})
+
+    ###
+    # Controls
+    ###
+
+    @route('/<id>/delete', methods=['POST'])
+    def delete_server(self, id):
+        """
+        UserControl: Deletes the server.
+        @param id:
+        @return:
+        """
+        ip = request.remote_addr
+        server = Server.query.filter_by(uuid=id, ip=ip).first_or_404()
+        print server
+
+        if server:
+            try:
+                murmur.delete_server(server.mumble_host, server.mumble_instance)
+                server.status = "expired"
+                db.session.commit()
+                return redirect(url_for('ServerView:get', id=id))
+            except:
+                import traceback
+
+                db.session.rollback()
+                traceback.print_exc()
+        return redirect(url_for('ServerView:get', id=id))
+
