@@ -23,6 +23,12 @@ $(document).ready(function() {
         return false;
     });
 
+    // GA link event tracking wrapper
+    $(".track-nolink").click(function () {
+        var label =  $(this).attr("data-event-label");
+        ga('send', 'event', 'link', 'click', label);
+    });
+
     // GA submit event tracking wrapper
     $(".track-submit").click(function (e) {
         e.preventDefault();
@@ -44,13 +50,13 @@ $(document).ready(function() {
     else if (os.indexOf("Win") !== -1) {
         $('#os-download #os-text').text(_WindowsDownload);
         $('#os-download #download-link i').addClass('fa-windows');
-        $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.7/mumble-1.2.7.msi/download');
+        $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.8/mumble-1.2.8.msi/download');
         }
     else if (os.indexOf("MacOS") !== -1 || os.indexOf("MacIntel") !== -1) {
         $('#os-download #os-text').text(_OSXDownload);
         $('#os-download #download-link i').removeClass('fa-windows');
         $('#os-download #download-link i').addClass('fa-apple');
-        $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.7/Mumble-1.2.7.dmg/download');
+        $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.8/Mumble-1.2.8.dmg/download');
         }
     else if (ua.indexOf("android") > -1) {
         $('#os-download #os-text').text(_AndroidDownload);

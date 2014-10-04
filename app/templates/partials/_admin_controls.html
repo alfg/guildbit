@@ -11,7 +11,8 @@
 {#        <button id="extend-action" class="ttip pure-button button-small button-secondary" data-toggle="modal" data-target="#extendModal">#}
 {#          <i class="fa fa-clock-o"></i> Extend Time#}
 {#        </button>#}
-        <button id="delete-action" class="ttip pure-button button-small button-error" data-toggle="modal" data-target="#deleteModal">
+        <button id="delete-action" class="ttip pure-button button-small button-error track-nolink" data-toggle="modal" data-target="#deleteModal"
+                data-event-label="Delete Server Modal">
           <i class="fa fa-trash"></i> Delete Server
         </button>
       </td>
@@ -34,7 +35,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="pure-button" data-dismiss="modal">Close</button>
-              <button type="submit" class="pure-button button-error">Delete Server</button>
+              <button type="submit" class="pure-button button-error track-submit" data-event-label="Delete Server Submit">Delete Server</button>
             </div>
         </form>
       </div>

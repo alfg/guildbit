@@ -47,7 +47,7 @@
                         <div class="copy-url append field">
                             <form class="pure-form">
                                 <input id="copy-text" class="pure-u-2-3" type="text" value="Host: {{ server.mumble_host }} Port: {{ details.port }} Pass: {{ server.password }}" readonly="readonly" />
-                                <a class="pure-button pure-button-primary" id="copy-button" href="#">{{ _('Copy') }}</a>
+                                <a class="pure-button pure-button-primary track-nolink" id="copy-button" href="#" data-event-label="Copy Text Button">{{ _('Copy') }}</a>
                             </form>
                         </div>
                     </td>
@@ -170,6 +170,8 @@
             client.on("load", function(client) {
                 client.on("complete", function(client, args) {
                     $(this).text("Copied!");
+                    var label =  $(this).attr("data-event-label");
+                    ga('send', 'event', 'link', 'click', label);
                 });
                 client.on('dataRequested', function (client, args) {
                     client.setText($('#copy-text').val());
