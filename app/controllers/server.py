@@ -187,3 +187,12 @@ class ServerView(FlaskView):
                 traceback.print_exc()
         return redirect(url_for('ServerView:get', id=id))
 
+    @route('/<id>/extend', methods=['POST'])
+    def extend_server(self, id):
+        """
+        UserControl: Extends the server by 1 hour.
+        @param id:
+        @return:
+        """
+        return
+
