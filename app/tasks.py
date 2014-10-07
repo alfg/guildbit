@@ -1,9 +1,11 @@
+from datetime import datetime, timedelta
 from celery import Celery
 
 from app import db
 from app.models import Server
 import murmur
 import settings
+
 
 app = Celery('tasks',
              broker=settings.BROKER_URL,
@@ -30,6 +32,7 @@ def delete_server(uuid):
 app.conf.update(
     CELERY_TASK_RESULT_EXPIRES=3600,
 )
+
 
 if __name__ == '__main__':
     app.start()
