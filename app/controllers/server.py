@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import json
 
 from flask import render_template, request, redirect, url_for, jsonify, Response
@@ -187,12 +188,13 @@ class ServerView(FlaskView):
                 traceback.print_exc()
         return redirect(url_for('ServerView:get', id=id))
 
-    @route('/<id>/extend', methods=['POST'])
+    @route('/<id>/extend', methods=['POST', 'GET'])
     def extend_server(self, id):
         """
         UserControl: Extends the server by 1 hour.
         @param id:
         @return:
         """
-        return
+
+        return "extend"
 
