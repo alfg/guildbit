@@ -19,6 +19,7 @@ class Server(db.Model):
     mumble_instance = db.Column(db.Integer)
     cvp_uuid = db.Column(db.String, unique=True, index=True, default=None)
     ip = db.Column(db.String(64))
+    extensions = db.Column(db.SmallInteger, default=0)
 
     ratings = db.relationship('Rating', backref='server', lazy='dynamic')
 

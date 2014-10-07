@@ -196,5 +196,21 @@ class ServerView(FlaskView):
         @return:
         """
 
-        return "extend"
+        limit = 1  # Allowed extensions count
+        ip = request.remote_addr
+        server = Server.query.filter_by(uuid=id, ip=ip).first_or_404()
+
+        if server and server.extensions < limit:
+            try:
+                server.duration += 1
+                server.extensions += 1
+                db.session.commit()
+                return jsonify(message="Server extended for 1 hour.")
+
+            except:
+                import traceback
+                db.session.rollback()
+                traceback.print_exc()
+
+        return jsonify(message="Server already extended.")
 

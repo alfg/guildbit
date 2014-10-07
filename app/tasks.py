@@ -16,12 +16,17 @@ app = Celery('tasks',
 def delete_server(uuid):
     s = Server.query.filter_by(uuid=uuid).first_or_404()
 
-    # Delete the server via Murmur
-    if s.status != "expired":
+    if s.status != "expired" and s.extensions == 0:
+        # Delete mumble server and expire server
         s.status = 'expired'
         murmur.delete_server(s.mumble_host, s.mumble_instance)
         db.session.commit()
         print "Deleting server instance: %s" % id
+
+    elif s.status != "expired" and datetime.now() < s.expiration:  # Is expired?
+
+        # Re-set task with new expiration
+        delete_server.apply_async([uuid], eta=s.expiration)
 
     else:
         print "Server instance %s already expired." % id
