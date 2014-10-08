@@ -8,7 +8,7 @@
   <tbody>
     <tr>
       <td>
-        <button id="extend-action" class="ttip pure-button button-small button-secondary" data-toggle="modal" data-target="#extendModal">
+        <button id="extend-action" class="ttip pure-button button-small button-secondary {% if server.extensions > 0 %}pure-button-disabled{% endif %}" data-toggle="modal" data-target="#extendModal">
           <i class="fa fa-clock-o"></i> Extend Time
         </button>
         <button id="delete-action" class="ttip pure-button button-small button-error track-nolink" data-toggle="modal" data-target="#deleteModal"

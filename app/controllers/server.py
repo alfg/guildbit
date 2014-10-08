@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import json
 
-from flask import render_template, request, redirect, url_for, jsonify, Response
+from flask import render_template, request, redirect, url_for, jsonify, Response, flash
 from flask.ext.classy import FlaskView, route
 
 from app import db, cache
@@ -205,12 +205,15 @@ class ServerView(FlaskView):
                 server.duration += 1
                 server.extensions += 1
                 db.session.commit()
-                return jsonify(message="Server extended for 1 hour.")
+
+                flash("Server extended for 1 hour.")
+                return redirect(url_for('ServerView:get', id=id))
 
             except:
                 import traceback
                 db.session.rollback()
                 traceback.print_exc()
 
-        return jsonify(message="Server already extended.")
+        flash("Server already extended.")
+        return redirect(url_for('ServerView:get', id=id))
 

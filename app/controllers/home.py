@@ -45,6 +45,7 @@ class HomeView(FlaskView):
                 # Create database entry
                 s = Server()
                 s.duration = form.duration.data
+                # s.duration = 1
                 s.password = form.password.data
                 s.uuid = gen_uuid
                 s.mumble_instance = server_id

@@ -4,6 +4,15 @@
 
 {% block body %}
     <div class="content server">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li class="secondary alert">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
         <div class="title">
             <h1>{{ _('Your server is ready!') }}</h1>
             <h2>{{ _('Use the details below to connect') }}</h2>
@@ -84,7 +93,7 @@
             </tbody>
         </table>
 
-      {% if ip == server.ip %}
+      {% if ip == server.ip and server.type == "temp" %}
         {% include 'partials/_admin_controls.html' %}
       {% endif %}
 
