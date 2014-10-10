@@ -61,7 +61,7 @@
                         </div>
                     </td>
                 </tr>
-                {% if server.type == 'temp' or server.type == 'upgrade' or server.type == 'custom' %}
+                {% if (server.type == 'temp' or server.type == 'upgrade' or server.type == 'custom') and server.duration != 0 %}
                 <tr>
                     <td>{{ _('Expires') }}</td>
                     <td><span id="expires-date"></span> (<span id="expires" data-bind="text: remainingTime"></span>) </td>
@@ -164,8 +164,10 @@
 
     <script type="text/javascript">
         // Format expiration date into human friendly
-        var base_url = '{{ request.base_url }}'
+        var base_url = '{{ request.base_url }}';
         var expire_date = '{{ server.expiration }}';
+        var duration = {{ server.duration }};
+
         $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
 
         //ZeroClipboard for copying mumble server credentials easily
@@ -251,7 +253,7 @@
                 var unix_expires = moment.utc(expire_date).unix();
 
                 // If expired
-                if (unix_now > unix_expires) {
+                if (unix_now > unix_expires && duration !== 0) {
                     window.location = base_url + "/expired";
 {#                    location.reload(false);#}
                 } else {
