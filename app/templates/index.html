@@ -3,35 +3,35 @@
 {% block title %}{{ _('Free Mumble Server Hosting') }}{% endblock %}
 
 {% block body %}
-        <div class="ten columns centered content home">
-            <h1 class="text-center">{{ _('Deploy a Mumble server for your group. It&apos;s free!') }}</h1>
+    <div class="ten columns centered content home">
+        <h1 class="text-center">{{ _('Deploy a Mumble server for your group. It&apos;s free!') }}</h1>
 
-            <form id="deploy-form" class="pure-form deploy-form" action="/" method="POST">
-                {{ form.csrf_token }}
-                    {{ form.location }}
-                    {{ form.duration }}
-                    {{ form.password(size=20, class='', placeholder='%s' % _('Set a Password'), autocomplete='off') }}
-                    <button id="deploy-button" class="pure-button pure-button-primary track-submit" type="submit" value="Submit"
-                        data-event-label="deploy-server">
-                        <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
-                    </button>
-            </form>
+        <form id="deploy-form" class="pure-form deploy-form" action="/" method="POST">
+            {{ form.csrf_token }}
+                {{ form.location }}
+                {{ form.duration }}
+                {{ form.password(size=20, class='', placeholder='%s' % _('Set a Password'), autocomplete='off') }}
+                <button id="deploy-button" class="pure-button pure-button-primary track-submit" type="submit" value="Submit"
+                    data-event-label="deploy-server">
+                    <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
+                </button>
+        </form>
 
-            {% if form.errors %}
-                <ul class="errors text-center">
-                    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
-                        {% for error in field_errors %}
-                            <li class="danger alert">{{ error }}</li>
-                        {% endfor %}
+        {% if form.errors %}
+            <ul class="errors text-center">
+                {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                    {% for error in field_errors %}
+                        <li class="danger alert">{{ error }}</li>
                     {% endfor %}
-                </ul>
-            {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
 
-            <div class="description text-center">
-                <p>{{ _('GuildBit is a free service to deploy temporary Mumble servers for your group. The service is completely
-                funded by donations and upgrades. <a href="/how-it-works">Learn how it works &raquo;</a>') }}</p>
-                <span>{{ _('*Free servers are currently limited to 15 slots') }}</span>
-            </div>
+        <div class="description text-center">
+            <p>{{ _('GuildBit is a free service to deploy temporary Mumble servers for your group. The service is completely
+            funded by donations and upgrades. <a href="/how-it-works">Learn how it works &raquo;</a>') }}</p>
+            <span>{{ _('*Free servers are currently limited to 15 slots') }}</span>
+        </div>
     </div>
 
     {% include 'partials/_dont_have_mumble.html' %}

@@ -51,12 +51,14 @@ a:hover {
     line-height: 1.6em;
     border: 1px solid #D0D0D0;
     padding: 20px;
+    padding-top: 0;
     margin: 0 auto 10px;
     background: #DDD url('../img/bg/grey.png') repeat;
     box-shadow: 0 0 15px -5px #AAA;
     border-radius: 4px;
 }
-.content.home {
+.content.community h3 {
+    margin-top: 0;
 }
 
 .header {
