@@ -43,7 +43,7 @@
                 </tr>
                 <tr class="mobile-hide">
                     <td>{{ _('Direct Link') }}</td>
-                    <td><a href="mumble://{{ server.mumble_host }}:{{ details.port }}">mumble://{{ server.mumble_host }}:{{ details.port }}</a></td>
+                    <td><a href="mumble://:{{ server.password }}@{{ server.mumble_host }}:{{ details.port }}">mumble://{{ server.mumble_host }}:{{ details.port }}</a></td>
                 </tr>
                 <tr>
                     <td>
@@ -277,6 +277,7 @@
             setInterval(function() {
                 self.usersOnline(loadUsers());
                 self.remainingTime(loadExpires());
+                ga('send', 'pageview'); // send pageview to GA
             }, 15000)
 
         }
