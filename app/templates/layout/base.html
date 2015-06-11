@@ -82,7 +82,9 @@
 
         {% if g.user.is_authenticated() %}
         <ul class="text-center clear">
-            <li>{{ _('Logged in as ') }} <strong>{{ g.user.email }}</strong></li>
+            <li>{{ _('Logged in as ') }} <i class="fa fa-steam-square"></i>
+                <a href="http://steamcommunity.com/profiles/{{ g.user.steam_id }}"><strong>{{ g.user.nickname }}</strong></a>
+            </li>
             {% if g.user.role == 1 %}
                 <li><a href="/admin">Admin</a></li>
             {% endif %}

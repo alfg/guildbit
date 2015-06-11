@@ -33,6 +33,7 @@ class Server(db.Model):
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    steam_id = db.Column(db.String(40), unique=True)
     nickname = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(120), unique=True)
     role = db.Column(db.SmallInteger, default=ROLE_USER)
@@ -61,6 +62,15 @@ class User(db.Model):
         else:
             role_name = "unassigned"
         return role_name
+
+    @staticmethod
+    def get_or_create(steam_id):
+        rv = User.query.filter_by(steam_id=steam_id).first()
+        if rv is None:
+            rv = User()
+            rv.steam_id = steam_id
+            db.session.add(rv)
+        return rv
 
     def __repr__(self):
         return '<User %r>' % self.nickname

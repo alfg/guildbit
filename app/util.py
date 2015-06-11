@@ -1,12 +1,14 @@
 import json
 from functools import wraps
+import urllib
+import urllib2
 
 from flask import redirect, request, current_app
 from flask.ext.login import current_user
 import requests
 from requests import ConnectionError
 
-from settings import MURMUR_HOSTS, PACKAGES
+from settings import MURMUR_HOSTS, PACKAGES, STEAM_API_KEY
 
 
 def admin_required(fn):
@@ -97,3 +99,16 @@ def support_jsonp(f):
             return f(*args, **kwargs)
     return decorated_function
 
+
+def get_steam_userinfo(steam_id):
+    """
+    Helper to fetch steam profile by id/api key.
+    """
+    options = {
+        'key': STEAM_API_KEY,
+        'steamids': steam_id
+    }
+    url = 'http://api.steampowered.com/ISteamUser/' \
+          'GetPlayerSummaries/v0001/?%s' % urllib.urlencode(options)
+    rv = json.load(urllib2.urlopen(url))
+    return rv['response']['players']['player'][0] or {}

@@ -30,9 +30,10 @@ DEFAULT_MAIL_SENDER = 'alf.g.jr@gmail.com'
 EMAIL_RECIPIENTS = ['alf.g.jr@gmail.com']
 
 OPENID_PROVIDERS = [
-    {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},
-    {'name': 'Yahoo', 'url': 'https://me.yahoo.com'}
+    {'name': 'Steam', 'url': 'http://steamcommunity.com/openid'}
 ]
+
+STEAM_API_KEY = 'XXXXXX'
 
 LANGUAGES = {
     'en': 'English',
