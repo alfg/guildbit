@@ -1,5 +1,7 @@
 # GuildBit.com
 
+![Guildbit.com](/app/static/img/screenshots/howitworks_home.png)
+
 This project is the frontend application of GuildBit.com. This project is built with the following stack:
 
 * Flask as the Python Framework
