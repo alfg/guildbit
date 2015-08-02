@@ -51,3 +51,7 @@ Install instructions on [http://github.com/alfg/murmur-rest](http://github.com/a
 Run celery to test and track queues:
 
 `celery worker --app=app.tasks -l info`
+
+## License
+
+[MIT License](http://alfg.mit-license.org/) © Alfred Gutierrez
