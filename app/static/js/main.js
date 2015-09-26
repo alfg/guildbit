@@ -45,18 +45,18 @@ $(document).ready(function() {
         $('#os-download #os-text').text(_LinuxDownload);
         $('#os-download #download-link i').removeClass('fa-windows');
         $('#os-download #download-link i').addClass('fa-linux');
-        $('#os-download #download-link').attr('href', 'http://mumble.sourceforge.net/Installing_Mumble#Linux');
+        $('#os-download #download-link').attr('href', 'http://wiki.mumble.info/wiki/Installing_Mumble#Linux');
         }
     else if (os.indexOf("Win") !== -1) {
         $('#os-download #os-text').text(_WindowsDownload);
         $('#os-download #download-link i').addClass('fa-windows');
-        $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.8/mumble-1.2.8.msi/download');
+        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.2.10/mumble-1.2.10.msi');
         }
     else if (os.indexOf("MacOS") !== -1 || os.indexOf("MacIntel") !== -1) {
         $('#os-download #os-text').text(_OSXDownload);
         $('#os-download #download-link i').removeClass('fa-windows');
         $('#os-download #download-link i').addClass('fa-apple');
-        $('#os-download #download-link').attr('href', 'http://sourceforge.net/projects/mumble/files/Mumble/1.2.8/Mumble-1.2.8.dmg/download');
+        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.2.10/Mumble-1.2.10.dmg');
         }
     else if (ua.indexOf("android") > -1) {
         $('#os-download #os-text').text(_AndroidDownload);
