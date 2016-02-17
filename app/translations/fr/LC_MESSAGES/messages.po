@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-07 16:50-0800\n"
+"POT-Creation-Date: 2016-02-16 23:09-0800\n"
 "PO-Revision-Date: 2014-04-23 20:54-0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: app/templates/contact.html:3 app/templates/contact_thankyou.html:3
 msgid "Contact or Report an Issue"
-msgstr ""
+msgstr "Contact ou Signaler un problème"
 
 #: app/templates/contact.html:25
 msgid "Contact"
-msgstr ""
+msgstr "Contact"
 
 #: app/templates/contact.html:26
 msgid ""
@@ -32,37 +32,42 @@ msgid ""
 "can also use this form\n"
 "        if you have any general inquires or translation corrections."
 msgstr ""
+"Vous avez trouvé un bug ? Veuillez signaler le problème en remplissant le"
+" formulaire ci-dessous. Vous pouvez également utiliser ce formulaire\n"
+"si vous avez des questions ou souhaitez corriger une traduction."
 
 #: app/templates/contact.html:31 app/templates/contact.html:32
 msgid "Your Email"
-msgstr ""
+msgstr "Votre Email"
 
 #: app/templates/contact.html:35 app/templates/contact.html:36
 msgid "Subject"
-msgstr ""
+msgstr "Sujet"
 
 #: app/templates/contact.html:39 app/templates/contact.html:40
 msgid "Message"
-msgstr ""
+msgstr "Message"
 
 #: app/templates/contact.html:43
 msgid "Send"
-msgstr ""
+msgstr "Envoyer"
 
 #: app/templates/contact_thankyou.html:16 app/templates/server.html:150
 #: app/templates/server_expired.html:39 app/templates/payment/success.html:7
 msgid "Thank you!"
-msgstr ""
+msgstr "Merci !"
 
 #: app/templates/contact_thankyou.html:17
 msgid ""
 "Thanks for submitting your question, comment or bug report! Your feedback"
 " is appreciated!"
 msgstr ""
+"Merci pour votre question, commentaire ou signalement de bug ! Votre "
+"retour est apprecié !"
 
 #: app/templates/donate.html:3 app/templates/donate.html:7
 msgid "Donate"
-msgstr ""
+msgstr "Donner"
 
 #: app/templates/donate.html:8
 msgid ""
@@ -71,10 +76,14 @@ msgid ""
 "        users. Please consider donating to help with server hosting and "
 "bandwidth costs with any of the services below."
 msgstr ""
+"GuildBit fonctionne totalement grâce aux dons et améliorations afin de "
+"garder un service gratuit pour nos utilisateurs. Pensez à faire un don "
+"pour aider avec les coûts d'hébergement et de bande passante grâce aux "
+"services ci-dessous."
 
 #: app/templates/how_it_works.html:3 app/templates/how_it_works.html:7
 msgid "How It Works"
-msgstr ""
+msgstr "Comment ça marche"
 
 #: app/templates/how_it_works.html:9
 msgid ""
@@ -88,22 +97,32 @@ msgid ""
 "much cheaper than they used to be. The\n"
 "        rest is supported by donations and upgrades."
 msgstr ""
+"Traditionnellement les hébergeurs de VOIP proposent des abonnements et "
+"des serveurs permanents, ce qui coûte généralement de "
+"l'argent.<strong>GuildBit</strong> fonctionne avec des serveurs "
+"temporaires pour préserver les ressources systèmes, au lieu d'ouvrir plus"
+" de places qui ne sont pas occupées.Cela permet de réduire les frais "
+"d'hébergement, les coûts de ressources et de bande passante. De plus, les"
+" hébergement VPS de nos jours sont moins chers qu'ils ne l'étaient "
+"auparavant. Le reste est supporté par les dons et améliorations."
 
 #: app/templates/how_it_works.html:18
 msgid "Set a location"
-msgstr ""
+msgstr "Choisir un lieu"
 
 #: app/templates/how_it_works.html:19
 msgid "Choose a server location closest to your group to minimize latency."
 msgstr ""
+"Choisissez le lieu du serveur le plus proche de votre group pour "
+"minimiser la latence"
 
 #: app/templates/how_it_works.html:22
 msgid "Set a duration"
-msgstr ""
+msgstr "Choisir une durée"
 
 #: app/templates/how_it_works.html:27
 msgid "Set a password"
-msgstr ""
+msgstr "Choisir un mot de passe"
 
 #: app/templates/how_it_works.html:28
 msgid ""
@@ -111,6 +130,8 @@ msgid ""
 "be\n"
 "              reused in the future."
 msgstr ""
+"Un mot de passe est requis pour protéger le serveur, étant donné que le "
+"serveur peut être réutilisé dans le futur."
 
 #: app/templates/how_it_works.html:38 app/templates/how_it_works.html:41
 msgid ""
@@ -119,14 +140,19 @@ msgid ""
 "            directly. The server page also monitors users in room "
 "(including subchannels) and displays the expiration countdown."
 msgstr ""
+"Partagez les informations de connexion, ou utilisez la copie pour "
+"copier/coller les identifiants directement.\n"
+" La page du serveur surveille également les utilisateurs présents sur le "
+"salon (incluant les sous salons) et affiche le temps restant avant "
+"expiration."
 
 #: app/templates/how_it_works.html:71
 msgid "FAQs"
-msgstr ""
+msgstr "FAQ"
 
 #: app/templates/how_it_works.html:73
 msgid "How is it free?"
-msgstr ""
+msgstr "Comment est-ce gratuit ?"
 
 #: app/templates/how_it_works.html:74
 msgid ""
@@ -134,10 +160,13 @@ msgid ""
 " an experimental phase. Remainders\n"
 "                are paid of out pocket. :)"
 msgstr ""
+"Les dons, les améliorations payées et les faibles coûts d'hébergement et "
+"de bande passante.Le service est encore en phase expérimentale. Le reste "
+"est payé de ma poche. :)"
 
 #: app/templates/how_it_works.html:77
 msgid "Why temporary servers?"
-msgstr ""
+msgstr "Pourquoi des serveurs temporaires ?"
 
 #: app/templates/how_it_works.html:78
 msgid ""
@@ -147,28 +176,37 @@ msgid ""
 " a service. The server expires to not\n"
 "            only save on resources, but to free up the slot for others."
 msgstr ""
+"Le service est fait pour les joueurs qui ont besoin rapidement d'un "
+"serveur Mumble pour leur groupe sans avoir à s'embêter à créer le leur, "
+"ou à soucrire à un service. Le serveur expire non seulement pour "
+"préserver les ressources, mais aussi pour libérer des palces pour les "
+"autres."
 
 #: app/templates/how_it_works.html:82
 msgid "Why only 15 slots?"
-msgstr ""
+msgstr "Pourquoi seulement 15 places ?"
 
 #: app/templates/how_it_works.html:83
 msgid ""
 "Check out the <a href=\"/upgrade\">upgrades</a> page if you&apos;re "
 "looking for more than 15 slots."
 msgstr ""
+"Jetez un coup d'oeil à <a href=\"/upgrade\">la page d'amélioration</a> si"
+" vous cherchez à avoir plus de 15 places."
 
 #: app/templates/how_it_works.html:85
 msgid "Why can&apos;t I use the same port when creating a server?"
 msgstr ""
+"Pourquoi ne puis-je pas utiliser le même port quand je crée un nouveau "
+"serveur ?"
 
 #: app/templates/how_it_works.html:86
 msgid "Servers are created according to the next port available. "
-msgstr ""
+msgstr "Les serveurs sont crées en fonction du prochain port disponible."
 
 #: app/templates/how_it_works.html:88
 msgid "Why only offer Mumble and not Ventrilo or TeamSpeak?"
-msgstr ""
+msgstr "Pourquoi seulement proposer Mumble et pas Ventrilo ou TeamSpeak ?"
 
 #: app/templates/how_it_works.html:89
 msgid ""
@@ -179,10 +217,15 @@ msgid ""
 "            cost me any licensing fees to host Mumble servers or offer it"
 " as a service."
 msgstr ""
+"Mumble is <a href=\"https://github.com/mumble-"
+"voip/mumble/blob/master/LICENSE\">un logiciel libre</a> et\n"
+"            <a href=\"http://en.wikipedia.org/wiki/Open-source_software"
+"\">open-source</a>. Cela ne me coûte donc aucun frais de licence pour "
+"héberger des serveurs Mumble ou en proposer en tant que service."
 
 #: app/templates/how_it_works.html:93
 msgid "Do you offer premium upgrades?"
-msgstr ""
+msgstr "Est-ce que vous proposez des améliorations payantes ?"
 
 #: app/templates/how_it_works.html:94
 msgid ""
@@ -191,10 +234,14 @@ msgid ""
 "            and a SuperUser admin capabilities. <a "
 "href=\"/upgrade\">Click here</a> to get started."
 msgstr ""
+"Oui ! Nous proposons maintenant des améliorations de serveurs via Bitcoin"
+" et Paypal pour augmenter le nombre de places, la durée, le nombre de "
+"sous-salons and la possibilité d'avoir un compte administrateur "
+"SuperUser."
 
 #: app/templates/how_it_works.html:97
 msgid "What is a SuperUser?"
-msgstr ""
+msgstr "Qu'est ce qu'un SuperUser ?"
 
 #: app/templates/how_it_works.html:98
 msgid ""
@@ -202,29 +249,37 @@ msgid ""
 "permissions and roles to users and\n"
 "            groups as well as setting up channels."
 msgstr ""
+"Un SuperUser est un compte administrateur sur votre serveur Mumble pour "
+"mettre des permissions et des rôles aux utilisateurs et groupes, ainsi "
+"que créer des salons."
 
 #: app/templates/how_it_works.html:101
 msgid "Do you plan on offering other methods of payment?"
-msgstr ""
+msgstr "Est-ce que vous allez proposer d'autres méthodes de paiement ?"
 
 #: app/templates/how_it_works.html:102
 msgid "We&apos;re looking into Stripe or Balanced Payments integration. :)"
-msgstr ""
+msgstr "Nous pensons à intégrer des paiements via Stripe ou Balanced Payments. :)"
 
 #: app/templates/how_it_works.html:104
 msgid "How can I contribute?"
-msgstr ""
+msgstr "Comment puis-je contribuer ?"
 
 #: app/templates/how_it_works.html:107
 msgid "Purchase upgrades! <a href=\"/upgrade\">Click here</a> to get started."
 msgstr ""
+"Achetez des améliorations ! <a href=\"/upgrade\">Cliquez ici</a> pour "
+"commencer."
 
 #: app/templates/how_it_works.html:110
+#, fuzzy
 msgid ""
-"We accept <a href=\"/donate\">donations</a>, including Bitcoin and "
-"Dogecoin! :) This keeps us\n"
+"We accept <a href=\"/donate\">donations</a>, including Bitcoin! :) This "
+"keeps us\n"
 "                    going."
 msgstr ""
+"Nous acceptons <a href=\"/donate\">les dons</a>, même ceux en Bitcoins et"
+" en Dogecoins ! :) Cela nous aide à continuer."
 
 #: app/templates/how_it_works.html:114
 msgid ""
@@ -232,32 +287,37 @@ msgid ""
 "                   <a href=\"https://github.com/alfg/murmur-rest"
 "\">Murmur-REST</a> project on Github and contribute!"
 msgstr ""
+"Etes-vous un developpeur ? Jetez un oeil à <a "
+"href=\"https://github.com/alfg/murmur-rest\">notre projet d'API REST pour"
+" Mumble</a> sur Github et contribuez !"
 
 #: app/templates/how_it_works.html:118
 msgid ""
 "Help us improve or add translations. <a href=\"/contact/\">Contact us</a>"
 " for more details!"
 msgstr ""
+"Aidez nous à améliorer les traductions existantes ou ajoutez-en de "
+"nouvelles. <a href=\"/contact/\">Contactez nous</a>"
 
 #: app/templates/how_it_works.html:122
 msgid "How can I contact you?"
-msgstr ""
+msgstr "Comment puis-je vous contacter ?"
 
 #: app/templates/index.html:3
 msgid "Free Mumble Server Hosting"
-msgstr ""
+msgstr "Hébergement Muble gratuit"
 
 #: app/templates/index.html:7
 msgid "Deploy a Mumble server for your group. It&apos;s free!"
-msgstr ""
+msgstr "Deployez un serveur Mumble pour votre groupe. C'est gratuit !"
 
 #: app/templates/index.html:13
 msgid "Set a Password"
-msgstr ""
+msgstr "Choisir un mot de passe"
 
 #: app/templates/index.html:16 app/templates/payment/create.html:49
 msgid "Deploy Server"
-msgstr ""
+msgstr "Créer le serveur"
 
 #: app/templates/index.html:31
 msgid ""
@@ -266,294 +326,231 @@ msgid ""
 "            funded by donations and upgrades. <a href=\"/how-it-"
 "works\">Learn how it works &raquo;</a>"
 msgstr ""
+"GuildBit est un service gratuit pour créer des serveurs Mulbe temporaires"
+" gratuitement pour votre groupe. Le service est complètement financé par "
+"les dons et améliorations. <a href=\"/how-it-works\">Regardez comment ça "
+"marche &raquo;</a>"
 
 #: app/templates/index.html:33
 msgid "*Free servers are currently limited to 15 slots"
-msgstr ""
+msgstr "*Les serveurs gratuits sont pour l'instant limités à 15 places"
 
 #: app/templates/index.html:46 app/templates/payment/create.html:80
 msgid "Deploying..."
-msgstr ""
+msgstr "Création en cours..."
 
 #: app/templates/server.html:3
 msgid "Your Server is Ready!"
-msgstr ""
+msgstr "Votre Serveur est Prêt !"
 
 #: app/templates/server.html:17
 msgid "Your server is ready!"
-msgstr ""
+msgstr "Votre serveur est prêt !"
 
 #: app/templates/server.html:18
 msgid "Use the details below to connect"
-msgstr ""
+msgstr "Utilisez les identifiants suivants pour vous connecter"
 
 #: app/templates/server.html:24
 msgid "Mumble Connection Details"
-msgstr ""
+msgstr "Identifiants de connexion Mumble"
 
 #: app/templates/server.html:26
 msgid "Upgraded Server"
-msgstr ""
+msgstr "Serveur Amélioré"
 
 #: app/templates/server.html:33
 msgid "Server"
-msgstr ""
+msgstr "Serveur"
 
 #: app/templates/server.html:37
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 #: app/templates/server.html:41
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
 #: app/templates/server.html:45
 msgid "Direct Link"
-msgstr ""
+msgstr "Lien direct"
 
 #: app/templates/server.html:51
 msgid "Copy Text"
-msgstr ""
+msgstr "Copier le texte"
 
 #: app/templates/server.html:59 app/templates/server.html:87
 msgid "Copy"
-msgstr ""
+msgstr "Copier"
 
 #: app/templates/server.html:66
 msgid "Expires"
-msgstr ""
+msgstr "Expire dans"
 
 #: app/templates/server.html:71
 msgid "Slots"
-msgstr ""
+msgstr "Places"
 
 #: app/templates/server.html:103
 msgid "Users Online"
-msgstr ""
+msgstr "Utilisateurs en ligne"
 
 #: app/templates/server.html:104
 msgid "Duration"
-msgstr ""
+msgstr "Durée"
 
 #: app/templates/server.html:131
 msgid "No users are online"
-msgstr ""
+msgstr "Aucun utilisateur n'est en ligne"
 
 #: app/templates/server.html:137 app/templates/server_expired.html:26
 msgid "How was the quality of your Mumble session?"
-msgstr ""
+msgstr "Comment était la qualité de votre session muble ?"
 
 #: app/templates/server.html:146 app/templates/server_expired.html:35
 msgid "How can we improve GuildBit?"
-msgstr ""
+msgstr "Comment pouvons nous améliroer GuildBit ?"
 
 #: app/templates/server.html:147 app/templates/server_expired.html:36
 msgid "Submit"
-msgstr ""
+msgstr "Envoyer"
 
 #: app/templates/server.html:151 app/templates/server_expired.html:40
 msgid "Your feedback is appreciated for the quality of GuildBit.com!"
-msgstr ""
+msgstr "Votre retour est apprecié pour la qualité de GuildBit.com !"
 
 #: app/templates/server_expired.html:3
 msgid "Your Server Has Expired!"
-msgstr ""
+msgstr "Votre Serveur a Expiré !"
 
 #: app/templates/server_expired.html:8
 msgid "Your server has expired!"
-msgstr ""
+msgstr "Votre serveur a expiré !"
 
 #: app/templates/server_expired.html:9
 msgid "Return to the <a href=\"/\">homepage</a> to deploy another server."
 msgstr ""
+"Retournez à la <a href=\"/\">page d'accueil</a> pour créer un autre "
+"serveur."
 
 #: app/templates/server_expired.html:14
 msgid "Details"
-msgstr ""
+msgstr "Identifiants"
 
 #: app/templates/server_expired.html:19
 msgid "Expired"
-msgstr ""
+msgstr "Expiré"
 
 #: app/templates/upgrade.html:3 app/templates/upgrade.html:7
 msgid "Upgrades"
-msgstr ""
+msgstr "Amélirations"
 
 #: app/templates/partials/_admin_controls.html:4
 msgid "Admin Controls"
-msgstr ""
+msgstr "Contrôles administrateur"
 
 #: app/templates/partials/_dont_have_mumble.html:2
 msgid "Don&apos;t have Mumble?"
-msgstr ""
+msgstr "Vous n'avez pas Mumble ?"
 
 #: app/templates/partials/_dont_have_mumble.html:5
 msgid "Windows Download"
-msgstr ""
+msgstr "Téléchargement pour Windows"
 
 #: app/templates/partials/_dont_have_mumble.html:6
 msgid "Mumble Homepage"
-msgstr ""
+msgstr "Page d'accueil de Mumble"
 
 #: app/templates/payment/create.html:3
 msgid "Create Your Server"
-msgstr ""
+msgstr "Créer Votre Serveur"
 
 #: app/templates/payment/create.html:9
 msgid "Create Your Upgraded Server"
-msgstr ""
+msgstr "Créer Votre Serveur Amélioré"
 
 #: app/templates/payment/create.html:33
 msgid "Channel Name"
-msgstr ""
+msgstr "Nom du salon"
 
 #: app/templates/payment/create.html:37
 msgid "Set a Server Password"
-msgstr ""
+msgstr "Choisir un mot de passe pour le serveur"
 
 #: app/templates/payment/create.html:42
 msgid "Set a SuperUser Password"
-msgstr ""
+msgstr "Choisir un mot de passe SuperUser"
 
 #: app/templates/payment/success.html:3
 msgid "Upgrade"
-msgstr ""
+msgstr "Améliorer"
 
 #~ msgid ""
 #~ msgstr ""
+#~ "GuildBit est un service gratuit pour "
+#~ "créer des serveurs Mumble temporaires "
+#~ "pour votre groupe. "
 
 #~ msgid "Email"
-#~ msgstr ""
+#~ msgstr "Email"
 
 #~ msgid "Hours"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "GuildBit completely operates on donations. "
-#~ "Please consider donating with any of "
-#~ "the services below."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Traditional VOIP hosts offer subscription-"
-#~ "based and persistent servers, so "
-#~ "generally a premium\n"
-#~ "        is charged. <strong>GuildBit</strong> "
-#~ "works on the idea of temporary "
-#~ "servers to preserve system\n"
-#~ "        resources, opening up more "
-#~ "server slots which aren&apos;t being "
-#~ "occupied. This helps lower hosting,\n"
-#~ "        resources and bandwidth costs. "
-#~ "Also, VPS hosting nowadays are much "
-#~ "cheaper than they used to be. The"
-#~ "\n"
-#~ "        rest is supported by donations."
-#~ msgstr ""
+#~ msgstr "Heures"
 
 #~ msgid "The Process"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Password protected servers are required, "
-#~ "due to the fact the server may "
-#~ "be\n"
-#~ "            reused in the future."
-#~ msgstr ""
+#~ msgstr "Le fonctionnement"
 
 #~ msgid "Deploy"
-#~ msgstr ""
+#~ msgstr "Créer"
 
 #~ msgid "The server generally takes a few seconds to spin up."
-#~ msgstr ""
+#~ msgstr "Le serveur prend généralement quelques secondes pour se créer."
 
 #~ msgid "Connect"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "That&apos;s all. The following page will"
-#~ " give you the connection details."
-#~ msgstr ""
+#~ msgstr "Se connecter"
 
 #~ msgid "Share"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Share the connection details, or use "
-#~ "the copy feature to copy/paste the "
-#~ "credentials\n"
-#~ "            directly. The server page "
-#~ "also monitors users in room and "
-#~ "displays the expiration countdown."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Donations and low server/bandwidth costs. "
-#~ "This is still in an experimental "
-#~ "phase. Remainders\n"
-#~ "                are paid of out pocket. :)"
-#~ msgstr ""
+#~ msgstr "Partager"
 
 #~ msgid "Why only 10 slots?"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "For now we&apos;re limiting servers to"
-#~ " 10 slots as the service is new"
-#~ " and experimental."
-#~ msgstr ""
+#~ msgstr "Pourquoi suelement 10 places ?"
 
 #~ msgid "Do you plan on offering premium upgrades?"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Possibly in the future. It won&apos;t"
-#~ " take away from the idea of "
-#~ "free temporary servers, though."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "GuildBit is a free service to "
-#~ "deploy temporary Mumble servers for your"
-#~ " group. The service is completely\n"
-#~ "                funded by donations. <a "
-#~ "href=\"/how-it-works\">Learn how it "
-#~ "works &raquo;</a>"
-#~ msgstr ""
+#~ msgstr "Est-ce que vous allez proposer des améliorations payantes ?"
 
 #~ msgid "*Servers are currently limited to 10 slots"
-#~ msgstr ""
+#~ msgstr "*Les serveurs sont pour l'instant limité à 10 places"
 
 #~ msgid "GuildBit - Free Mumble Server Hosting"
-#~ msgstr ""
+#~ msgstr "GuildBit - Hébergement Mumble Gratuit"
 
 #~ msgid "Home"
-#~ msgstr ""
+#~ msgstr "Accueil"
 
 #~ msgid "Found a bug?"
-#~ msgstr ""
+#~ msgstr "Vous avez trouvé un bug ?"
 
 #~ msgid "Updates"
-#~ msgstr ""
+#~ msgstr "Mises à jour"
 
 #~ msgid "Logged in as "
-#~ msgstr ""
+#~ msgstr "Connecté en tant que "
 
 #~ msgid "Logout"
-#~ msgstr ""
+#~ msgstr "Se déconnecter"
 
 #~ msgid "Share Us!"
-#~ msgstr ""
+#~ msgstr "Partagez nous !"
 
 #~ msgid "Linux Download"
-#~ msgstr ""
+#~ msgstr "Téléchargement pour Linux"
 
 #~ msgid "OSX Download"
-#~ msgstr ""
+#~ msgstr "Téléchargement pour OSX"
 
 #~ msgid "Android Download"
-#~ msgstr ""
+#~ msgstr "Téléchargement pour Android"
 
 #~ msgid "iOS Download"
-#~ msgstr ""
+#~ msgstr "Téléchargement pour iOS"
 
