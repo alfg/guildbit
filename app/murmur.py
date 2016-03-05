@@ -291,6 +291,18 @@ def set_superuser_password(location, password, instance_id):
     return None
 
 
+def cleanup_expired_servers(location):
+    """
+    Cleans up expired servers.
+    @param location: location from config
+    @return: None
+    """
+    host = get_host_by_location(location)['uri']
+    auth = get_murmur_credentials(location)
+
+    return
+
+
 def stop_server(host, instance_id):
     """
     Stops a server by host and id.

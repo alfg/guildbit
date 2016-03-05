@@ -146,6 +146,13 @@ class SuperuserPasswordForm(Form):
     instance = IntegerField('instance')
 
 
+class CleanupExpiredServersForm(Form):
+    _server_locations = build_hosts_list()
+    location = SelectField('location',
+                           validators=[DataRequired()],
+                           choices=_server_locations)
+
+
 class ContactForm(Form):
     subject = TextField('subject', validators=[DataRequired('Subject is required.')])
     email = TextField('email', validators=[Email('Invalid email address.'), DataRequired('Email is required.')])

@@ -9,7 +9,7 @@ import settings
 from app.util import admin_required
 from app import db
 from app.forms import UserAdminForm, DeployCustomServerForm, NoticeForm, SuperuserPasswordForm
-from app.forms import SendChannelMessageForm, CreateTokenForm, build_hosts_list
+from app.forms import SendChannelMessageForm, CreateTokenForm, CleanupExpiredServersForm, build_hosts_list
 from app.models import Server, User, Notice, Rating, Token
 import app.murmur as murmur
 
@@ -243,8 +243,9 @@ class AdminToolsView(FlaskView):
         notice_form = NoticeForm(obj=notice)
         message_form = SendChannelMessageForm()
         superuser_pw_form = SuperuserPasswordForm()
+        cleanup_form = CleanupExpiredServersForm()
         return render_template('admin/tools.html', notice_form=notice_form, message_form=message_form,
-                               superuser_pw_form=superuser_pw_form, title="Tools")
+                               superuser_pw_form=superuser_pw_form, cleanup_form=cleanup_form, title="Tools")
 
     @login_required
     @admin_required
@@ -289,6 +290,25 @@ class AdminToolsView(FlaskView):
             password = form.password.data
             instance = form.instance.data
             murmur.set_superuser_password(location, password, instance)
+            return redirect('/admin/tools/')
+        return redirect('/admin/tools/')
+
+    @login_required
+    @admin_required
+    @route('/cleanup-expired-servers', methods=['POST'])
+    def cleanup_expired_servers(self):
+        form = CleanupExpiredServersForm()
+        servers = Server.query.filter_by(status='active').all()
+        expired = [s for s in servers if s.is_expired]
+
+        print servers
+        print expired
+
+        ## TODO Make call to murmur to clean servers.
+
+        if form.validate_on_submit():
+            location = form.location.data
+            murmur.cleanup_expired_servers(location)
             return redirect('/admin/tools/')
         return redirect('/admin/tools/')
 

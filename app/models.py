@@ -27,6 +27,12 @@ class Server(db.Model):
     def expiration(self):
         return self.created_date + datetime.timedelta(hours=self.duration)
 
+    @hybrid_property
+    def is_expired(self):
+        now = datetime.datetime.utcnow()
+        exp = self.created_date + datetime.timedelta(hours=self.duration)
+        return now > exp
+
     def __repr__(self):
         return '<Server %r>' % self.id
 
