@@ -298,18 +298,28 @@ class AdminToolsView(FlaskView):
     @route('/cleanup-expired-servers', methods=['POST'])
     def cleanup_expired_servers(self):
         form = CleanupExpiredServersForm()
-        servers = Server.query.filter_by(status='active').all()
-        expired = [s for s in servers if s.is_expired]
-
-        print servers
-        print expired
-
-        ## TODO Make call to murmur to clean servers.
 
         if form.validate_on_submit():
             location = form.location.data
-            murmur.cleanup_expired_servers(location)
-            return redirect('/admin/tools/')
+            hostname = murmur.get_host_by_location(location)['hostname']
+
+            servers = Server.query.filter_by(status='active', type='temp', mumble_host=hostname).all()
+            expired = [s.mumble_instance for s in servers if s.is_expired]  # Filter servers if it should be expired.
+            print expired
+
+            for s in servers:
+                s.status = 'expired'
+                db.session.add(s)
+
+            try:
+                db.session.commit()
+                print expired
+                murmur.cleanup_expired_servers(location, expired)
+                return redirect('/admin/tools/')
+            except:
+                db.session.rollback()
+                raise
+
         return redirect('/admin/tools/')
 
     @login_required

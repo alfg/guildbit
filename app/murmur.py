@@ -291,16 +291,28 @@ def set_superuser_password(location, password, instance_id):
     return None
 
 
-def cleanup_expired_servers(location):
+def cleanup_expired_servers(location, expired_ids):
     """
     Cleans up expired servers.
     @param location: location from config
+    @param expired_ids: list of mumble_instance IDs to be expired.
     @return: None
     """
     host = get_host_by_location(location)['uri']
     auth = get_murmur_credentials(location)
+    expired_ids = ','.join(str(x) for x in expired_ids)
+    print expired_ids
 
-    return
+    try:
+        r = requests.delete("%s/servers/delete?id=%s" % (host, expired_ids), auth=HTTPDigestAuth(auth['username'],
+                                                                                      auth['password']))
+        if r.status_code == 200:
+            return r.json()
+    except requests.exceptions.ConnectionError as e:
+        import traceback
+        traceback.print_exc()
+        return None
+    return None
 
 
 def stop_server(host, instance_id):
@@ -311,6 +323,7 @@ def stop_server(host, instance_id):
     @return:
     """
     return
+
 
 def start_server(host, instance_id):
     """
@@ -324,6 +337,7 @@ def start_server(host, instance_id):
 ##
 ## Utilities for interfacing with murmur servers
 ##
+
 
 def find_available_port(location):
     """
