@@ -39,6 +39,15 @@
         <button type="submit" class="pure-button pure-button-primary">Send</button>
       </fieldset>
     </form>
+
+    <form action="cleanup-expired-servers" method="post" name="role" class="pure-form">
+        {{ cleanup_form.csrf_token }}
+        <fieldset>
+            <legend>Cleans up expired servers.</legend>
+            {{ cleanup_form.location }}
+            <button type="submit" class="pure-button pure-button-primary">Clean</button>
+        </fieldset>
+    </form>
 {% endblock %}
 
 {% block scripts %}

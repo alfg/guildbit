@@ -9,7 +9,7 @@ import settings
 from app.util import admin_required
 from app import db
 from app.forms import UserAdminForm, DeployCustomServerForm, NoticeForm, SuperuserPasswordForm
-from app.forms import SendChannelMessageForm, CreateTokenForm, build_hosts_list
+from app.forms import SendChannelMessageForm, CreateTokenForm, CleanupExpiredServersForm, build_hosts_list
 from app.models import Server, User, Notice, Rating, Token
 import app.murmur as murmur
 
@@ -243,8 +243,9 @@ class AdminToolsView(FlaskView):
         notice_form = NoticeForm(obj=notice)
         message_form = SendChannelMessageForm()
         superuser_pw_form = SuperuserPasswordForm()
+        cleanup_form = CleanupExpiredServersForm()
         return render_template('admin/tools.html', notice_form=notice_form, message_form=message_form,
-                               superuser_pw_form=superuser_pw_form, title="Tools")
+                               superuser_pw_form=superuser_pw_form, cleanup_form=cleanup_form, title="Tools")
 
     @login_required
     @admin_required
@@ -290,6 +291,33 @@ class AdminToolsView(FlaskView):
             instance = form.instance.data
             murmur.set_superuser_password(location, password, instance)
             return redirect('/admin/tools/')
+        return redirect('/admin/tools/')
+
+    @login_required
+    @admin_required
+    @route('/cleanup-expired-servers', methods=['POST'])
+    def cleanup_expired_servers(self):
+        form = CleanupExpiredServersForm()
+
+        if form.validate_on_submit():
+            location = form.location.data
+            hostname = murmur.get_host_by_location(location)['hostname']
+
+            servers = Server.query.filter_by(status='active', type='temp', mumble_host=hostname).all()
+            expired = [s.mumble_instance for s in servers if s.is_expired]  # Filter servers if it should be expired.
+
+            for s in servers:
+                s.status = 'expired'
+                db.session.add(s)
+
+            try:
+                db.session.commit()
+                murmur.cleanup_expired_servers(location, expired)
+                return redirect('/admin/tools/')
+            except:
+                db.session.rollback()
+                raise
+
         return redirect('/admin/tools/')
 
     @login_required

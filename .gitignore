@@ -35,6 +35,8 @@ coverage.xml
 *.mo
 
 # Mr Developer
+env
+.DS_Store
 .mr.developer.cfg
 .project
 .pydevproject
