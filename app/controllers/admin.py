@@ -307,8 +307,9 @@ class AdminToolsView(FlaskView):
             expired = [s.mumble_instance for s in servers if s.is_expired]  # Filter servers if it should be expired.
 
             for s in servers:
-                s.status = 'expired'
-                db.session.add(s)
+                if s.is_expired:
+                    s.status = 'expired'
+                    db.session.add(s)
 
             try:
                 db.session.commit()
