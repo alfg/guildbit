@@ -305,7 +305,6 @@ class AdminToolsView(FlaskView):
 
             servers = Server.query.filter_by(status='active', type='temp', mumble_host=hostname).all()
             expired = [s.mumble_instance for s in servers if s.is_expired]  # Filter servers if it should be expired.
-            print expired
 
             for s in servers:
                 s.status = 'expired'
@@ -313,7 +312,6 @@ class AdminToolsView(FlaskView):
 
             try:
                 db.session.commit()
-                print expired
                 murmur.cleanup_expired_servers(location, expired)
                 return redirect('/admin/tools/')
             except:
