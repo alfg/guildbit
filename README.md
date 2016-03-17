@@ -52,6 +52,8 @@ Run celery to test and track queues:
 
 `celery worker --app=app.tasks -l info`
 
+* See [The Wiki](https://github.com/alfg/guildbit/wiki/Commands-and-Fixes) for further commands available.
+
 ## License
 
 [MIT License](http://alfg.mit-license.org/) © Alfred Gutierrez
