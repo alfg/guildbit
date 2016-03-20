@@ -38,7 +38,7 @@
               </div>
               <hr>
               <div class="pure-control-group">
-                <label for="password">Set SuperUser Password</label>
+                <label for="password">Set SuperUser Password*</label>
                 {{ form.superuser_password(size=20, placeholder='%s' % _('Set a SuperUser Password'), autocomplete='off') }}
                 <i class="fa fa-info-circle"></i>
                 <span class="ttip text-underline" data-toggle="tooltip" title="" data-original-title="A SuperUser is a user with admin
@@ -49,6 +49,7 @@
                   <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
                 </button>
               </div>
+              <span>*Your SuperUser password will be emailed to you.</span>
             </fieldset>
           </form>
         {% else %}
