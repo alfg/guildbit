@@ -1,6 +1,7 @@
+import re
 from flask_wtf import Form
 from wtforms import TextField, SelectField, BooleanField, IntegerField, TextAreaField
-from wtforms.validators import DataRequired, Required, Email, Length
+from wtforms.validators import DataRequired, Required, Email, Length, Regexp
 from flask.ext.babel import lazy_gettext as __
 
 from settings import MURMUR_HOSTS, PACKAGES
@@ -40,7 +41,6 @@ class DeployServerForm(Form):
     location = SelectField('location',
                            validators=[DataRequired()],
                            choices=_server_locations)
-    # duration = SelectField('duration')  # Create dynamic list in view
     duration = SelectField('duration',
                            validators=[DataRequired()],
                            choices=[
@@ -51,6 +51,7 @@ class DeployServerForm(Form):
                            ])
     password = TextField('password',
                          validators=[DataRequired('Password is required.'),
+                                     Regexp("^[A-Za-z0-9_-]*$", re.IGNORECASE, message="Password must be letters and/or numbers only."),
                                      Length(min=3, max=25,
                                             message="Password must be between 3 and 25 characters long.")])
 
@@ -78,6 +79,7 @@ class DeployTokenServerForm(Form):
                            choices=_server_locations)
     password = TextField('password',
                          validators=[DataRequired('Password is required.'),
+                                     Regexp("^[A-Za-z0-9_-]*$", re.IGNORECASE, message="Password must be letters and/or numbers only."),
                                      Length(min=3, max=25,
                                             message="Password must be between 3 and 25 characters long.")])
     channel_name = TextField('channel_name', validators=[DataRequired('Channel name is required.')])
@@ -157,4 +159,3 @@ class ContactForm(Form):
     subject = TextField('subject', validators=[DataRequired('Subject is required.')])
     email = TextField('email', validators=[Email('Invalid email address.'), DataRequired('Email is required.')])
     message = TextAreaField('message', validators=[DataRequired('Message is required.')])
-
