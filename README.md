@@ -36,11 +36,13 @@ For a full production deployment, please refer to [INSTALL.md](INSTALL.md).
 To develop locally:
 
 ```bash
+brew install redis-server
+redis-server --daemonize yes
 git clone https://github.com/alfg/guildbit
 virtualenv env --system-site-packages
 . env/bin/activate
-pip install -r requirements
-python runserver.py
+pip install -r requirements.txt
+python runserver.py runserver
 ```
 
 You'll need to setup mumble-server, python-zeroc-ice, and murmur-rest to develop and test locally, or
