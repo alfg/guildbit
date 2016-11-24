@@ -62,6 +62,10 @@ app_1   | * Restarting with reloader
 
 Load `http://docker-machine-host:5000` in your browser.
 
+When deploying a server, you'll see the Direct Link as `mumble://murmur-rest:50001`. Simply, replace `murmur-rest` with your docker-machine host. Example: `192.168.99.100`.
+
+*Please note the `docker-compose.yml` file opens ports 50001-50050 for testing. Update as needed.*
+
 ## Admin
 See: [Activating Admin](https://github.com/alfg/guildbit/wiki/Commands-and-Fixes#activating-admin)
 
