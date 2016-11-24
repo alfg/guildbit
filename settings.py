@@ -3,17 +3,18 @@
 import os
 
 APP_HOST = '0.0.0.0'
-APP_PORT = 4000
+APP_PORT = 5000
 APP_DEBUG = True
 APP_SESSION_KEY = 'super-secret'
 CSRF_ENABLED = True
 ASSETS_DEBUG = True
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost:6379')
 DATABASE_URI = 'sqlite:////tmp/test.db'
-BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CACHE_BACKEND = 'redis'
+BROKER_URL = 'redis://%s/0' % REDIS_HOST
+CELERY_RESULT_BACKEND = 'redis://%s/0' % REDIS_HOST
+CACHE_BACKEND = 'simple'
 
 # Murmur default settings
 DEFAULT_MAX_USERS = 15
@@ -57,6 +58,24 @@ MURMUR_HOSTS = [
         'password': ''
     }
 ]
+
+# Use only if in test docker environment.
+DOCKER_TEST = os.environ.get('DOCKER_TEST', False)
+if DOCKER_TEST:
+    MURMUR_HOSTS = [{
+        'name': 'Test Server',
+        'address': 'murmur-rest:5000',
+        'uri': 'http://murmur-rest:5000',
+        'hostname': 'murmur-rest',
+        'http_uri': 'http://localhost:4000/static/img',
+        'monitor_uri': 'http://localhost:5555',
+        'location': 'local',
+        'location_name': 'Local',
+        'status': 'active',
+        'capacity': 100,
+        'username': '',
+        'password': ''
+    }]
 
 PACKAGES = [
     {

@@ -1,60 +1,77 @@
 # GuildBit.com
+> Free Mumble Hosting
+
+http://guildbit.com
 
 ![Guildbit.com](/app/static/img/screenshots/howitworks_home.png)
 
-This project is the frontend application of GuildBit.com. This project is built with the following stack:
+GuildBit is a full-stack application frontend written in Python to offer
+temporary virtual Mumble servers to users. Guildbit depends the [murmur-rest](https://github.com/alfg/murmur-rest) API backend to interface
+with the virtual Mumble servers.
 
-* Flask as the Python Framework
-* SQLAlchemy as the ORM for postgres/sqlite
-* Celery messaging queue for scheduling Mumble Server tasks
-* Redis as the message broker for Celery and caching engine
-* Python-requests for sending REST requests to murmur-rest
-* Murmur-rest as the RESTful backend for communicating with Murmur virtual servers via Ice
-* CSS Framework is Pure
-
-
-## Process
-
-When a user deploys a GuildBit server from the frontpage, the following takes place:
-
-1. Form is validated and a POST request is sent to the home controller index view
-2. App server generates a UUID4
-3. Form data is captured as the location, duration, password
-4. A post request (via python requests) is sent to the locations's murmur-rest to create a server using the payload
-5. murmur-rest returns an assigned server id
-6. Database entry a saved with the following: uuid, form.location, form.duration, form.password, server.id
-7. A scheduled date is generated based on the created_date from the database entry + form.duration hours
-8. A celery task is scheduled using the info above
-9. Server view is returned to user /server/{uuid4}
-
-The server view checks database if server is expired. If expired, the server_expired.html view is shown.
+## Technology Stack
+* [Flask](http://flask.pocoo.org/) - Python Framework
+* [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.1/) - PostgreSQL/SQLite ORM
+* [Celery](http://www.celeryproject.org/) - Message Queue for scheduling Mumble Server tasks
+* [Redis](http://redis.io/) - Message broker for Celery
+* [Python-requests](http://docs.python-requests.org/en/master/) - HTTP requests to murmur-rest API
+* [Murmur-rest](https://github.com/alfg/murmur-rest) - Murmur RESTful API
 
 ## Install
-
 For a full production deployment, please refer to [INSTALL.md](INSTALL.md).
 
-To develop locally:
+### Requirements
+* Redis-server
+* SQLite or PostgreSQL
+* [Virtualenv](https://virtualenv.pypa.io/en/stable/) recommended for development
+* [murmur-rest](https://github.com/alfg/murmur-rest)
 
+*Please note `murmur-rest` MUST be setup in order to deploy virtual Mumble servers. However, it is possible to work on the Guildbit app without murmur-rest, you just won't be able to deploy or administer any Mumble servers.*
+
+
+### Development Setup
 ```bash
-brew install redis-server
-redis-server --daemonize yes
-git clone https://github.com/alfg/guildbit
-virtualenv env --system-site-packages
-. env/bin/activate
-pip install -r requirements.txt
-python runserver.py runserver
+$ git clone https://github.com/alfg/guildbit
+$ virtualenv env --system-site-packages
+$ . env/bin/activate
+$ pip install -r requirements.txt
+$ python manage.py runserver
+
+* Running on http://0.0.0.0:5000/
+* Restarting with reloader
 ```
 
-You'll need to setup mumble-server, python-zeroc-ice, and murmur-rest to develop and test locally, or
-configure `MURMUR_REST_HOST` to another server that's already setup.
+* Development server is running with default settings. See [Configuration Guide](https://github.com/alfg/guildbit/wiki/Configuration-Guide) for additional configuration options.
+* Update `MURMUR_HOSTS` with your murmur-rest host.
+* Run celery in a separate process (but in the same python environment) to start the messaging queue:
+  ```
+  $ celery worker --app=app.tasks -l info
+  ```
 
-Install instructions on [http://github.com/alfg/murmur-rest](http://github.com/alfg/murmur-rest)
+## Docker Setup
+A Dockerfile and `docker-compose.yml` is provided for setting up a local development server.
+```
+$ docker-compose build
+$ docker-compose up
 
-Run celery to test and track queues:
+redis_1 | * DB loaded from disk: 0.000 seconds
+redis_1 | * The server is now ready to accept connections on port 6379
+app_1   | * Running on http://0.0.0.0:5000/
+app_1   | * Restarting with reloader
+```
 
-`celery worker --app=app.tasks -l info`
+Load `http://docker-machine-host:5000` in your browser.
 
+When deploying a server, you'll see the Direct Link as `mumble://murmur-rest:50001`. Simply, replace `murmur-rest` with your docker-machine host. Example: `192.168.99.100`.
+
+*Please note the `docker-compose.yml` file opens ports 50001-50050 for testing. Update as needed.*
+
+## Admin
+See: [Activating Admin](https://github.com/alfg/guildbit/wiki/Commands-and-Fixes#activating-admin)
+
+## Resources
 * See [The Wiki](https://github.com/alfg/guildbit/wiki/Commands-and-Fixes) for further commands available.
+* [Configuration Guide](https://github.com/alfg/guildbit/wiki/Configuration-Guide)
 
 ## License
 

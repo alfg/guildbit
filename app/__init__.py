@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.script import Manager
+from flask.ext.script import Manager, Server
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.login import LoginManager
 from flask.ext.openid import OpenID
@@ -33,6 +33,7 @@ migrate = Migrate(app, db)
 
 # Configure Flask-Script
 manager = Manager(app)
+manager.add_command('runserver', Server(host=settings.APP_HOST, port=settings.APP_PORT))
 manager.add_command('db', MigrateCommand)
 
 # Configure Flask-Mail
