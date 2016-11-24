@@ -122,4 +122,3 @@ class HomeView(FlaskView):
     @route('/updates/')
     def updates(self):
         return render_template('updates.html')
-
