@@ -59,6 +59,24 @@ MURMUR_HOSTS = [
     }
 ]
 
+# Use only if in test docker environment.
+DOCKER_TEST = os.environ.get('DOCKER_TEST', False)
+if DOCKER_TEST:
+    MURMUR_HOSTS = [{
+        'name': 'Test Server',
+        'address': 'murmur-rest:5000',
+        'uri': 'http://murmur-rest:5000',
+        'hostname': 'murmur-rest',
+        'http_uri': 'http://localhost:4000/static/img',
+        'monitor_uri': 'http://localhost:5555',
+        'location': 'local',
+        'location_name': 'Local',
+        'status': 'active',
+        'capacity': 100,
+        'username': '',
+        'password': ''
+    }]
+
 PACKAGES = [
     {
         'name': 'PACKAGE-Test',

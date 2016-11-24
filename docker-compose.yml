@@ -2,8 +2,10 @@ app:
   build: .
   links:
     - redis
+    - murmur-rest
   environment:
     - REDIS_HOST=redis:6379
+    - DOCKER_TEST=1
   ports:
     - "5000:5000"
 
@@ -11,3 +13,9 @@ redis:
   image: redis
   ports:
     - "6379"
+
+murmur-rest:
+  image: alfg/murmur-rest
+  ports:
+    - "5001:5000"
+    - "50001-50050:50001-50050"
