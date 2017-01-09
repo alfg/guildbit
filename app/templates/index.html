@@ -8,14 +8,17 @@
 
         <form id="deploy-form" class="pure-form deploy-form" action="/" method="POST">
             {{ form.csrf_token }}
-                {{ form.location }}
-                {{ form.duration }}
-                {{ form.password(size=20, class='', placeholder='%s' % _('Set a Password'), autocomplete='off') }}
-                <button id="deploy-button" class="pure-button pure-button-primary track-submit" type="submit" value="Submit"
-                    data-event-label="deploy-server">
-                    <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
-                </button>
+            {{ form.location }}
+            {{ form.duration }}
+            {{ form.password(size=20, class='', placeholder='%s' % _('Set a Password'), autocomplete='off') }}
+            <button id="deploy-button" class="pure-button pure-button-primary track-submit" type="submit" value="Submit"
+                data-event-label="deploy-server">
+                <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
+            </button>
         </form>
+        <div class="password-generator text-right">
+            <a id="generate-password" href="#">Generate Password</a>
+        </div>
 
         {% if form.errors %}
             <ul class="errors text-center">
@@ -45,5 +48,76 @@
             $('#deploy-button').attr('disabled', 'disabled');
             $('#deploy-button').html("<i class='fa fa-refresh fa-spin'></i> {{ _('Deploying...') }}");
         });
+
+        $('#generate-password').on('click', function() {
+          $('#password').val(randomPassword());
+        });
+
+        function randomPassword() {
+          var adjective = randomWord(_CHARACTERS);
+          var noun = randomWord(_NOUNS);
+          return adjective + noun;
+        }
+
+        function randomWord(list) {
+            var i = Math.floor(Math.random() * list.length);
+            return list[i];
+        }
+
+        var _CHARACTERS = [
+            'Abominable', 'Accurate', 'Adorable', 'All', 'Alleged', 'Ancient', 'Angry',
+            'Anxious', 'Appalling', 'Apparent', 'Astonishing', 'Attractive', 'Awesome',
+            'Baby', 'Bad', 'Beautiful', 'Benign', 'Big', 'Bitter', 'Blind', 'Blue',
+            'Bold', 'Brave', 'Bright', 'Brisk', 'Calm', 'Camouflaged', 'Casual',
+            'Cautious', 'Choppy', 'Chosen', 'Clever', 'Cold', 'Cool', 'Crawly',
+            'Crazy', 'Creepy', 'Cruel', 'Curious', 'Cynical', 'Dangerous', 'Dark',
+            'Delicate', 'Desperate', 'Difficult', 'Discreet', 'Disguised', 'Dizzy',
+            'Dumb', 'Eager', 'Easy', 'Edgy', 'Electric', 'Elegant', 'Emancipated',
+            'Enormous', 'Euphoric', 'Evil', 'Fast', 'Ferocious', 'Fierce', 'Fine',
+            'Flawed', 'Flying', 'Foolish', 'Foxy', 'Freezing', 'Funny', 'Furious',
+            'Gentle', 'Glorious', 'Golden', 'Good', 'Green', 'Green', 'Guilty',
+            'Hairy', 'Happy', 'Hard', 'Hasty', 'Hazy', 'Heroic', 'Hostile', 'Hot',
+            'Humble', 'Humongous', 'Humorous', 'Hysterical', 'Idealistic', 'Ignorant',
+            'Immense', 'Impartial', 'Impolite', 'Indifferent', 'Infuriated',
+            'Insightful', 'Intense', 'Interesting', 'Intimidated', 'Intriguing',
+            'Jealous', 'Jolly', 'Jovial', 'Jumpy', 'Kind', 'Laughing', 'Lazy', 'Liquid',
+            'Lonely', 'Longing', 'Loud', 'Loving', 'Loyal', 'Macabre', 'Mad', 'Magical',
+            'Magnificent', 'Malevolent', 'Medieval', 'Memorable', 'Mere', 'Merry',
+            'Mighty', 'Mischievous', 'Miserable', 'Modified', 'Moody', 'Most',
+            'Mysterious', 'Mystical', 'Needy', 'Nervous', 'Nice', 'Objective',
+            'Obnoxious', 'Obsessive', 'Obvious', 'Opinionated', 'Orange', 'Painful',
+            'Passionate', 'Perfect', 'Pink', 'Playful', 'Poisonous', 'Polite', 'Poor',
+            'Popular', 'Powerful', 'Precise', 'Preserved', 'Pretty', 'Purple', 'Quick',
+            'Quiet', 'Random', 'Rapid', 'Rare', 'Real', 'Reassuring', 'Reckless', 'Red',
+            'Regular', 'Remorseful', 'Responsible', 'Rich', 'Rude', 'Ruthless', 'Sad',
+            'Scared', 'Scary', 'Scornful', 'Screaming', 'Selfish', 'Serious', 'Shady',
+            'Shaky', 'Sharp', 'Shiny', 'Shy', 'Simple', 'Sleepy', 'Slow', 'Sly',
+            'Small', 'Smart', 'Smelly', 'Smiling', 'Smooth', 'Smug', 'Sober', 'Soft',
+            'Solemn', 'Square', 'Square', 'Steady', 'Strange', 'Strong', 'Stunning',
+            'Subjective', 'Successful', 'Surly', 'Sweet', 'Tactful', 'Tense',
+            'Thoughtful', 'Tight', 'Tiny', 'Tolerant', 'Uneasy', 'Unique', 'Unseen',
+            'Warm', 'Weak', 'Weird', 'WellCooked', 'Wild', 'Wise', 'Witty', 'Wonderful',
+            'Worried', 'Yellow', 'Young', 'Zealous'
+        ];
+
+        var _NOUNS = [
+          'Aeris', 'Aerith', 'Lucas', 'Charizard', 'Marth', 'MegaMan', 'Mewtwo',
+          'Android', 'Butthead', 'Turok', 'Bond', 'Ren', 'Stimpy', 'Elvis', 'Frogger',
+          'Batman', 'Sonic', 'Mario', 'Luigi', 'SuperJoe', 'SolidSnake', 'Shaq',
+          'Corrin', 'CaptainFalcon', 'Sheik', 'Roy', 'Rosalina', 'Squirtle', 'Wolf',
+          'Dracula', 'Reptile', 'Sindel', 'Blade', 'ChrisRedfield', 'Akuma', 'Piccolo',
+          'Fox', 'Ike', 'Kirby', 'MetaKnight', 'Ness', 'Pichu', 'Ganondorf',
+          'Frog', 'Crono', 'Lucca', 'Magus', 'Cinder', 'EarthwormJim', 'Serge', 'Loki',
+          'Gohan', 'Vegeta', 'Frieza', 'Sniper', 'Ultros', 'Daxter', 'Jak', 'GLaDOS',
+          'Guile', 'DonkeyKong', 'Vader', 'Conker', 'Buzz', 'Bowser', 'Toad', 'Bomberman',
+          'LiuKang', 'LiquidSnake', 'Link', 'Leon', 'LaraCroft', 'Knuckles', 'Banjo',
+          'MasterChief', 'GordanFreeman', 'Clank', 'Lightning', 'Tifa', 'Cammy',
+          'RacoonMario', 'DarkwingDuck', 'VaultBoy', 'Cloud', 'Sephiroth', 'Lemmings',
+          'Samus', 'Sagat', 'Ryu', 'Scorpion', 'Zelda', 'Yoda', 'Wario', 'Vega',
+          'Shredder', 'RoboCop', 'Raiden', 'Pikachu', 'Neo', 'Metroid', 'Pacman',
+          'Starscream', 'Saria', 'Gabe', 'Blanka', 'Peach', 'Sin', 'Goemon', 'Musashi',
+          'Tidus', 'Jade', 'Yuna', 'CaitSith', 'DukeNukem', 'SniperWolf', 'Sinder',
+          'Yoshi'
+        ];
     </script>
 {% endblock %}
