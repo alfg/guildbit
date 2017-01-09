@@ -15,8 +15,10 @@
                 data-event-label="deploy-server">
                 <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
             </button>
-            <a id="generate-password" href="#">Generate a Random Password</a>
         </form>
+        <div class="password-generator text-right">
+            <a id="generate-password" href="#">Generate Password</a>
+        </div>
 
         {% if form.errors %}
             <ul class="errors text-center">
@@ -52,7 +54,7 @@
         });
 
         function randomPassword() {
-          var adjective = randomWord(_ADJECTIVES);
+          var adjective = randomWord(_CHARACTERS);
           var noun = randomWord(_NOUNS);
           return adjective + noun;
         }
@@ -62,7 +64,7 @@
             return list[i];
         }
 
-        var _ADJECTIVES = [
+        var _CHARACTERS = [
             'Abominable', 'Accurate', 'Adorable', 'All', 'Alleged', 'Ancient', 'Angry',
             'Anxious', 'Appalling', 'Apparent', 'Astonishing', 'Attractive', 'Awesome',
             'Baby', 'Bad', 'Beautiful', 'Benign', 'Big', 'Bitter', 'Blind', 'Blue',
