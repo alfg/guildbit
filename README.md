@@ -5,8 +5,8 @@ http://guildbit.com
 
 ![Guildbit.com](/app/static/img/screenshots/howitworks_home.png)
 
-GuildBit is a full-stack application frontend written in Python to offer
-temporary virtual Mumble servers to users. Guildbit depends the [murmur-rest](https://github.com/alfg/murmur-rest) API backend to interface
+GuildBit is a full-stack application written in Python to offer
+temporary virtual Mumble servers to users. Guildbit depends on [murmur-rest](https://github.com/alfg/murmur-rest) API backend to interface
 with the virtual Mumble servers.
 
 ## Technology Stack
