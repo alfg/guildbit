@@ -23,7 +23,7 @@ Flask-Script==0.6.6
 Flask-SQLAlchemy==1.0
 Flask-WTF==0.9.3
 greenlet==0.4.1
-gunicorn==18.0
+gunicorn==19.5.0
 ipython==5.1.0
 ipython-genutils==0.1.0
 itsdangerous==0.23
