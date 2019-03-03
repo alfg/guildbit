@@ -1,8 +1,8 @@
 import uuid
 
 from flask import render_template, request, redirect, jsonify
-from flask.ext.classy import FlaskView, route
-from flask.ext.login import login_required
+from flask_classy import FlaskView, route
+from flask_login import login_required
 import psutil
 
 import settings
