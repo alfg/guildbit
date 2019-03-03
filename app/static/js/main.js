@@ -8,13 +8,6 @@ $(document).ready(function() {
         $('input').placeholder();
     }
 
-    // Share plugin
-    $('.share-js').share({
-        url: 'http://guildbit.com',
-        text: 'Guildbit - Free 15 slot Mumble servers. No registration required!',
-        button_text: 'Share Us!'
-    });
-
     // GA link event tracking wrapper
     $(".track").click(function () {
         var label =  $(this).attr("data-event-label");
@@ -50,13 +43,13 @@ $(document).ready(function() {
     else if (os.indexOf("Win") !== -1) {
         $('#os-download #os-text').text(_WindowsDownload);
         $('#os-download #download-link i').addClass('fa-windows');
-        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.2.10/mumble-1.2.10.msi');
+        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.2.19/mumble-1.2.19.msi');
         }
     else if (os.indexOf("MacOS") !== -1 || os.indexOf("MacIntel") !== -1) {
         $('#os-download #os-text').text(_OSXDownload);
         $('#os-download #download-link i').removeClass('fa-windows');
         $('#os-download #download-link i').addClass('fa-apple');
-        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.2.10/Mumble-1.2.10.dmg');
+        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.2.19/Mumble-1.2.19.dmg');
         }
     else if (ua.indexOf("android") > -1) {
         $('#os-download #os-text').text(_AndroidDownload);

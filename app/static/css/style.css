@@ -2,8 +2,8 @@
 
 /* Base Styles */
 html {
+    background: #faf9fa;
     height: 100%;
-    background: #CECECE url('../img/bg/skulls.png') repeat fixed;
 }
 body {
     font-family: "Open Sans", sans-serif;
@@ -49,13 +49,12 @@ a:hover {
 .content {
     max-width: 800px;
     line-height: 1.6em;
-    border: 1px solid #D0D0D0;
+    border: 1px solid #dad8de;
     padding: 20px;
     padding-top: 0;
     margin: 0 auto 10px;
-    background: #DDD url('../img/bg/grey.png') repeat;
-    box-shadow: 0 0 15px -5px #AAA;
-    border-radius: 4px;
+    background: #fff;
+    border-radius: 2px;
 }
 .content.community h3 {
     margin-top: 0;
@@ -67,6 +66,7 @@ a:hover {
     color: #333;
     text-align: center;
     padding: 0.5em 0 0;
+    margin-bottom: 20px;
 }
     .header h1 {
         margin: 0.2em 0;
@@ -98,7 +98,8 @@ a:hover {
 .head-logo a,
 .head-logo a:visited,
 .head-logo a:active {
-    background: url('../img/guildbit_logo_sm_v2.png') no-repeat;
+    background: url('../img/guildbit_logo2.png') no-repeat;
+    background-size: 100%;
     height: 100%;
     width: 100%;
     position: relative;
