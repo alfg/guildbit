@@ -1,15 +1,15 @@
 import os
 from datetime import datetime
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.script import Manager, Server
-from flask.ext.migrate import Migrate, MigrateCommand
-from flask.ext.login import LoginManager
-from flask.ext.openid import OpenID
-from flask.ext.mail import Mail
-from flask.ext.cache import Cache
-from flask.ext.babel import Babel
-from flask.ext.assets import Environment, Bundle
+from flask_sqlalchemy import SQLAlchemy
+from flask_script import Manager, Server
+from flask_migrate import Migrate, MigrateCommand
+from flask_login import LoginManager
+from flask_openid import OpenID
+from flask_mail import Mail
+from flask_cache import Cache
+from flask_babel import Babel
+from flask_assets import Environment, Bundle
 
 import settings
 
@@ -56,7 +56,7 @@ babel = Babel(app)
 assets = Environment(app)
 app.config['ASSETS_DEBUG'] = settings.ASSETS_DEBUG
 
-js = Bundle('js/libs/share.min.js', 'js/libs/tooltips.min.js', 'js/main.js', 'js/libs/jquery.fancybox.js',
+js = Bundle('js/libs/tooltips.min.js', 'js/main.js', 'js/libs/jquery.fancybox.js',
             'js/libs/modal.js',
             filters='jsmin', output='gen/packed.js')
 css = Bundle('css/pure-min.css', 'css/grids-responsive-min.css', 'css/style.css', 'css/tooltips.css',

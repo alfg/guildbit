@@ -3,8 +3,8 @@ import json
 import datetime
 
 from flask import render_template, request, redirect, url_for, jsonify
-from flask.ext.classy import FlaskView, route
-from flask.ext.mail import Message
+from flask_classy import FlaskView, route
+from flask_mail import Message
 
 import settings
 from app.util import get_package_by_name

@@ -1,8 +1,8 @@
 import uuid
 
 from flask import render_template, redirect, url_for, g, flash, request
-from flask.ext.classy import FlaskView, route
-from flask.ext.mail import Message
+from flask_classy import FlaskView, route
+from flask_mail import Message
 
 import settings
 from app import db, tasks, mail

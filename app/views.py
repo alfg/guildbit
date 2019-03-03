@@ -1,7 +1,7 @@
 import re
 
 from flask import render_template, request, redirect, session, url_for, g, flash, json
-from flask.ext.login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user
 
 import settings
 from app import app, db, lm, oid, cache, babel
