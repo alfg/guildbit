@@ -54,9 +54,9 @@
         });
 
         function randomPassword() {
-          var adjective = randomWord(_CHARACTERS);
-          var noun = randomWord(_NOUNS);
-          return adjective + noun;
+          var adjective = randomWord(_ADJECTIVES);
+          var character = randomWord(_CHARACTERS);
+          return adjective + character;
         }
 
         function randomWord(list) {
@@ -64,7 +64,7 @@
             return list[i];
         }
 
-        var _CHARACTERS = [
+        var _ADJECTIVES = [
             'Abominable', 'Accurate', 'Adorable', 'All', 'Alleged', 'Ancient', 'Angry',
             'Anxious', 'Appalling', 'Apparent', 'Astonishing', 'Attractive', 'Awesome',
             'Baby', 'Bad', 'Beautiful', 'Benign', 'Big', 'Bitter', 'Blind', 'Blue',
@@ -100,7 +100,7 @@
             'Worried', 'Yellow', 'Young', 'Zealous'
         ];
 
-        var _NOUNS = [
+        var _CHARACTERS = [
           'Aeris', 'Aerith', 'Lucas', 'Charizard', 'Marth', 'MegaMan', 'Mewtwo',
           'Android', 'Butthead', 'Turok', 'Bond', 'Ren', 'Stimpy', 'Elvis', 'Frogger',
           'Batman', 'Sonic', 'Mario', 'Luigi', 'SuperJoe', 'SolidSnake', 'Shaq',
