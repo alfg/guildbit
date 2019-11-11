@@ -16,7 +16,7 @@ cssmin==0.2.0
 decorator==4.0.10
 enum34==1.1.6
 eventlet==0.14.0
-Flask==0.12.4
+Flask==1.0
 Flask-Assets==0.9
 Flask-Babel==0.9
 Flask-Cache==0.12
