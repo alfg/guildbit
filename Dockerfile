@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ENV FLASK_APP=app
+
 EXPOSE 5000
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -13,4 +15,4 @@ RUN cd /opt && pip install -r requirements.txt
 ADD . /opt
 WORKDIR /opt
 
-CMD ["python", "manage.py", "runserver"]
+CMD ["flask", "run"]

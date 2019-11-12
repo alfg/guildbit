@@ -2,12 +2,11 @@ import os
 from datetime import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_script import Manager, Server
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_openid import OpenID
 from flask_mail import Mail
-from flask_cache import Cache
+from flask_caching import Cache
 from flask_babel import Babel
 from flask_assets import Environment, Bundle
 
@@ -17,7 +16,7 @@ app = Flask(__name__)
 app.secret_key = settings.APP_SESSION_KEY
 
 # Version
-app.config.version = '1.4.0'
+app.config.version = '1.6.0'
 app.config.last_updated = datetime.now()
 
 # Configure Flask-login
@@ -30,11 +29,6 @@ oid = OpenID(app, os.path.join(settings.BASE_DIR, 'tmp'))
 app.config['SQLALCHEMY_DATABASE_URI'] = settings.DATABASE_URI
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
-# Configure Flask-Script
-manager = Manager(app)
-manager.add_command('runserver', Server(host=settings.APP_HOST, port=settings.APP_PORT))
-manager.add_command('db', MigrateCommand)
 
 # Configure Flask-Mail
 app.config['MAIL_SERVER'] = settings.MAIL_SERVER

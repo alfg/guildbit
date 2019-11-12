@@ -2,7 +2,7 @@ import re
 from flask_wtf import Form
 from wtforms import TextField, SelectField, BooleanField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Required, Email, Length, Regexp
-from flask.ext.babel import lazy_gettext as __
+from flask_babel import lazy_gettext as __
 
 from settings import MURMUR_HOSTS, PACKAGES
 
