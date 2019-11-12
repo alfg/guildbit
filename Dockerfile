@@ -15,4 +15,4 @@ RUN cd /opt && pip install -r requirements.txt
 ADD . /opt
 WORKDIR /opt
 
-CMD ["python", "manage.py", "runserver"]
+CMD ["flask", "run"]

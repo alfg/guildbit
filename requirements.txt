@@ -17,7 +17,7 @@ decorator==4.0.10
 enum34==1.1.6
 eventlet==0.14.0
 Flask==1.1.1
-Flask-Assets==0.9
+Flask-Assets==0.12
 Flask-Babel==0.9
 Flask-Caching==1.7.2
 Flask-Classy==0.6.8
@@ -25,7 +25,6 @@ Flask-Login==0.2.9
 Flask-Mail==0.9.0
 Flask-Migrate==2.5.2
 Flask-OpenID==1.2
-Flask-Script==0.6.6
 Flask-SQLAlchemy==2.4.1
 Flask-WTF==0.9.3
 greenlet==0.4.1
@@ -72,6 +71,6 @@ virtualenv==15.0.3
 virtualenv-clone==0.2.6
 virtualenvwrapper==4.7.2
 wcwidth==0.1.7
-webassets==0.9
+webassets==0.12.1
 Werkzeug==0.16.0
 WTForms==1.0.5
