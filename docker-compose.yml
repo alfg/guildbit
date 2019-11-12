@@ -4,10 +4,15 @@ app:
     - redis
     - murmur-rest
   environment:
+    - FLASK_ENV=development
+    - FLASK_RUN_HOST=0.0.0.0
+    - FLASK_RUN_PORT=5000
     - REDIS_HOST=redis:6379
     - DOCKER_TEST=1
   ports:
     - "5000:5000"
+  volumes:
+    - ".:/opt"
 
 redis:
   image: redis

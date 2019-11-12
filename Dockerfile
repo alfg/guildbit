@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ENV FLASK_APP=app
+
 EXPOSE 5000
 
 ENV DEBIAN_FRONTEND noninteractive

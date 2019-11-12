@@ -35,7 +35,10 @@ $ git clone https://github.com/alfg/guildbit
 $ virtualenv env --system-site-packages
 $ . env/bin/activate
 $ pip install -r requirements.txt
-$ python manage.py runserver
+$ export FLASK_ENV=development
+$ export FLASK_RUN_HOST=0.0.0.0
+$ export FLASK_RUN_PORT=5000
+$ flask run
 
 * Running on http://0.0.0.0:5000/
 * Restarting with reloader
