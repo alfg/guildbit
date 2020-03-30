@@ -18,7 +18,7 @@ def get_host_by_location(location):
     Searches MURMUR_HOSTS settings and returns tuple of address, uri, and hostname for given location.
     """
     for i in MURMUR_HOSTS:
-        for k, v in i.iteritems():
+        for k, v in i.items():
             if v == location:
                 return {
                     'address': i['address'],
@@ -112,7 +112,7 @@ def create_server_by_location(location, payload):
 
     try:
         r = requests.post(host + "/servers/", data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
-        if r.status_code == 200:
+        if r.ok:
             server_id = r.json()['id']
             return server_id
     except requests.exceptions.ConnectionError as e:
@@ -133,7 +133,7 @@ def get_server(host, instance_id):
         try:
             r = requests.get("%s/servers/%i" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
                                                                                        auth['password']))
-            if r.status_code == 200:
+            if r.ok:
                 return r.json()
         except requests.exceptions.ConnectionError as e:
             import traceback
@@ -152,7 +152,7 @@ def delete_server(host, instance_id):
     try:
         r = requests.delete("%s/servers/%i" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
                                                                                       auth['password']))
-        if r.status_code == 200:
+        if r.ok:
             return r.json()
     except requests.exceptions.ConnectionError as e:
         import traceback
@@ -170,7 +170,7 @@ def get_server_stats(host):
     try:
         r = requests.get("%s/stats/" % uri, auth=HTTPDigestAuth(auth['username'],
                                                                        auth['password']))
-        if r.status_code == 200:
+        if r.ok:
             stats = {
                 'servers_online': r.json()['booted_servers'],
                 'users_online': r.json()['users_online']
@@ -215,7 +215,7 @@ def get_server_logs(host, instance_id):
         try:
             r = requests.get("%s/servers/%s/logs" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
                                                                                                    auth['password']))
-            if r.status_code == 200:
+            if r.ok:
                 logs = r.json()
                 return logs
         except requests.exceptions.ConnectionError as e:
@@ -258,7 +258,7 @@ def list_all_servers(location):
     if uri is not None:
         try:
             r = requests.get("%s/servers/" % uri, auth=HTTPDigestAuth(auth['username'], auth['password']))
-            if r.status_code == 200:
+            if r.ok:
                 return r.json()
         except requests.exceptions.ConnectionError as e:
             import traceback
@@ -282,7 +282,7 @@ def set_superuser_password(location, password, instance_id):
 
     try:
         r = requests.post(host + "/servers/%i/setsuperuserpw" % instance_id, data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
-        if r.status_code == 200:
+        if r.ok:
             return "SuperUser password set."
     except requests.exceptions.ConnectionError as e:
         import traceback
@@ -301,12 +301,11 @@ def cleanup_expired_servers(location, expired_ids):
     host = get_host_by_location(location)['uri']
     auth = get_murmur_credentials(location)
     expired_ids = ','.join(str(x) for x in expired_ids)
-    print expired_ids
 
     try:
         r = requests.delete("%s/servers/delete?id=%s" % (host, expired_ids), auth=HTTPDigestAuth(auth['username'],
                                                                                       auth['password']))
-        if r.status_code == 200:
+        if r.ok:
             return r.json()
     except requests.exceptions.ConnectionError as e:
         import traceback
@@ -361,15 +360,15 @@ def find_available_port(location):
     # Find inactive ports and build a set
     lowest_item = min(active_ports)
     highest_item = max(active_ports)
-    full_set = set(xrange(lowest_item, highest_item + 1))
+    full_set = set(range(lowest_item, highest_item + 1))
     inactive_ports = full_set - set(active_ports)
 
     # Sort lists
     active_ports = sorted(active_ports)
     inactive_ports = sorted(inactive_ports)
 
-    print "Active ports:", active_ports
-    print "Inactive ports: ", inactive_ports
+    print("Active ports:", active_ports)
+    print("Inactive ports: ", inactive_ports)
 
     # If any inactive ports, then use the first item. Otherwise, use the last active port + 1
     if inactive_ports:
@@ -377,5 +376,5 @@ def find_available_port(location):
     else:
         chosen_port = active_ports[-1] + 1
 
-    print "Next available port: %s" % chosen_port
+    print("Next available port: %s" % chosen_port)
     return chosen_port

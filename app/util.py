@@ -1,7 +1,6 @@
 import json
 from functools import wraps
-import urllib
-import urllib2
+import urllib.parse
 
 from flask import redirect, request, current_app
 from flask_login import current_user
@@ -72,7 +71,7 @@ def get_package_by_name(name):
     Searches MURMUR_HOSTS settings and returns tuple of address, uri, and hostname for given location.
     """
     for i in PACKAGES:
-        for k, v in i.iteritems():
+        for k, v in i.items():
             if v == name:
                 return {
                     'name': i['name'],
@@ -109,6 +108,7 @@ def get_steam_userinfo(steam_id):
         'steamids': steam_id
     }
     url = 'http://api.steampowered.com/ISteamUser/' \
-          'GetPlayerSummaries/v0001/?%s' % urllib.urlencode(options)
-    rv = json.load(urllib2.urlopen(url))
-    return rv['response']['players']['player'][0] or {}
+          'GetPlayerSummaries/v0001/?%s' % urllib.parse.urlencode(options)
+    r = requests.get(url)
+    resp = r.json()
+    return resp['response']['players']['player'][0] or {}

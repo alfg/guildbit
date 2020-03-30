@@ -11,7 +11,7 @@ from app.util import get_package_by_name
 from app import db, tasks, mail
 from app.forms import DeployTokenServerForm
 from app.models import Server, Token
-import app.murmur as murmur
+from app import murmur
 
 
 class PaymentView(FlaskView):
@@ -21,7 +21,7 @@ class PaymentView(FlaskView):
         })
 
     def post(self):
-        print request.data["order"]
+        print(request.data["order"])
         return jsonify({
             "status": "received"
         })

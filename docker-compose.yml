@@ -1,26 +1,46 @@
-app:
-  build: .
-  links:
-    - redis
-    - murmur-rest
-  environment:
-    - FLASK_ENV=development
-    - FLASK_RUN_HOST=0.0.0.0
-    - FLASK_RUN_PORT=5000
-    - REDIS_HOST=redis:6379
-    - DOCKER_TEST=1
-  ports:
-    - "5000:5000"
-  volumes:
-    - ".:/opt"
+version: "2"
 
-redis:
-  image: redis
-  ports:
-    - "6379"
+services:
+  guildbit:
+    build: .
+    links:
+      - redis
+      - murmur-rest
+    environment:
+      - FLASK_ENV=development
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=8081
+      - REDIS_HOST=redis:6379
+      - DOCKER_TEST=1
+      - C_FORCE_ROOT=true
+    ports:
+      - "8081:8081"
+    volumes:
+      - ".:/opt/guildbit"
+      # - "./settings.py:/opt/guildbit/settings.py"
 
-murmur-rest:
-  image: alfg/murmur-rest
-  ports:
-    - "5001:5000"
-    - "50001-50050:50001-50050"
+  db:
+    image: postgres
+    # ports:
+    #   - priv.net.ip.addr:5432:5432
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+    volumes:
+      - /var/lib/postgresql/data
+
+  redis:
+    image: redis
+    ports:
+      - "6379"
+
+  murmur-rest:
+    image: alfg/murmur-rest
+    environment:
+      - APP_HOST=0.0.0.0
+      - APP_PORT=8080
+      - APP_DEBUG=True
+      - ENABLE_AUTH=False
+      - USERS=admin:password,admin2:password2
+    ports:
+      - "8080:8080"
+      - "50000-50050:50000-50050"
