@@ -6,7 +6,7 @@ from flask_classy import FlaskView, route
 
 from app import db, cache
 from app.models import Server, Rating
-import app.murmur as murmur
+from app import murmur
 from app.util import support_jsonp
 
 
@@ -173,7 +173,6 @@ class ServerView(FlaskView):
         """
         ip = request.remote_addr
         server = Server.query.filter_by(uuid=id, ip=ip).first_or_404()
-        print server
 
         if server:
             try:

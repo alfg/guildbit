@@ -9,7 +9,7 @@ from app import db, tasks, mail
 from app.forms import DeployServerForm, ContactForm
 from app.forms import duration_choices
 from app.models import Server
-import app.murmur as murmur
+from app import murmur
 
 
 ## Home views

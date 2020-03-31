@@ -10,7 +10,7 @@ from settings import MURMUR_HOSTS, PACKAGES
 def build_hosts_list():
     hosts_list = []
     for i in MURMUR_HOSTS:
-        for k, v in i.iteritems():
+        for k, v in i.items():
             if k == "location" and i['status'] == 'active':
                 hosts_list.append((v, i['location_name']))
     return hosts_list
@@ -19,7 +19,7 @@ def build_hosts_list():
 def build_packages_list():
     packages_list = []
     for i in PACKAGES:
-        for k, v in i.iteritems():
+        for k, v in i.items():
             if k == "name":
                 packages_list.append((v, i['name']))
     return packages_list

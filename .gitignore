@@ -36,6 +36,7 @@ coverage.xml
 
 # Mr Developer
 env
+venv
 .DS_Store
 .mr.developer.cfg
 .project

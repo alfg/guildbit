@@ -3,7 +3,7 @@ from celery import Celery
 
 from app import db
 from app.models import Server
-import murmur
+from app import murmur
 import settings
 
 
@@ -25,17 +25,17 @@ def delete_server(uuid):
 
         # Re-set task with new expiration
         delete_server.apply_async([uuid], eta=s.expiration)
-        print "Extend task for server instance: %s" % id
+        print("Extend task for server instance: %s" % id)
 
     elif s.status != "expired":
         # Delete mumble server and expire server
         s.status = 'expired'
         murmur.delete_server(s.mumble_host, s.mumble_instance)
         db.session.commit()
-        print "Deleting server instance: %s" % id
+        print("Deleting server instance: %s" % id)
 
     else:
-        print "Server instance %s already expired." % id
+        print("Server instance %s already expired." % id)
 
     return
 
