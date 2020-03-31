@@ -6,6 +6,7 @@ services:
     links:
       - redis
       - murmur-rest
+      - db
     environment:
       - FLASK_ENV=development
       - FLASK_RUN_HOST=0.0.0.0
@@ -38,6 +39,7 @@ services:
       - "5432"
     environment:
       POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'guildbit'
     volumes:
       - /var/lib/postgresql/data
 
