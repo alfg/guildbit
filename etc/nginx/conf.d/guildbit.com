@@ -3,8 +3,8 @@ server {
 
     server_name guildbit.com www.guildbit.com *.guildbit.com;
 
-    access_log /var/log/nginx/guildbit.access.log;
-    error_log /var/log/nginx/guildbit.error.log;
+    access_log /dev/stdout;
+    error_log /dev/stdout info;
     
     client_max_body_size 5M;
 
@@ -38,8 +38,8 @@ server {
 
     server_name flower.guildbit.com;
 
-    access_log /var/log/nginx/flower.guildbit.access.log;
-    error_log /var/log/nginx/flower.guildbit.error.log;
+    access_log /dev/stdout;
+    error_log /dev/stdout info;
     
     client_max_body_size 5M;
 

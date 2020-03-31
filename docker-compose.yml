@@ -34,8 +34,8 @@ services:
 
   db:
     image: postgres
-    # ports:
-    #   - priv.net.ip.addr:5432:5432
+    ports:
+      - "5432"
     environment:
       POSTGRES_PASSWORD: 'postgres'
     volumes:
