@@ -164,7 +164,7 @@
 
     <script type="text/javascript">
         // Format expiration date into human friendly
-        var base_url = '{{ request.base_url }}';
+        var base_url = '/server/{{ server.uuid }}';
         var expire_date = '{{ server.expiration }}';
         var duration = {{ server.duration }};
 
