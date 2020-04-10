@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-11-07 16:50-0800\n"
-"PO-Revision-Date: 2014-04-23 21:45-0800\n"
-"Last-Translator: Alfred Gutierrez <alf.g.jr@gmail.com>\n"
+"PO-Revision-Date: 2020-04-10 21:45-0800\n"
+"Last-Translator: Benson Muite <benson_muite@emailplus.org>\n"
 "Language-Team: de <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
@@ -19,11 +19,11 @@ msgstr ""
 
 #: app/templates/contact.html:3 app/templates/contact_thankyou.html:3
 msgid "Contact or Report an Issue"
-msgstr ""
+msgstr "Arifu Toleo"
 
 #: app/templates/contact.html:25
 msgid "Contact"
-msgstr ""
+msgstr "Mwasiliani"
 
 #: app/templates/contact.html:26
 msgid ""
@@ -34,7 +34,7 @@ msgstr ""
 
 #: app/templates/contact.html:31 app/templates/contact.html:32
 msgid "Your Email"
-msgstr ""
+msgstr "Barua pepe yako"
 
 #: app/templates/contact.html:35 app/templates/contact.html:36
 msgid "Subject"
@@ -46,12 +46,12 @@ msgstr ""
 
 #: app/templates/contact.html:43
 msgid "Send"
-msgstr ""
+msgstr "Tuma"
 
 #: app/templates/contact_thankyou.html:16 app/templates/server.html:150
 #: app/templates/server_expired.html:39 app/templates/payment/success.html:7
 msgid "Thank you!"
-msgstr ""
+msgstr "Asante"
 
 #: app/templates/contact_thankyou.html:17
 msgid ""
@@ -102,7 +102,7 @@ msgstr ""
 
 #: app/templates/how_it_works.html:27
 msgid "Set a password"
-msgstr ""
+msgstr "Ingiza nywila"
 
 #: app/templates/how_it_works.html:28
 msgid ""
@@ -125,7 +125,7 @@ msgstr ""
 
 #: app/templates/how_it_works.html:73
 msgid "How is it free?"
-msgstr ""
+msgstr "Ni huru aje?"
 
 #: app/templates/how_it_works.html:74
 msgid ""
@@ -136,7 +136,7 @@ msgstr ""
 
 #: app/templates/how_it_works.html:77
 msgid "Why temporary servers?"
-msgstr ""
+msgstr "Kwa nini seva ni za muda mfupi"
 
 #: app/templates/how_it_works.html:78
 msgid ""
@@ -149,7 +149,7 @@ msgstr ""
 
 #: app/templates/how_it_works.html:82
 msgid "Why only 15 slots?"
-msgstr ""
+msgstr "Kwa nini nafasi 15 tu?"
 
 #: app/templates/how_it_works.html:83
 msgid ""
@@ -167,7 +167,7 @@ msgstr ""
 
 #: app/templates/how_it_works.html:88
 msgid "Why only offer Mumble and not Ventrilo or TeamSpeak?"
-msgstr ""
+msgstr "Kwa nini ni Mumble tu, na hakuna Ventrilo au TeamSpeak?"
 
 #: app/templates/how_it_works.html:89
 msgid ""
@@ -193,7 +193,7 @@ msgstr ""
 
 #: app/templates/how_it_works.html:97
 msgid "What is a SuperUser?"
-msgstr ""
+msgstr "Mtumiaji maalum ni nani?"
 
 #: app/templates/how_it_works.html:98
 msgid ""
@@ -204,15 +204,15 @@ msgstr ""
 
 #: app/templates/how_it_works.html:101
 msgid "Do you plan on offering other methods of payment?"
-msgstr ""
+msgstr "Utawezesha aina nyingine ya kulipa?"
 
 #: app/templates/how_it_works.html:102
 msgid "We&apos;re looking into Stripe or Balanced Payments integration. :)"
-msgstr ""
+msgstr "Tunaangalia kulipa na Stripe au Balanced Payments"
 
 #: app/templates/how_it_works.html:104
 msgid "How can I contribute?"
-msgstr ""
+msgstr "Ninaweza kusaidia aje?"
 
 #: app/templates/how_it_works.html:107
 msgid "Purchase upgrades! <a href=\"/upgrade\">Click here</a> to get started."
@@ -240,7 +240,7 @@ msgstr ""
 
 #: app/templates/how_it_works.html:122
 msgid "How can I contact you?"
-msgstr ""
+msgstr "Ninaweza kupata maelezo ya kuwasiliana?"
 
 #: app/templates/index.html:3
 msgid "Free Mumble Server Hosting"
@@ -252,7 +252,7 @@ msgstr ""
 
 #: app/templates/index.html:13
 msgid "Set a Password"
-msgstr ""
+msgstr "Tega nywila"
 
 #: app/templates/index.html:16 app/templates/payment/create.html:49
 msgid "Deploy Server"
@@ -276,11 +276,11 @@ msgstr ""
 
 #: app/templates/server.html:3
 msgid "Your Server is Ready!"
-msgstr ""
+msgstr "Seva Yako iko Tayari!"
 
 #: app/templates/server.html:17
 msgid "Your server is ready!"
-msgstr ""
+msgstr "Seva yako iko tayari!"
 
 #: app/templates/server.html:18
 msgid "Use the details below to connect"
@@ -296,7 +296,7 @@ msgstr ""
 
 #: app/templates/server.html:33
 msgid "Server"
-msgstr ""
+msgstr "Seva"
 
 #: app/templates/server.html:37
 msgid "Port"
@@ -304,7 +304,7 @@ msgstr ""
 
 #: app/templates/server.html:41
 msgid "Password"
-msgstr ""
+msgstr "Nywila"
 
 #: app/templates/server.html:45
 msgid "Direct Link"
@@ -332,7 +332,7 @@ msgstr ""
 
 #: app/templates/server.html:104
 msgid "Duration"
-msgstr ""
+msgstr "Muda"
 
 #: app/templates/server.html:131
 msgid "No users are online"
@@ -396,7 +396,7 @@ msgstr ""
 
 #: app/templates/payment/create.html:3
 msgid "Create Your Server"
-msgstr ""
+msgstr "Tengeneza Seva"
 
 #: app/templates/payment/create.html:9
 msgid "Create Your Upgraded Server"
@@ -422,10 +422,10 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Email"
-#~ msgstr ""
+#~ msgstr "Barua Pepe"
 
 #~ msgid "Hours"
-#~ msgstr ""
+#~ msgstr "Masaa"
 
 #~ msgid ""
 #~ "GuildBit completely operates on donations. "
@@ -475,7 +475,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Share"
-#~ msgstr ""
+#~ msgstr "Gawana"
 
 #~ msgid ""
 #~ "Share the connection details, or use "
@@ -539,20 +539,20 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Logout"
-#~ msgstr ""
+#~ msgstr "Toka"
 
 #~ msgid "Share Us!"
 #~ msgstr ""
 
 #~ msgid "Linux Download"
-#~ msgstr ""
+#~ msgstr "Pakua ya Linux"
 
 #~ msgid "OSX Download"
-#~ msgstr ""
+#~ msgstr "Pakua ya OSX"
 
 #~ msgid "Android Download"
-#~ msgstr ""
+#~ msgstr "Pakua ya Android"
 
 #~ msgid "iOS Download"
-#~ msgstr ""
+#~ msgstr "Pakua ya iOS"
 
