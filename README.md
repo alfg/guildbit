@@ -69,6 +69,10 @@ When deploying a server, you'll see the Direct Link as `mumble://murmur-rest:500
 
 *Please note the `docker-compose.yml` file opens ports 50001-50050 for testing. Update as needed.*
 
+## Translations
+
+Translations are welcome. To add or update a translation, please add a file or update a file in [https://github.com/alfg/guildbit/tree/master/app/translations](https://github.com/alfg/guildbit/tree/master/app/translations). For more information, please read the [wiki](https://github.com/alfg/guildbit/wiki/Commands-and-Fixes#updating-translations).
+
 ## Admin
 See: [Activating Admin](https://github.com/alfg/guildbit/wiki/Commands-and-Fixes#activating-admin)
 

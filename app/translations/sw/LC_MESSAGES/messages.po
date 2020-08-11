@@ -1,0 +1,613 @@
+# Kiswahili translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-11-07 16:50-0800\n"
+"PO-Revision-Date: 2020-08-09 21:45-0800\n"
+"Last-Translator: Benson Muite <benson_muite@emailplus.org>\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: app/templates/contact.html:3 app/templates/contact_thankyou.html:3
+msgid "Contact or Report an Issue"
+msgstr "Arifu Toleo"
+
+#: app/templates/contact.html:25
+msgid "Contact"
+msgstr "Mwasiliani"
+
+#: app/templates/contact.html:26
+msgid ""
+"Found a bug? Please report the issue by submitting the form below. You "
+"can also use this form\n"
+"        if you have any general inquires or translation corrections."
+msgstr ""
+"Umeona kosa? Tafadhali tuambie, tuma foum iko chini. Pia, "
+"unaweza kutumia fomu hii\n "
+"        kama una swali ingine au rekebisho ya tafsiri. " 
+
+#: app/templates/contact.html:31 app/templates/contact.html:32
+msgid "Your Email"
+msgstr "Barua pepe yako"
+
+#: app/templates/contact.html:35 app/templates/contact.html:36
+msgid "Subject"
+msgstr "Kichwa cha Ujumbe"
+
+#: app/templates/contact.html:39 app/templates/contact.html:40
+msgid "Message"
+msgstr "Ujumbe"
+
+#: app/templates/contact.html:43
+msgid "Send"
+msgstr "Tuma"
+
+#: app/templates/contact_thankyou.html:16 app/templates/server.html:150
+#: app/templates/server_expired.html:39 app/templates/payment/success.html:7
+msgid "Thank you!"
+msgstr "Asante"
+
+#: app/templates/contact_thankyou.html:17
+msgid ""
+"Thanks for submitting your question, comment or bug report! Your feedback"
+" is appreciated!"
+msgstr ""
+"Asante kw kutuma swali, maoni au ripoti ya kosa! Tumeshukuru jibu lako!"
+""
+
+#: app/templates/donate.html:3 app/templates/donate.html:7
+msgid "Donate"
+msgstr "Tuma sadaka"
+
+#: app/templates/donate.html:8
+msgid ""
+"GuildBit completely operates on donations and upgrades to keep a free "
+"tier of servers available to our\n"
+"        users. Please consider donating to help with server hosting and "
+"bandwidth costs with any of the services below."
+msgstr ""
+"Guildbit inatumia sadaka na kodi kupatia watumiaji seva huru "
+" \n"
+"       Tafadhali tusaidie na sadaka ya kulipa bei za seva na utumiaji wa "
+" mtandao."
+
+#: app/templates/how_it_works.html:3 app/templates/how_it_works.html:7
+msgid "How It Works"
+msgstr "Elezo ya kufanya kazi"
+
+#: app/templates/how_it_works.html:9
+msgid ""
+"Traditional VOIP hosts offer subscription-based and persistent servers, "
+"so generally a premium\n"
+"        is charged. <strong>GuildBit</strong> works on the idea of "
+"temporary servers to preserve system\n"
+"        resources, opening up more server slots which aren&apos;t being "
+"occupied. This helps lower hosting,\n"
+"        resources and bandwidth costs. Also, VPS hosting nowadays are "
+"much cheaper than they used to be. The\n"
+"        rest is supported by donations and upgrades."
+msgstr ""
+" Huduma ya kupiga simu kwa mtandao, kwa kawaida zinatumia seva zinakodishwa, "
+" kwa hivyo watu wanalipa zaidi\n"
+"         <strong>GuildBit</strong> inatumia seva kwa muda mfupi, "
+" watu wengi wanaweza kugawana seva.\n"
+"         Kwa hivyo, tunaweza kupunguza gharama ya seva na kuenda kwa mtandao. Pia, "
+" leo, bei ya seva ni ndogo kuliko \n"
+"          zamani. Sadaka na malipo zinatumikana kulipa gharama zingine. "
+
+#: app/templates/how_it_works.html:18
+msgid "Set a location"
+msgstr "Tega pahalii ya seva"
+
+#: app/templates/how_it_works.html:19
+msgid "Choose a server location closest to your group to minimize latency."
+msgstr "Chagua pahali ya seva iko karibu kundi yako kupunguza ukawivu"
+
+#: app/templates/how_it_works.html:22
+msgid "Set a duration"
+msgstr "Tega muda wa mkutano"
+
+#: app/templates/how_it_works.html:27
+msgid "Set a password"
+msgstr "Ingiza nywila"
+#: app/templates/how_it_works.html:28
+msgid ""
+"Password protected servers are required, due to the fact the server may "
+"be\n"
+"              reused in the future."
+msgstr ""
+"Tunahitaji seva zimehifadhi na neno la siri, kwa sababu watu wengine "
+"wanaweza\n"
+"              kuzitumia baadaye." 
+
+#: app/templates/how_it_works.html:38 app/templates/how_it_works.html:41
+msgid ""
+"Share the connection details, or use the copy feature to copy/paste the "
+"credentials\n"
+"            directly. The server page also monitors users in room "
+"(including subchannels) and displays the expiration countdown."
+msgstr ""
+"Patia taarifa ya muunganisho, au tumia kitufe ya kunakala, kupata "
+" taarifa\n"
+"            moja kwa moja.  Ukurasa wa seva inaoneyesha watu wako ndani "
+"(pia kwa chumba ndogo) na inayonesha saa imebaki."
+
+#: app/templates/how_it_works.html:71
+msgid "FAQs"
+msgstr "Swali zinaulizwa mara mingi"
+
+#: app/templates/how_it_works.html:73
+msgid "How is it free?"
+msgstr "Ni huru aje?"
+
+#: app/templates/how_it_works.html:74
+msgid ""
+"Donations, paid upgrades and low server/bandwidth costs. This is still in"
+" an experimental phase. Remainders\n"
+"                are paid of out pocket. :)"
+msgstr ""
+"Sadaka, zimenunua na gharama ndogo za seva na kuenda mtandaoni. Huduma hii ni "
+" jaribio. Tumelipa gharama \n"
+"                zimebaki. "
+
+#: app/templates/how_it_works.html:77
+msgid "Why temporary servers?"
+msgstr "Kwa nini seva ni za muda mfupi"
+
+#: app/templates/how_it_works.html:78
+msgid ""
+"The idea is targeted towards gamers who need a quick Mumble server for "
+"their group or raid\n"
+"            without the hassle of setting up their own, or subscribing to"
+" a service. The server expires to not\n"
+"            only save on resources, but to free up the slot for others."
+msgstr ""
+"Tunataka kusaidia watu wachezaji wa michezo ya mtando wantaka kutumia seva"
+"ya Mumble kwa kundi yao\n"
+"                  bila kazi ya kutengeneza seva, au kujiunga "
+" huduma. Seva inasimamishwa baada ya \n"
+"                   muda, kuhuria seva na kuruhusu wengine waitumie." 
+
+#: app/templates/how_it_works.html:82
+msgid "Why only 15 slots?"
+msgstr "Kwa nini nafasi 15 tu?"
+
+#: app/templates/how_it_works.html:83
+msgid ""
+"Check out the <a href=\"/upgrade\">upgrades</a> page if you&apos;re "
+"looking for more than 15 slots."
+msgstr ""
+"Angalia ukurasa <a href=\"/upgrade\">nunua seva</a> kama unataka "
+"watu zaidi 15 kutumia seva."
+
+#: app/templates/how_it_works.html:85
+msgid "Why can&apos;t I use the same port when creating a server?"
+msgstr "Kwa nini siwezi kutumia kituo tarishi nilitumia nikiunda seva?"
+
+#: app/templates/how_it_works.html:86
+msgid "Servers are created according to the next port available. "
+msgstr "Seva inatumia kituo tarishi inapatikana"
+
+#: app/templates/how_it_works.html:88
+msgid "Why only offer Mumble and not Ventrilo or TeamSpeak?"
+msgstr "Kwa nini ni Mumble tu, na hakuna Ventrilo au TeamSpeak?"
+
+#: app/templates/how_it_works.html:89
+msgid ""
+"Mumble is <a href=\"https://github.com/mumble-"
+"voip/mumble/blob/master/LICENSE\">free</a> and\n"
+"            <a href=\"http://en.wikipedia.org/wiki/Open-source_software"
+"\">open-source software</a>. So it doesn&apos;t\n"
+"            cost me any licensing fees to host Mumble servers or offer it"
+" as a service."
+msgstr ""
+"Mumble ni <a href=\"https://github.com/mumble-"
+"voip/mumble/blob/master/LICENSE\">huru</a> na\n"
+"            <a href=\"http://en.wikipedia.org/wiki/Open-source_software"
+"\">programmu wazi</a>. Kwa hivyo,\n"
+"            haina ada ya lisensi kutumia Mumble kwa seva, au kuitumia"
+" kupatia huduma." 
+
+#: app/templates/how_it_works.html:93
+msgid "Do you offer premium upgrades?"
+msgstr "Ninaweza kupata "
+
+#: app/templates/how_it_works.html:94
+msgid ""
+"Yes! We now offer server upgrades via Bitcoin and Paypal to increase slot"
+" count, duration, subchannels\n"
+"            and a SuperUser admin capabilities. <a "
+"href=\"/upgrade\">Click here</a> to get started."
+msgstr ""
+"Ndio! Sasa unaweza kulipa na Bitcoin au Paypal kupata seva ziko na zaidi"
+" ya watu 15, muda mrefu, chumba ndogo\n"
+"            na mtumiaji maaluum. <a "
+"href=\"/upgrade\">Finya hapa</a> kuanza."
+
+#: app/templates/how_it_works.html:97
+msgid "What is a SuperUser?"
+msgstr "Mtumiaji maalum ni nani?"
+
+#: app/templates/how_it_works.html:98
+msgid ""
+"A SuperUser is an admin account on your Mumble server to grant "
+"permissions and roles to users and\n"
+"            groups as well as setting up channels."
+msgstr ""
+"Mtumiaji maaluum kwa seva ya Mumble yako anaweza "
+"kukiri vibali na dhima kwa watumiaji na\n"
+"             kundi na kutengeneza chumba."
+
+#: app/templates/how_it_works.html:101
+msgid "Do you plan on offering other methods of payment?"
+msgstr "Utawezesha aina nyingine ya kulipa?"
+
+#: app/templates/how_it_works.html:102
+msgid "We&apos;re looking into Stripe or Balanced Payments integration. :)"
+msgstr "Tunaangalia kulipa na Stripe au Balanced Payments"
+
+#: app/templates/how_it_works.html:104
+msgid "How can I contribute?"
+msgstr "Ninaweza kusaidia aje?"
+
+#: app/templates/how_it_works.html:107
+msgid "Purchase upgrades! <a href=\"/upgrade\">Click here</a> to get started."
+msgstr "Nunua seva maaluum! <a href=\"/upgrade\">Finya hapa</a> kuanza."
+
+#: app/templates/how_it_works.html:110
+msgid ""
+"We accept <a href=\"/donate\">donations</a>, including Bitcoin and "
+"Dogecoin! :) This keeps us\n"
+"                    going."
+msgstr ""
+"Tunapenda <a href=\"/donate\">sadaka</a>, unatumia Bitcoin na "
+"Dogecoin! :) Tunazitumia \n"
+"                    kuendelea."
+
+#: app/templates/how_it_works.html:114
+msgid ""
+"Are you a developer? Check out the\n"
+"                   <a href=\"https://github.com/alfg/murmur-rest"
+"\">Murmur-REST</a> project on Github and contribute!"
+msgstr ""
+"Je, unaweza kutengeneza programmu? Angalia\n"
+"                    <a href=\https://github.com/alfg/murmur-rest"
+"\">Murmur-REST</a> kwa GitHub na tusaidie!"
+
+#: app/templates/how_it_works.html:118
+msgid ""
+"Help us improve or add translations. <a href=\"/contact/\">Contact us</a>"
+" for more details!"
+msgstr ""
+"Tusaidia, boresha programmu au ongeza tafsiri. <a href=\"/contact/\">Ongea nasi</a>"
+" tafadhali!"
+
+#: app/templates/how_it_works.html:122
+msgid "How can I contact you?"
+msgstr "Ninaweza kupata maelezo ya kuwasiliana?"
+
+#: app/templates/index.html:3
+msgid "Free Mumble Server Hosting"
+msgstr "Seva ya Mumble huru"
+
+#: app/templates/index.html:7
+msgid "Deploy a Mumble server for your group. It&apos;s free!"
+msgstr "Tumia seva ya Mumble huru kwa kundi lako. Ni huru!"
+
+#: app/templates/index.html:13
+msgid "Set a Password"
+msgstr "Tega nywila"
+
+#: app/templates/index.html:16 app/templates/payment/create.html:49
+msgid "Deploy Server"
+msgstr "Tengeneza Seva"
+
+#: app/templates/index.html:31
+msgid ""
+"GuildBit is a free service to deploy temporary Mumble servers for your "
+"group. The service is completely\n"
+"            funded by donations and upgrades. <a href=\"/how-it-"
+"works\">Learn how it works &raquo;</a>"
+msgstr ""
+"GuildBit ni huduma huru inakusaidia kutumia seva ya Mumble kwa kundi "
+"lako kwa muda mfupi. Huduma ni huru kabisa,\n"
+"               tunatumia sadaka pesa kutoka seva maaluum. <a href=\"/how-it-"
+"works\">Soma vile inafanya kazi</a>"
+
+#: app/templates/index.html:33
+msgid "*Free servers are currently limited to 15 slots"
+msgstr "*Watu 15 wanaweza kutumia seva huru"
+
+#: app/templates/index.html:46 app/templates/payment/create.html:80
+msgid "Deploying..."
+msgstr "Seva inatengenezwa..."
+
+#: app/templates/server.html:3
+msgid "Your Server is Ready!"
+msgstr "Seva Yako iko Tayari!"
+
+#: app/templates/server.html:17
+msgid "Your server is ready!"
+msgstr "Seva yako iko tayari!"
+
+#: app/templates/server.html:18
+msgid "Use the details below to connect"
+msgstr "Tumia taarifa hizi kuunganisha"
+
+#: app/templates/server.html:24
+msgid "Mumble Connection Details"
+msgstr "Taariga ya kuunganisha Mumble"
+
+#: app/templates/server.html:26
+msgid "Upgraded Server"
+msgstr "Seva nafuu"
+
+#: app/templates/server.html:33
+msgid "Server"
+msgstr "Seva"
+
+#: app/templates/server.html:37
+msgid "Port"
+msgstr "Kituo tarishi"
+
+#: app/templates/server.html:41
+msgid "Password"
+msgstr "Nywila"
+
+#: app/templates/server.html:45
+msgid "Direct Link"
+msgstr "Kiungo nyoovu"
+
+#: app/templates/server.html:51
+msgid "Copy Text"
+msgstr "Nakili Mwandiko"
+
+#: app/templates/server.html:59 app/templates/server.html:87
+msgid "Copy"
+msgstr "Nakala"
+
+#: app/templates/server.html:66
+msgid "Expires"
+msgstr "Masaa bila kuisha"
+
+#: app/templates/server.html:71
+msgid "Slots"
+msgstr "Nafasi"
+
+#: app/templates/server.html:103
+msgid "Users Online"
+msgstr "Watumiaji Wako Mtandao"
+
+#: app/templates/server.html:104
+msgid "Duration"
+msgstr "Muda"
+
+#: app/templates/server.html:131
+msgid "No users are online"
+msgstr "Hakuna watumiaji hapa"
+
+#: app/templates/server.html:137 app/templates/server_expired.html:26
+msgid "How was the quality of your Mumble session?"
+msgstr "Mkutano kwa Mumble ilikuwa nzuri?"
+
+#: app/templates/server.html:146 app/templates/server_expired.html:35
+msgid "How can we improve GuildBit?"
+msgstr "Tunaweza kufanya nini kuboresha GuildBit?"
+
+#: app/templates/server.html:147 app/templates/server_expired.html:36
+msgid "Submit"
+msgstr "Tuma"
+
+#: app/templates/server.html:151 app/templates/server_expired.html:40
+msgid "Your feedback is appreciated for the quality of GuildBit.com!"
+msgstr "Tumeshukuru majibu yako ya kuboresha GuildBit.com!"
+
+#: app/templates/server_expired.html:3
+msgid "Your Server Has Expired!"
+msgstr "Masaa Ya Seva Yako Imeisha!"
+
+#: app/templates/server_expired.html:8
+msgid "Your server has expired!"
+msgstr "Masaa ya seva yako imeisha!"
+
+#: app/templates/server_expired.html:9
+msgid "Return to the <a href=\"/\">homepage</a> to deploy another server."
+msgstr "Rudi <a href=\"/\">nyumbani</a> kuanzisha seva ingine."
+
+#: app/templates/server_expired.html:14
+msgid "Details"
+msgstr "Taarifa"
+
+#: app/templates/server_expired.html:19
+msgid "Expired"
+msgstr "Imeisha"
+
+#: app/templates/upgrade.html:3 app/templates/upgrade.html:7
+msgid "Upgrades"
+msgstr "Seva bora"
+
+#: app/templates/partials/_admin_controls.html:4
+msgid "Admin Controls"
+msgstr "Madhibiti ya Mtumiaji Mkuu"
+
+#: app/templates/partials/_dont_have_mumble.html:2
+msgid "Don&apos;t have Mumble?"
+msgstr "Hauna Mumble?"
+
+#: app/templates/partials/_dont_have_mumble.html:5
+msgid "Windows Download"
+msgstr "Pakua ya Windows"
+
+#: app/templates/partials/_dont_have_mumble.html:6
+msgid "Mumble Homepage"
+msgstr "Ukurasa wa Mtandao wa Mumble"
+
+#: app/templates/payment/create.html:3
+msgid "Create Your Server"
+msgstr "Tengeneza Seva"
+
+#: app/templates/payment/create.html:9
+msgid "Create Your Upgraded Server"
+msgstr "Tengeneza Seva"
+
+#: app/templates/payment/create.html:33
+msgid "Channel Name"
+msgstr "Jina la Chumba"
+
+#: app/templates/payment/create.html:37
+msgid "Set a Server Password"
+msgstr "Tengeneza Nywila ya Seva"
+
+#: app/templates/payment/create.html:42
+msgid "Set a SuperUser Password"
+msgstr "Tengenza Nywila ya Mtumiaji Mkuu"
+
+#: app/templates/payment/success.html:3
+msgid "Upgrade"
+msgstr "Boresha seva"
+#~ msgid ""
+#~ msgstr ""
+
+#~ msgid "Email"
+#~ msgstr "Barua Pepe"
+
+#~ msgid "Hours"
+#~ msgstr "Masaa"
+
+#~ msgid ""
+#~ "GuildBit completely operates on donations. "
+#~ "Please consider donating with any of "
+#~ "the services below."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Traditional VOIP hosts offer subscription-"
+#~ "based and persistent servers, so "
+#~ "generally a premium\n"
+#~ "        is charged. <strong>GuildBit</strong> "
+#~ "works on the idea of temporary "
+#~ "servers to preserve system\n"
+#~ "        resources, opening up more "
+#~ "server slots which aren&apos;t being "
+#~ "occupied. This helps lower hosting,\n"
+#~ "        resources and bandwidth costs. "
+#~ "Also, VPS hosting nowadays are much "
+#~ "cheaper than they used to be. The"
+#~ "\n"
+#~ "        rest is supported by donations."
+#~ msgstr ""
+
+#~ msgid "The Process"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Password protected servers are required, "
+#~ "due to the fact the server may "
+#~ "be\n"
+#~ "            reused in the future."
+#~ msgstr ""
+
+#~ msgid "Deploy"
+#~ msgstr ""
+
+#~ msgid "The server generally takes a few seconds to spin up."
+#~ msgstr ""
+
+#~ msgid "Connect"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "That&apos;s all. The following page will"
+#~ " give you the connection details."
+#~ msgstr ""
+
+#~ msgid "Share"
+#~ msgstr "Gawana"
+
+#~ msgid ""
+#~ "Share the connection details, or use "
+#~ "the copy feature to copy/paste the "
+#~ "credentials\n"
+#~ "            directly. The server page "
+#~ "also monitors users in room and "
+#~ "displays the expiration countdown."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Donations and low server/bandwidth costs. "
+#~ "This is still in an experimental "
+#~ "phase. Remainders\n"
+#~ "                are paid of out pocket. :)"
+#~ msgstr ""
+
+#~ msgid "Why only 10 slots?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For now we&apos;re limiting servers to"
+#~ " 10 slots as the service is new"
+#~ " and experimental."
+#~ msgstr ""
+
+#~ msgid "Do you plan on offering premium upgrades?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Possibly in the future. It won&apos;t"
+#~ " take away from the idea of "
+#~ "free temporary servers, though."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "GuildBit is a free service to "
+#~ "deploy temporary Mumble servers for your"
+#~ " group. The service is completely\n"
+#~ "                funded by donations. <a "
+#~ "href=\"/how-it-works\">Learn how it "
+#~ "works &raquo;</a>"
+#~ msgstr ""
+
+#~ msgid "*Servers are currently limited to 10 slots"
+#~ msgstr ""
+
+#~ msgid "GuildBit - Free Mumble Server Hosting"
+#~ msgstr ""
+
+#~ msgid "Home"
+#~ msgstr ""
+
+#~ msgid "Found a bug?"
+#~ msgstr ""
+
+#~ msgid "Updates"
+#~ msgstr ""
+
+#~ msgid "Logged in as "
+#~ msgstr ""
+
+#~ msgid "Logout"
+#~ msgstr "Toka"
+
+#~ msgid "Share Us!"
+#~ msgstr ""
+
+#~ msgid "Linux Download"
+#~ msgstr "Pakua ya Linux"
+
+#~ msgid "OSX Download"
+#~ msgstr "Pakua ya OSX"
+
+#~ msgid "Android Download"
+#~ msgstr "Pakua ya Android"
+
+#~ msgid "iOS Download"
+#~ msgstr "Pakua ya iOS"meet.jit.si
