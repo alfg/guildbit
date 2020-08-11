@@ -29,6 +29,9 @@ ADD ./etc/supervisord.conf /etc/supervisor/supervisord.conf
 # Add app.
 ADD . /opt/guildbit
 
+# Compile translation files from PO to MO.
+RUN venv/bin/pybabel compile -f -d app/translations
+
 EXPOSE 8081
 
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]

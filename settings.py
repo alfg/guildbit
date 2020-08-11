@@ -38,7 +38,8 @@ STEAM_API_KEY = 'XXXXXX'
 
 LANGUAGES = {
     'en': 'English',
-    'es': 'Español'
+    'fr': 'français',
+    'sw': 'Kiswahili'
 }
 
 MURMUR_HOSTS = [
