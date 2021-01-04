@@ -9,9 +9,9 @@ http://guildbit.com
 
 ## Screenshots
 
-![Guildbit.com Home](/screenshots/01_screenshot_home.png)
-![Guildbit.com Server](/screenshots/02_screenshot_server.png)
-![Guildbit.com Admin](/screenshots/03_screenshot_admin.png)
+![Guildbit.com Home](screenshots/01_screenshot_home.png)
+![Guildbit.com Server](screenshots/02_screenshot_server.png)
+![Guildbit.com Admin](screenshots/03_screenshot_admin.png)
 
 ## Technology Stack
 * [Flask](http://flask.pocoo.org/) - Python Framework
