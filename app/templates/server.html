@@ -160,7 +160,6 @@
 {% block scripts %}
     <script src="/static/js/libs/knockout-3.0.0.js"></script>
     <script src="/static/js/libs/moment.min.js"></script>
-    <script src="/static/js/libs/ZeroClipboard.min.js"></script>
 
     <script type="text/javascript">
         // Format expiration date into human friendly
@@ -170,31 +169,28 @@
 
         $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
 
-        //ZeroClipboard for copying mumble server credentials easily
         $(document).ready(function() {
-            var client = new ZeroClipboard( document.getElementById("copy-button"), {
-              moviePath: "/static/js/libs/ZeroClipboard.swf"
+            $('#copy-button').on('click', function() {
+                $('#copy-text').select();
+                document.execCommand('copy');
+
+                var btn = $(this);
+                btn.text("Copied!");
+                setTimeout(function() {
+                    btn.text("Copy");
+                }, 3000);
             });
-            var clientCvp = new ZeroClipboard( document.getElementById("copy-button-cvp"), {
-              moviePath: "/static/js/libs/ZeroClipboard.swf"
-            });
-            client.on("load", function(client) {
-                client.on("complete", function(client, args) {
-                    $(this).text("Copied!");
-                    var label =  $(this).attr("data-event-label");
-                    ga('send', 'event', 'link', 'click', label);
-                });
-                client.on('dataRequested', function (client, args) {
-                    client.setText($('#copy-text').val());
-                });
-            });
-            clientCvp.on("load", function(client) {
-              client.on("complete", function(client, args) {
-                $(this).text("Copied!");
-              });
-              client.on('dataRequested', function (client, args) {
-                client.setText($('#copy-text-cvp').val());
-              });
+
+            $('#copy-button-cvp').on('click', function() {
+                $('#copy-text-cvp').select();
+                document.execCommand('copy');
+
+                var btn = $(this);
+                btn.text("Copied!");
+                setTimeout(function() {
+                    btn.text("Copy");
+                }, 3000);
+
             });
 
             // Tooltips

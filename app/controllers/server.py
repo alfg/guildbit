@@ -16,7 +16,9 @@ class ServerView(FlaskView):
         return redirect(url_for('home'))
 
     def get(self, id):
-        ip = request.remote_addr
+        x_forwarded_for = request.headers.getlist('X-Forwarded-For');
+        ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+
         server = Server.query.filter_by(uuid=id).first_or_404()
         rating = Rating.query.filter_by(server_uuid=id, ip=ip).first()
 
@@ -28,7 +30,9 @@ class ServerView(FlaskView):
 
     @route('/<id>/expired')
     def expired(self, id):
-        ip = request.remote_addr
+        x_forwarded_for = request.headers.getlist('X-Forwarded-For');
+        ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+
         server = Server.query.filter_by(uuid=id).first_or_404()
         rating = Rating.query.filter_by(server_uuid=id, ip=ip).first()
         return render_template('server_expired.html', server=server, rating=rating)
@@ -50,7 +54,9 @@ class ServerView(FlaskView):
     @route('/<id>/rating', methods=['POST'])
     @route('/<id>/expired/rating', methods=['POST'])
     def rating(self, id):
-        ip = request.remote_addr
+        x_forwarded_for = request.headers.getlist('X-Forwarded-For');
+        ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+
         stars = request.form['stars']
 
         r = Rating.query.filter_by(server_uuid=id, ip=ip).first()
@@ -79,7 +85,9 @@ class ServerView(FlaskView):
     @route('/<id>/feedback', methods=['POST'])
     @route('/<id>/expired/feedback', methods=['POST'])
     def feedback(self, id):
-        ip = request.remote_addr
+        x_forwarded_for = request.headers.getlist('X-Forwarded-For');
+        ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+
         feedback = request.form['feedback']
 
         if feedback:
@@ -171,7 +179,9 @@ class ServerView(FlaskView):
         @param id:
         @return:
         """
-        ip = request.remote_addr
+        x_forwarded_for = request.headers.getlist('X-Forwarded-For');
+        ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+
         server = Server.query.filter_by(uuid=id, ip=ip).first_or_404()
 
         if server:
@@ -196,7 +206,10 @@ class ServerView(FlaskView):
         """
 
         limit = 1  # Allowed extensions count
-        ip = request.remote_addr
+
+        x_forwarded_for = request.headers.getlist('X-Forwarded-For');
+        ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+
         server = Server.query.filter_by(uuid=id, ip=ip).first_or_404()
 
         if server and server.extensions < limit:

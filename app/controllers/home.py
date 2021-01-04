@@ -28,7 +28,10 @@ class HomeView(FlaskView):
             try:
                 # Generate UUID
                 gen_uuid = str(uuid.uuid4())
-                ip = request.remote_addr
+
+                # Set admin's IP
+                x_forwarded_for = request.headers.getlist('X-Forwarded-For');
+                ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
 
                 # Create POST request to murmur-rest api to create a new server
                 welcome_msg = render_template("mumble/temp_welcome_message.html", gen_uuid=gen_uuid)

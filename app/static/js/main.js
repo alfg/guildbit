@@ -43,13 +43,13 @@ $(document).ready(function() {
     else if (os.indexOf("Win") !== -1) {
         $('#os-download #os-text').text(_WindowsDownload);
         $('#os-download #download-link i').addClass('fa-windows');
-        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.3.0/mumble-1.3.0.msi');
+        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.3.3/mumble-1.3.3.msi');
         }
     else if (os.indexOf("MacOS") !== -1 || os.indexOf("MacIntel") !== -1) {
         $('#os-download #os-text').text(_OSXDownload);
         $('#os-download #download-link i').removeClass('fa-windows');
         $('#os-download #download-link i').addClass('fa-apple');
-        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.3.0/Mumble-1.3.0.dmg');
+        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.3.3/Mumble-1.3.3.dmg');
         }
     else if (ua.indexOf("android") > -1) {
         $('#os-download #os-text').text(_AndroidDownload);
