@@ -64,7 +64,7 @@
                 {% if (server.type == 'temp' or server.type == 'upgrade' or server.type == 'custom') and server.duration != 0 %}
                 <tr>
                     <td>{{ _('Expires') }}</td>
-                    <td><span id="expires-date"></span> (<span id="expires" data-bind="text: remainingTime"></span>) </td>
+                    <td><span id="expires-date"></span> (<span id="expires"></span>) </td>
                 </tr>
                 {% endif %}
                 <tr>
@@ -97,39 +97,15 @@
         {% include 'partials/_admin_controls.html' %}
       {% endif %}
 
-        <table class="rounded centered" data-bind="with: usersOnline">
+        <table class="rounded centered">
             <thead>
                 <tr>
-                    <th><i class="fa fa-users"></i> {{ _('Users Online') }} (<span data-bind="text: count"></span>) &mdash; Lobby</th>
+                    <th><i class="fa fa-users"></i> {{ _('Users Online') }} (<span id="users-online"></span>) &mdash; Lobby</th>
                     <th class="text-right"><i class="fa fa-clock-o"></i> {{ _('Duration') }}</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- ko foreach: users -->
-                <tr>
-                    <td><i class="fa fa-user"></i> <span data-bind="text: name"></span></td>
-                    <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
-                </tr>
-                <!-- /ko -->
-
-                <!-- ko foreach: sub_channels -->
-                <!-- ko if: users.length > 0 -->
-                <tr class="subchannels">
-                  <td colspan="2"><i class="fa fa-comments"></i> <span data-bind="text: 'Channel &mdash; ' + c.name"></span></td>
-                </tr>
-                <!-- /ko -->
-
-                <!-- ko foreach: users -->
-                <tr>
-                  <td><i class="fa fa-user"></i> <span data-bind="text: name"></span></td>
-                  <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
-                </tr>
-                <!-- /ko -->
-                <!-- /ko -->
-
-                <!-- ko if: count == 0 -->
-                <tr><td class="text-center" colspan="2">{{ _('No users are online') }}</td></tr>
-                <!-- /ko -->
+            <tbody id="users">
+                <tr><td>Loading...</td></tr>
             </tbody>
         </table>
 
@@ -158,7 +134,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="/static/js/libs/knockout-3.0.0.js"></script>
     <script src="/static/js/libs/moment.min.js"></script>
 
     <script type="text/javascript">
@@ -200,7 +175,7 @@
               html: true,
               container: '.cvp-popover',
               content: 'Copy and paste this script to your guild&apos;s website to display a live widget of active users.' +
-                      'You can read more about it <a href="http://mumble-widget.guildbit.com" target="_BLANK">here</a>.'
+                      'You can read more about it <a href="https://mumble-widget.guildbit.com" target="_BLANK">here</a>.'
             });
 
             // Leave feedback ratings
@@ -227,56 +202,119 @@
                         $('#thankyou-message').fadeIn();
                 });
             })
-
-            // Delete server request
-            $("#delete-action").on("click", function() {
-
-            });
         });
 
-        // Knockout Users Model for displaying and updating users online
-        function ServerViewModel() {
-            var self = this;
 
-            self.usersOnline = ko.observable(loadUsers());
-            self.remainingTime = ko.observable(loadExpires());
+        var usersOnlineEl = document.getElementById('users-online');
+        var usersEl = document.getElementById('users');
+        var expiresEl = document.getElementById('expires');
 
+        var usersOnlineText = "{{ _('Users Online') }}";
+        var durationText = "{{ _('Duration') }}";
+        var noUserAreOnlineText = "{{ _('No users are online') }}";
 
-            function loadExpires() {
-                var expires = moment.utc(expire_date).fromNow();
-
-                var unix_now = moment.utc().unix();
-                var unix_expires = moment.utc(expire_date).unix();
-
-                // If expired
-                if (unix_now > unix_expires && duration !== 0) {
-                    window.location = base_url + "/expired";
-{#                    location.reload(false);#}
-                } else {
+        function loadUsers(callback) {
+            $.ajax({
+                url: base_url + "/users/",
+                dataType: "json",
+                success: function(json) {
+                    callback(json.users);
                 }
-                return expires
-            }
-
-            // Load initial users into usersOnline observable, then set an interval
-            function loadUsers() {
-                var users = [];
-                $.ajax({
-                    url: base_url + "/users/",
-                    async: false,
-                    dataType: "json",
-                    success: function (json) {
-                        users = json.users;
-                    }
-                });
-                return users;
-            }
-            setInterval(function() {
-                self.usersOnline(loadUsers());
-                self.remainingTime(loadExpires());
-                ga('send', 'pageview'); // send pageview to GA
-            }, 15000)
-
+            });
         }
-        ko.applyBindings(new ServerViewModel());
+
+        function renderUsers() {
+            loadUsers(function(data) {
+                usersOnlineEl.textContent = data.count;
+                usersEl.innerHTML = "";
+
+                if (data.count === 0) {
+                    var tr = document.createElement('tr');
+                    var td = document.createElement('td');
+                    td.classList.add('text-center');
+                    td.setAttribute('colspan', '2');
+                    td.textContent = "No users are online";
+                    tr.appendChild(td);
+                    usersEl.appendChild(tr);
+                }
+
+                // Users in root.
+                for (var i = 0; i < data.users.length; i++) {
+                    var tr = document.createElement('tr');
+                    var td1 = document.createElement('td');
+                    var td2 = document.createElement('td');
+                    var ii = document.createElement('i');
+                    var span = document.createElement('span');
+                    ii.classList.add('fa');
+                    ii.classList.add('fa-user');
+                    td1.appendChild(ii);
+                    span.textContent = " " + data.users[i].name;
+                    td2.classList.add('text-right');
+                    td2.textContent = moment.duration(data.users[i].onlinesecs, 'seconds').humanize();
+                    td1.appendChild(span);
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    usersEl.appendChild(tr);
+                }
+
+                // Users in sub_channels.
+                for (var i = 0; i < data.sub_channels.length; i++) {
+                    if (data.sub_channels[i].users.length > 0) {
+                        var tr = document.createElement('tr');
+                        var td = document.createElement('td');
+                        var ii = document.createElement('i');
+                        var span = document.createElement('span');
+                        tr.classList.add('subchannels');
+                        td.setAttribute('colspan', '2');
+                        ii.classList.add('fa');
+                        ii.classList.add('fa-comments');
+                        span.innerHTML = " Channel &mdash; " + data.sub_channels[i].c.name;
+                        td.appendChild(ii);
+                        td.appendChild(span);
+                        tr.appendChild(td);
+                        usersEl.appendChild(tr);
+                    }
+
+                    for (var j = 0; j < data.sub_channels[i].users.length; j++) {
+                        var tr = document.createElement('tr');
+                        var td1 = document.createElement('td');
+                        var td2 = document.createElement('td');
+                        var ii = document.createElement('i');
+                        var span = document.createElement('span');
+                        ii.classList.add('fa');
+                        ii.classList.add('fa-user');
+                        td1.appendChild(ii);
+                        span.textContent = " " + data.sub_channels[i].users[j].name;
+                        td2.classList.add('text-right');
+                        td2.textContent = moment.duration(data.sub_channels[i].users[j].onlinesecs, 'seconds').humanize();
+                        td1.appendChild(span);
+                        tr.appendChild(td1);
+                        tr.appendChild(td2);
+                        usersEl.appendChild(tr);
+                    }
+                }
+            });
+        }
+
+        function loadExpires() {
+            var expires = moment.utc(expire_date).fromNow();
+
+            var unix_now = moment.utc().unix();
+            var unix_expires = moment.utc(expire_date).unix();
+
+            // If expired
+            if (unix_now > unix_expires && duration !== 0) {
+                window.location = base_url + "/expired";
+            }
+            expiresEl.textContent = expires;
+        }
+
+        setInterval(function() {
+            renderUsers();
+            loadExpires();
+            ga('send', 'pageview'); // send pageview to GA
+        }, 15000);
+        renderUsers();
+        loadExpires();
     </script>
 {% endblock %}
