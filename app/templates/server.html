@@ -209,8 +209,6 @@
         var usersEl = document.getElementById('users');
         var expiresEl = document.getElementById('expires');
 
-        var usersOnlineText = "{{ _('Users Online') }}";
-        var durationText = "{{ _('Duration') }}";
         var noUserAreOnlineText = "{{ _('No users are online') }}";
 
         function loadUsers(callback) {
@@ -233,7 +231,7 @@
                     var td = document.createElement('td');
                     td.classList.add('text-center');
                     td.setAttribute('colspan', '2');
-                    td.textContent = "No users are online";
+                    td.textContent = noUserAreOnlineText;
                     tr.appendChild(td);
                     usersEl.appendChild(tr);
                 }

@@ -102,7 +102,9 @@
             </tr>
             <tr>
                 <td>Welcome message</td>
-                <td>{{ details.welcometext }}</td>
+                <td>
+                    <textarea cols="80" rows="5" readonly>{{ details.welcometext }}</textarea>
+                </td>
             </tr>
             {% else %}
             <tr>
@@ -112,37 +114,15 @@
         </tbody>
     </table>
     <br />
-    <table class="pure-table pure-table-horizontal pure-table-striped servers-js" data-bind="with: usersOnline">
+    <table class="pure-table pure-table-horizontal pure-table-striped servers-js">
         <thead>
         <tr>
-            <th>Users Online (<span data-bind="text: count"></span>)</th>
+            <th>Users Online (<span id="users-online"></span>)</th>
             <th class="text-right">Duration</th>
         </tr>
         </thead>
-        <tbody>
-        <!-- ko foreach: users -->
-        <tr>
-            <td data-bind="text: name"></td>
-            <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
-        </tr>
-        <!-- /ko -->
-
-        <!-- ko foreach: sub_channels -->
-        <tr style="background: #ddd; font-weight: bold;">
-          <td colspan="2" data-bind="text: c.name + ' (Subchannel)'"></td>
-        </tr>
-
-        <!-- ko foreach: users -->
-        <tr>
-          <td data-bind="text: name"></td>
-          <td id="duration" class="text-right" data-bind="text: moment.duration(onlinesecs, 'seconds').humanize()"></td>
-        </tr>
-        <!-- /ko -->
-        <!-- /ko -->
-
-        <!-- ko if: count == 0 -->
-        <tr><td class="text-center" colspan="2">No users are online</td></tr>
-        <!-- /ko -->
+        <tbody id="users">
+            <tr><td>Loading...</td></tr>
         </tbody>
     </table>
     <br />
@@ -153,20 +133,14 @@
             <th class="text-right">Timestamp</th>
         </tr>
         </thead>
-        <tbody>
-        <!-- ko foreach: serverLogs -->
-        <tr>
-            <td data-bind="text: message"></td>
-            <td id="duration" class="text-right" data-bind="text: moment.unix(timestamp)"></td>
-        </tr>
-        <!-- /ko -->
+        <tbody id="logs">
+            <tr><td>Loading...</td></tr>
         </tbody>
     </table>
 {% endblock %}
 
 {% block scripts %}
     <script src="/static/js/admin.js"></script>
-    <script src="/static/js/libs/knockout-3.0.0.js"></script>
     <script src="/static/js/libs/moment.min.js"></script>
 
     <script type="text/javascript">
@@ -182,48 +156,129 @@
             }
         });
 
-        // Knockout Users Model for displaying and updated users online
-        function UsersViewModel() {
-            var self = this;
+        var logsEl = document.getElementById('logs');
+        var usersOnlineEl = document.getElementById('users-online');
+        var usersEl = document.getElementById('users');
+        var expiresEl = document.getElementById('expires');
 
-            self.usersOnline = ko.observable(loadUsers());
-            self.serverLogs = ko.observable(loadLogs());
-
-            // Load initial users into usersOnline observable, then set an interval
-            function loadUsers() {
-                var users = [];
-                $.ajax({
-                    url: base_url + "/users/",
-                    async: false,
-                    dataType: "json",
-                    success: function (json) {
-                        users = json.users;
-                    }
-                });
-                return users;
-            }
-            setInterval(function() {
-                self.usersOnline(loadUsers());
-            }, 15000)
-
-            // Load initial users into usersOnline observable, then set an interval
-            function loadLogs() {
-                var logs = [];
-                $.ajax({
-                    url: base_url_id + "/logs",
-                    async: false,
-                    dataType: "json",
-                    success: function (json) {
-                        logs = json.logs;
-                    }
-                });
-                return logs;
-            }
-            setInterval(function() {
-                self.serverLogs(loadLogs());
-            }, 15000)
-
+        function loadLogs(callback) {
+            $.ajax({
+                url: base_url_id + "/logs",
+                async: false,
+                dataType: "json",
+                success: function (json) {
+                    callback(json.logs);
+                }
+            });
         }
-        ko.applyBindings(new UsersViewModel());
+
+        function loadUsers(callback) {
+            $.ajax({
+                url: base_url + "/users/",
+                dataType: "json",
+                success: function(json) {
+                    callback(json.users);
+                }
+            });
+        }
+
+        function renderLogs() {
+            loadLogs(function(data) {
+                logsEl.innerHTML = "";
+
+                for (var i = 0; i < data.length; i++) {
+                    var tr = document.createElement('tr');
+                    var td = document.createElement('td');
+                    var td2 = document.createElement('td');
+                    td.textContent = data[i].message;
+                    td2.textContent = moment.unix(data[i].timestamp);
+                    td2.classList.add('text-right');
+                    tr.appendChild(td);
+                    tr.appendChild(td2);
+                    logsEl.appendChild(tr);
+                }
+            });
+        }
+
+        function renderUsers() {
+            loadUsers(function(data) {
+                usersOnlineEl.textContent = data.count;
+                usersEl.innerHTML = "";
+
+                if (data.count === 0) {
+                    var tr = document.createElement('tr');
+                    var td = document.createElement('td');
+                    td.classList.add('text-center');
+                    td.setAttribute('colspan', '2');
+                    td.textContent = "No users are online";
+                    tr.appendChild(td);
+                    usersEl.appendChild(tr);
+                }
+
+                // Users in root.
+                for (var i = 0; i < data.users.length; i++) {
+                    var tr = document.createElement('tr');
+                    var td1 = document.createElement('td');
+                    var td2 = document.createElement('td');
+                    var ii = document.createElement('i');
+                    var span = document.createElement('span');
+                    ii.classList.add('fa');
+                    ii.classList.add('fa-user');
+                    td1.appendChild(ii);
+                    span.textContent = " " + data.users[i].name;
+                    td2.classList.add('text-right');
+                    td2.textContent = moment.duration(data.users[i].onlinesecs, 'seconds').humanize();
+                    td1.appendChild(span);
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    usersEl.appendChild(tr);
+                }
+
+                // Users in sub_channels.
+                for (var i = 0; i < data.sub_channels.length; i++) {
+                    if (data.sub_channels[i].users.length > 0) {
+                        var tr = document.createElement('tr');
+                        var td = document.createElement('td');
+                        var ii = document.createElement('i');
+                        var span = document.createElement('span');
+                        tr.classList.add('subchannels');
+                        tr.setAttribute('style', 'background: #ddd; font-weight: bold;');
+                        td.setAttribute('colspan', '2');
+                        ii.classList.add('fa');
+                        ii.classList.add('fa-comments');
+                        span.innerHTML = data.sub_channels[i].c.name + " (Subchannel)";
+                        td.appendChild(ii);
+                        td.appendChild(span);
+                        tr.appendChild(td);
+                        usersEl.appendChild(tr);
+                    }
+
+                    for (var j = 0; j < data.sub_channels[i].users.length; j++) {
+                        var tr = document.createElement('tr');
+                        var td1 = document.createElement('td');
+                        var td2 = document.createElement('td');
+                        var ii = document.createElement('i');
+                        var span = document.createElement('span');
+                        ii.classList.add('fa');
+                        ii.classList.add('fa-user');
+                        td1.appendChild(ii);
+                        span.textContent = " " + data.sub_channels[i].users[j].name;
+                        td2.classList.add('text-right');
+                        td2.textContent = moment.duration(data.sub_channels[i].users[j].onlinesecs, 'seconds').humanize();
+                        td1.appendChild(span);
+                        tr.appendChild(td1);
+                        tr.appendChild(td2);
+                        usersEl.appendChild(tr);
+                    }
+                }
+            });
+        }
+
+        setInterval(function() {
+            renderUsers();
+            renderLogs();
+        }, 15000);
+        renderUsers();
+        renderLogs();
     </script>
 {% endblock %}
