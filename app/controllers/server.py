@@ -113,7 +113,7 @@ class ServerView(FlaskView):
         """
         CVP endpoint provides the Channel Viewer Protocol Specification according to Mumble documentation to allow
         embeddable widgets display live users on their websites.
-        http://mumble.sourceforge.net/Channel_Viewer_Protocol
+        https://wiki.mumble.info/Channel_Viewer_Protocol
         @param id: server id
         @return: json response for cvp
         """

@@ -5,12 +5,14 @@ html {
     background: #faf9fa;
     height: 100%;
 }
+
 body {
     font-family: "Open Sans", sans-serif;
     font-weight: 400;
     color: #555;
     -webkit-font-smoothing: antialiased;
 }
+
 h1, h2, h3, h4, h5, h6 {
     font-family: "Open Sans", sans-serif;
     font-weight: 300;
@@ -21,15 +23,18 @@ h1, h2, h3, h4, h5, h6 {
     padding-bottom: 0.223em;
     text-shadow: 0px 0px 0.01em;
 }
+
 p {
     margin: 0.5em 0;
 }
+
 a {
     color: #D04526;
     text-decoration: none;
     outline: 0;
     line-height: inherit;
 }
+
 hr {
     width: 95%;
     margin: 20px auto;
@@ -38,9 +43,11 @@ hr {
     border-left: 0;
     border-right: 0;
 }
+
 a:hover {
     text-decoration: underline;
 }
+
 .pure-button:hover {
     text-decoration: none;
 }
@@ -56,6 +63,7 @@ a:hover {
     background: #fff;
     border-radius: 2px;
 }
+
 .content.community h3 {
     margin-top: 0;
 }
@@ -68,22 +76,24 @@ a:hover {
     padding: 0.5em 0 0;
     margin-bottom: 20px;
 }
-    .header h1 {
-        margin: 0.2em 0;
-        font-size: 3em;
-        font-weight: 300;
-    }
-    .header h2 {
-        font-weight: 300;
-        color: #ccc;
-        padding: 0;
-        margin-top: 0;
-    }
+
+.header h1 {
+    margin: 0.2em 0;
+    font-size: 3em;
+    font-weight: 300;
+}
+.header h2 {
+    font-weight: 300;
+    color: #ccc;
+    padding: 0;
+    margin-top: 0;
+}
 
 .head {
     height: 95px;
     position: relative;
 }
+
 .head-logo h1 {
     height: 58px;
     width: 230px;
@@ -95,6 +105,7 @@ a:hover {
     padding: 0;
     top: 35px;
 }
+
 .head-logo a,
 .head-logo a:visited,
 .head-logo a:active {
@@ -105,10 +116,12 @@ a:hover {
     position: relative;
     display: block;
 }
+
 .head-logo a:hover {
     text-decoration: none;
     opacity: .90;
 }
+
 .head-buttons {
     margin-bottom: 10px;
     padding-right: 1px;
@@ -116,68 +129,84 @@ a:hover {
     bottom: 0;
     right: 0;
 }
+
 .header-links {
     margin-top: -5px;
     margin-bottom: 10px;
 }
+
 .header-links ul {
     float: right;
     margin: 0;
     padding: 0;
 }
+
 .header-links ul li {
     display: inline-block;
     padding: 0 3px;
 }
+
 .password-generator {
     font-size: 14px;
     margin-top: -10px;
     width: 61.5%;
 }
+
 .description {
     margin: 0 auto;
     width: 90%;
 }
+
 .description p {
     margin-bottom: 0;
 }
+
 .description span {
     font-size: 12px;
 }
+
 .faqs dd {
     margin-bottom: 10px;
 }
+
 .faqs dt {
     font-weight: bold;
 }
+
 .footer-links {
     max-width: 840px;
     margin: 20px auto 10px;
     height: 80px;
 }
+
 .footer-links ul {
     float: right;
     margin: 0;
     padding: 0;
 }
+
 .footer-links ul li {
     display: inline-block;
     padding: 0 6px;
 }
+
 .footer-social {
     float: left;
     margin-top: 5px;
     width: 150px;
 }
+
 .footer-social div {
     margin-bottom: 12px;
 }
+
 .footer-links .share-js {
     float: left;
     width: 145px !important;
 }
+
 .footer-links .update-stamp {
-    color: #BABABA;
+    color: #eeeeee;
     margin-top: 10px;
     float: right;
     clear: both;
@@ -187,42 +216,51 @@ a:hover {
 .mumble-buttons .pure-button {
     margin-bottom: 10px;
 }
+
 .deploy-form {
     text-align: center;
 }
+
 .deploy-form input,
 .deploy-form select,
 .deploy-form button {
     display: inline-block !important;
     margin-bottom: 10px;
 }
+
 .errors {
     width: 50%;
     margin: 10px auto;
     padding: 0;
 }
+
 .message {
     margin-top: 5px;
 }
+
 .rating {
     unicode-bidi:bidi-override;
     direction:rtl;
     font-size:30px;
 }
+
 .rating span.star {
     font-family:FontAwesome;
     font-weight:normal;
     font-style:normal;
     display:inline-block;
 }
+
 .rating span.star:hover {
     cursor:pointer;
 }
+
 .rating span.star:before {
     content:"\f006";
     padding-right:5px;
     color:#999;
 }
+
 .rating span.star:hover:before,
 .rating span.star:hover ~ span.star:before {
     content:"\f005";
@@ -234,9 +272,11 @@ a:hover {
     content:"\f005";
     color: rgb(214, 156, 48);
 }
+
 .feedback-quality #feedback-form {
     margin-top: 15px;
 }
+
 .feedback-quality h2 {
     margin: 5px 0;
 }
@@ -246,43 +286,46 @@ a:hover {
     margin-bottom: 0;
     padding-bottom: 0;
 }
+
 .content .ttip:after {
     min-width: 210px;
 }
+
 .content .copy-url .btn {
     margin-bottom: 1px;
 }
-.content .copy-url.field {
-}
+
 .content.server table {
     margin: 20px auto;
     width: 90%;
 }
+
 .content.server .title {
     width: 90%;
     margin: 0 auto;
     text-align: center;
 }
+
 .content.server .title h1,
 .content.server .title h2 {
     margin: 0;
 }
+
 .content.server .title h1 {
     font-size: 44px;
 }
+
 .content.server .feedback-quality {
     margin: 0 auto;
     width: 90%;
     text-align: center;
 }
+
 .content.server .cvp-popover .popover {
     max-width: 400px !important;
 }
 
 /* How It Works */
-.content.how-it-works {
-
-}
 .content.how-it-works h3 {
     margin: 0;
     font-weight: 400 !important;
@@ -328,9 +371,11 @@ a:hover {
 .button-xsmall {
     font-size: 70%;
 }
+
 .button-small {
     font-size: 85%;
 }
+
 
 .button-large {
     font-size: 110%;
@@ -339,6 +384,7 @@ a:hover {
 .button-xlarge {
     font-size: 125%;
 }
+
 .button-success,
 .button-error,
 .button-warning,
@@ -347,18 +393,23 @@ a:hover {
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
+
 .button-success {
     background: rgb(28, 184, 65); /* this is a green */
 }
+
 .button-error {
     background: rgb(202, 60, 60); /* this is a maroon */
 }
+
 .button-warning {
     background: rgb(223, 117, 20); /* this is an orange */
 }
+
 .button-secondary {
     background: rgb(66, 184, 221); /* this is a light blue */
 }
+
 .button-gray {
     background: rgb(178, 181, 184); /* this is a light blue */
 }
@@ -380,27 +431,32 @@ table.rounded thead ~ tr:last-child td:first-child, table.rounded tbody tr:last-
 table.rounded thead th, table.rounded thead td, table.rounded caption + tbody tr:first-child td, table.rounded > tbody:first-child tr:first-child td { border-top: 0; }
 table .subchannels { background: #42B8DD; color: white; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); font-weight: bold; }
 
-
 /*
  * Helpers */
 .text-center {
     text-align: center;
 }
+
 .text-right {
     text-align: right;
 }
+
 .text-left {
     text-align: left;
 }
+
 .text-underline {
     border-bottom: 1px dotted #444;
 }
+
 .text-underline:hover {
     cursor: help;
 }
+
 .text-small {
     font-size: 0.8em;
 }
+
 .clear {
     clear: both;
 }
@@ -412,10 +468,12 @@ table .subchannels { background: #42B8DD; color: white; text-shadow: 0 1px 1px r
     margin-bottom: 20px;
     padding: 0 20px;
 }
+
 .pricing-chart li {
     border-left: 1px solid #DDD;
     border-right: 1px solid #DDD;
 }
+
 .pricing-chart .title {
     background-color: #0078E7;
     padding: 0.9375em 1em;
@@ -424,6 +482,7 @@ table .subchannels { background: #42B8DD; color: white; text-shadow: 0 1px 1px r
     font-weight: bold;
     font-size: 1.2em;
 }
+
 .pricing-chart .price {
     background-color: #EEE;
     padding: 0.9375em 1.25em;
@@ -432,6 +491,7 @@ table .subchannels { background: #42B8DD; color: white; text-shadow: 0 1px 1px r
     font-weight: normal;
     font-size: 1em;
 }
+
 .pricing-chart .desc {
     background-color: #FFF;
     padding: 0.9375em;
@@ -442,6 +502,7 @@ table .subchannels { background: #42B8DD; color: white; text-shadow: 0 1px 1px r
     line-height: 1.4;
     border-bottom: dotted 1px #DDD;
 }
+
 .pricing-chart .bullet-item {
     background-color: #FFF;
     padding: 0.9375em;
@@ -451,6 +512,7 @@ table .subchannels { background: #42B8DD; color: white; text-shadow: 0 1px 1px r
     font-size: 0.875em;
     border-bottom: dotted 1px #DDD;
 }
+
 .pricing-chart .cta-button {
     background-color: #F5F5F5;
     text-align: center;
@@ -467,6 +529,7 @@ table .subchannels { background: #42B8DD; color: white; text-shadow: 0 1px 1px r
         display: none;
     }
 }
+
 /* Reposition logo if on mobile */
 @media screen and (max-width: 700px) {
     .head-logo h1 {

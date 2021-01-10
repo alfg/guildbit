@@ -15,17 +15,6 @@ from app import murmur
 
 
 class PaymentView(FlaskView):
-    def index(self):
-        return jsonify({
-            "example": "example"
-        })
-
-    def post(self):
-        print(request.data["order"])
-        return jsonify({
-            "status": "received"
-        })
-
     @route('/success', methods=['GET', 'POST'])
     def success(self):
         return render_template('payment/success.html')
@@ -42,7 +31,6 @@ class PaymentView(FlaskView):
         }
 
         if form.validate_on_submit():
-
             try:
                 # Generate UUID
                 gen_uuid = str(uuid.uuid4())
@@ -160,7 +148,6 @@ class PaymentView(FlaskView):
         return jsonify({
             "status": "received"
         })
-
 
     @route('/paypal-gateway', methods=['GET', 'POST'])
     def paypal_gateway(self):
