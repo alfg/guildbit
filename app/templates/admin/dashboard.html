@@ -46,13 +46,6 @@
         </tbody>
     </table>
     <br />
-    <form class="pure-form" method="get">
-        <select id="select-host" name="filter">
-            {% for k, v in server_list %}
-                <option value="{{ k }}" {% if request.args.get('filter') == k %}selected="selected"{% endif %}>{{ v }}</option>
-            {% endfor %}
-        </select>
-    </form>
 
 {% endblock %}
 

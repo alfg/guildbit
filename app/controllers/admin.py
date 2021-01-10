@@ -25,7 +25,6 @@ class AdminView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-        filter = request.args.get('filter')
         stats = murmur.get_all_server_stats()
         users_count = User.query.count()
         servers_count = Server.query.count()
@@ -34,12 +33,6 @@ class AdminView(FlaskView):
         tokens_count = Token.query.count()
 
         ps = psutil
-
-        server_list = build_hosts_list()
-        if filter is not None:
-            http_uri = murmur.get_http_uri(filter)
-        else:
-            http_uri = murmur.get_http_uri(server_list[0][0])
 
         ctx = {
             'servers_online': stats['servers_online'],
@@ -50,10 +43,9 @@ class AdminView(FlaskView):
             'feedback_avg': feedback_avg,
             'tokens': tokens_count,
             'memory': ps.virtual_memory(),
-            'disk': ps.disk_usage('/'),
-            'http_uri': http_uri
+            'disk': ps.disk_usage('/')
         }
-        return render_template('admin/dashboard.html', title="Dashboard", ctx=ctx, server_list=server_list)
+        return render_template('admin/dashboard.html', title="Dashboard", ctx=ctx)
 
 
 class AdminServersView(FlaskView):
