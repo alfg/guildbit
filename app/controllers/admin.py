@@ -30,6 +30,7 @@ class AdminView(FlaskView):
         users_count = User.query.count()
         servers_count = Server.query.count()
         feedback_count = Rating.query.count()
+        feedback_avg = Rating.get_rating_average()
         tokens_count = Token.query.count()
 
         ps = psutil
@@ -46,6 +47,7 @@ class AdminView(FlaskView):
             'users': users_count,
             'servers': servers_count,
             'feedback': feedback_count,
+            'feedback_avg': feedback_avg,
             'tokens': tokens_count,
             'memory': ps.virtual_memory(),
             'disk': ps.disk_usage('/'),

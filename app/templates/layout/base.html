@@ -7,26 +7,24 @@
 	<title>{% block title %}{% endblock %} &mdash; GuildBit.com</title>
 	<meta name="description" content="{{ _('GuildBit - Free Mumble Server Hosting') }}" />
 	<meta name="keywords" content="mumble, voip, hosting, guild, mmo, ffxiv, server, murmur" />
-	<meta name="author" content="alfg.co">
+	<meta name="author" content="https://github.com/alfg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <meta name="google-site-verification" content="6LyHPdggxteOxGctt9IDNoad82I2ONWI0dAuJqyNJMs" />
 
 	<link rel="shortcut icon" href="/static/img/guildbit_ico.png" type="image/x-icon" />
 
 	<!-- Facebook Metadata /-->
-	<meta property="og:image" content="http://guildbit.com/static/img/screenshot_home.png" />
+	<meta property="og:image" content="https://guildbit.com/static/img/screenshot_home.png" />
 	<meta property="og:description" content="{{ _('GuildBit - Free Mumble Server Hosting') }}"/>
 	<meta property="og:title" content="GuildBit" />
 
 	<!-- Google+ Metadata /-->
 	<meta itemprop="name" content="GuildBit">
 	<meta itemprop="description" content="{{ _('GuildBit - Free Mumble Server Hosting') }}">
-	<meta itemprop="image" content="http://guildbit.com/static/img/screenshot_home.png">
+	<meta itemprop="image" content="https://guildbit.com/static/img/screenshot_home.png">
 
 
   <!-- CDN loaded styles -->
-{#  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">#}
-{#  <link href="//yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css" rel="stylesheet">#}
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
 
@@ -59,10 +57,10 @@
             </div>
             <div class="header-links">
                 <ul>
-                    <li><a class="pure-button button-small pure-button-primary" href="/"><i class="fa fa-home"></i> {{ _('Home') }}</a></li>
-                    <li><a class="pure-button button-small button-success" href="/how-it-works"><i class="fa fa-cogs"></i> {{ _('How It Works') }}</a></li>
-                    <li><a class="pure-button button-small button-warning" href="/donate"><i class="fa fa-money"></i> {{ _('Donate') }}</a></li>
-                    <li><a class="pure-button button-small button-secondary" href="/upgrade"><i class="fa fa-bolt"></i> {{ _('Upgrade') }}</a></li>
+                    <li><a class="pure-button button-small {% if request.path == '/' %}pure-button-primary{% endif %}" href="/"><i class="fa fa-home"></i> {{ _('Home') }}</a></li>
+                    <li><a class="pure-button button-small {% if request.path == '/how-it-works/' %}pure-button-primary{% endif %}" href="/how-it-works"><i class="fa fa-cogs"></i> {{ _('How It Works') }}</a></li>
+                    <li><a class="pure-button button-small {% if request.path == '/donate/' %}pure-button-primary{% endif %}" href="/donate"><i class="fa fa-money"></i> {{ _('Donate') }}</a></li>
+                    <li><a class="pure-button button-small {% if request.path == '/upgrade/' %}pure-button-primary{% endif %}" href="/upgrade"><i class="fa fa-bolt"></i> {{ _('Upgrade') }}</a></li>
                 </ul>
             </div>
         </div>
@@ -72,18 +70,16 @@
 
     <div class="footer-links">
         <ul class="text-center">
-            <li><a href="{{ url_for('HomeView:contact') }}"><i class="fa fa-bug"></i> {{ _('Found a bug?') }}</a></li>
-            <li><a href="{{ url_for('HomeView:updates') }}">{{ _('Updates') }}</a></li>
             <li><a href="{{ url_for('HomeView:terms') }}">{{ _('Terms') }}</a></li>
             <li><a href="{{ url_for('HomeView:privacy') }}">{{ _('Privacy') }}</a></li>
             <li><a href="{{ url_for('HomeView:contact') }}">{{ _('Contact') }}</a></li>
-            <li><a href="http://github.com/alfg/guildbit"><i class="fa fa-github-alt"></i> {{ _('Source') }}</a></li>
+            <li><a href="https://github.com/alfg/guildbit"><i class="fa fa-github-alt"></i> {{ _('Source') }}</a></li>
         </ul>
 
         {% if g.user.is_authenticated() %}
         <ul class="text-center clear">
             <li>{{ _('Logged in as ') }} <i class="fa fa-steam-square"></i>
-                <a href="http://steamcommunity.com/profiles/{{ g.user.steam_id }}"><strong>{{ g.user.nickname }}</strong></a>
+                <a href="https://steamcommunity.com/profiles/{{ g.user.steam_id }}"><strong>{{ g.user.nickname }}</strong></a>
             </li>
             {% if g.user.role == 1 %}
                 <li><a href="/admin">Admin</a></li>

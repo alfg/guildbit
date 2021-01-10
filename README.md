@@ -1,11 +1,13 @@
 # GuildBit.com
 > Free Mumble Hosting
 
+![Guildbit.com](app/static/img/guildbit_logo2.png)
+
 GuildBit is a full-stack application written in Python to offer
 temporary virtual Mumble servers to users. Guildbit depends on [murmur-rest](https://github.com/alfg/murmur-rest) API backend to interface
 with the virtual Mumble servers.
 
-http://guildbit.com
+https://guildbit.com
 
 ## Screenshots
 

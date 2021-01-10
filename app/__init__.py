@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.secret_key = settings.APP_SESSION_KEY
 
 # Version
-app.config.version = '1.6.0'
+app.config.version = '1.7.0'
 app.config.last_updated = datetime.now()
 
 # Configure Flask-login
@@ -27,6 +27,7 @@ oid = OpenID(app, os.path.join(settings.BASE_DIR, 'tmp'))
 
 # Configure database
 app.config['SQLALCHEMY_DATABASE_URI'] = settings.DATABASE_URI
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 

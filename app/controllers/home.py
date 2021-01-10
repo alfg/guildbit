@@ -78,7 +78,7 @@ class HomeView(FlaskView):
     def donate(self):
         return render_template('donate.html')
 
-    @route('/upgrade')
+    @route('/upgrade/')
     def upgrade(self):
         return render_template('upgrade.html')
 

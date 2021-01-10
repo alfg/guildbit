@@ -1,5 +1,6 @@
 import datetime
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.sql import func
 
 from app import db
 
@@ -106,6 +107,11 @@ class Rating(db.Model):
     ip = db.Column(db.String(64))
     stars = db.Column(db.Integer)
     feedback = db.Column(db.String())
+
+    @staticmethod
+    def get_rating_average():
+        avg = Rating.query.with_entities(func.avg(Rating.stars).label('avg')).scalar()
+        return round(avg, 2)
 
     def __repr__(self):
         return '<Rating %r>' % self.id

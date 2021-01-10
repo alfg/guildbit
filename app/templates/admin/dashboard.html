@@ -23,7 +23,7 @@
             </tr>
             <tr>
               <td>Feedback:</td>
-              <td>{{ ctx.feedback }}</td>
+              <td>{{ ctx.feedback }} ({{ ctx.feedback_avg }})</td>
             </tr>
             <tr>
               <td>Tokens:</td>
@@ -53,19 +53,6 @@
             {% endfor %}
         </select>
     </form>
-
-    <h3>Bandwidth Information</h3>
-    <div class="pure-g">
-        <div class="pure-u-md-1-2 pure-u-sm-1-1">
-            <img class="pure-img" src="{{ ctx.http_uri }}/stats/vnstat_summary.png" />
-            <img class="pure-img" src="{{ ctx.http_uri }}/stats/vnstat_hourly.png" />
-            <img class="pure-img" src="{{ ctx.http_uri }}/stats/vnstat_top10.png" />
-        </div>
-        <div class="pure-u-md-1-2 pure-u-sm-1-1">
-            <img class="pure-img" src="{{ ctx.http_uri }}/stats/vnstat_monthly.png" />
-            <img class="pure-img" src="{{ ctx.http_uri }}/stats/vnstat_daily.png" />
-        </div>
-    </div>
 
 {% endblock %}
 
