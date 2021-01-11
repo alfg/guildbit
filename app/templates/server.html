@@ -43,7 +43,7 @@
                 </tr>
                 <tr class="mobile-hide">
                     <td>{{ _('Direct Link') }}</td>
-                    <td><a href="mumble://:{{ server.password }}@{{ server.mumble_host }}:{{ details.port }}">mumble://{{ server.mumble_host }}:{{ details.port }}</a></td>
+                    <td><a class="ttip direct-link track-nolink" href="mumble://:{{ server.password }}@{{ server.mumble_host }}:{{ details.port }}" title="Click here to connect!" data-placement="right">mumble://{{ server.mumble_host }}:{{ details.port }}</a></td>
                 </tr>
                 <tr>
                     <td>
@@ -177,6 +177,9 @@
               content: 'Copy and paste this script to your guild&apos;s website to display a live widget of active users.' +
                       'You can read more about it <a href="https://mumble-widget.guildbit.com" target="_BLANK">here</a>.'
             });
+            setTimeout(function() {
+                $('.direct-link').tooltip('show');
+            }, 2000);
 
             // Leave feedback ratings
             $('#rating').find('span').on('click', function() {
