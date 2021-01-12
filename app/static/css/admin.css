@@ -5,18 +5,23 @@ body {
 .text-center {
     text-align: center;
 }
+
 .text-right {
     text-align: right;
 }
+
 .pull-right {
     float: right;
 }
+
 .pull-left {
     float: left;
 }
+
 .box {
     padding: 1em 0;
 }
+
 .spacer {
     padding: 1em 0;
 }
@@ -57,9 +62,11 @@ body {
     padding: 30px;
     background: #e6e6e6;
 }
+
 .login-view h1 {
     color: #4B4B4B;
 }
+
 .login-view .head-logo h1 {
     width: 300px;
 }
@@ -70,9 +77,14 @@ body {
 }
 
 /* Servers View */
+table.servers {
+    margin-top: 10px;
+}
+
 table.servers tbody tr {
     cursor: pointer;
 }
+
 table.servers tbody tr:hover td {
     background-color: #e7e7e7;
     cursor: pointer;
@@ -87,6 +99,7 @@ table.servers tbody tr:hover td {
     margin: 0 auto;
     padding-bottom: 20px;
 }
+
 .head-logo a,
 .head-logo a:visited,
 .head-logo a:active {
@@ -96,6 +109,7 @@ table.servers tbody tr:hover td {
     position: relative;
     display: block;
 }
+
 .head-logo a:hover {
     text-decoration: none;
     opacity: .90;
@@ -109,6 +123,7 @@ table.servers tbody tr:hover td {
     margin: 0 auto;
     padding: 20px 5px;
 }
+
 .head-logo-small a,
 .head-logo-small a:visited,
 .head-logo-small a:active {
@@ -118,6 +133,7 @@ table.servers tbody tr:hover td {
     position: relative;
     display: block;
 }
+
 .head-logo-small a:hover {
     text-decoration: none;
     opacity: .90;
@@ -131,23 +147,28 @@ table.servers tbody tr:hover td {
     background: #999;
     font-size: 80%;
 }
-    .label-etc {
-        background: #5aba59;
-    }
-    .label-blue {
-        background: #4d85d1;
-    }
-    .label-green {
-        background: #3DA958;
-    }
-    .label-red {
-        background: #df2d4f;
+
+.label-etc {
+    background: #5aba59;
+}
+
+.label-blue {
+    background: #4d85d1;
+}
+
+.label-green {
+    background: #3DA958;
+}
+
+.label-red {
+    background: #df2d4f;
 }
 
 /* Buttons */
 .button-blue {
     background: #4d85d1;
 }
+
 .button-small {
     font-size: 12px;
 }
@@ -177,18 +198,21 @@ This is the parent `<div>` that contains the menu and the content area.
     position: relative;
     padding-left: 0;
 }
-    #layout.active {
-        position: relative;
-        left: 150px;
-    }
-        #layout.active #menu {
-            left: 150px;
-            width: 150px;
-        }
 
-        #layout.active .menu-link {
-            left: 150px;
-        }
+#layout.active {
+    position: relative;
+    left: 150px;
+}
+
+#layout.active #menu {
+    left: 150px;
+    width: 150px;
+}
+
+#layout.active .menu-link {
+    left: 150px;
+}
+
 /*
 The content `<div>` is where all your content goes.
 */
@@ -206,20 +230,23 @@ The content `<div>` is where all your content goes.
      padding: 0.5em 2em 0;
      border-bottom: 1px solid #eee;
  }
-    .header h1 {
-        margin: 0.6em 0;
-        font-size: 2em;
-        font-weight: 300;
-    }
-     .header h2 {
-        font-weight: 300;
-        color: #ccc;
-        padding: 0;
-        margin-top: 0;
-    }
-     .header span {
-         float: right;
-     }
+
+.header h1 {
+    margin: 0.6em 0;
+    font-size: 2em;
+    font-weight: 300;
+}
+
+.header h2 {
+    font-weight: 300;
+    color: #ccc;
+    padding: 0;
+    margin-top: 0;
+}
+
+.header span {
+    float: right;
+}
 
 .content-subhead {
     margin: 50px 0 20px 0;
@@ -233,97 +260,110 @@ The content `<div>` is where all your content goes.
 
 /* Pagination */
 .pagination {
-  display: inline-block;
-  padding-left: 0;
-  margin: 10px 0;
-  border-radius: 4px;
+    display: inline-block;
+    padding-left: 0;
+    margin: 10px 0;
+    border-radius: 4px;
 }
+
 .pagination > li {
-  display: inline;
+    display: inline;
 }
+
 .pagination > li > a,
 .pagination > li > span {
-  position: relative;
-  float: left;
-  padding: 6px 12px;
-  line-height: 1.42857143;
-  text-decoration: none;
-  color: #428bca;
-  background-color: #ffffff;
-  border: 1px solid #dddddd;
-  margin-left: -1px;
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    text-decoration: none;
+    color: #428bca;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    margin-left: -1px;
 }
+
 .pagination > li:first-child > a,
 .pagination > li:first-child > span {
-  margin-left: 0;
-  border-bottom-left-radius: 4px;
-  border-top-left-radius: 4px;
+    margin-left: 0;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
 }
+
 .pagination > li:last-child > a,
 .pagination > li:last-child > span {
-  border-bottom-right-radius: 4px;
-  border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
 }
+
 .pagination > li > a:hover,
 .pagination > li > span:hover,
 .pagination > li > a:focus,
 .pagination > li > span:focus {
-  color: #2a6496;
-  background-color: #eeeeee;
-  border-color: #dddddd;
+    color: #2a6496;
+    background-color: #eeeeee;
+    border-color: #dddddd;
 }
+
 .pagination > .active > a,
 .pagination > .active > span,
 .pagination > .active > a:hover,
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-  z-index: 2;
-  color: #ffffff;
-  background-color: #428bca;
-  border-color: #428bca;
-  cursor: default;
+    z-index: 2;
+    color: #ffffff;
+    background-color: #428bca;
+    border-color: #428bca;
+    cursor: default;
 }
+
 .pagination > .disabled > span,
 .pagination > .disabled > span:hover,
 .pagination > .disabled > span:focus,
 .pagination > .disabled > a,
 .pagination > .disabled > a:hover,
 .pagination > .disabled > a:focus {
-  color: #777777;
-  background-color: #ffffff;
-  border-color: #dddddd;
-  cursor: not-allowed;
+    color: #777777;
+    background-color: #ffffff;
+    border-color: #dddddd;
+    cursor: not-allowed;
 }
+
 .pagination-lg > li > a,
 .pagination-lg > li > span {
-  padding: 10px 16px;
-  font-size: 18px;
+    padding: 10px 16px;
+    font-size: 18px;
 }
+
 .pagination-lg > li:first-child > a,
 .pagination-lg > li:first-child > span {
-  border-bottom-left-radius: 6px;
-  border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
 }
+
 .pagination-lg > li:last-child > a,
 .pagination-lg > li:last-child > span {
-  border-bottom-right-radius: 6px;
-  border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-right-radius: 6px;
 }
+
 .pagination-sm > li > a,
 .pagination-sm > li > span {
-  padding: 5px 10px;
-  font-size: 12px;
+    padding: 5px 10px;
+    font-size: 12px;
 }
+
 .pagination-sm > li:first-child > a,
 .pagination-sm > li:first-child > span {
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
 }
+
 .pagination-sm > li:last-child > a,
 .pagination-sm > li:last-child > span {
-  border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
 
@@ -344,69 +384,71 @@ appears on the left side of the page.
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
-    /*
-    All anchors inside the menu should be styled like this.
-    */
-    #menu a {
-        color: #999;
-        border: none;
-        padding: 0.6em 0 0.6em 0.6em;
-    }
+/*
+All anchors inside the menu should be styled like this.
+*/
+#menu a {
+    color: #999;
+    border: none;
+    padding: 0.6em 0 0.6em 0.6em;
+}
 
-    /*
-    Remove all background/borders, since we are applying them to #menu.
-    */
-     #menu .pure-menu,
-     #menu .pure-menu ul {
-        border: none;
-        background: transparent;
-    }
+/*
+Remove all background/borders, since we are applying them to #menu.
+*/
+    #menu .pure-menu,
+    #menu .pure-menu ul {
+    border: none;
+    background: transparent;
+}
 
-    /*
-    Add that light border to separate items into groups.
-    */
-    #menu .pure-menu ul,
-    #menu .pure-menu .menu-item-divided {
-        border-top: 1px solid #333;
-    }
-        /*
-        Change color of the anchor links on hover/focus.
-        */
-        #menu .pure-menu li a:hover,
-        #menu .pure-menu li a:focus {
-            background: #333;
-        }
+/*
+Add that light border to separate items into groups.
+*/
+#menu .pure-menu ul,
+#menu .pure-menu .menu-item-divided {
+    border-top: 1px solid #333;
+}
 
-    /*
-    This styles the selected menu item `<li>`.
-    */
-    #menu .pure-menu-selected,
-    #menu .pure-menu-heading {
-        background: #1f8dd6;
-    }
-        /*
-        This styles a link within a selected menu item `<li>`.
-        */
-        #menu .pure-menu-selected a {
-            color: #fff;
-        }
+/*
+Change color of the anchor links on hover/focus.
+*/
+#menu .pure-menu li a:hover,
+#menu .pure-menu li a:focus {
+    background: #333;
+}
 
-    /*
-    This styles the menu heading.
-    */
-    #menu .pure-menu-heading {
-        font-size: 110%;
-        color: #fff;
-        margin: 0;
-    }
+/*
+This styles the selected menu item `<li>`.
+*/
+#menu .pure-menu-selected,
+#menu .pure-menu-heading {
+    background: #1f8dd6;
+}
 
-    #menu hr {
-        border-bottom: 1px solid #2C2C2C;
-        border-top: 1px solid #000;
-        border-left: 0;
-        border-right: 0;
-        width: 95%;
-    }
+/*
+This styles a link within a selected menu item `<li>`.
+*/
+#menu .pure-menu-selected a {
+    color: #fff;
+}
+
+/*
+This styles the menu heading.
+*/
+#menu .pure-menu-heading {
+    font-size: 110%;
+    color: #fff;
+    margin: 0;
+}
+
+#menu hr {
+    border-bottom: 1px solid #2C2C2C;
+    border-top: 1px solid #000;
+    border-left: 0;
+    border-right: 0;
+    width: 95%;
+}
 
 /* -- Dynamic Button For Responsive Menu -------------------------------------*/
 
@@ -433,35 +475,34 @@ small screens.
     padding: 2.1em 1.6em;
 }
 
-    .menu-link:hover,
-    .menu-link:focus {
-        background: #000;
-    }
+.menu-link:hover,
+.menu-link:focus {
+    background: #000;
+}
 
-    .menu-link span {
-        position: relative;
-        display: block;
-    }
+.menu-link span {
+    position: relative;
+    display: block;
+}
 
-    .menu-link span,
-    .menu-link span:before,
-    .menu-link span:after {
-        background-color: #fff;
-        width: 100%;
-        height: 0.2em;
-    }
+.menu-link span,
+.menu-link span:before,
+.menu-link span:after {
+    background-color: #fff;
+    width: 100%;
+    height: 0.2em;
+}
 
-        .menu-link span:before,
-        .menu-link span:after {
-            position: absolute;
-            margin-top: -0.6em;
-            content: " ";
-        }
+.menu-link span:before,
+.menu-link span:after {
+    position: absolute;
+    margin-top: -0.6em;
+    content: " ";
+}
 
-        .menu-link span:after {
-            margin-top: 0.6em;
-        }
-
+.menu-link span:after {
+    margin-top: 0.6em;
+}
 
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
 
@@ -469,7 +510,6 @@ small screens.
 Hides the menu at `48em`, but modify this based on your app's needs.
 */
 @media (min-width: 48em) {
-
     .header,
     .content {
         padding-left: 2em;

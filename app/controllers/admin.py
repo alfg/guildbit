@@ -59,11 +59,6 @@ class AdminServersView(FlaskView):
         form = DeployCustomServerForm()
         filter = request.args.get('filter')
         page = int(request.args.get('page', 1))
-        stats = murmur.get_all_server_stats()
-        stats_ctx = {
-            'servers_online': stats.get('servers_online'),
-            'users_online': stats.get('users_online')
-        }
 
         if filter == "all":
             servers = Server.query.order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
@@ -78,7 +73,7 @@ class AdminServersView(FlaskView):
         else:
             servers = Server.query.filter_by(status="active").order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
 
-        return render_template('admin/servers.html', servers=servers, form=form, stats=stats_ctx, title="Servers")
+        return render_template('admin/servers.html', servers=servers, form=form, title="Servers")
 
     @login_required
     @admin_required
