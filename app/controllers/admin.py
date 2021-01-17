@@ -10,7 +10,8 @@ from app.util import admin_required
 from app import db
 from app.forms import UserAdminForm, DeployCustomServerForm, NoticeForm, SuperuserPasswordForm
 from app.forms import SendChannelMessageForm, CreateTokenForm, CleanupExpiredServersForm, build_hosts_list
-from app.models import Server, User, Notice, Rating, Token
+from app.forms import CreateHostForm, HostAdminForm
+from app.models import Server, User, Notice, Rating, Token, Host
 import app.murmur as murmur
 
 ITEMS_PER_PAGE = 50
@@ -161,18 +162,21 @@ class AdminPortsView(FlaskView):
     @admin_required
     def index(self):
         filter = request.args.get('filter')
-        stats = murmur.get_all_server_stats()
-        stats_ctx = {
-            'servers_online': stats.get('servers_online'),
-            'users_online': stats.get('users_online')
-        }
         server_list = build_hosts_list()
+
         if filter is not None:
+            stats = murmur.get_server_stats(filter)
             ports = murmur.list_all_servers(filter)
         else:
+            stats = murmur.get_server_stats(server_list[0][0])
             ports = murmur.list_all_servers(server_list[0][0])
 
-        return render_template('admin/ports.html', ports=ports, stats=stats_ctx, server_list=server_list, title="Ports")
+        ctx = {
+            'servers_online': stats.get('servers_online'),
+            'users_online': stats.get('users_online'),
+            'ports': ports
+        }
+        return render_template('admin/ports.html', ctx=ctx, server_list=server_list, title="Ports")
 
 
 class AdminUsersView(FlaskView):
@@ -205,23 +209,70 @@ class AdminHostsView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-        hosts = settings.MURMUR_HOSTS
+        form = CreateHostForm()
+        hosts = Host.query.order_by(Host.id.desc()).all()
+        return render_template('admin/hosts.html', hosts=hosts, form=form, title="Hosts")
 
-        ctx = []
-        for i in hosts:
-            r = murmur.get_server_stats(i['hostname'])
+    @login_required
+    @admin_required
+    def post(self):
+        form = CreateHostForm()
+        hosts = Host.query.order_by(Host.id.desc()).all()
+        if form.validate_on_submit():
+            try:
+                # Create database entry
+                h = Host()
+                h.name = form.name.data or None
+                h.hostname = form.hostname.data or None
+                h.location = form.location.data or None
+                h.location_name = form.location_name.data or None
+                h.uri = form.uri.data or None
+                h.active = False
+                h.type = form.type.data or None
+                h.username = form.username.data or None
+                h.password = form.password.data or None
 
-            ctx.append({
-                'name': i['name'],
-                'address': i['address'],
-                'contact': i['contact'],
-                'status': i['status'],
-                'booted_servers': r.get('servers_online', 0),
-                'capacity': i['capacity'],
-                'monitor_url': i['monitor_uri']
-            })
+                db.session.add(h)
+                db.session.commit()
+                return redirect('/admin/hosts/')
 
-        return render_template('admin/hosts.html', hosts=ctx, title="Hosts")
+            except:
+                import traceback
+                db.session.rollback()
+                traceback.print_exc()
+                return redirect('/admin/hosts/')
+
+        return render_template('admin/hosts.html', form=form, hosts=hosts)
+
+    @login_required
+    @admin_required
+    def get(self, id):
+        host = Host.query.filter_by(id=id).first_or_404()
+        form = HostAdminForm(active=host.active)
+        return render_template('admin/host.html', host=host, form=form, title="Host: %s" % host.hostname)
+
+    @login_required
+    @admin_required
+    def post(self, id):
+        host = Host.query.filter_by(id=id).first()
+        form = HostAdminForm(request.form, active=host.active)
+        if form.validate_on_submit():
+            host.active = form.active.data
+            db.session.commit()
+            return redirect('/admin/hosts/%s' % host.id)
+        return render_template('admin/host.html', host=host, form=form, title="HOst: %s" % host.hostname)
+
+
+    @login_required
+    @admin_required
+    @route('/<hostname>/server-count', methods=['GET'])
+    def server_count(self, hostname):
+        s = murmur.get_server_stats(hostname)
+
+        server = {
+            'servers_online': s.get('servers_online', 0)
+        }
+        return jsonify(server)
 
 
 class AdminToolsView(FlaskView):

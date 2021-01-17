@@ -97,6 +97,23 @@ class CreateTokenForm(Form):
                           validators=[DataRequired()],
                           choices=_packages)
 
+class CreateHostForm(Form):
+    name = TextField('name', validators=[DataRequired('Name is required.')])
+    hostname = TextField('hostname', validators=[DataRequired('Hostname is required.')])
+    location = TextField('location', validators=[DataRequired('Location is required.')])
+    location_name = TextField('location_name', validators=[DataRequired('Location Name is required.')])
+    uri = TextField('uri', validators=[DataRequired('URI is required.')])
+    username = TextField('username')
+    password = TextField('password')
+    type = SelectField('type',
+                        validators=[DataRequired()],
+                        choices=[
+                            ('0', 'Free'),
+                            ('1', 'Upgrade')
+                        ])
+
+class HostAdminForm(Form):
+    active = BooleanField('active', default=False)
 
 class LoginForm(Form):
     openid = TextField('openid', validators=[Required()])

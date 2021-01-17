@@ -3,33 +3,97 @@
 {% block title %}Admin Hosts{% endblock %}
 
 {% block body %}
-    <table class="pure-table pure-table-horizontal pure-table-striped servers">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Host</th>
-                <th>Contact</th>
-                <th>Active</th>
-                <th>Capacity</th>
-                <th>Monitor</th>
-                <th>API Route</th>
-            </tr>
-        </thead>
+  <div class="spacer">
+    <a class="pure-button button-secondary" data-toggle="modal" data-target="#create-host">Create Host</a>
+  </div>
+  <table class="pure-table pure-table-horizontal pure-table-striped servers">
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Hostname</th>
+              <th>Location</th>
+              <th>Location Name</th>
+              <th>URI</th>
+              <th>Active</th>
+              <th>Servers</th>
+          </tr>
+      </thead>
 
-        <tbody>
-            {% for host in hosts %}
-            <tr>
-                <td>{{ host.name }}</td>
-                <td>{{ host.address }}</td>
-                <td>{{ host.contact }}</td>
-                <td>{{ host.status }}</td>
-                <td>{{ host.booted_servers }} / {{ host.capacity }}</td>
-                <td><a href="{{ host.monitor_url }}">{{ host.monitor_url }}</a></td>
-                <td><a href="{{ host.uri }}">{{ host.uri }}</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+      <tbody>
+          {% for host in hosts %}
+          <tr>
+              <td>{{ host.name }}</td>
+              <td><a href="/admin/hosts/{{ host.id }}">{{ host.hostname }}</a></td>
+              <td>{{ host.location }}</td>
+              <td>{{ host.location_name }}</td>
+              <td><a href="{{ host.uri }}">{{ host.uri }}</a></td>
+              <td>{{ '✔️' if host.active else '❌' }}</td>
+              <td>{{ host.booted_servers }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+
+  <!-- Create Host Modal -->
+  <div class="modal fade" id="create-host" tabindex="-1" role="dialog" aria-labelledby="create-host" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="" method="post" name="role" class="pure-form pure-form-aligned">
+          <div class="modal-header">
+            <h4 class="modal-title">Create a Host</h4>
+          </div>
+          <div class="modal-body">
+            {{ form.csrf_token }}
+            <div class="pure-control-group">
+              <label for="role">Name</label>
+              {{ form.name }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Hostname</label>
+              {{ form.hostname }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Location</label>
+              {{ form.location }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Location Name</label>
+              {{ form.location_name }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">URI</label>
+              {{ form.uri }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Type</label>
+              {{ form.type }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Username</label>
+              {{ form.username }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Password</label>
+              {{ form.password }}
+            </div>
+            {% if form.errors %}
+                <ul>
+                    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                        {% for error in field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="pure-button" data-dismiss="modal">Close</button>
+            <button type="submit" class="pure-button button-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block scripts %}

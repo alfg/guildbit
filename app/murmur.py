@@ -15,16 +15,13 @@ from settings import MURMUR_HOSTS, DEFAULT_MURMUR_PORT
 
 def get_host_by_location(location):
     """
-    Searches MURMUR_HOSTS settings and returns tuple of address, uri, and hostname for given location.
+    Searches MURMUR_HOSTS settings and returns tuple of uri for given location.
     """
     for i in MURMUR_HOSTS:
         for k, v in i.items():
             if v == location:
                 return {
-                    'address': i['address'],
                     'uri': i['uri'],
-                    'hostname': i['hostname'],
-                    'http_uri': i['http_uri'],
                     'username': i['username'],
                     'password': i['password']
                 }

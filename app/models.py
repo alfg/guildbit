@@ -4,8 +4,13 @@ from sqlalchemy.sql import func
 
 from app import db
 
+# User roles.
 ROLE_USER = 0
 ROLE_ADMIN = 1
+
+# Host types.
+HOST_TYPE_FREE = 0
+HOST_TYPE_UPGRADE = 1
 
 
 class Server(db.Model):
@@ -130,15 +135,18 @@ class Token(db.Model):
         return '<Token %r>' % self.id
 
 
+class Host(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, index=True)
+    hostname = db.Column(db.String(120), unique=True, index=True)
+    location = db.Column(db.String(120), unique=True, index=True)
+    location_name = db.Column(db.String(120), unique=False, index=True)
+    uri = db.Column(db.String(120), unique=False, index=False)
+    active = db.Column(db.Boolean, default=False)
+    type = db.Column(db.SmallInteger, default=HOST_TYPE_FREE)
+    username = db.Column(db.String(120), unique=False, index=False)
+    password = db.Column(db.String(120), unique=False, index=False)
 
-# class Host(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     hostname = db.Column(db.String(120), unique=True, index=True)
-#     status = db.Column(db.String, default='active')
-#     contact_name = db.Column(db.String(120))
-#     contact_email = db.Column(db.String(120))
-#     created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-#
-#     def __repr__(self):
-#         return '<Host %r>' % self.hostname
+    def __repr__(self):
+        return '<Host %r>' % self.hostname
 
