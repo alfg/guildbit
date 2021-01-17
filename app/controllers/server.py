@@ -37,6 +37,7 @@ class ServerView(FlaskView):
         rating = Rating.query.filter_by(server_uuid=id, ip=ip).first()
         return render_template('server_expired.html', server=server, rating=rating)
 
+    @cache.cached(timeout=15)
     @route('/<id>/users/')
     def users(self, id):
         server = Server.query.filter_by(uuid=id).first_or_404()
