@@ -40,7 +40,10 @@ app.config['MAIL_PASSWORD'] = settings.MAIL_PASSWORD
 mail = Mail(app)
 
 # Configure Flask-Cache
-cache = Cache(config={'CACHE_TYPE': settings.CACHE_BACKEND})
+cache = Cache(config={
+    'CACHE_TYPE': settings.CACHE_BACKEND,
+    'CACHE_REDIS_URL': settings.CACHE_REDIS_URL,
+    })
 cache.init_app(app)
 
 # Configure Babel

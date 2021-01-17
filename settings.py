@@ -11,10 +11,11 @@ ASSETS_DEBUG = True
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost:6379')
-DATABASE_URI = 'sqlite:////tmp/test.db'
+DATABASE_URI = 'postgresql://postgres:postgres@db:5432/guildbit'
 BROKER_URL = 'redis://%s/0' % REDIS_HOST
 CELERY_RESULT_BACKEND = 'redis://%s/0' % REDIS_HOST
-CACHE_BACKEND = 'simple'
+CACHE_BACKEND = 'redis'
+CACHE_REDIS_URL = 'redis://%s/2' % REDIS_HOST
 
 # Murmur default settings
 DEFAULT_MAX_USERS = 15
@@ -63,39 +64,42 @@ MURMUR_HOSTS = [
 # Use only if in test docker environment.
 DOCKER_TEST = os.environ.get('DOCKER_TEST', False)
 if DOCKER_TEST:
-    MURMUR_HOSTS = [{
-        'name': 'Test Server',
-        'address': 'murmur-rest:5000',
-        'uri': 'http://murmur-rest:5000',
-        'hostname': 'murmur-rest',
-        'http_uri': 'http://localhost:4000/static/img',
-        'monitor_uri': 'http://localhost:5555',
-        'location': 'local',
-        'location_name': 'Local',
-        'status': 'active',
-        'capacity': 100,
-        'username': '',
-        'password': ''
-    }]
+    MURMUR_HOSTS = [
+        {
+            'name': 'Test Server',
+            'address': 'murmur-rest:8080',
+            'uri': 'http://murmur-rest:8080',
+            'hostname': 'murmur-rest',
+            'http_uri': 'http://localhost:4000/static/img',
+            'monitor_uri': 'http://localhost:5555',
+            'contact': 'user@docker.local',
+            'location': 'local',
+            'location_name': 'Local (docker)',
+            'status': 'active',
+            'capacity': 100,
+            'username': 'admin',
+            'password': 'password'
+        }
+    ]
 
 PACKAGES = [
     {
-        'name': 'PACKAGE-Test',
+        'name': 'Test',
         'slots': 10,
         'duration': 48  # Days in hours
     },
     {
-        'name': 'PACKAGE-A',
+        'name': 'Bronze',
         'slots': 25,
         'duration': 168  # Days in hours
     },
     {
-        'name': 'PACKAGE-B',
+        'name': 'Silver',
         'slots': 25,
         'duration': 336  # Days in hours
     },
     {
-        'name': 'PACKAGE-C',
+        'name': 'Gold',
         'slots': 25,
         'duration': 720 # Days in hours
     }
