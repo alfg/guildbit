@@ -149,7 +149,7 @@ class PaymentView(FlaskView):
             "status": "received"
         })
 
-    @route('/paypal-gateway', methods=['GET', 'POST'])
+    @route('/paypal-gateway', methods=['POST'])
     def paypal_gateway(self):
         """
         Paypal callback receiver. Generates token and sends the code via email to user.

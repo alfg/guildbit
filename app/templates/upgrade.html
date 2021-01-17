@@ -22,7 +22,8 @@
               <li class="bullet-item">Sub-channels</li>
               <li class="bullet-item">SuperUser Admin</li>
               <li class="cta-button">
-                <script async src="/static/js/libs/paypal.js?merchant=UYN9SV4FS6NXU"
+                <div id="paypal-button-container-0"></div>
+                <!-- <script async src="/static/js/libs/paypal.js?merchant=UYN9SV4FS6NXU"
                         data-button="buynow"
                         data-size="small"
                         data-type="form"
@@ -33,7 +34,7 @@
                         data-callback="https://guildbit.com/payment/paypal-gateway"
                         data-return="https://guildbit.com/payment/success"
                         data-rm="1"></script>
-              </li>
+              </li> -->
             </ul>
           </div>
           <div class="pure-u-1-1 pure-u-md-1-3">
@@ -45,7 +46,8 @@
               <li class="bullet-item">Sub-channels</li>
               <li class="bullet-item">SuperUser Admin</li>
               <li class="cta-button">
-                <script async src="/static/js/libs/paypal.js?merchant=UYN9SV4FS6NXU"
+                <div id="paypal-button-container-1"></div>
+                <!-- <script async src="/static/js/libs/paypal.js?merchant=UYN9SV4FS6NXU"
                         data-button="buynow"
                         data-size="small"
                         data-type="form"
@@ -56,7 +58,7 @@
                         data-callback="https://guildbit.com/payment/paypal-gateway"
                         data-return="https://guildbit.com/payment/success"
                         data-rm="1"
-                        data-host="www.paypal.com"></script>
+                        data-host="www.paypal.com"></script> -->
               </li>
             </ul>
           </div>
@@ -69,7 +71,8 @@
               <li class="bullet-item">Sub-channels</li>
               <li class="bullet-item">SuperUser Admin</li>
               <li class="cta-button">
-                <script async src="/static/js/libs/paypal.js?merchant=UYN9SV4FS6NXU"
+                <div id="paypal-button-container-2"></div>
+                <!-- <script async src="/static/js/libs/paypal.js?merchant=UYN9SV4FS6NXU"
                         data-button="buynow"
                         data-size="small"
                         data-type="form"
@@ -80,11 +83,10 @@
                         data-callback="https://guildbit.com/payment/paypal-gateway"
                         data-return="https://guildbit.com/payment/success"
                         data-rm="1"
-                        data-host="www.paypal.com"></script>
+                        data-host="www.paypal.com"></script> -->
               </li>
             </ul>
           </div>
-
 
           {% if config['DEBUG'] or request.args.get('test') %}
           <div class="pure-u-1-3">
@@ -96,7 +98,8 @@
               <li class="bullet-item">Sub-channels</li>
               <li class="bullet-item">SuperUser Admin</li>
               <li class="cta-button">
-                <script async src="/static/js/libs/paypal.js?merchant=alf.g.jr@gmail.com"
+                <!-- <div id="paypal-button-container-3"></div> -->
+                <!-- <script async src="/static/js/libs/paypal.js?merchant=alf.g.jr@gmail.com"
                         data-button="buynow"
                         data-size="small"
                         data-type="form"
@@ -104,10 +107,10 @@
                         data-amount="0.01"
                         data-currency="USD"
                         data-no_shipping="1"
-                        data-callback="https://guildbit.com/payment/paypal-gateway"
+                        data-callback="https://webhook.site/6f937e46-cb8e-495c-8a21-d9d74e6900f8"
                         data-return="https://guildbit.com/payment/success"
                         data-rm="1"
-                        data-host="www.sandbox.paypal.com"></script>
+                        data-host="www.sandbox.paypal.com"></script> -->
               </li>
             </ul>
           </div>
@@ -119,4 +122,54 @@
 {% endblock %}
 
 {% block scripts %}
+  <script src="https://www.paypal.com/sdk/js?client-id=Acvqv_7VaW1yO_oQmFvDPWwhgsZY2QCwqApzEeSGibAJeYaK6v5ekshyTpwyZCDTFxkWx6hnGQOGebAA&currency=USD&disable-funding=credit" data-sdk-integration-source="button-factory"></script>
+  <script>
+    function createPayPalButton(item) {
+      paypal.Buttons({
+        style: {
+          shape: 'rect',
+          color: 'blue',
+          layout: 'vertical',
+          label: 'paypal',
+        },
+
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              "description": item.desc,
+              "amount": {
+                "currency_code": "USD",
+                "value": item.value
+              }
+            }]
+          });
+        },
+
+        onApprove: function(data, actions) {
+          window.location = '/payment/success';
+          return actions.order.capture().then(function(details) {
+            console.log(details);
+          });
+        },
+
+        onError: function(err) {
+          console.log(err);
+        }
+      }).render('#paypal-button-container-' + item.id);
+    }
+
+    var buttons = [
+      { id: 0, desc: 'Bronze', value: 2 },
+      { id: 1, desc: 'Silver', value: 3 },
+      { id: 2, desc: 'Gold', value: 5 },
+    ];
+
+    {% if config['DEBUG'] or request.args.get('test') %}
+      buttons.push({ id: 3, value: 0.01 });
+    {% endif %}
+
+    for (var i = 0; i < buttons.length; i++) {
+      createPayPalButton(buttons[i]);
+    }
+  </script>
 {% endblock %}
