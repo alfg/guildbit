@@ -22,6 +22,7 @@ def get_host_by_location(location):
             if v == location:
                 return {
                     'uri': i['uri'],
+                    'hostname': i['hostname'],
                     'username': i['username'],
                     'password': i['password']
                 }
@@ -364,8 +365,8 @@ def find_available_port(location):
     active_ports = sorted(active_ports)
     inactive_ports = sorted(inactive_ports)
 
-    print("Active ports:", active_ports)
-    print("Inactive ports: ", inactive_ports)
+    # print("Active ports:", active_ports)
+    # print("Inactive ports: ", inactive_ports)
 
     # If any inactive ports, then use the first item. Otherwise, use the last active port + 1
     if inactive_ports:
@@ -373,5 +374,5 @@ def find_available_port(location):
     else:
         chosen_port = active_ports[-1] + 1
 
-    print("Next available port: %s" % chosen_port)
+    # print("Next available port: %s" % chosen_port)
     return chosen_port
