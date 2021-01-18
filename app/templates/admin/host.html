@@ -14,16 +14,16 @@
                 <td>{{ host.id }}</td>
             </tr>
             <tr>
+                <td>Name</td>
+                <td>{{ host.name }}</td>
+            </tr>
+            <tr>
                 <td>Hostname</td>
                 <td>{{ host.hostname }}</td>
             </tr>
             <tr>
-                <td>Location</td>
-                <td>{{ host.location }}</td>
-            </tr>
-            <tr>
-                <td>Location Name</td>
-                <td>{{ host.location_name }}</td>
+                <td>Region</td>
+                <td>{{ host.region }}</td>
             </tr>
             <tr>
                 <td>URI</td>
@@ -35,7 +35,9 @@
             </tr>
             <tr>
                 <td>Type</td>
-                <td>{{ host.type }}</td>
+                <td>
+                    <span class="label label-blue">{{ 'Upgraded ⚡️' if host.type == 1 else 'Free' }}</span>
+                </td>
             </tr>
             <tr>
                 <td>Username</td>
@@ -59,8 +61,32 @@
               <div class="modal-body">
                       {{ form.csrf_token }}
                       <div class="pure-control-group">
+                          <label for="role">Name</label>
+                          {{ form.name }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Hostname</label>
+                          {{ form.hostname }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Region</label>
+                          {{ form.region }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">URI</label>
+                          {{ form.uri }}
+                      </div>
+                      <div class="pure-control-group">
                           <label for="role">Active</label>
                           {{ form.active }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Username</label>
+                          {{ form.username }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Password</label>
+                          {{ form.password }}
                       </div>
                       <fieldset>
                           {% for error in form.errors.active %}

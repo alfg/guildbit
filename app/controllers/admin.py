@@ -9,7 +9,7 @@ import settings
 from app.util import admin_required
 from app import db
 from app.forms import UserAdminForm, DeployCustomServerForm, NoticeForm, SuperuserPasswordForm
-from app.forms import SendChannelMessageForm, CreateTokenForm, CleanupExpiredServersForm, build_hosts_list
+from app.forms import SendChannelMessageForm, CreateTokenForm, CleanupExpiredServersForm, get_all_hosts
 from app.forms import CreateHostForm, HostAdminForm
 from app.models import Server, User, Notice, Rating, Token, Host
 import app.murmur as murmur
@@ -162,8 +162,8 @@ class AdminPortsView(FlaskView):
     @admin_required
     def index(self):
         filter = request.args.get('filter')
-        server_list = build_hosts_list()
 
+        server_list = get_all_hosts()
         if filter is not None:
             stats = murmur.get_server_stats(filter)
             ports = murmur.list_all_servers(filter)
@@ -224,8 +224,7 @@ class AdminHostsView(FlaskView):
                 h = Host()
                 h.name = form.name.data or None
                 h.hostname = form.hostname.data or None
-                h.location = form.location.data or None
-                h.location_name = form.location_name.data or None
+                h.region = form.region.data or None
                 h.uri = form.uri.data or None
                 h.active = False
                 h.type = form.type.data or None
@@ -248,19 +247,30 @@ class AdminHostsView(FlaskView):
     @admin_required
     def get(self, id):
         host = Host.query.filter_by(id=id).first_or_404()
-        form = HostAdminForm(active=host.active)
+        form = HostAdminForm(
+            name=host.name,
+            hostname=host.hostname,
+            region=host.region,
+            uri=host.uri,
+            active=host.active,
+            username=host.username,
+            password=host.password
+            )
         return render_template('admin/host.html', host=host, form=form, title="Host: %s" % host.hostname)
 
     @login_required
     @admin_required
-    def post(self, id):
+    @route('/<id>', methods=['POST'])
+    def update(self, id):
         host = Host.query.filter_by(id=id).first()
         form = HostAdminForm(request.form, active=host.active)
         if form.validate_on_submit():
             host.active = form.active.data
+            host.username = form.username.data
+            host.password = form.password.data
             db.session.commit()
             return redirect('/admin/hosts/%s' % host.id)
-        return render_template('admin/host.html', host=host, form=form, title="HOst: %s" % host.hostname)
+        return render_template('admin/host.html', host=host, form=form, title="Host: %s" % host.hostname)
 
 
     @login_required

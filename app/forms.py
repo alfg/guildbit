@@ -7,14 +7,21 @@ from flask_babel import lazy_gettext as __
 from settings import MURMUR_HOSTS, PACKAGES
 
 
-def build_hosts_list():
+def get_all_hosts():
     hosts_list = []
     for i in MURMUR_HOSTS:
         for k, v in i.items():
-            if k == "location" and i['status'] == 'active':
+            if k == "location":
                 hosts_list.append((v, i['location_name']))
     return hosts_list
 
+def get_active_hosts():
+    hosts_list = []
+    for i in MURMUR_HOSTS:
+        for k, v in i.items():
+            if k == "location" and i['active'] == True:
+                hosts_list.append((v, i['location_name']))
+    return hosts_list
 
 def build_packages_list():
     packages_list = []
@@ -36,7 +43,7 @@ def duration_choices():
 
 
 class DeployServerForm(Form):
-    _server_locations = build_hosts_list()
+    _server_locations = get_active_hosts()
 
     location = SelectField('location',
                            validators=[DataRequired()],
@@ -57,7 +64,7 @@ class DeployServerForm(Form):
 
 
 class DeployCustomServerForm(Form):
-    _server_locations = build_hosts_list()
+    _server_locations = get_active_hosts()
 
     location = SelectField('location',
                            validators=[DataRequired()],
@@ -72,7 +79,7 @@ class DeployTokenServerForm(Form):
     Form used for creating upgraded server (premium users).
     """
 
-    _server_locations = build_hosts_list()
+    _server_locations = get_active_hosts()
 
     location = SelectField('location',
                            validators=[DataRequired()],
@@ -100,8 +107,7 @@ class CreateTokenForm(Form):
 class CreateHostForm(Form):
     name = TextField('name', validators=[DataRequired('Name is required.')])
     hostname = TextField('hostname', validators=[DataRequired('Hostname is required.')])
-    location = TextField('location', validators=[DataRequired('Location is required.')])
-    location_name = TextField('location_name', validators=[DataRequired('Location Name is required.')])
+    region = TextField('location', validators=[DataRequired('Location is required.')])
     uri = TextField('uri', validators=[DataRequired('URI is required.')])
     username = TextField('username')
     password = TextField('password')
@@ -113,7 +119,13 @@ class CreateHostForm(Form):
                         ])
 
 class HostAdminForm(Form):
+    name = TextField('name', validators=[DataRequired('Name is required.')])
+    hostname = TextField('hostname', validators=[DataRequired('Hostname is required.')])
+    region = TextField('location', validators=[DataRequired('Location is required.')])
+    uri = TextField('uri', validators=[DataRequired('URI is required.')])
     active = BooleanField('active', default=False)
+    username = TextField('username')
+    password = TextField('password')
 
 class LoginForm(Form):
     openid = TextField('openid', validators=[Required()])
@@ -145,7 +157,7 @@ class NoticeForm(Form):
 
 
 class SendChannelMessageForm(Form):
-    _server_locations = build_hosts_list()
+    _server_locations = get_all_hosts()
 
     message = TextField('message', validators=[DataRequired()])
     location = SelectField('location',
@@ -154,7 +166,7 @@ class SendChannelMessageForm(Form):
 
 
 class SuperuserPasswordForm(Form):
-    _server_locations = build_hosts_list()
+    _server_locations = get_all_hosts()
     password = TextField('password',
                          validators=[DataRequired('Password is required.'),
                                      Length(min=3, max=25,
@@ -166,7 +178,7 @@ class SuperuserPasswordForm(Form):
 
 
 class CleanupExpiredServersForm(Form):
-    _server_locations = build_hosts_list()
+    _server_locations = get_all_hosts()
     location = SelectField('location',
                            validators=[DataRequired()],
                            choices=_server_locations)

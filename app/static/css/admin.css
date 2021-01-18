@@ -105,6 +105,7 @@ table.servers tbody tr:hover td {
 .head-logo a:active {
     background: url(../img/guildbit_logo2.png) no-repeat;
     background-size: 75%;
+    background-position: center;
     height: 100%;
     width: 100%;
     position: relative;

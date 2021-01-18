@@ -513,6 +513,21 @@ table .subchannels { background: #42B8DD; color: white; text-shadow: 0 1px 1px r
     border-bottom: dotted 1px #DDD;
 }
 
+.pricing-chart .regions {
+    background-color: rgb(243, 243, 243);
+    padding: 0.5em 1.25em;
+    text-align: center;
+    color: #333;
+    font-weight: normal;
+    font-size: 0.9em;
+}
+
+.pricing-chart .region-item {
+    font-size: 0.75em;
+    padding: 0.5em 1.25em;
+    list-style: circle;
+}
+
 .pricing-chart .cta-button {
     background-color: #F5F5F5;
     text-align: center;

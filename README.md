@@ -49,7 +49,7 @@ $ flask run
 * Running on http://0.0.0.0:5000/
 * Restarting with reloader
 ```
-
+* Database and schema will automatically be created via Flask-Migrate.
 * Development server is running with default settings. See [Configuration Guide](https://github.com/alfg/guildbit/wiki/Configuration-Guide) for additional configuration options.
 * Update `MURMUR_HOSTS` with your murmur-rest host.
 * Run celery in a separate process (but in the same python environment) to start the messaging queue:
@@ -65,13 +65,13 @@ $ docker-compose up
 
 redis_1 | * DB loaded from disk: 0.000 seconds
 redis_1 | * The server is now ready to accept connections on port 6379
-app_1   | * Running on http://0.0.0.0:5000/
+app_1   | * Running on http://0.0.0.0:8081/
 app_1   | * Restarting with reloader
 ```
 
-Load `http://docker-machine-host:5000` in your browser.
+Load `http://localhost:8081` in your browser.
 
-When deploying a server, you'll see the Direct Link as `mumble://murmur-rest:50001`. Simply, replace `murmur-rest` with your docker-machine host. Example: `192.168.99.100`.
+When deploying a server, you'll see the Direct Link as `mumble://murmur-rest:50001`. Simply, replace `murmur-rest` with `localhost`. 
 
 *Please note the `docker-compose.yml` file opens ports 50001-50050 for testing. Update as needed.*
 

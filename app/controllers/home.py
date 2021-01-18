@@ -7,7 +7,7 @@ from flask_mail import Message
 import settings
 from app import db, tasks, mail
 from app.forms import DeployServerForm, ContactForm
-from app.forms import duration_choices
+from app.forms import duration_choices, get_active_hosts
 from app.models import Server
 from app import murmur
 
@@ -80,7 +80,8 @@ class HomeView(FlaskView):
 
     @route('/upgrade/')
     def upgrade(self):
-        return render_template('upgrade.html')
+        regions = get_active_hosts()
+        return render_template('upgrade.html', regions=regions)
 
     @route('/contact/', methods=['POST', 'GET'])
     def contact(self):
