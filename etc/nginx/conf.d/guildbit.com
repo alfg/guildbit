@@ -44,13 +44,13 @@ server {
     client_max_body_size 5M;
 
     location / {
-        proxy_pass         http://127.0.0.1:5555/;
+        proxy_pass         http://guildbit:5555/;
         proxy_redirect     off;
         proxy_set_header   Host             $http_host;
         proxy_set_header   X-Real-IP        $remote_addr;
         proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
 
-	auth_basic            "Restricted";
-	auth_basic_user_file  /home/alf/htpasswd;
+    auth_basic            "Restricted";
+    auth_basic_user_file  /root/htpasswd;
     }
 }
