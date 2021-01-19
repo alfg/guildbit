@@ -1,0 +1,109 @@
+{% extends"layout/admin_base.html" %}
+
+{% block title %}Admin Host{% endblock %}
+
+{% block body %}
+    <div>
+        <button class="pure-button button-secondary" data-toggle="modal" data-target="#hostAdminModal">Update Status</button>
+    </div>
+    <br />
+    <table class="pure-table pure-table-horizontal pure-table-striped servers">
+        <tbody>
+            <tr>
+                <td>Host ID</td>
+                <td>{{ host.id }}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{ host.name }}</td>
+            </tr>
+            <tr>
+                <td>Hostname</td>
+                <td>{{ host.hostname }}</td>
+            </tr>
+            <tr>
+                <td>Region</td>
+                <td>{{ host.region }}</td>
+            </tr>
+            <tr>
+                <td>URI</td>
+                <td>{{ host.uri }}</td>
+            </tr>
+            <tr>
+                <td>Active</td>
+                <td>{{ '✔️' if host.active else '❌' }}</td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>
+                    <span class="label label-blue">{{ 'Upgraded ⚡️' if host.type == 1 else 'Free' }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td>{{ host.username }}</td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>{{ host.password }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- User Admin Modal -->
+    <div class="modal fade" id="hostAdminModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="" method="post" name="role" class="pure-form pure-form-aligned">
+              <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Update Host - {{ host.hostname }}</h4>
+              </div>
+              <div class="modal-body">
+                      {{ form.csrf_token }}
+                      <div class="pure-control-group">
+                          <label for="role">Name</label>
+                          {{ form.name }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Hostname</label>
+                          {{ form.hostname }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Region</label>
+                          {{ form.region }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">URI</label>
+                          {{ form.uri }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Active</label>
+                          {{ form.active }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Username</label>
+                          {{ form.username }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Password</label>
+                          {{ form.password }}
+                      </div>
+                      <fieldset>
+                          {% for error in form.errors.active %}
+                              <span class="label label-red">{{ error }}</span>
+                          {% endfor %}
+                      </fieldset>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="pure-button" data-dismiss="modal">Close</button>
+                <button type="submit" class="pure-button button-secondary">Save changes</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+{% endblock %}

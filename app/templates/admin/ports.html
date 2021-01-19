@@ -21,8 +21,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ stats.servers_online }}</td>
-                    <td>{{ stats.users_online }}</td>
+                    <td>{{ ctx.servers_online }}</td>
+                    <td>{{ ctx.users_online }}</td>
                 </tr>
             </tbody>
         </table>
@@ -43,7 +43,7 @@
         </thead>
 
         <tbody>
-            {% for s in ports|sort(attribute='port') %}
+            {% for s in ctx.ports|sort(attribute='port') %}
             <tr>
                 <td>{{ s.port }}</td>
                 <td>{{ s.id }}</td>

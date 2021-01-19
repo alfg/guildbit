@@ -103,7 +103,9 @@ table.servers tbody tr:hover td {
 .head-logo a,
 .head-logo a:visited,
 .head-logo a:active {
-    background: url(../img/guildbit_logo.png) no-repeat;
+    background: url(../img/guildbit_logo2.png) no-repeat;
+    background-size: 75%;
+    background-position: center;
     height: 100%;
     width: 100%;
     position: relative;
@@ -122,12 +124,14 @@ table.servers tbody tr:hover td {
     text-indent: 100%;
     margin: 0 auto;
     padding: 20px 5px;
+    padding-left: 20px;
 }
 
 .head-logo-small a,
 .head-logo-small a:visited,
 .head-logo-small a:active {
-    background: url(../img/guildbit_logo_small_v2.png) no-repeat;
+    background: url(../img/guildbit_logo2.png) no-repeat;
+    background-size: 75%;
     height: 100%;
     width: 100%;
     position: relative;
