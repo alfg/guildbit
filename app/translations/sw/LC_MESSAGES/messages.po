@@ -105,11 +105,11 @@ msgstr ""
 "          zamani. Sadaka na malipo zinatumikana kulipa gharama zingine. "
 
 #: app/templates/how_it_works.html:18
-msgid "Set a location"
+msgid "Set a region"
 msgstr "Tega pahalii ya seva"
 
 #: app/templates/how_it_works.html:19
-msgid "Choose a server location closest to your group to minimize latency."
+msgid "Choose a server region closest to your group to minimize latency."
 msgstr "Chagua pahali ya seva iko karibu kundi yako kupunguza ukawivu"
 
 #: app/templates/how_it_works.html:22

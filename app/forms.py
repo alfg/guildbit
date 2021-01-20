@@ -4,23 +4,26 @@ from wtforms import TextField, SelectField, BooleanField, IntegerField, TextArea
 from wtforms.validators import DataRequired, Required, Email, Length, Regexp
 from flask_babel import lazy_gettext as __
 
-from settings import MURMUR_HOSTS, PACKAGES
+from settings import PACKAGES
+
+from app.models import Host
 
 
 def get_all_hosts():
+    hosts = Host.get_all_hosts()
+
     hosts_list = []
-    for i in MURMUR_HOSTS:
-        for k, v in i.items():
-            if k == "location":
-                hosts_list.append((v, i['location_name']))
+    for host in hosts:
+        hosts_list.append((host.region, host.name))
     return hosts_list
 
-def get_active_hosts():
+def get_active_hosts_by_type(type):
+    hosts = Host.get_hosts_by_type(type)
+
     hosts_list = []
-    for i in MURMUR_HOSTS:
-        for k, v in i.items():
-            if k == "location" and i['active'] == True:
-                hosts_list.append((v, i['location_name']))
+    for host in hosts:
+        if host.active:
+            hosts_list.append((host.region, host.name))
     return hosts_list
 
 def build_packages_list():
@@ -43,11 +46,9 @@ def duration_choices():
 
 
 class DeployServerForm(Form):
-    _server_locations = get_active_hosts()
-
-    location = SelectField('location',
+    region = SelectField('region',
                            validators=[DataRequired()],
-                           choices=_server_locations)
+                           choices=[])
     duration = SelectField('duration',
                            validators=[DataRequired()],
                            choices=[
@@ -64,11 +65,9 @@ class DeployServerForm(Form):
 
 
 class DeployCustomServerForm(Form):
-    _server_locations = get_active_hosts()
-
-    location = SelectField('location',
+    region = SelectField('region',
                            validators=[DataRequired()],
-                           choices=_server_locations)
+                           choices=[])
     slots = IntegerField('slots', default=15)
     password = TextField('password', validators=[DataRequired('Password is required.')])
     channel_name = TextField('channel_name')
@@ -79,11 +78,9 @@ class DeployTokenServerForm(Form):
     Form used for creating upgraded server (premium users).
     """
 
-    _server_locations = get_active_hosts()
-
-    location = SelectField('location',
+    region = SelectField('region',
                            validators=[DataRequired()],
-                           choices=_server_locations)
+                           choices=[])
     password = TextField('password',
                          validators=[DataRequired('Password is required.'),
                                      Regexp("^[A-Za-z0-9_-]*$", re.IGNORECASE, message="Password must be letters and/or numbers only."),
@@ -107,7 +104,7 @@ class CreateTokenForm(Form):
 class CreateHostForm(Form):
     name = TextField('name', validators=[DataRequired('Name is required.')])
     hostname = TextField('hostname', validators=[DataRequired('Hostname is required.')])
-    region = TextField('location', validators=[DataRequired('Location is required.')])
+    region = TextField('region', validators=[DataRequired('region is required.')])
     uri = TextField('uri', validators=[DataRequired('URI is required.')])
     username = TextField('username')
     password = TextField('password')
@@ -121,7 +118,7 @@ class CreateHostForm(Form):
 class HostAdminForm(Form):
     name = TextField('name', validators=[DataRequired('Name is required.')])
     hostname = TextField('hostname', validators=[DataRequired('Hostname is required.')])
-    region = TextField('location', validators=[DataRequired('Location is required.')])
+    region = TextField('region', validators=[DataRequired('region is required.')])
     uri = TextField('uri', validators=[DataRequired('URI is required.')])
     active = BooleanField('active', default=False)
     username = TextField('username')
@@ -157,31 +154,31 @@ class NoticeForm(Form):
 
 
 class SendChannelMessageForm(Form):
-    _server_locations = get_all_hosts()
+    _server_regions = get_all_hosts()
 
     message = TextField('message', validators=[DataRequired()])
-    location = SelectField('location',
+    region = SelectField('region',
                            validators=[DataRequired()],
-                           choices=_server_locations)
+                           choices=_server_regions)
 
 
 class SuperuserPasswordForm(Form):
-    _server_locations = get_all_hosts()
+    _server_regions = get_all_hosts()
     password = TextField('password',
                          validators=[DataRequired('Password is required.'),
                                      Length(min=3, max=25,
                                             message="Password must be between 3 and 25 characters long.")])
-    location = SelectField('location',
+    region = SelectField('region',
                            validators=[DataRequired()],
-                           choices=_server_locations)
+                           choices=_server_regions)
     instance = IntegerField('instance')
 
 
 class CleanupExpiredServersForm(Form):
-    _server_locations = get_all_hosts()
-    location = SelectField('location',
+    _server_regions = get_all_hosts()
+    region = SelectField('region',
                            validators=[DataRequired()],
-                           choices=_server_locations)
+                           choices=_server_regions)
 
 
 class ContactForm(Form):

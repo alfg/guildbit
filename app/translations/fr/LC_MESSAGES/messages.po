@@ -107,7 +107,7 @@ msgstr ""
 "auparavant. Le reste est supporté par les dons et améliorations."
 
 #: app/templates/how_it_works.html:18
-msgid "Set a location"
+msgid "Set a region"
 msgstr "Choisir un lieu"
 
 #: app/templates/how_it_works.html:19

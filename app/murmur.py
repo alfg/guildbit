@@ -6,74 +6,115 @@ All murmur utility functions and logic for interfacing with configured murmur se
 import requests
 from requests.auth import HTTPDigestAuth
 
-from settings import MURMUR_HOSTS, DEFAULT_MURMUR_PORT
+from settings import DEFAULT_MURMUR_PORT
+from app.models import Host
 
 ##
 ## Helper functions to load configs from settings
 ##
 
 
-def get_host_by_location(location):
+def get_host_by_region(region):
     """
-    Searches MURMUR_HOSTS settings and returns tuple of uri for given location.
+    Searches Hosts and returns tuple of uri for given region.
     """
-    for i in MURMUR_HOSTS:
-        for k, v in i.items():
-            if v == location:
-                return {
-                    'uri': i['uri'],
-                    'hostname': i['hostname'],
-                    'username': i['username'],
-                    'password': i['password']
-                }
-            else:
-                pass
+    hosts = Host.get_all_hosts()
+    for host in hosts:
+        if host.region == region:
+            return {
+                'name': host.name,
+                'region': host.region,
+                'uri': host.uri,
+                'active': host.active,
+                'type': host.type,
+                'hostname': host.hostname,
+                'username': host.username,
+                'password': host.password 
+            }
+        else:
+            pass
+    return {}
+
+def get_host_by_hostname(hostname):
+    """
+    Searches Hosts and returns tuple of uri for given region.
+    """
+    hosts = Host.get_all_hosts()
+    for host in hosts:
+        if host.hostname == hostname:
+            return {
+                'name': host.name,
+                'region': host.region,
+                'uri': host.uri,
+                'active': host.active,
+                'type': host.type,
+                'hostname': host.hostname,
+                'username': host.username,
+                'password': host.password 
+            }
+        else:
+            pass
     return {}
 
 
-def get_murmur_hostname(location):
+def get_murmur_hostname(region):
     """
     Shortcut for getting murmur's hostname.
     """
-    host = get_host_by_location(location)
+    host = get_host_by_region(region)
     return host.get('hostname', None)
 
 
-def get_http_uri(location):
+def get_http_uri(region):
     """
     Shortcut for getting murmur's hostname.
     """
-    host = get_host_by_location(location)
+    host = get_host_by_region(region)
     return host.get('http_uri', None)
 
 
-def get_murmur_uri(location):
+def get_murmur_uri(hostname):
     """
     Shortcut for getting murmur's uri.
     @rtype : dict
     """
-    host = get_host_by_location(location)
+    host = get_host_by_hostname(hostname)
     return host.get('uri', None)
 
-
-def get_murmur_credentials(location):
+def get_murmur_region(hostname):
     """
-    Shortcut for getting murmur's credentials for specified location.
+    Shortcut for getting murmur's region.
+    @rtype : dict
+    """
+    host = get_host_by_hostname(hostname)
+    return host.get('region', None)
+
+def get_murmur_name(hostname):
+    """
+    Shortcut for getting murmur's name.
+    @rtype : dict
+    """
+    host = get_host_by_hostname(hostname)
+    return host.get('name', None)
+
+def get_murmur_credentials(hostname):
+    """
+    Shortcut for getting murmur's credentials for specified hostname.
     """
 
-    host = get_host_by_location(location)
+    host = get_host_by_hostname(hostname)
     username = host.get('username', None)
     password = host.get('password', None)
     return {'username': username, 'password': password}
 
 
-def list_murmur_instances(location):
+def list_murmur_instances(region):
     """
-    Lists all instances and ports for specified location.
-    @param location:
+    Lists all instances and ports for specified region.
+    @param region:
     @return: list of instances and ports
     """
-    servers = list_all_servers(location)
+    servers = list_all_servers(region)
     instances = []
 
     for i in servers:
@@ -96,20 +137,20 @@ def create_server(host, payload):
     return server_id
 
 
-def create_server_by_location(location, payload):
+def create_server_by_region(region, payload):
     """
-    Accepts location and POST data payload as parameters and returns the id of the server created at host.
+    Accepts region and POST data payload as parameters and returns the id of the server created at host.
     """
-    host = get_host_by_location(location)['uri']
-    auth = get_murmur_credentials(location)
-    port_check = find_available_port(location)
+    host = get_host_by_region(region)
+    auth = get_murmur_credentials(host['hostname'])
+    port_check = find_available_port(host['hostname'])
 
     # Set port if there's an open port
     if port_check is not None:
         payload["port"] = port_check
 
     try:
-        r = requests.post(host + "/servers/", data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
+        r = requests.post(host['uri'] + "/servers/", data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
         if r.ok:
             server_id = r.json()['id']
             return server_id
@@ -122,7 +163,7 @@ def create_server_by_location(location, payload):
 
 def get_server(host, instance_id):
     """
-    Accepts host location (sf.guildbit.com), and mumble_instance id and returns dict of server information.
+    Accepts host region (sf.guildbit.com), and mumble_instance id and returns dict of server information.
     """
     uri = get_murmur_uri(host)
     auth = get_murmur_credentials(host)
@@ -167,7 +208,7 @@ def get_server_stats(host):
     auth = get_murmur_credentials(host)
     try:
         r = requests.get("%s/stats/" % uri, auth=HTTPDigestAuth(auth['username'],
-                                                                       auth['password']))
+                                                                auth['password']))
         if r.ok:
             stats = {
                 'servers_online': r.json()['booted_servers'],
@@ -189,13 +230,14 @@ def get_all_server_stats():
     """
     Get server stats for all hosts.
     """
+    hosts = Host.get_all_hosts()
     stats = {
         'servers_online': 0,
         'users_online': 0
     }
-    for i in MURMUR_HOSTS:
+    for host in hosts:
         try:
-            s = get_server_stats(i['hostname'])
+            s = get_server_stats(host.hostname)
             stats['servers_online'] += s.get('servers_online', 0)
             stats['users_online'] += s.get('users_online', 0)
         except:
@@ -244,14 +286,14 @@ def send_message_all_channels(host, message):
     return
 
 
-def list_all_servers(location):
+def list_all_servers(region):
     """
-    Lists all servers for specified location
-    @param location: location from config
+    Lists all servers for specified region
+    @param region: region from config
     @return: list
     """
-    uri = get_murmur_uri(location)
-    auth = get_murmur_credentials(location)
+    uri = get_murmur_uri(region)
+    auth = get_murmur_credentials(region)
 
     if uri is not None:
         try:
@@ -266,16 +308,16 @@ def list_all_servers(location):
         return None
 
 
-def set_superuser_password(location, password, instance_id):
+def set_superuser_password(region, password, instance_id):
     """
     Sets SuperUser password.
-    @param location: server location from config
+    @param region: server region from config
     @param password: password
     @param instance_id: instance id of virtual mumble server
     @return:
     """
-    host = get_host_by_location(location)['uri']
-    auth = get_murmur_credentials(location)
+    host = get_host_by_region(region)['uri']
+    auth = get_murmur_credentials(region)
     payload = {'password': password}
 
     try:
@@ -289,15 +331,15 @@ def set_superuser_password(location, password, instance_id):
     return None
 
 
-def cleanup_expired_servers(location, expired_ids):
+def cleanup_expired_servers(region, expired_ids):
     """
     Cleans up expired servers.
-    @param location: location from config
+    @param region: region from config
     @param expired_ids: list of mumble_instance IDs to be expired.
     @return: None
     """
-    host = get_host_by_location(location)['uri']
-    auth = get_murmur_credentials(location)
+    host = get_host_by_region(region)['uri']
+    auth = get_murmur_credentials(region)
     expired_ids = ','.join(str(x) for x in expired_ids)
 
     try:
@@ -336,17 +378,17 @@ def start_server(host, instance_id):
 ##
 
 
-def find_available_port(location):
+def find_available_port(hostname):
     """
     Scans all active ports in use and selects the next available port.
-    @param location: location of mumble server instance from config
+    @param region: region of mumble server instance from config
     @return: Port number
     """
 
     start_port = DEFAULT_MURMUR_PORT
 
     # Query list of active ports
-    servers = list_all_servers(location)
+    servers = list_all_servers(hostname)
 
     # Set active and inactive port lists. Initialize the start port.
     active_ports = [start_port]

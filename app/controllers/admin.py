@@ -10,7 +10,7 @@ from app.util import admin_required
 from app import db
 from app.forms import UserAdminForm, DeployCustomServerForm, NoticeForm, SuperuserPasswordForm
 from app.forms import SendChannelMessageForm, CreateTokenForm, CleanupExpiredServersForm, get_all_hosts
-from app.forms import CreateHostForm, HostAdminForm
+from app.forms import CreateHostForm, HostAdminForm, get_active_hosts_by_type
 from app.models import Server, User, Notice, Rating, Token, Host
 import app.murmur as murmur
 
@@ -58,6 +58,7 @@ class AdminServersView(FlaskView):
     @admin_required
     def index(self):
         form = DeployCustomServerForm()
+        form.region.choices = get_active_hosts_by_type('free')
         filter = request.args.get('filter')
         page = int(request.args.get('page', 1))
 
@@ -88,6 +89,7 @@ class AdminServersView(FlaskView):
     @admin_required
     def post(self):
         form = DeployCustomServerForm()
+        form.region.choices = get_active_hosts_by_type('free')
         if form.validate_on_submit():
             try:
                 # Generate UUID
@@ -102,11 +104,11 @@ class AdminServersView(FlaskView):
                     'users': form.slots.data,
                     'registername': form.channel_name.data
                 }
-                server_id = murmur.create_server_by_location(form.location.data, payload)
+                server_id = murmur.create_server_by_region(form.region.data, payload)
 
                 # Create database entry
                 s = Server()
-                s.mumble_host = murmur.get_murmur_hostname(form.location.data)
+                s.mumble_host = murmur.get_murmur_hostname(form.region.data)
                 s.duration = 0
                 s.password = form.password.data
                 s.uuid = gen_uuid
@@ -161,22 +163,23 @@ class AdminPortsView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-        filter = request.args.get('filter')
+        region = request.args.get('filter')
 
-        server_list = get_all_hosts()
-        if filter is not None:
-            stats = murmur.get_server_stats(filter)
-            ports = murmur.list_all_servers(filter)
+        hosts = Host.query.all()
+        if region is not None:
+            host = Host.query.filter_by(region=region).first()
+            stats = murmur.get_server_stats(host.hostname)
+            ports = murmur.list_all_servers(host.hostname)
         else:
-            stats = murmur.get_server_stats(server_list[0][0])
-            ports = murmur.list_all_servers(server_list[0][0])
+            stats = murmur.get_server_stats(hosts[0].hostname)
+            ports = murmur.list_all_servers(hosts[0].hostname)
 
         ctx = {
             'servers_online': stats.get('servers_online'),
             'users_online': stats.get('users_online'),
             'ports': ports
         }
-        return render_template('admin/ports.html', ctx=ctx, server_list=server_list, title="Ports")
+        return render_template('admin/ports.html', ctx=ctx, hosts=hosts, title="Ports")
 
 
 class AdminUsersView(FlaskView):
@@ -265,6 +268,10 @@ class AdminHostsView(FlaskView):
         host = Host.query.filter_by(id=id).first()
         form = HostAdminForm(request.form, active=host.active)
         if form.validate_on_submit():
+            host.name = form.name.data
+            host.hostname = form.hostname.data
+            host.region = form.region.data
+            host.uri = form.uri.data
             host.active = form.active.data
             host.username = form.username.data
             host.password = form.password.data
@@ -301,7 +308,7 @@ class AdminToolsView(FlaskView):
     @admin_required
     @route('/header-message', methods=['POST'])
     def update_header_message(self):
-        notice = Notice.query.filter_by(location='base').first()
+        notice = Notice.query.filter_by(region='base').first()
         form = NoticeForm(obj=notice)
 
         if form.validate_on_submit():
@@ -311,7 +318,7 @@ class AdminToolsView(FlaskView):
                 notice.active = form.active.data
                 notice.message_type = form.message_type.data
                 notice.message = form.message.data
-                notice.location = 'base'
+                notice.region = 'base'
 
             db.session.add(notice)
             db.session.commit()
@@ -324,9 +331,9 @@ class AdminToolsView(FlaskView):
     def send_channel_message(self):
         form = SendChannelMessageForm()
         if form.validate_on_submit():
-            location = form.location.data
+            region = form.region.data
             message = form.message.data
-            murmur.send_message_all_channels(location, message)
+            murmur.send_message_all_channels(region, message)
             return redirect('/admin/tools/')
         return redirect('/admin/tools/')
 
@@ -336,10 +343,10 @@ class AdminToolsView(FlaskView):
     def set_superuser_password(self):
         form = SuperuserPasswordForm()
         if form.validate_on_submit():
-            location = form.location.data
+            region = form.region.data
             password = form.password.data
             instance = form.instance.data
-            murmur.set_superuser_password(location, password, instance)
+            murmur.set_superuser_password(region, password, instance)
             return redirect('/admin/tools/')
         return redirect('/admin/tools/')
 
@@ -350,8 +357,8 @@ class AdminToolsView(FlaskView):
         form = CleanupExpiredServersForm()
 
         if form.validate_on_submit():
-            location = form.location.data
-            hostname = murmur.get_host_by_location(location)['hostname']
+            region = form.region.data
+            hostname = murmur.get_host_by_region(region)['hostname']
 
             servers = Server.query.filter_by(status='active', type='temp', mumble_host=hostname).all()
             expired = [s.mumble_instance for s in servers if s.is_expired]  # Filter servers if it should be expired.
@@ -363,7 +370,7 @@ class AdminToolsView(FlaskView):
 
             try:
                 db.session.commit()
-                murmur.cleanup_expired_servers(location, expired)
+                murmur.cleanup_expired_servers(region, expired)
                 return redirect('/admin/tools/')
             except:
                 db.session.rollback()

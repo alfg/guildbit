@@ -67,9 +67,9 @@ class User(db.Model):
         return self.role
 
     def get_role_name(self):
-        if self.role == 0:
+        if self.role == ROLE_USER:
             role_name = "user"
-        elif self.role == 1:
+        elif self.role == ROLE_ADMIN:
             role_name = "admin"
         else:
             role_name = "unassigned"
@@ -145,6 +145,29 @@ class Host(db.Model):
     type = db.Column(db.SmallInteger, default=HOST_TYPE_FREE)
     username = db.Column(db.String(120), unique=False, index=False)
     password = db.Column(db.String(120), unique=False, index=False)
+
+    def get_host_type(self):
+        if self.role == HOST_TYPE_FREE:
+            role_name = "free"
+        elif self.role == HOST_TYPE_UPGRADE:
+            role_name = "upgrade"
+        else:
+            role_name = "unassigned"
+        return role_name
+
+    @staticmethod
+    def get_hosts_by_type(type):
+        if type == "free":
+            type = HOST_TYPE_FREE
+        elif type == "upgrade":
+            type = HOST_TYPE_UPGRADE
+        hosts = Host.query.filter_by(type=type).all()
+        return hosts
+
+    @staticmethod
+    def get_all_hosts():
+        hosts = Host.query.all()
+        return hosts
 
     def __repr__(self):
         return '<Host %r>' % self.hostname

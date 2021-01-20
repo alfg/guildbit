@@ -9,7 +9,7 @@ from flask_mail import Message
 import settings
 from app.util import get_package_by_name
 from app import db, tasks, mail
-from app.forms import DeployTokenServerForm
+from app.forms import DeployTokenServerForm, get_active_hosts_by_type
 from app.models import Server, Token
 from app import murmur
 
@@ -22,6 +22,7 @@ class PaymentView(FlaskView):
     @route('/create/<id>', methods=['GET', 'POST'])
     def create(self, id):
         form = DeployTokenServerForm()
+        form.region.choices = get_active_hosts_by_type('upgrade')
         token = Token.query.filter_by(uuid=id).first_or_404()
         package = get_package_by_name(token.package)
 
@@ -47,8 +48,8 @@ class PaymentView(FlaskView):
                 }
 
                 # Create virtual murmur server and set SuperUser password
-                server_id = murmur.create_server_by_location(form.location.data, payload)
-                murmur.set_superuser_password(form.location.data, form.superuser_password.data, server_id)
+                server_id = murmur.create_server_by_region(form.region.data, payload)
+                murmur.set_superuser_password(form.region.data, form.superuser_password.data, server_id)
 
                 # Create database entry
                 s = Server()
@@ -57,7 +58,7 @@ class PaymentView(FlaskView):
                 s.uuid = gen_uuid
                 s.type = 'upgrade'
                 s.mumble_instance = server_id
-                s.mumble_host = murmur.get_murmur_hostname(form.location.data)
+                s.mumble_host = murmur.get_murmur_hostname(form.region.data)
                 s.cvp_uuid = str(uuid.uuid4())
 
                 # Expire token

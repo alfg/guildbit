@@ -21,10 +21,11 @@ class ServerView(FlaskView):
 
         server = Server.query.filter_by(uuid=id).first_or_404()
         rating = Rating.query.filter_by(server_uuid=id, ip=ip).first()
+        name = murmur.get_murmur_name(server.mumble_host)
 
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
         if server_details is not None:
-            return render_template('server.html', server=server, details=server_details, rating=rating, ip=ip)
+            return render_template('server.html', server=server, details=server_details, name=name, rating=rating, ip=ip)
         else:
             return render_template('server_expired.html', server=server, rating=rating)
 
