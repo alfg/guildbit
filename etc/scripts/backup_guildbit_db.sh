@@ -6,7 +6,7 @@
 # Place provided .pgpass file in home directory and chmod 0600
 ###
 
-NOW=$(date +"%m-%d-%Y")
+NOW=$(date +"%m-%d-%Y-%H%M%S")
 
 echo "Dumping Guildbit database..."
 pg_dump -U postgres -h localhost guildbit > /tmp/test.sql

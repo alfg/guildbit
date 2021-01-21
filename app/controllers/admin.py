@@ -308,7 +308,7 @@ class AdminToolsView(FlaskView):
     @admin_required
     @route('/header-message', methods=['POST'])
     def update_header_message(self):
-        notice = Notice.query.filter_by(region='base').first()
+        notice = Notice.query.filter_by(location='base').first()
         form = NoticeForm(obj=notice)
 
         if form.validate_on_submit():
@@ -318,7 +318,7 @@ class AdminToolsView(FlaskView):
                 notice.active = form.active.data
                 notice.message_type = form.message_type.data
                 notice.message = form.message.data
-                notice.region = 'base'
+                notice.location = 'base'
 
             db.session.add(notice)
             db.session.commit()
