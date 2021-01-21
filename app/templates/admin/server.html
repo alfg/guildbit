@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <td>Type</td>
-                <td>{{ server.type }}</td>
+                <td><span class="label {{ 'label-blue' if server.type == 'upgrade' }}">{{ server.type }}</span></td>
             </tr>
             <tr>
                 <td>Created</td>
@@ -70,7 +70,7 @@
             {% if details != None %}
             <tr>
                 <td>Server</td>
-                <td>{{ server.mumble_host }}</td>
+                <td>{{ server.mumble_host }}<span class="pull-right label">{{ name }}</span></td>
             </tr>
             <tr>
                 <td>Port</td>
