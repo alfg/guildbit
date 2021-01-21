@@ -164,16 +164,16 @@ class AdminPortsView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-        region = request.args.get('filter')
+        region = request.args.get('region')
 
         hosts = Host.query.all()
         if region is not None:
             host = Host.query.filter_by(region=region).first()
-            stats = murmur.get_server_stats(host.hostname)
-            ports = murmur.list_all_servers(host.hostname)
+            stats = murmur.get_server_stats(host.region)
+            ports = murmur.list_all_servers(host.region)
         else:
-            stats = murmur.get_server_stats(hosts[0].hostname)
-            ports = murmur.list_all_servers(hosts[0].hostname)
+            stats = murmur.get_server_stats(hosts[0].region)
+            ports = murmur.list_all_servers(hosts[0].region)
 
         ctx = {
             'servers_online': stats.get('servers_online'),

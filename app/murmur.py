@@ -73,36 +73,36 @@ def get_http_uri(region):
     return host.get('http_uri', None)
 
 
-def get_murmur_uri(hostname):
+def get_murmur_uri(region):
     """
     Shortcut for getting murmur's uri.
     @rtype : dict
     """
-    host = get_host_by_hostname(hostname)
+    host = get_host_by_region(region)
     return host.get('uri', None)
 
-def get_murmur_region(hostname):
+def get_murmur_region(region):
     """
     Shortcut for getting murmur's region.
     @rtype : dict
     """
-    host = get_host_by_hostname(hostname)
+    host = get_host_by_region(region)
     return host.get('region', None)
 
-def get_murmur_name(hostname):
+def get_murmur_name(region):
     """
     Shortcut for getting murmur's name.
     @rtype : dict
     """
-    host = get_host_by_hostname(hostname)
+    host = get_host_by_region(region)
     return host.get('name', None)
 
-def get_murmur_credentials(hostname):
+def get_murmur_credentials(region):
     """
-    Shortcut for getting murmur's credentials for specified hostname.
+    Shortcut for getting murmur's credentials for specified region.
     """
 
-    host = get_host_by_hostname(hostname)
+    host = get_host_by_region(region)
     username = host.get('username', None)
     password = host.get('password', None)
     return {'username': username, 'password': password}
