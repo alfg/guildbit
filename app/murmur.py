@@ -64,15 +64,6 @@ def get_murmur_hostname(region):
     host = get_host_by_region(region)
     return host.get('hostname', None)
 
-
-def get_http_uri(region):
-    """
-    Shortcut for getting murmur's hostname.
-    """
-    host = get_host_by_region(region)
-    return host.get('http_uri', None)
-
-
 def get_murmur_uri(region):
     """
     Shortcut for getting murmur's uri.
@@ -80,22 +71,6 @@ def get_murmur_uri(region):
     """
     host = get_host_by_region(region)
     return host.get('uri', None)
-
-def get_murmur_region(region):
-    """
-    Shortcut for getting murmur's region.
-    @rtype : dict
-    """
-    host = get_host_by_region(region)
-    return host.get('region', None)
-
-def get_murmur_name(region):
-    """
-    Shortcut for getting murmur's name.
-    @rtype : dict
-    """
-    host = get_host_by_region(region)
-    return host.get('name', None)
 
 def get_murmur_credentials(region):
     """
@@ -127,11 +102,12 @@ def list_murmur_instances(region):
 ## Functions to interface with murmur-rest server
 ##
 
-def create_server(host, payload):
+def create_server(hostname, payload):
     """
     Accepts host and POST data payload as parameters and returns the id of the server created at host.
     """
-    auth = get_murmur_credentials(host)
+    host = get_host_by_hostname(hostname)
+    auth = get_murmur_credentials(host['region'])
     r = requests.post(host + "/servers/", data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
     server_id = r.json()['id']
     return server_id
@@ -142,15 +118,14 @@ def create_server_by_region(region, payload):
     Accepts region and POST data payload as parameters and returns the id of the server created at host.
     """
     host = get_host_by_region(region)
-    auth = get_murmur_credentials(host['hostname'])
-    port_check = find_available_port(host['hostname'])
+    port_check = find_available_port(host['region'])
 
     # Set port if there's an open port
     if port_check is not None:
         payload["port"] = port_check
 
     try:
-        r = requests.post(host['uri'] + "/servers/", data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
+        r = requests.post(host['uri'] + "/servers/", data=payload, auth=HTTPDigestAuth(host['username'], host['password']))
         if r.ok:
             server_id = r.json()['id']
             return server_id
@@ -161,17 +136,17 @@ def create_server_by_region(region, payload):
     return None
 
 
-def get_server(host, instance_id):
+def get_server(hostname, instance_id):
     """
     Accepts host region (sf.guildbit.com), and mumble_instance id and returns dict of server information.
     """
-    uri = get_murmur_uri(host)
-    auth = get_murmur_credentials(host)
+    host = get_host_by_hostname(hostname)
 
-    if uri is not None:
+    if host['uri'] is not None:
         try:
-            r = requests.get("%s/servers/%i" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
-                                                                                       auth['password']))
+            r = requests.get("%s/servers/%i" % (host['uri'], instance_id),
+                                                auth=HTTPDigestAuth(host['username'],
+                                                                    host['password']))
             if r.ok:
                 return r.json()
         except requests.exceptions.ConnectionError as e:
@@ -182,15 +157,15 @@ def get_server(host, instance_id):
         return None
 
 
-def delete_server(host, instance_id):
+def delete_server(hostname, instance_id):
     """
     Deletes a server by hostname and instance_id.
     """
-    uri = get_murmur_uri(host)
-    auth = get_murmur_credentials(host)
+    host = get_host_by_hostname(hostname)
+
     try:
-        r = requests.delete("%s/servers/%i" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
-                                                                                      auth['password']))
+        r = requests.delete("%s/servers/%i" % (host['uri'], instance_id), auth=HTTPDigestAuth(host['username'],
+                                                                                      host['password']))
         if r.ok:
             return r.json()
     except requests.exceptions.ConnectionError as e:
@@ -200,15 +175,15 @@ def delete_server(host, instance_id):
     return None
 
 
-def get_server_stats(host):
+def get_server_stats(region):
     """
     Get server stats for one host.
     """
-    uri = get_murmur_uri(host)
-    auth = get_murmur_credentials(host)
+    host = get_host_by_region(region)
+
     try:
-        r = requests.get("%s/stats/" % uri, auth=HTTPDigestAuth(auth['username'],
-                                                                auth['password']))
+        r = requests.get("%s/stats/" % host['uri'], auth=HTTPDigestAuth(host['username'],
+                                                                        host['password']))
         if r.ok:
             stats = {
                 'servers_online': r.json()['booted_servers'],
@@ -237,7 +212,7 @@ def get_all_server_stats():
     }
     for host in hosts:
         try:
-            s = get_server_stats(host.hostname)
+            s = get_server_stats(host.region)
             stats['servers_online'] += s.get('servers_online', 0)
             stats['users_online'] += s.get('users_online', 0)
         except:
@@ -352,26 +327,6 @@ def cleanup_expired_servers(region, expired_ids):
         traceback.print_exc()
         return None
     return None
-
-
-def stop_server(host, instance_id):
-    """
-    Stops a server by host and id.
-    @param host:
-    @param instance_id:
-    @return:
-    """
-    return
-
-
-def start_server(host, instance_id):
-    """
-    Starts server by host and id.
-    @param host:
-    @param instance_id:
-    @return:
-    """
-    return
 
 ##
 ## Utilities for interfacing with murmur servers

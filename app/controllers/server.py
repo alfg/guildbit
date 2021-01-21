@@ -21,7 +21,7 @@ class ServerView(FlaskView):
 
         server = Server.query.filter_by(uuid=id).first_or_404()
         rating = Rating.query.filter_by(server_uuid=id, ip=ip).first()
-        name = murmur.get_murmur_name(server.mumble_host)
+        name = murmur.get_host_by_hostname(server.mumble_host)['name']
 
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
         if server_details is not None:

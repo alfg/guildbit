@@ -82,7 +82,7 @@ class AdminServersView(FlaskView):
     def get(self, id):
         server = Server.query.filter_by(id=id).first_or_404()
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
-        name = murmur.get_murmur_name(server.mumble_host)
+        name = murmur.get_host_by_hostname(server.mumble_host)['name']
 
         return render_template('admin/server.html', server=server, details=server_details, name=name, title="Server: %s" % id)
 
