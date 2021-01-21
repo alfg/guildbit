@@ -21,7 +21,7 @@
         <fieldset>
             <legend>Send message to all Mumble channels in server</legend>
             {{ message_form.message(class="pure-input-1-2") }}
-            {{ message_form.location }}
+            {{ message_form.region }}
             <button type="submit" class="pure-button pure-button-primary channel-message-button" disabled="disabled">Send</button>
             <label for="toggle">
                 <input id="toggle" type="checkbox" /> Enable
@@ -34,7 +34,7 @@
       <fieldset>
         <legend>Sets SuperUser password for server</legend>
         {{ superuser_pw_form.password(class="pure-input-1-2") }}
-        {{ superuser_pw_form.location }}
+        {{ superuser_pw_form.region }}
         {{ superuser_pw_form.instance(placeholder='id', size=1) }}
         <button type="submit" class="pure-button pure-button-primary">Send</button>
       </fieldset>
@@ -44,7 +44,7 @@
         {{ cleanup_form.csrf_token }}
         <fieldset>
             <legend>Cleans up expired servers.</legend>
-            {{ cleanup_form.location }}
+            {{ cleanup_form.region }}
             <button type="submit" class="pure-button pure-button-primary">Clean</button>
         </fieldset>
     </form>

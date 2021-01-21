@@ -8,7 +8,7 @@
 
         <form id="deploy-form" class="pure-form deploy-form" action="/" method="POST">
             {{ form.csrf_token }}
-            {{ form.location }}
+            {{ form.region }}
             {{ form.duration }}
             {{ form.password(size=20, class='', placeholder='%s' % _('Set a Password'), autocomplete='off') }}
             <button id="deploy-button" class="pure-button pure-button-primary track-submit" type="submit" value="Submit"

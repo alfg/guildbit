@@ -7,7 +7,7 @@ from flask_login import current_user
 import requests
 from requests import ConnectionError
 
-from settings import MURMUR_HOSTS, PACKAGES, STEAM_API_KEY
+from settings import PACKAGES, STEAM_API_KEY
 
 
 def admin_required(fn):
@@ -35,40 +35,40 @@ def get_or_create(session, model, **kwargs):
         return instance
 
 
-def host_balancer():
-    """ INACTIVE
-    Checks the amount of murmur hosts in settings and returns a server depending on server instances load. Used for
-    deciding which murmur host to use when deploying a new mumble instance.
-    """
+# def host_balancer():
+#     """ INACTIVE
+#     Checks the amount of murmur hosts in settings and returns a server depending on server instances load. Used for
+#     deciding which murmur host to use when deploying a new mumble instance.
+#     """
 
-    hosts = MURMUR_HOSTS  # List of hosts defined in settings
+#     hosts = MURMUR_HOSTS  # List of hosts defined in settings
 
-    # Query stats for each murmur host in settings. Adds the booted_servers count as a key to the dict.
-    servers_list = []
-    for host in hosts:
-        try:
-            r = requests.get("%s/stats/" % host['uri'])
+#     # Query stats for each murmur host in settings. Adds the booted_servers count as a key to the dict.
+#     servers_list = []
+#     for host in hosts:
+#         try:
+#             r = requests.get("%s/stats/" % host['uri'])
 
-            if r.status_code == 200:
-                host['booted_servers'] = r.json()['booted_servers']
-                servers_list.append(host)
+#             if r.status_code == 200:
+#                 host['booted_servers'] = r.json()['booted_servers']
+#                 servers_list.append(host)
 
-        except ConnectionError:
-            # Don't add to servers_list if exception
-            pass
+#         except ConnectionError:
+#             # Don't add to servers_list if exception
+#             pass
 
-    # Find the lowest populated server from the compiled servers_list and return the selected dict object
-    if servers_list:
-        lowest = min(servers_list, key=lambda x:x['booted_servers'])
-    else:
-        lowest = None
+#     # Find the lowest populated server from the compiled servers_list and return the selected dict object
+#     if servers_list:
+#         lowest = min(servers_list, key=lambda x:x['booted_servers'])
+#     else:
+#         lowest = None
 
-    return lowest
+#     return lowest
 
 
 def get_package_by_name(name):
     """
-    Searches MURMUR_HOSTS settings and returns tuple of address, uri, and hostname for given location.
+    Searches PACKAGES settings and returns tuple of address, uri, and hostname for given region.
     """
     for i in PACKAGES:
         for k, v in i.items():

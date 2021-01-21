@@ -7,7 +7,7 @@ from flask_mail import Message
 import settings
 from app import db, tasks, mail
 from app.forms import DeployServerForm, ContactForm
-from app.forms import duration_choices, get_active_hosts
+from app.forms import duration_choices, get_active_hosts_by_type
 from app.models import Server
 from app import murmur
 
@@ -19,12 +19,15 @@ class HomeView(FlaskView):
         user = g.user
         form = DeployServerForm()
         form.duration.choices = duration_choices()
+        form.region.choices = get_active_hosts_by_type('free')
         return render_template('index.html', form=form)
 
     def post(self):
         form = DeployServerForm()
-        if form.validate_on_submit():
+        form.duration.choices = duration_choices()
+        form.region.choices = get_active_hosts_by_type('free')
 
+        if form.validate_on_submit():
             try:
                 # Generate UUID
                 gen_uuid = str(uuid.uuid4())
@@ -43,7 +46,7 @@ class HomeView(FlaskView):
                     'registername': settings.DEFAULT_CHANNEL_NAME
                 }
 
-                server_id = murmur.create_server_by_location(form.location.data, payload)
+                server_id = murmur.create_server_by_region(form.region.data, payload)
 
                 # Create database entry
                 s = Server()
@@ -52,7 +55,7 @@ class HomeView(FlaskView):
                 s.password = form.password.data
                 s.uuid = gen_uuid
                 s.mumble_instance = server_id
-                s.mumble_host = murmur.get_murmur_hostname(form.location.data)
+                s.mumble_host = murmur.get_murmur_hostname(form.region.data)
                 s.ip = ip
                 db.session.add(s)
                 db.session.commit()
@@ -80,7 +83,7 @@ class HomeView(FlaskView):
 
     @route('/upgrade/')
     def upgrade(self):
-        regions = get_active_hosts()
+        regions = get_active_hosts_by_type('upgrade')
         return render_template('upgrade.html', regions=regions)
 
     @route('/contact/', methods=['POST', 'GET'])

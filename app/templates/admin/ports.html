@@ -1,13 +1,13 @@
 {% extends"layout/admin_base.html" %}
-{% set filter = request.args.get('filter') %}
+{% set region = request.args.get('region') %}
 
 {% block title %}Admin Home{% endblock %}
 
 {% block body %}
     <form class="pure-form" method="get">
-        <select id="select-host" name="filter">
-            {% for k, v in server_list %}
-                <option value="{{ k }}" {% if request.args.get('filter') == k %}selected="selected"{% endif %}>{{ v }}</option>
+        <select id="select-host" name="region">
+            {% for host in hosts %}
+                <option value="{{ host.region }}" {% if request.args.get('region') == host.region %}selected="selected"{% endif %}>{{ host.region }}</option>
             {% endfor %}
         </select>
     </form>
