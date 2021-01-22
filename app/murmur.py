@@ -220,16 +220,17 @@ def get_all_server_stats():
     return stats
 
 
-def get_server_logs(host, instance_id):
+def get_server_logs(hostname, instance_id):
     """
     Get server logs for specified host and instance.
     """
-    uri = get_murmur_uri(host)
-    auth = get_murmur_credentials(host)
-    if uri is not None:
+    host = get_host_by_hostname(hostname)
+
+    if host['uri'] is not None:
         try:
-            r = requests.get("%s/servers/%s/logs" % (uri, instance_id), auth=HTTPDigestAuth(auth['username'],
-                                                                                                   auth['password']))
+            r = requests.get("%s/servers/%s/logs" % (host['uri'], instance_id),
+                            auth=HTTPDigestAuth(host['username'],
+                                                host['password']))
             if r.ok:
                 logs = r.json()
                 return logs
@@ -245,16 +246,15 @@ def send_message_all_channels(host, message):
     """
     Send a message to all channels on host.
     """
-    uri = get_murmur_uri(host)
-    auth = get_murmur_credentials(host)
-    servers_list = requests.get('%s/servers/' % uri)
+    host = get_host_by_hostname(hostname)
+    servers_list = requests.get('%s/servers/' % host['uri'])
     server_ids_list = [i['id'] for i in servers_list.json()]
 
     for i in server_ids_list:
         try:
-            r = requests.post("%s/servers/%s/sendmessage" % (uri, i),
+            r = requests.post("%s/servers/%s/sendmessage" % (host['uri'], i),
                               data={'message': message},
-                              auth=HTTPDigestAuth(auth['username'], auth['password']))
+                              auth=HTTPDigestAuth(host['username'], host['password']))
         except requests.exceptions.ConnectionError as e:
             import traceback
             traceback.print_exc()
