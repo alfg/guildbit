@@ -37,10 +37,10 @@ def build_packages_list():
 
 def duration_choices():
     choices = [
-        ('4', '4 %s' % __('Hours')),
-        ('8', '8 %s' % __('Hours')),
-        ('16', '16 %s' % __('Hours')),
-        ('24', '24 %s' % __('Hours'))
+        ('1', '1 %s' % __('Hour')),
+        ('2', '2 %s' % __('Hours')),
+        ('3', '3 %s' % __('Hours')),
+        ('4', '4 %s' % __('Hours'))
     ]
     return choices
 
@@ -52,10 +52,10 @@ class DeployServerForm(Form):
     duration = SelectField('duration',
                            validators=[DataRequired()],
                            choices=[
-                               ('4', '4 Hours'),
-                               ('8', '8 Hours'),
-                               ('16', '16 Hours'),
-                               ('24', '24 Hours')
+                               ('1', '1 Hour'),
+                               ('2', '2 Hours'),
+                               ('3', '3 Hours'),
+                               ('4', '4 Hours')
                            ])
     password = TextField('password',
                          validators=[DataRequired('Password is required.'),
