@@ -63,12 +63,17 @@
             <tr>
                 <td>{{ s.port }}</td>
                 <td>{{ s.id }}</td>
-                <td>{{ s.uptime }}</td>
+                <td><span class="{{ 'label label-blue' if s.uptime_seconds|int > 18000 }}">{{ s.uptime }}</span></td>
                 <td>{{ s.log_length }}</td>
                 <td>{{ s.channels }}</td>
                 <td><span class="{{ 'label label-blue' if s.maxusers|int >= 50 }}">{{ s.maxusers }}</span></td>
-                <td>{{ s.users }}</td>
-                <td><button class="delete-server pure-button button-error button-small" data-id="{{ s.id }}">Delete</button></td>
+                <td><span class="{{ 'label label-blue' if s.users|int > 0 }}">{{ s.users }}</span></td>
+                <td>
+                    <button
+                        class="delete-server pure-button button-error button-small"
+                        data-id="{{ s.id }}"
+                        {{ 'disabled=disabled' if s.maxusers|int >= 50 }}>Delete</button>
+                </td>
             </tr>
             {% endfor %}
             {% if ports == [] %}
@@ -83,12 +88,6 @@
 {% block scripts %}
     <script src="/static/js/admin.js"></script>
     <script src="/static/js/libs/moment.min.js"></script>
-    <script type="text/javascript">
-        // Moment.js time formatting
-        $(".created-date").text(function(index, value) {
-            return moment.utc(value).local().format("MM/DD h:mm:ss a");
-        });
-    </script>
     <script>
         $(function() {
             // Update Bandwidth Info on select change
