@@ -10,8 +10,8 @@ from app.util import admin_required
 from app import db
 from app.forms import UserAdminForm, DeployCustomServerForm, NoticeForm, SuperuserPasswordForm
 from app.forms import SendChannelMessageForm, CreateTokenForm, CleanupExpiredServersForm, get_all_hosts
-from app.forms import CreateHostForm, HostAdminForm, get_active_hosts_by_type
-from app.models import Server, User, Notice, Rating, Token, Host
+from app.forms import CreateHostForm, HostAdminForm, CreatePackageForm, get_active_hosts_by_type
+from app.models import Server, User, Notice, Rating, Token, Host, Package
 import app.murmur as murmur
 
 ITEMS_PER_PAGE = 50
@@ -172,15 +172,30 @@ class AdminPortsView(FlaskView):
             stats = murmur.get_server_stats(host.region)
             ports = murmur.list_all_servers(host.region)
         else:
-            stats = murmur.get_server_stats(hosts[0].region)
-            ports = murmur.list_all_servers(hosts[0].region)
+            host = hosts[0]
+            stats = murmur.get_server_stats(host.region)
+            ports = murmur.list_all_servers(host.region)
 
         ctx = {
+            'host': host,
             'servers_online': stats.get('servers_online'),
             'users_online': stats.get('users_online'),
             'ports': ports
         }
         return render_template('admin/ports.html', ctx=ctx, hosts=hosts, title="Ports")
+
+    @login_required
+    @admin_required
+    @route('/<hostname>/<int:instance_id>', methods=['DELETE'])
+    def delete_instance(self, hostname, instance_id):
+        try:
+            resp = murmur.delete_server(hostname, instance_id)
+        except:
+            import traceback
+            db.session.rollback()
+            traceback.print_exc()
+
+        return jsonify(resp)
 
 
 class AdminUsersView(FlaskView):
@@ -434,3 +449,67 @@ class AdminTokensView(FlaskView):
 
             return render_template('admin/tokens.html', form=form, tokens=tokens)
         return render_template('admin/tokens.html', form=form, tokens=tokens)
+
+class AdminPackagesView(FlaskView):
+    @login_required
+    @admin_required
+    def index(self):
+        form = CreatePackageForm()
+        packages = Package.query.order_by(Package.id.desc()).all()
+        return render_template('admin/packages.html', form=form, packages=packages, title="Packages")
+
+    @login_required
+    @admin_required
+    def post(self):
+        form = CreatePackageForm()
+        packages = Package.query.order_by(Package.id.desc()).all()
+        if form.validate_on_submit():
+            try:
+                # Create database entry
+                p = Package()
+                p.name = form.name.data or None
+                p.description = form.description.data or None
+                p.price = form.price.data or None
+                p.slots = form.slots.data or None
+                p.duration = form.duration.data or None
+
+                db.session.add(p)
+                db.session.commit()
+                return redirect('/admin/packages/')
+
+            except:
+                import traceback
+                db.session.rollback()
+                traceback.print_exc()
+                return redirect('/admin/packages/')
+
+        return render_template('admin/packages.html', form=form, packages=packages)
+
+    @login_required
+    @admin_required
+    def get(self, id):
+        package = Package.query.filter_by(id=id).first_or_404()
+        form = CreatePackageForm(
+            name=package.name,
+            description=package.description,
+            price=package.price,
+            slots=package.slots,
+            duration=package.duration
+            )
+        return render_template('admin/package.html', package=package, form=form, title="Pacakge: %s" % package.name)
+
+    @login_required
+    @admin_required
+    @route('/<id>', methods=['POST'])
+    def update(self, id):
+        package = Package.query.filter_by(id=id).first()
+        form = CreatePackageForm(request.form)
+        if form.validate_on_submit():
+            package.name = form.name.data
+            package.description = form.description.data
+            package.price = form.price.data
+            package.slots = form.slots.data
+            package.duration = form.duration.data
+            db.session.commit()
+            return redirect('/admin/packages/%s' % package.id)
+        return render_template('admin/package.html', package=package, form=form, title="Package: %s" % package.name)

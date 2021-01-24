@@ -1,0 +1,87 @@
+{% extends"layout/admin_base.html" %}
+
+{% block title %}Admin Package{% endblock %}
+
+{% block body %}
+    <div>
+        <button class="pure-button button-secondary" data-toggle="modal" data-target="#packageAdminModal">Update Status</button>
+    </div>
+    <br />
+    <table class="pure-table pure-table-horizontal pure-table-striped servers">
+        <tbody>
+            <tr>
+                <td>Package ID</td>
+                <td>{{ package.id }}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{ package.name }}</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>{{ package.description }}</td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td>{{ package.price }}</td>
+            </tr>
+            <tr>
+                <td>Slots</td>
+                <td>{{ package.slots }}</td>
+            </tr>
+            <tr>
+                <td>Duration</td>
+                <td>{{ package.duration }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- User Admin Modal -->
+    <div class="modal fade" id="packageAdminModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="" method="post" name="role" class="pure-form pure-form-aligned">
+              <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Update Package - {{ package.name }}</h4>
+              </div>
+              <div class="modal-body">
+                      {{ form.csrf_token }}
+                      <div class="pure-control-group">
+                          <label for="role">Name</label>
+                          {{ form.name }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Description</label>
+                          {{ form.description }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Price</label>
+                          {{ form.price }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Slots</label>
+                          {{ form.slots }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="role">Duration</label>
+                          {{ form.duration }}
+                      </div>
+                      <fieldset>
+                          {% for error in form.errors.active %}
+                              <span class="label label-red">{{ error }}</span>
+                          {% endfor %}
+                      </fieldset>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="pure-button" data-dismiss="modal">Close</button>
+                <button type="submit" class="pure-button button-secondary">Save changes</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+{% endblock %}

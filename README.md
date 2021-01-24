@@ -51,7 +51,6 @@ $ flask run
 ```
 * Database and schema will automatically be created via Flask-Migrate.
 * Development server is running with default settings. See [Configuration Guide](https://github.com/alfg/guildbit/wiki/Configuration-Guide) for additional configuration options.
-* Update `MURMUR_HOSTS` with your murmur-rest host.
 * Run celery in a separate process (but in the same python environment) to start the messaging queue:
   ```
   $ celery worker --app=app.tasks -l info

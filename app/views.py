@@ -9,7 +9,7 @@ from app import app, db, lm, oid, cache, babel
 from app.controllers.home import HomeView
 from app.controllers.server import ServerView
 from app.controllers.admin import AdminView, AdminServersView, AdminPortsView, AdminHostsView, AdminFeedbackView
-from app.controllers.admin import AdminTokensView, AdminToolsView, AdminUsersView
+from app.controllers.admin import AdminTokensView, AdminToolsView, AdminUsersView, AdminPackagesView
 from app.controllers.payment import PaymentView
 
 from app.forms import LoginForm
@@ -109,3 +109,4 @@ AdminHostsView.register(app, route_prefix='/admin/', route_base='/hosts')
 AdminToolsView.register(app, route_prefix='/admin/', route_base='/tools')
 AdminFeedbackView.register(app, route_prefix='/admin/', route_base='/feedback')
 AdminTokensView.register(app, route_prefix='/admin/', route_base='/tokens')
+AdminPackagesView.register(app, route_prefix='/admin/', route_base='/packages')
