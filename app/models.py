@@ -172,3 +172,11 @@ class Host(db.Model):
     def __repr__(self):
         return '<Host %r>' % self.hostname
 
+
+class Package(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, index=True)
+    description = db.Column(db.String)
+    price = db.Column(db.Integer)
+    slots = db.Column(db.Integer)
+    duration = db.Column(db.Integer)

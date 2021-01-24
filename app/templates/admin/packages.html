@@ -1,0 +1,85 @@
+{% extends"layout/admin_base.html" %}
+
+{% block title %}Admin Packages{% endblock %}
+
+{% block body %}
+  <div class="spacer">
+    <a class="pure-button button-secondary" data-toggle="modal" data-target="#create-package">Create Package</a>
+  </div>
+  <table class="pure-table pure-table-horizontal pure-table-striped servers">
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Slots</th>
+              <th>Duration</th>
+          </tr>
+      </thead>
+
+      <tbody>
+          {% for package in packages %}
+          <tr>
+              <td><a href="/admin/packages/{{ package.id }}">{{ package.name }}</a></td>
+              <td>{{ package.description }}</td>
+              <td>{{ package.price }}</td>
+              <td>{{ package.slots }}</td>
+              <td>{{ package.duration }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+
+  <!-- Create Package Modal -->
+  <div class="modal fade" id="create-package" tabindex="-1" role="dialog" aria-labelledby="create-package" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="" method="post" name="role" class="pure-form pure-form-aligned">
+          <div class="modal-header">
+            <h4 class="modal-title">Create a Package</h4>
+          </div>
+          <div class="modal-body">
+            {{ form.csrf_token }}
+            <div class="pure-control-group">
+              <label for="role">Name</label>
+              {{ form.name }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Description</label>
+              {{ form.description }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Price</label>
+              {{ form.price }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Slots</label>
+              {{ form.slots }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Duration</label>
+              {{ form.duration}}
+            </div>
+            {% if form.errors %}
+                <ul>
+                    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                        {% for error in field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="pure-button" data-dismiss="modal">Close</button>
+            <button type="submit" class="pure-button button-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+{% endblock %}

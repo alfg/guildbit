@@ -14,7 +14,7 @@ def get_all_hosts():
 
     hosts_list = []
     for host in hosts:
-        hosts_list.append((host.region, host.name))
+        hosts_list.append((host.region, host.region))
     return hosts_list
 
 def get_active_hosts_by_type(type):
@@ -123,6 +123,13 @@ class HostAdminForm(Form):
     active = BooleanField('active', default=False)
     username = TextField('username')
     password = TextField('password')
+
+class CreatePackageForm(Form):
+    name = TextField('name', validators=[DataRequired('Name is required.')])
+    description = TextField('description')
+    price = IntegerField('price', validators=[DataRequired('Price is required.')])
+    slots = IntegerField('slots', default=15)
+    duration = IntegerField('duration', default=48)
 
 class LoginForm(Form):
     openid = TextField('openid', validators=[Required()])
