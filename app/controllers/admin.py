@@ -472,6 +472,7 @@ class AdminPackagesView(FlaskView):
                 p.price = form.price.data or None
                 p.slots = form.slots.data or None
                 p.duration = form.duration.data or None
+                p.active = False
 
                 db.session.add(p)
                 db.session.commit()
@@ -494,7 +495,8 @@ class AdminPackagesView(FlaskView):
             description=package.description,
             price=package.price,
             slots=package.slots,
-            duration=package.duration
+            duration=package.duration,
+            active=package.active
             )
         return render_template('admin/package.html', package=package, form=form, title="Pacakge: %s" % package.name)
 
@@ -510,6 +512,7 @@ class AdminPackagesView(FlaskView):
             package.price = form.price.data
             package.slots = form.slots.data
             package.duration = form.duration.data
+            package.active = form.active.data
             db.session.commit()
             return redirect('/admin/packages/%s' % package.id)
         return render_template('admin/package.html', package=package, form=form, title="Package: %s" % package.name)

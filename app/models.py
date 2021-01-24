@@ -180,3 +180,4 @@ class Package(db.Model):
     price = db.Column(db.Integer)
     slots = db.Column(db.Integer)
     duration = db.Column(db.Integer)
+    active = db.Column(db.Boolean, default=False)

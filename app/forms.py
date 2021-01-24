@@ -130,6 +130,7 @@ class CreatePackageForm(Form):
     price = IntegerField('price', validators=[DataRequired('Price is required.')])
     slots = IntegerField('slots', default=15)
     duration = IntegerField('duration', default=48)
+    active = BooleanField('active', default=False)
 
 class LoginForm(Form):
     openid = TextField('openid', validators=[Required()])

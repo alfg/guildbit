@@ -33,6 +33,10 @@
                 <td>Duration</td>
                 <td>{{ package.duration }}</td>
             </tr>
+            <tr>
+                <td>Active</td>
+                <td>{{ '✔️' if package.active else '❌' }}</td>
+            </tr>
         </tbody>
     </table>
 
@@ -47,24 +51,28 @@
               <div class="modal-body">
                       {{ form.csrf_token }}
                       <div class="pure-control-group">
-                          <label for="role">Name</label>
+                          <label for="name">Name</label>
                           {{ form.name }}
                       </div>
                       <div class="pure-control-group">
-                          <label for="role">Description</label>
+                          <label for="description">Description</label>
                           {{ form.description }}
                       </div>
                       <div class="pure-control-group">
-                          <label for="role">Price</label>
+                          <label for="price">Price</label>
                           {{ form.price }}
                       </div>
                       <div class="pure-control-group">
-                          <label for="role">Slots</label>
+                          <label for="slots">Slots</label>
                           {{ form.slots }}
                       </div>
                       <div class="pure-control-group">
-                          <label for="role">Duration</label>
+                          <label for="duration">Duration</label>
                           {{ form.duration }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="active">Active</label>
+                          {{ form.active }}
                       </div>
                       <fieldset>
                           {% for error in form.errors.active %}
