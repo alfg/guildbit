@@ -16,10 +16,34 @@ services:
       - C_FORCE_ROOT=true
     ports:
       - "8081:8081"
-      - "5555:5555"
     volumes:
       - ".:/opt/guildbit"
       # - "./settings.py:/opt/guildbit/settings.py"
+    command: /opt/guildbit/venv/bin/gunicorn -n guildbit -w 1 -b 0.0.0.0:8081 wsgi:app
+
+  celery:
+    build: .
+    links:
+      - redis
+      - murmur-rest
+      - db
+    environment:
+      - REDIS_HOST=redis:6379
+      - C_FORCE_ROOT=true
+    volumes:
+      - ".:/opt/guildbit"
+    command: /opt/guildbit/venv/bin/celery worker --app=app.tasks --concurrency=2 -n guildbit-tasks -l info
+
+  flower:
+    build: .
+    links:
+      - redis
+    environment:
+      - REDIS_HOST=redis:6379
+    ports:
+      - "5555:5555"
+    command: /opt/guildbit/venv/bin/celery flower --broker=redis://redis:6379/0
+
   nginx:
     image: nginx
     volumes:
