@@ -21,25 +21,34 @@ def delete_server(uuid):
     """
 
     try:
+        print("Running delete_server task: %s" % uuid)
         s = Server.query.filter_by(uuid=uuid).first_or_404()
 
-        if s.status != "expired" and datetime.utcnow() < s.expiration:  # Is not expired?
+        if not s:
+            print("Server not found: %s" % uuid)
+            return
 
+        if s.status != "expired" and datetime.utcnow() < s.expiration:  # Is not expired?
             # Re-set task with new expiration
+            print("Extend task for server: %s" % uuid)
             delete_server.apply_async([uuid], eta=s.expiration)
-            print("Extend task for server instance: %s" % uuid)
 
         elif s.status != "expired":
             # Delete mumble server and expire server
+            print("Deleting server: %s" % uuid)
             s.status = 'expired'
-            murmur.delete_server(s.mumble_host, s.mumble_instance)
-            db.session.commit()
-            print("Deleting server instance: %s" % uuid)
+            resp = murmur.delete_server(s.mumble_host, s.mumble_instance)
+            if resp:
+                db.session.commit()
+                print("Deleted server: %s host: %s, id: %d" % (uuid, s.mumble_host, s.mumble_instance))
+            else:
+                print("ERROR deleting server: %s host: %s id: %d" % (uuid, s.mumble_host, s.mumble_instance))
 
         else:
             print("Server instance %s already expired." % uuid)
     except:
         import traceback
+        print("ERROR deleting server: %s host: %s id: %d" % (uuid, s.mumble_host, s.mumble_instance))
         db.session.rollback()
         traceback.print_exc()
     finally:

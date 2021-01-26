@@ -17,14 +17,11 @@ https://guildbit.com
 
 ## Technology Stack
 * [Flask](http://flask.pocoo.org/) - Python Framework
-* [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.1/) - PostgreSQL/SQLite ORM
+* [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/) - PostgreSQL/SQLite ORM
 * [Celery](http://www.celeryproject.org/) - Message Queue for scheduling Mumble Server tasks
-* [Redis](http://redis.io/) - Message broker for Celery
+* [Redis](http://redis.io/) - Cache backend and message broker for Celery
 * [Python-requests](http://docs.python-requests.org/en/master/) - HTTP requests to murmur-rest API
-* [Murmur-rest](https://github.com/alfg/murmur-rest) - Murmur RESTful API
-
-## Install
-For a full production deployment, please refer to [INSTALL.md](INSTALL.md).
+* [Murmur-rest](https://github.com/alfg/murmur-rest) - Murmur HTTP API
 
 ### Requirements
 * Redis-server
