@@ -4,9 +4,7 @@ from wtforms import TextField, SelectField, BooleanField, IntegerField, TextArea
 from wtforms.validators import DataRequired, Required, Email, Length, Regexp
 from flask_babel import lazy_gettext as __
 
-from settings import PACKAGES
-
-from app.models import Host
+from app.models import Host, Package
 
 
 def get_all_hosts():
@@ -27,11 +25,10 @@ def get_active_hosts_by_type(type):
     return hosts_list
 
 def build_packages_list():
+    packages = Package.query.order_by(Package.order.desc()).all()
     packages_list = []
-    for i in PACKAGES:
-        for k, v in i.items():
-            if k == "name":
-                packages_list.append((v, i['name']))
+    for package in packages:
+        packages_list.append((package.name, package.name))
     return packages_list
 
 
@@ -131,6 +128,7 @@ class CreatePackageForm(Form):
     slots = IntegerField('slots', default=15)
     duration = IntegerField('duration', default=48)
     active = BooleanField('active', default=False)
+    order = IntegerField('duration', default=0)
 
 class LoginForm(Form):
     openid = TextField('openid', validators=[Required()])

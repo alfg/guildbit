@@ -181,3 +181,4 @@ class Package(db.Model):
     slots = db.Column(db.Integer)
     duration = db.Column(db.Integer)
     active = db.Column(db.Boolean, default=False)
+    order = db.Column(db.Integer, default=0)

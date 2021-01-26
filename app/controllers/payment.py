@@ -7,10 +7,9 @@ from flask_classy import FlaskView, route
 from flask_mail import Message
 
 import settings
-from app.util import get_package_by_name
 from app import db, tasks, mail
 from app.forms import DeployTokenServerForm, get_active_hosts_by_type
-from app.models import Server, Token
+from app.models import Server, Token, Package
 from app import murmur
 
 
@@ -24,11 +23,11 @@ class PaymentView(FlaskView):
         form = DeployTokenServerForm()
         form.region.choices = get_active_hosts_by_type('upgrade')
         token = Token.query.filter_by(uuid=id).first_or_404()
-        package = get_package_by_name(token.package)
+        package = Package.query.filter_by(name=token.package).first_or_404()
 
         ctx = {
-            'slots': package.get('slots', None),
-            'duration': package.get('duration', None)
+            'slots': package.slots,
+            'duration': package.duration
         }
 
         if form.validate_on_submit():

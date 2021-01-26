@@ -14,6 +14,7 @@
               <th>Price</th>
               <th>Slots</th>
               <th>Duration</th>
+              <th>Order</th>
               <th>Active</th>
           </tr>
       </thead>
@@ -26,6 +27,7 @@
               <td>{{ package.price }}</td>
               <td>{{ package.slots }}</td>
               <td>{{ package.duration }}</td>
+              <td>{{ package.order }}</td>
               <td>{{ '✔️' if package.active else '❌' }}</td>
           </tr>
           {% endfor %}

@@ -8,7 +8,7 @@ import settings
 from app import db, tasks, mail
 from app.forms import DeployServerForm, ContactForm
 from app.forms import duration_choices, get_active_hosts_by_type
-from app.models import Server
+from app.models import Server, Package
 from app import murmur
 
 
@@ -83,8 +83,9 @@ class HomeView(FlaskView):
 
     @route('/upgrade/')
     def upgrade(self):
+        packages = Package.query.filter_by(active=True).order_by(Package.order.asc()).all()
         regions = get_active_hosts_by_type('upgrade')
-        return render_template('upgrade.html', regions=regions)
+        return render_template('upgrade.html', regions=regions, packages=packages)
 
     @route('/contact/', methods=['POST', 'GET'])
     def contact(self):

@@ -11,16 +11,18 @@
           <a href="https://wiki.mumble.info/wiki/ACL_and_Groups/English" target="_BLANK">ACLs</a>.
           <a href="https://wiki.mumble.info/wiki/ACL_and_Groups/English" target="_BLANK">Learn more about SuperUser and ACLs here</a>.</p>
 
-
         <div class="pure-g">
+        {% for package in packages %}
           <div class="pure-u-1-1 pure-u-md-1-3">
             <ul class="pricing-chart">
-              <li class="title">🥉 Bronze</li>
-              <li class="price btc" data-btc="2.00">$2.00</li>
-              <li class="desc">50 Slots &mdash; 7 Days</li>
+              <li class="title">{{ package.name }}</li>
+              <li class="price">${{ "%.2f"|format(package.price) }}</li>
+              <li class="desc">{{ package.description }}</li>
               <li class="bullet-item">Persistent Server & Port</li>
               <li class="bullet-item">Sub-channels</li>
               <li class="bullet-item">SuperUser Admin</li>
+              <li class="bullet-item">Dedicated Region</li>
+              <li class="bullet-item"><span class="ttip text-underline" data-toggle="popover" data-trigger="hover" title="Add a Mumble Channel Viewer Widget on your website!">Mumble Widget CVP</span></li>
               <li class="regions"><i class="fa fa-globe"></i> Available Regions</li>
               {% for k, v in regions %}
                 <li class="bullet-item region-item">{{ v }}</li>
@@ -30,8 +32,8 @@
                         data-button="buynow"
                         data-size="small"
                         data-type="form"
-                        data-name="Bronze"
-                        data-amount="2.00"
+                        data-name="{{ package.name}}"
+                        data-amount="{{ package.price }}"
                         data-currency="USD"
                         data-no_shipping="1"
                         data-callback="https://guildbit.com/payment/paypal-gateway"
@@ -40,63 +42,8 @@
               </li>
             </ul>
           </div>
-          <div class="pure-u-1-1 pure-u-md-1-3">
-            <ul class="pricing-chart">
-              <li class="title">🥈 Silver</li>
-              <li class="price btc" data-btc="3.00">$3.00</li>
-              <li class="desc">50 Slots &mdash; 14 Days</li>
-              <li class="bullet-item">Persistent Server & Port</li>
-              <li class="bullet-item">Sub-channels</li>
-              <li class="bullet-item">SuperUser Admin</li>
-              <li class="regions"><i class="fa fa-globe"></i> Available Regions</li>
-              {% for k, v in regions %}
-                <li class="bullet-item region-item">{{ v }}</li>
-              {% endfor %}
-              <li class="cta-button">
-                <script async src="/static/js/libs/paypal.js?merchant=UYN9SV4FS6NXU"
-                        data-button="buynow"
-                        data-size="small"
-                        data-type="form"
-                        data-name="Silver"
-                        data-amount="3.00"
-                        data-currency="USD"
-                        data-no_shipping="1"
-                        data-callback="https://guildbit.com/payment/paypal-gateway"
-                        data-return="https://guildbit.com/payment/success"
-                        data-rm="1"
-                        data-host="www.paypal.com"></script>
-              </li>
-            </ul>
-          </div>
-          <div class="pure-u-1-1 pure-u-md-1-3">
-            <ul class="pricing-chart">
-              <li class="title">🏅 Gold</li>
-              <li class="price btc" data-btc="5.00">$5.00</li>
-              <li class="desc">50 Slots &mdash; 30 Days</li>
-              <li class="bullet-item">Persistent Server & Port</li>
-              <li class="bullet-item">Sub-channels</li>
-              <li class="bullet-item">SuperUser Admin</li>
-              <li class="regions"><i class="fa fa-globe"></i> Available Regions</li>
-              {% for k, v in regions %}
-                <li class="bullet-item region-item">{{ v }}</li>
-              {% endfor %}
-              <li class="cta-button">
-                <script async src="/static/js/libs/paypal.js?merchant=UYN9SV4FS6NXU"
-                        data-button="buynow"
-                        data-size="small"
-                        data-type="form"
-                        data-name="Gold"
-                        data-amount="5.00"
-                        data-currency="USD"
-                        data-no_shipping="1"
-                        data-callback="https://guildbit.com/payment/paypal-gateway"
-                        data-return="https://guildbit.com/payment/success"
-                        data-rm="1"
-                        data-host="www.paypal.com"></script>
-              </li>
-            </ul>
-          </div>
-
+        {% endfor %}
+        </div>
 
           {% if config['DEBUG'] or request.args.get('test') %}
           <div class="pure-u-1-3">
@@ -107,6 +54,8 @@
               <li class="bullet-item">Persistent Server & Port</li>
               <li class="bullet-item">Sub-channels</li>
               <li class="bullet-item">SuperUser Admin</li>
+              <li class="bullet-item">Dedicated Region</li>
+              <li class="bullet-item"><span class="ttip text-underline" data-toggle="popover" data-trigger="hover" title="Add a Mumble Channel Viewer Widget on your website!">Mumble Widget CVP</span></li>
               <li class="regions"><i class="fa fa-globe"></i> Available Regions</li>
               {% for k, v in regions %}
                 <li class="bullet-item region-item">{{ v }}</li>
@@ -135,4 +84,9 @@
 {% endblock %}
 
 {% block scripts %}
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('.ttip').tooltip({trigger: 'hover'});
+      });
+    </script>
 {% endblock %}

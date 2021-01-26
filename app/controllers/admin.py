@@ -455,7 +455,7 @@ class AdminPackagesView(FlaskView):
     @admin_required
     def index(self):
         form = CreatePackageForm()
-        packages = Package.query.order_by(Package.id.desc()).all()
+        packages = Package.query.order_by(Package.order.desc()).all()
         return render_template('admin/packages.html', form=form, packages=packages, title="Packages")
 
     @login_required
@@ -472,6 +472,7 @@ class AdminPackagesView(FlaskView):
                 p.price = form.price.data or None
                 p.slots = form.slots.data or None
                 p.duration = form.duration.data or None
+                p.order = form.duration.data or 0
                 p.active = False
 
                 db.session.add(p)
@@ -496,6 +497,7 @@ class AdminPackagesView(FlaskView):
             price=package.price,
             slots=package.slots,
             duration=package.duration,
+            order=package.order,
             active=package.active
             )
         return render_template('admin/package.html', package=package, form=form, title="Pacakge: %s" % package.name)
@@ -512,6 +514,7 @@ class AdminPackagesView(FlaskView):
             package.price = form.price.data
             package.slots = form.slots.data
             package.duration = form.duration.data
+            package.order = form.order.data
             package.active = form.active.data
             db.session.commit()
             return redirect('/admin/packages/%s' % package.id)

@@ -34,6 +34,10 @@
                 <td>{{ package.duration }}</td>
             </tr>
             <tr>
+                <td>Order</td>
+                <td>{{ package.order }}</td>
+            </tr>
+            <tr>
                 <td>Active</td>
                 <td>{{ '✔️' if package.active else '❌' }}</td>
             </tr>
@@ -69,6 +73,10 @@
                       <div class="pure-control-group">
                           <label for="duration">Duration</label>
                           {{ form.duration }}
+                      </div>
+                      <div class="pure-control-group">
+                          <label for="duration">Order</label>
+                          {{ form.order }}
                       </div>
                       <div class="pure-control-group">
                           <label for="active">Active</label>
