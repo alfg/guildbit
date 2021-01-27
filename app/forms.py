@@ -91,6 +91,7 @@ class DeployTokenServerForm(Form):
                                    validators=[DataRequired('Password is required.'),
                                                Length(min=3, max=25,
                                                       message="Password must be between 3 and 25 characters long.")])
+    email = TextField('email', validators=[Email('Invalid email address.'), DataRequired('Email is required.')])
 
 
 class CreateTokenForm(Form):

@@ -129,3 +129,7 @@ class HomeView(FlaskView):
     @route('/updates/')
     def updates(self):
         return render_template('updates.html')
+
+    @route('/redeem/<id>/', methods=['GET'])
+    def redeem(self, id):
+        return redirect('/payment/redeem/%s' % id)
