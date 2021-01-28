@@ -162,6 +162,8 @@ class PaymentView(FlaskView):
         @return:
         """
 
+        print(request.form)
+
         # Gather information from callback response
         first_name = request.form.get("first_name", None)
         last_name = request.form.get("last_name", None)
@@ -181,6 +183,7 @@ class PaymentView(FlaskView):
             t.email = payer_email
             t.active = True
             t.package = item_name
+            t.package_id = item_number
 
             db.session.add(t)
             db.session.commit()

@@ -33,6 +33,7 @@
                         data-size="small"
                         data-type="form"
                         data-name="{{ package.name}}"
+                        data-number="{{ package.id }}"
                         data-amount="{{ package.price }}"
                         data-currency="USD"
                         data-no_shipping="1"
@@ -66,11 +67,12 @@
                         data-size="small"
                         data-type="form"
                         data-name="TEST"
+                        data-number="1"
                         data-amount="0.01"
                         data-currency="USD"
                         data-no_shipping="1"
-                        data-callback="https://guildbit.com/payment/paypal-gateway"
-                        data-return="https://guildbit.com/payment/success"
+                        data-callback="https://7da9ca60e1a4.ngrok.io/payment/paypal-gateway"
+                        data-return="https://7da9ca60e1a4.ngrok.io/payment/success"
                         data-rm="1"
                         data-host="www.sandbox.paypal.com"></script>
               </li>
