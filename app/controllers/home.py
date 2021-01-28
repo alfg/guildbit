@@ -62,7 +62,7 @@ class HomeView(FlaskView):
 
                 # Send task to delete server on expiration
                 tasks.delete_server.apply_async([gen_uuid], eta=s.expiration)
-                return redirect(url_for('ServerView:get', id=s.uuid))
+                return redirect(url_for('ServerView:get', uuid=s.uuid))
 
             except:
                 import traceback

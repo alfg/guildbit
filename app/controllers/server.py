@@ -29,13 +29,13 @@ class ServerView(FlaskView):
         else:
             return render_template('server_expired.html', server=server, rating=rating)
 
-    @route('/<id>/expired')
-    def expired(self, id):
+    @route('/<uuid>/expired')
+    def expired(self, uuid):
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
 
         server = Server.query.filter_by(uuid=uuid).first_or_404()
-        rating = Rating.query.filter_by(server_uuid=id, ip=ip).first()
+        rating = Rating.query.filter_by(server_uuid=uuid, ip=ip).first()
         return render_template('server_expired.html', server=server, rating=rating)
 
     @cache.cached(timeout=15)
@@ -174,8 +174,8 @@ class ServerView(FlaskView):
     # Controls
     ###
 
-    @route('/<id>/delete', methods=['POST'])
-    def delete_server(self, id):
+    @route('/<uuid>/delete', methods=['POST'])
+    def delete_server(self, uuid):
         """
         UserControl: Deletes the server.
         @param id:
@@ -184,23 +184,23 @@ class ServerView(FlaskView):
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
 
-        server = Server.query.filter_by(uuid=id, ip=ip).first_or_404()
+        server = Server.query.filter_by(uuid=uuid, ip=ip).first_or_404()
 
         if server:
             try:
                 murmur.delete_server(server.mumble_host, server.mumble_instance)
                 server.status = "expired"
                 db.session.commit()
-                return redirect(url_for('ServerView:get', id=id))
+                return redirect(url_for('ServerView:get', uuid=uuid))
             except:
                 import traceback
 
                 db.session.rollback()
                 traceback.print_exc()
-        return redirect(url_for('ServerView:get', id=id))
+        return redirect(url_for('ServerView:get', uuid=uuid))
 
-    @route('/<id>/extend', methods=['POST', 'GET'])
-    def extend_server(self, id):
+    @route('/<uuid>/extend', methods=['POST', 'GET'])
+    def extend_server(self, uuid):
         """
         UserControl: Extends the server by 1 hour.
         @param id:
@@ -212,7 +212,7 @@ class ServerView(FlaskView):
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
 
-        server = Server.query.filter_by(uuid=id, ip=ip).first_or_404()
+        server = Server.query.filter_by(uuid=uuid, ip=ip).first_or_404()
 
         if server and server.extensions < limit:
             try:
@@ -221,7 +221,7 @@ class ServerView(FlaskView):
                 db.session.commit()
 
                 flash("Server extended for 1 hour.")
-                return redirect(url_for('ServerView:get', id=id))
+                return redirect(url_for('ServerView:get', uuid=uuid))
 
             except:
                 import traceback
@@ -229,5 +229,5 @@ class ServerView(FlaskView):
                 traceback.print_exc()
 
         flash("Server already extended.")
-        return redirect(url_for('ServerView:get', id=id))
+        return redirect(url_for('ServerView:get', uuid=uuid))
 
