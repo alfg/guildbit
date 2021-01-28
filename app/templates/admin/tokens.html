@@ -23,7 +23,7 @@
           {% for i in tokens %}
           <tr>
               <td>{{ i.id }}</td>
-              <td><a href="/payment/create/{{ i.uuid }}" target="_blank">{{ i.uuid }}</a></td>
+              <td><a href="/redeem/{{ i.uuid }}" target="_blank">{{ i.uuid }}</a></td>
               <td class="created-date">{{ i.created_date }}</td>
               <td><span class="label {% if i.active == True %}label-green{% else %}label-red{% endif %}">{{ i.active }}</span></td>
               <td class="created-date">{{ i.activation_date }}</td>

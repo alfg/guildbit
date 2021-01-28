@@ -19,6 +19,7 @@ class PaymentView(FlaskView):
         return render_template('payment/success.html')
 
     @route('/create/<id>', methods=['GET', 'POST'])
+    @route('/redeem/<id>', methods=['GET', 'POST'])
     def create(self, id):
         form = DeployTokenServerForm()
         form.region.choices = get_active_hosts_by_type('upgrade')
@@ -63,6 +64,7 @@ class PaymentView(FlaskView):
                 # Expire token
                 token.activation_date = datetime.datetime.utcnow()
                 token.active = False
+                token.email = form.email.data
                 db.session.add(s)
                 db.session.add(token)
                 db.session.commit()
@@ -71,7 +73,7 @@ class PaymentView(FlaskView):
                 tasks.delete_server.apply_async([gen_uuid], eta=s.expiration)
 
                 # Send email to user if email was set
-                if token.email is not None:
+                if form.email.data is not None:
                     email_ctx = {
                         'url': 'http://guildbit.com/server/%s' % gen_uuid,
                         'package': token.package,
@@ -81,10 +83,14 @@ class PaymentView(FlaskView):
                     msg = Message(
                         "Guildbit - Server Created",
                         sender=settings.DEFAULT_MAIL_SENDER,
-                        recipients=[token.email])
+                        recipients=[form.email.data])
 
                     msg.html = render_template("emails/payment_server_created.html", ctx=email_ctx)
-                    mail.send(msg)
+                    try:
+                        mail.send(msg)
+                    except:
+                        import traceback
+                        traceback.print_exc()
 
                 return redirect(url_for('ServerView:get', uuid=s.uuid))
 

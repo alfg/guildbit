@@ -44,13 +44,18 @@
                 <span class="ttip text-underline" data-toggle="tooltip" title="" data-original-title="A SuperUser is a user with admin
                   privileges. You can use this account to create sub-channels, moderate users and channels, and grant privileges to other users."> What is a SuperUser?</span>
               </div>
+              <hr>
+              <div class="pure-control-group">
+                <label for="email">Email</label>
+                {{ form.email(size=20, value=token.email or '', placeholder='%s' % _('Set your email')) }}
+              </div>
+              <span>Your server connection details and SuperUser password will be emailed to you.</span>
               <div class="pure-controls">
                 <button id="deploy-button" class="pure-button pure-button-primary" type="submit" value="Submit">
                   <i class="fa fa-cloud"></i> {{ _('Deploy Server') }}
                 </button>
               </div>
             </fieldset>
-            <span>*Your SuperUser password will be emailed to you.</span>
           </form>
         {% else %}
           <h1>Token Expired</h1>
