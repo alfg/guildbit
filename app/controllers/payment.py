@@ -23,7 +23,7 @@ class PaymentView(FlaskView):
         form = DeployTokenServerForm()
         form.region.choices = get_active_hosts_by_type('upgrade')
         token = Token.query.filter_by(uuid=id).first_or_404()
-        package = Package.query.filter_by(name=token.package).first_or_404()
+        package = Package.query.filter_by(id=token.package_id).first_or_404()
 
         ctx = {
             'slots': package.slots,
@@ -86,7 +86,7 @@ class PaymentView(FlaskView):
                     msg.html = render_template("emails/payment_server_created.html", ctx=email_ctx)
                     mail.send(msg)
 
-                return redirect(url_for('ServerView:get', id=s.uuid))
+                return redirect(url_for('ServerView:get', uuid=s.uuid))
 
             except:
                 import traceback

@@ -15,12 +15,12 @@ class ServerView(FlaskView):
     def index(self):
         return redirect(url_for('home'))
 
-    def get(self, id):
+    def get(self, uuid):
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
 
-        server = Server.query.filter_by(uuid=id).first_or_404()
-        rating = Rating.query.filter_by(server_uuid=id, ip=ip).first()
+        server = Server.query.filter_by(uuid=uuid).first_or_404()
+        rating = Rating.query.filter_by(server_uuid=uuid, ip=ip).first()
         name = murmur.get_host_by_hostname(server.mumble_host)['name']
 
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
@@ -34,14 +34,14 @@ class ServerView(FlaskView):
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
 
-        server = Server.query.filter_by(uuid=id).first_or_404()
+        server = Server.query.filter_by(uuid=uuid).first_or_404()
         rating = Rating.query.filter_by(server_uuid=id, ip=ip).first()
         return render_template('server_expired.html', server=server, rating=rating)
 
     @cache.cached(timeout=15)
-    @route('/<id>/users/')
-    def users(self, id):
-        server = Server.query.filter_by(uuid=id).first_or_404()
+    @route('/<uuid>/users/')
+    def users(self, uuid):
+        server = Server.query.filter_by(uuid=uuid).first_or_404()
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
         if server_details is not None:
             users = {

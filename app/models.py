@@ -130,6 +130,12 @@ class Token(db.Model):
     active = db.Column(db.Boolean, default=True)
     email = db.Column(db.String(120))
     package = db.Column(db.String(32))
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id'), index=True)
+
+    @hybrid_property
+    def get_package_name(self):
+        package = Package.query.filter_by(id=self.package_id).first()
+        return package.name
 
     def __repr__(self):
         return '<Token %r>' % self.id

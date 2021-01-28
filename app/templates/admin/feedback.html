@@ -19,7 +19,7 @@
             {% for i in feedback.items %}
             <tr>
                 <td>{{ i.id }}</td>
-                <td><a href="/admin/servers/{{ s.id }}">{{ s.uuid }}</a></td>
+                <td><a href="/admin/servers/{{ i.server_uuid }}">{{ i.server_uuid }}</a></td>
                 <td class="created-date">{{ i.created_date }}</td>
                 <td>{{ i.ip }}</td>
                 <td>{{ i.stars }}</td>

@@ -28,7 +28,7 @@ def build_packages_list():
     packages = Package.query.order_by(Package.order.desc()).all()
     packages_list = []
     for package in packages:
-        packages_list.append((package.name, package.name))
+        packages_list.append((str(package.id), package.name))
     return packages_list
 
 
@@ -91,12 +91,10 @@ class DeployTokenServerForm(Form):
 
 
 class CreateTokenForm(Form):
-    _packages = build_packages_list()
-
     email = TextField('email')
     package = SelectField('package',
                           validators=[DataRequired()],
-                          choices=_packages)
+                          choices=[])
 
 class CreateHostForm(Form):
     name = TextField('name', validators=[DataRequired('Name is required.')])
