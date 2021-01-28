@@ -42,7 +42,7 @@
             {% for s in servers.items %}
             <tr>
                 <td>{{ s.id }}</td>
-                <td><a href="/admin/servers/{{ s.id }}">{{ s.uuid }}</a></td>
+                <td><a href="/admin/servers/{{ s.uuid }}">{{ s.uuid }}</a></td>
                 <td class="created-date">{{ s.created_date }}</td>
                 <td>{{ s.duration }}</td>
                 <td>{{ s.password }}</td>

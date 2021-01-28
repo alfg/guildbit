@@ -28,7 +28,7 @@
               <td><span class="label {% if i.active == True %}label-green{% else %}label-red{% endif %}">{{ i.active }}</span></td>
               <td class="created-date">{{ i.activation_date }}</td>
               <td>{{ i.email }}</td>
-              <td>{{ i.package }}</td>
+              <td>{{ i.get_package_name }}</td>
           </tr>
           {% endfor %}
           {% if tokens == [] %}
@@ -57,9 +57,15 @@
               {{ form.email }}
             </div>
             <fieldset>
-              {% for error in form.errors.role %}
-                <span class="label label-red">{{ error }}</span>
-              {% endfor %}
+            {% if form.errors %}
+                <ul>
+                    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                        {% for error in field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
             </fieldset>
           </div>
           <div class="modal-footer">

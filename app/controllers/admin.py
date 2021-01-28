@@ -10,7 +10,7 @@ from app.util import admin_required
 from app import db
 from app.forms import UserAdminForm, DeployCustomServerForm, NoticeForm, SuperuserPasswordForm
 from app.forms import SendChannelMessageForm, CreateTokenForm, CleanupExpiredServersForm, get_all_hosts
-from app.forms import CreateHostForm, HostAdminForm, CreatePackageForm, get_active_hosts_by_type
+from app.forms import CreateHostForm, HostAdminForm, CreatePackageForm, get_active_hosts_by_type, build_packages_list
 from app.models import Server, User, Notice, Rating, Token, Host, Package
 import app.murmur as murmur
 
@@ -79,12 +79,12 @@ class AdminServersView(FlaskView):
 
     @login_required
     @admin_required
-    def get(self, id):
-        server = Server.query.filter_by(id=id).first_or_404()
+    def get(self, uuid):
+        server = Server.query.filter_by(uuid=uuid).first_or_404()
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
         name = murmur.get_host_by_hostname(server.mumble_host)['name']
 
-        return render_template('admin/server.html', server=server, details=server_details, name=name, title="Server: %s" % id)
+        return render_template('admin/server.html', server=server, details=server_details, name=name, title="Server: %s" % server.id)
 
     @login_required
     @admin_required
@@ -131,9 +131,9 @@ class AdminServersView(FlaskView):
 
     @login_required
     @admin_required
-    @route('/<id>/kill', methods=['POST'])
-    def kill_server(self, id):
-        server = Server.query.filter_by(id=id).first_or_404()
+    @route('/<uuid>/kill', methods=['POST'])
+    def kill_server(self, uuid):
+        server = Server.query.filter_by(uuid=uuid).first_or_404()
 
         try:
             murmur.delete_server(server.mumble_host, server.mumble_instance)
@@ -145,13 +145,13 @@ class AdminServersView(FlaskView):
             db.session.rollback()
             traceback.print_exc()
 
-        return redirect('/admin/servers/%s' % id)
+        return redirect('/admin/servers/%s' % uuid)
 
     @login_required
     @admin_required
-    @route('/<id>/logs', methods=['GET'])
-    def server_log(self, id):
-        server = Server.query.filter_by(id=id).first_or_404()
+    @route('/<uuid>/logs', methods=['GET'])
+    def server_log(self, uuid):
+        server = Server.query.filter_by(uuid=uuid).first_or_404()
         logs = murmur.get_server_logs(server.mumble_host, server.mumble_instance)
         return jsonify(logs=logs)
 
@@ -416,6 +416,7 @@ class AdminTokensView(FlaskView):
     @admin_required
     def index(self):
         form = CreateTokenForm()
+        form.package.choices = build_packages_list()
         tokens = Token.query.order_by(Token.id.desc()).all()
         return render_template('admin/tokens.html', form=form, tokens=tokens, title="Tokens")
 
@@ -423,7 +424,9 @@ class AdminTokensView(FlaskView):
     @admin_required
     def post(self):
         form = CreateTokenForm()
+        form.package.choices = build_packages_list()
         tokens = Token.query.order_by(Token.id.desc()).all()
+
         if form.validate_on_submit():
             try:
                 # Generate UUID
@@ -435,6 +438,7 @@ class AdminTokensView(FlaskView):
                 t.email = form.email.data or None
                 t.active = True
                 t.package = form.package.data
+                t.package_id = form.package.data
 
                 db.session.add(t)
                 db.session.commit()
@@ -455,7 +459,7 @@ class AdminPackagesView(FlaskView):
     @admin_required
     def index(self):
         form = CreatePackageForm()
-        packages = Package.query.order_by(Package.id.desc()).all()
+        packages = Package.query.order_by(Package.order.desc()).all()
         return render_template('admin/packages.html', form=form, packages=packages, title="Packages")
 
     @login_required
@@ -472,6 +476,7 @@ class AdminPackagesView(FlaskView):
                 p.price = form.price.data or None
                 p.slots = form.slots.data or None
                 p.duration = form.duration.data or None
+                p.order = form.duration.data or 0
                 p.active = False
 
                 db.session.add(p)
@@ -496,6 +501,7 @@ class AdminPackagesView(FlaskView):
             price=package.price,
             slots=package.slots,
             duration=package.duration,
+            order=package.order,
             active=package.active
             )
         return render_template('admin/package.html', package=package, form=form, title="Pacakge: %s" % package.name)
@@ -512,6 +518,7 @@ class AdminPackagesView(FlaskView):
             package.price = form.price.data
             package.slots = form.slots.data
             package.duration = form.duration.data
+            package.order = form.order.data
             package.active = form.active.data
             db.session.commit()
             return redirect('/admin/packages/%s' % package.id)

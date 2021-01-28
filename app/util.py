@@ -66,23 +66,6 @@ def get_or_create(session, model, **kwargs):
 #     return lowest
 
 
-def get_package_by_name(name):
-    """
-    Searches PACKAGES settings and returns tuple of address, uri, and hostname for given region.
-    """
-    for i in PACKAGES:
-        for k, v in i.items():
-            if v == name:
-                return {
-                    'name': i['name'],
-                    'slots': i['slots'],
-                    'duration': i['duration']
-                }
-            else:
-                pass
-    return {}
-
-
 def support_jsonp(f):
     """
     Wraps JSONified output for JSONP

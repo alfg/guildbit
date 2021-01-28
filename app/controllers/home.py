@@ -5,10 +5,10 @@ from flask_classy import FlaskView, route
 from flask_mail import Message
 
 import settings
-from app import db, tasks, mail
+from app import db, cache, tasks, mail
 from app.forms import DeployServerForm, ContactForm
 from app.forms import duration_choices, get_active_hosts_by_type
-from app.models import Server
+from app.models import Server, Package
 from app import murmur
 
 
@@ -62,7 +62,7 @@ class HomeView(FlaskView):
 
                 # Send task to delete server on expiration
                 tasks.delete_server.apply_async([gen_uuid], eta=s.expiration)
-                return redirect(url_for('ServerView:get', id=s.uuid))
+                return redirect(url_for('ServerView:get', uuid=s.uuid))
 
             except:
                 import traceback
@@ -81,10 +81,12 @@ class HomeView(FlaskView):
     def donate(self):
         return render_template('donate.html')
 
+    @cache.cached(timeout=10)
     @route('/upgrade/')
     def upgrade(self):
+        packages = Package.query.filter_by(active=True).order_by(Package.order.asc()).all()
         regions = get_active_hosts_by_type('upgrade')
-        return render_template('upgrade.html', regions=regions)
+        return render_template('upgrade.html', regions=regions, packages=packages)
 
     @route('/contact/', methods=['POST', 'GET'])
     def contact(self):
@@ -99,7 +101,7 @@ class HomeView(FlaskView):
 
                 msg = Message(
                     form.subject.data,
-                    sender=settings.DEFAULT_MAIL_SENDER,
+                    sender=form.email.data,
                     recipients=settings.EMAIL_RECIPIENTS)
 
                 msg.body = template

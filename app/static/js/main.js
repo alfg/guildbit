@@ -38,7 +38,7 @@ $(document).ready(function() {
         $('#os-download #os-text').text(_LinuxDownload);
         $('#os-download #download-link i').removeClass('fa-windows');
         $('#os-download #download-link i').addClass('fa-linux');
-        $('#os-download #download-link').attr('href', 'http://wiki.mumble.info/wiki/Installing_Mumble#Linux');
+        $('#os-download #download-link').attr('href', 'https://wiki.mumble.info/wiki/Installing_Mumble#Linux');
         }
     else if (os.indexOf("Win") !== -1) {
         $('#os-download #os-text').text(_WindowsDownload);
@@ -63,5 +63,4 @@ $(document).ready(function() {
         $('#os-download #download-link i').addClass('fa-apple');
         $('#os-download #download-link').attr('href', 'https://itunes.apple.com/us/app/mumble/id443472808');
         }
-
 });
