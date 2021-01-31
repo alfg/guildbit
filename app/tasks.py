@@ -48,7 +48,7 @@ def delete_server(uuid):
             print("Server instance %s already expired." % uuid)
     except:
         import traceback
-        print("ERROR deleting server: %s host: %s id: %d" % (uuid, s.mumble_host, s.mumble_instance))
+        print("ERROR deleting server: %s" % uuid)
         db.session.rollback()
         traceback.print_exc()
     finally:
