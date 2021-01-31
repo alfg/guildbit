@@ -1,6 +1,6 @@
 import uuid
 
-from flask import render_template, redirect, url_for, g, flash, request
+from flask import render_template, redirect, url_for, g, flash, request, make_response
 from flask_classy import FlaskView, route
 from flask_mail import Message
 
@@ -62,7 +62,11 @@ class HomeView(FlaskView):
 
                 # Send task to delete server on expiration
                 tasks.delete_server.apply_async([gen_uuid], eta=s.expiration)
-                return redirect(url_for('ServerView:get', uuid=s.uuid))
+                
+                # Store server_uuid cookie and redirect.
+                response = make_response(redirect(url_for('ServerView:get', uuid=s.uuid)))
+                response.set_cookie('server_uuid', s.uuid)
+                return response
 
             except:
                 import traceback

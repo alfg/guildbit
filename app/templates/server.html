@@ -93,7 +93,7 @@
             </tbody>
         </table>
 
-      {% if ip == server.ip and server.type == "temp" %}
+      {% if request.cookies.get('server_uuid') == server.uuid and server.type == "temp" %}
         {% include 'partials/_admin_controls.html' %}
       {% endif %}
 
