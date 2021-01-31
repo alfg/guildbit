@@ -26,6 +26,10 @@ body {
     padding: 1em 0;
 }
 
+.text-green {
+    color: #3fb15b;
+}
+
 /* Buttons */
 .button-success,
 .button-error,

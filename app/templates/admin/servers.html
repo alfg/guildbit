@@ -44,7 +44,11 @@
                 <td>{{ s.id }}</td>
                 <td><a href="/admin/servers/{{ s.uuid }}">{{ s.uuid }}</a></td>
                 <td class="created-date">{{ s.created_date }}</td>
-                <td>{{ s.duration }}</td>
+                {% if s.extensions > 0 %}
+                    <td>{{ s.duration - s.extensions }} <span class="text-green">+{{ s.extensions }}</span></td>
+                {% else %}
+                    <td>{{ s.duration }}</span></td>
+                {% endif %}
                 <td>{{ s.password }}</td>
                 <td>{{ s.status }}</td>
                 <td>{{ s.mumble_host }}</td>

@@ -9,6 +9,8 @@ from app.models import Server, Rating
 from app import murmur
 from app.util import support_jsonp
 
+from settings import SERVER_EXTENSIONS_MAX
+
 
 ## Server views
 class ServerView(FlaskView):
@@ -25,7 +27,7 @@ class ServerView(FlaskView):
 
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
         if server_details is not None:
-            return render_template('server.html', server=server, details=server_details, name=name, rating=rating, ip=ip)
+            return render_template('server.html', server=server, details=server_details, name=name, rating=rating, ip=ip, extensions_max=SERVER_EXTENSIONS_MAX)
         else:
             return render_template('server_expired.html', server=server, rating=rating)
 
@@ -207,7 +209,7 @@ class ServerView(FlaskView):
         @return:
         """
 
-        limit = 1  # Allowed extensions count
+        limit = SERVER_EXTENSIONS_MAX  # Allowed extensions count
 
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr

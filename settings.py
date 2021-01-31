@@ -21,6 +21,7 @@ CACHE_REDIS_URL = 'redis://%s/2' % REDIS_HOST
 DEFAULT_MAX_USERS = 15
 DEFAULT_CHANNEL_NAME = 'GuildBit.com Mumble Server'
 DEFAULT_MURMUR_PORT = 50000  # Murmur server port
+SERVER_EXTENSIONS_MAX = 3 # Max allowed time extensions for free servers
 
 MAIL_SERVER = 'email-smtp.us-east-1.amazonaws.com'
 MAIL_PORT = 587
