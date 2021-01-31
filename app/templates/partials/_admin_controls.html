@@ -8,7 +8,7 @@
   <tbody>
     <tr>
       <td>
-        <button id="extend-action" class="ttip pure-button button-small button-secondary {% if server.extensions > 0 %}pure-button-disabled{% endif %}" data-toggle="modal" data-target="#extendModal">
+        <button id="extend-action" class="ttip pure-button button-small button-secondary" data-toggle="modal" data-target="#extendModal">
           <i class="fa fa-clock-o"></i> Extend Time
         </button>
         <button id="delete-action" class="ttip pure-button button-small button-error track-nolink" data-toggle="modal" data-target="#deleteModal"
@@ -53,12 +53,17 @@
         <div class="modal-body">
           <h3>Need a little more time? You can extend your server duration by<br /> <strong>1 hour</strong>
             without interruption to continue your session.</h3>
-          <h3>This action can only be applied once per session, so use as needed.</h3>
-
+          <h3>You have <strong>{{ extensions_max - server.extensions }}</strong> extension(s) remaining for this session.</h3>
+          <div id="extension-warning" class="hide alert warning text-center">You can extend again <span id="extension-unlock"></span>.</div>
         </div>
         <div class="modal-footer">
           <button type="button" class="pure-button" data-dismiss="modal">Close</button>
-          <button type="submit" class="pure-button button-secondary track-submit" data-event-label="Extend Server Submit">Extend Time by 1 Hour</button>
+          <button id="extend-btn" type="submit" class="pure-button button-secondary track-submit" data-event-label="Extend Server Submit">Extend Time by 1 Hour</button>
+          {% if server.extensions == extensions_max %}
+            <!-- Nice try. -->
+          {% else %}
+            <!-- Sneaky, you are... I'll allow it this time. -->
+          {% endif %}
         </div>
       </form>
     </div>

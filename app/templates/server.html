@@ -1,4 +1,4 @@
-{% extends"layout/base.html" %}
+{% extends "layout/base.html" %}
 
 {% block title %}{{ _('Your Server is Ready!') }}{% endblock %}
 
@@ -142,7 +142,8 @@
         var expire_date = '{{ server.expiration }}';
         var duration = {{ server.duration }};
 
-        $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
+        var expire_date_format = moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a");
+        $("#expires-date").text(expire_date_format);
 
         $(document).ready(function() {
             $('#copy-button').on('click', function() {
@@ -211,6 +212,7 @@
         var usersOnlineEl = document.getElementById('users-online');
         var usersEl = document.getElementById('users');
         var expiresEl = document.getElementById('expires');
+        var extUnlockEl = document.getElementById('extension-unlock');
 
         var noUserAreOnlineText = "{{ _('No users are online') }}";
 
@@ -299,6 +301,7 @@
 
         function loadExpires() {
             var expires = moment.utc(expire_date).fromNow();
+            var extExpires = moment.utc(expire_date).subtract(1, 'hour').fromNow();
 
             var unix_now = moment.utc().unix();
             var unix_expires = moment.utc(expire_date).unix();
@@ -308,6 +311,16 @@
                 window.location = base_url + "/expired";
             }
             expiresEl.textContent = expires;
+
+            // Expires button.
+            if (extUnlockEl && (unix_now < (unix_expires - 3600) && duration !== 0)) {
+                $('#extension-warning').show();
+                $('#extend-btn').attr('disabled', 'disabled');
+                extUnlockEl.textContent = extExpires;
+            } else {
+                $('#extension-warning').hide();
+                $('#extend-btn').removeAttr('disabled');
+            }
         }
 
         setInterval(function() {

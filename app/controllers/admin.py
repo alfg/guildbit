@@ -476,7 +476,7 @@ class AdminPackagesView(FlaskView):
                 p.price = form.price.data or None
                 p.slots = form.slots.data or None
                 p.duration = form.duration.data or None
-                p.order = form.duration.data or 0
+                p.order = form.order.data or 0
                 p.active = False
 
                 db.session.add(p)
