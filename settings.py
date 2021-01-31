@@ -28,7 +28,7 @@ MAIL_USE_TLS = True
 MAIL_USE_SSL = True
 MAIL_USERNAME = ''
 MAIL_PASSWORD = ''
-DEFAULT_MAIL_SENDER = 'alf.g.jr@gmail.com'
+DEFAULT_MAIL_SENDER = 'no-reply@guildbit.com'
 EMAIL_RECIPIENTS = ['alf.g.jr@gmail.com']
 
 OPENID_PROVIDERS = [
@@ -42,65 +42,3 @@ LANGUAGES = {
     'fr': 'français',
     'sw': 'Kiswahili'
 }
-
-MURMUR_HOSTS = [
-    {
-        'name': 'localhost',
-        'address': 'localhost:5000',
-        'uri': 'http://localhost:5000',
-        'hostname': 'localhost',
-        'http_uri': 'http://localhost:4000/static/img',
-        'monitor_uri': 'http://localhost:5555',
-        'contact': 'alf.g.jr@gmail.com',
-        'location': 'local',
-        'location_name': 'Local',
-        'status': 'active',
-        'capacity': 100,
-        'username': '',
-        'password': ''
-    }
-]
-
-# Use only if in test docker environment.
-DOCKER_TEST = os.environ.get('DOCKER_TEST', False)
-if DOCKER_TEST:
-    MURMUR_HOSTS = [
-        {
-            'name': 'Test Server',
-            'address': 'murmur-rest:8080',
-            'uri': 'http://murmur-rest:8080',
-            'hostname': 'murmur-rest',
-            'http_uri': 'http://localhost:4000/static/img',
-            'monitor_uri': 'http://localhost:5555',
-            'contact': 'user@docker.local',
-            'location': 'local',
-            'location_name': 'Local (docker)',
-            'status': 'active',
-            'capacity': 100,
-            'username': 'admin',
-            'password': 'password'
-        }
-    ]
-
-PACKAGES = [
-    {
-        'name': 'Test',
-        'slots': 10,
-        'duration': 48  # Days in hours
-    },
-    {
-        'name': 'Bronze',
-        'slots': 25,
-        'duration': 168  # Days in hours
-    },
-    {
-        'name': 'Silver',
-        'slots': 25,
-        'duration': 336  # Days in hours
-    },
-    {
-        'name': 'Gold',
-        'slots': 25,
-        'duration': 720 # Days in hours
-    }
-]

@@ -7,7 +7,7 @@ from flask_login import current_user
 import requests
 from requests import ConnectionError
 
-from settings import PACKAGES, STEAM_API_KEY
+from settings import STEAM_API_KEY
 
 
 def admin_required(fn):
