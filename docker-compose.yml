@@ -32,17 +32,17 @@ services:
       - C_FORCE_ROOT=true
     volumes:
       - ".:/opt/guildbit"
-    command: /opt/guildbit/venv/bin/celery worker --app=app.tasks --concurrency=2 -n guildbit-tasks -l info
+    command: /opt/guildbit/venv/bin/celery -A app.tasks worker --concurrency=2 -n guildbit-tasks -l info
 
   flower:
-    build: .
+    image: mher/flower
     links:
       - redis
     environment:
       - REDIS_HOST=redis:6379
     ports:
       - "5555:5555"
-    command: /opt/guildbit/venv/bin/celery flower --broker=redis://redis:6379/0
+    command: ["--app guildbit-tasks", "--broker=redis://redis:6379/0"]
 
   nginx:
     image: nginx
