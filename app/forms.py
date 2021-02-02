@@ -1,5 +1,5 @@
 import re
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import TextField, SelectField, BooleanField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Required, Email, Length, Regexp
 from flask_babel import lazy_gettext as __
@@ -42,7 +42,7 @@ def duration_choices():
     return choices
 
 
-class DeployServerForm(Form):
+class DeployServerForm(FlaskForm):
     region = SelectField('region',
                            validators=[DataRequired()],
                            choices=[])
@@ -61,7 +61,7 @@ class DeployServerForm(Form):
                                             message="Password must be between 3 and 25 characters long.")])
 
 
-class DeployCustomServerForm(Form):
+class DeployCustomServerForm(FlaskForm):
     region = SelectField('region',
                            validators=[DataRequired()],
                            choices=[])
@@ -70,7 +70,7 @@ class DeployCustomServerForm(Form):
     channel_name = TextField('channel_name')
 
 
-class DeployTokenServerForm(Form):
+class DeployTokenServerForm(FlaskForm):
     """
     Form used for creating upgraded server (premium users).
     """
@@ -91,13 +91,13 @@ class DeployTokenServerForm(Form):
     email = TextField('email', validators=[Email('Invalid email address.'), DataRequired('Email is required.')])
 
 
-class CreateTokenForm(Form):
+class CreateTokenForm(FlaskForm):
     email = TextField('email')
     package = SelectField('package',
                           validators=[DataRequired()],
                           choices=[])
 
-class CreateHostForm(Form):
+class CreateHostForm(FlaskForm):
     name = TextField('name', validators=[DataRequired('Name is required.')])
     hostname = TextField('hostname', validators=[DataRequired('Hostname is required.')])
     region = TextField('region', validators=[DataRequired('region is required.')])
@@ -111,7 +111,7 @@ class CreateHostForm(Form):
                             ('1', 'Upgrade')
                         ])
 
-class HostAdminForm(Form):
+class HostAdminForm(FlaskForm):
     name = TextField('name', validators=[DataRequired('Name is required.')])
     hostname = TextField('hostname', validators=[DataRequired('Hostname is required.')])
     region = TextField('region', validators=[DataRequired('region is required.')])
@@ -120,7 +120,7 @@ class HostAdminForm(Form):
     username = TextField('username')
     password = TextField('password')
 
-class CreatePackageForm(Form):
+class CreatePackageForm(FlaskForm):
     name = TextField('name', validators=[DataRequired('Name is required.')])
     description = TextField('description')
     price = IntegerField('price', validators=[DataRequired('Price is required.')])
@@ -129,12 +129,12 @@ class CreatePackageForm(Form):
     active = BooleanField('active', default=False)
     order = IntegerField('duration', default=0)
 
-class LoginForm(Form):
+class LoginForm(FlaskForm):
     openid = TextField('openid', validators=[Required()])
     remember_me = BooleanField('remember_me', default=False)
 
 
-class UserAdminForm(Form):
+class UserAdminForm(FlaskForm):
     role = SelectField('role',
                        validators=[DataRequired()],
                        choices=[
@@ -143,7 +143,7 @@ class UserAdminForm(Form):
                        ])
 
 
-class NoticeForm(Form):
+class NoticeForm(FlaskForm):
     message = TextField('message', validators=[DataRequired()])
     active = BooleanField('active')
     message_type = SelectField('type', validators=[DataRequired()],
@@ -158,7 +158,7 @@ class NoticeForm(Form):
                                ])
 
 
-class SendChannelMessageForm(Form):
+class SendChannelMessageForm(FlaskForm):
     _server_regions = get_all_hosts()
 
     message = TextField('message', validators=[DataRequired()])
@@ -167,7 +167,7 @@ class SendChannelMessageForm(Form):
                            choices=_server_regions)
 
 
-class SuperuserPasswordForm(Form):
+class SuperuserPasswordForm(FlaskForm):
     _server_regions = get_all_hosts()
     password = TextField('password',
                          validators=[DataRequired('Password is required.'),
@@ -179,14 +179,14 @@ class SuperuserPasswordForm(Form):
     instance = IntegerField('instance')
 
 
-class CleanupExpiredServersForm(Form):
+class CleanupExpiredServersForm(FlaskForm):
     _server_regions = get_all_hosts()
     region = SelectField('region',
                            validators=[DataRequired()],
                            choices=_server_regions)
 
 
-class ContactForm(Form):
+class ContactForm(FlaskForm):
     subject = TextField('subject', validators=[DataRequired('Subject is required.')])
     email = TextField('email', validators=[Email('Invalid email address.'), DataRequired('Email is required.')])
     message = TextAreaField('message', validators=[DataRequired('Message is required.')])
