@@ -1,0 +1,28 @@
+{% extends"layout/base.html" %}
+
+{% block title %}{{ _('Your Server is Queued!') }}{% endblock %}
+
+{% block body %}
+    <div class="content server" style="min-height: 350px;">
+        <div class="title">
+            <h1>{{ _('Your server is queued!') }}</h1>
+            <p>{{ _('Your server will be ready in a few moments.') }}</p>
+        </div>
+        <div class="loader">Loading...</div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/libs/moment.min.js"></script>
+
+    <script type="text/javascript">
+        var base_url = '{{ request.base_url }}'
+
+        $(document).ready(function() {
+            setTimeout(function() {
+                window.location = base_url;
+            }, 5000);
+        });
+    </script>
+{% endblock %}

@@ -60,6 +60,7 @@ class PaymentView(FlaskView):
                 s.mumble_instance = server_id
                 s.mumble_host = murmur.get_murmur_hostname(form.region.data)
                 s.cvp_uuid = str(uuid.uuid4())
+                s.status = 'active'
 
                 # Expire token
                 token.activation_date = datetime.datetime.utcnow()

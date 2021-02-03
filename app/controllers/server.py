@@ -22,14 +22,17 @@ class ServerView(FlaskView):
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
 
         server = Server.query.filter_by(uuid=uuid).first_or_404()
+        if server.status == 'queued':
+            return render_template('server_queued.html')
+
         rating = Rating.query.filter_by(server_uuid=uuid, ip=ip).first()
-        name = murmur.get_host_by_hostname(server.mumble_host)['name']
+        host = murmur.get_host_by_hostname(server.mumble_host)
 
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
-        if server_details is not None:
-            return render_template('server.html', server=server, details=server_details, name=name, rating=rating, ip=ip, extensions_max=SERVER_EXTENSIONS_MAX)
-        else:
+        if not server_details:
             return render_template('server_expired.html', server=server, rating=rating)
+
+        return render_template('server.html', server=server, details=server_details, host=host, rating=rating, ip=ip, extensions_max=SERVER_EXTENSIONS_MAX)
 
     @route('/<uuid>/expired')
     def expired(self, uuid):

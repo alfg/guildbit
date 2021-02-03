@@ -11,6 +11,37 @@ app = Celery('tasks',
              broker=settings.BROKER_URL,
              backend=settings.CELERY_RESULT_BACKEND)
 
+@app.task
+def create_server(uuid, region, payload):
+    """
+    Celery task to create a server. Also queues delete_server task.
+    @param uuid: server uuid
+    @param region: server region
+    @param payload: mumble server payload
+    @return:
+    """
+
+    try:
+        print('Creating server: ', uuid, payload)
+        server_id = murmur.create_server_by_region(region, payload)
+
+        server = Server.query.filter_by(uuid=uuid).first_or_404()
+        server.mumble_instance = server_id
+        server.mumble_host = murmur.get_murmur_hostname(region)
+        server.status = 'active'
+        db.session.add(server)
+        db.session.commit()
+
+        delete_server.apply_async([uuid], eta=server.expiration)
+    except:
+        import traceback
+        print("ERROR creating server: %s" % uuid)
+        db.session.rollback()
+        traceback.print_exc()
+    finally:
+        db.session.close()
+
+    return
 
 @app.task
 def delete_server(uuid):
@@ -55,11 +86,6 @@ def delete_server(uuid):
         db.session.close()
 
     return
-
-
-app.conf.update(
-    CELERY_TASK_RESULT_EXPIRES=3600,
-)
 
 
 if __name__ == '__main__':

@@ -36,7 +36,19 @@ class HomeView(FlaskView):
                 x_forwarded_for = request.headers.getlist('X-Forwarded-For');
                 ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
 
-                # Create POST request to murmur-rest api to create a new server
+                # Create database entry
+                s = Server()
+                s.duration = form.duration.data
+                s.password = form.password.data
+                s.uuid = gen_uuid
+                s.mumble_instance = None
+                s.mumble_host = None
+                s.status = "queued"
+                s.ip = ip
+                db.session.add(s)
+                db.session.commit()
+
+                # Setup the payload and send to create_server queue.
                 welcome_msg = render_template("mumble/temp_welcome_message.html", gen_uuid=gen_uuid)
 
                 payload = {
@@ -46,23 +58,9 @@ class HomeView(FlaskView):
                     'registername': settings.DEFAULT_CHANNEL_NAME
                 }
 
-                server_id = murmur.create_server_by_region(form.region.data, payload)
+                # Send task to create server
+                tasks.create_server.apply_async([gen_uuid, form.region.data, payload])
 
-                # Create database entry
-                s = Server()
-                s.duration = form.duration.data
-                # s.duration = 1
-                s.password = form.password.data
-                s.uuid = gen_uuid
-                s.mumble_instance = server_id
-                s.mumble_host = murmur.get_murmur_hostname(form.region.data)
-                s.ip = ip
-                db.session.add(s)
-                db.session.commit()
-
-                # Send task to delete server on expiration
-                tasks.delete_server.apply_async([gen_uuid], eta=s.expiration)
-                
                 # Store server_uuid cookie and redirect.
                 response = make_response(redirect(url_for('ServerView:get', uuid=s.uuid)))
                 response.set_cookie('server_uuid', s.uuid)

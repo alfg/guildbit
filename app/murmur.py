@@ -121,7 +121,7 @@ def create_server_by_region(region, payload):
     port_check = find_available_port(host['region'])
 
     # Set port if there's an open port
-    if port_check is not None:
+    if port_check:
         payload["port"] = port_check
 
     try:
@@ -142,7 +142,10 @@ def get_server(hostname, instance_id):
     """
     host = get_host_by_hostname(hostname)
 
-    if host['uri'] is not None:
+    if not host:
+        return None
+
+    if host['uri']:
         try:
             r = requests.get("%s/servers/%i" % (host['uri'], instance_id),
                                                 auth=HTTPDigestAuth(host['username'],
@@ -162,6 +165,8 @@ def delete_server(hostname, instance_id):
     Deletes a server by hostname and instance_id.
     """
     host = get_host_by_hostname(hostname)
+    if not host:
+        return None
 
     try:
         r = requests.delete("%s/servers/%i" % (host['uri'], instance_id), auth=HTTPDigestAuth(host['username'],
@@ -225,8 +230,10 @@ def get_server_logs(hostname, instance_id):
     Get server logs for specified host and instance.
     """
     host = get_host_by_hostname(hostname)
+    if not host:
+        return None
 
-    if host['uri'] is not None:
+    if host['uri']:
         try:
             r = requests.get("%s/servers/%s/logs" % (host['uri'], instance_id),
                             auth=HTTPDigestAuth(host['username'],
@@ -270,7 +277,7 @@ def list_all_servers(region):
     uri = get_murmur_uri(region)
     auth = get_murmur_credentials(region)
 
-    if uri is not None:
+    if uri:
         try:
             r = requests.get("%s/servers/" % uri, auth=HTTPDigestAuth(auth['username'], auth['password']))
             if r.ok:
