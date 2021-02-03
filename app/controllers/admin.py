@@ -82,9 +82,9 @@ class AdminServersView(FlaskView):
     def get(self, uuid):
         server = Server.query.filter_by(uuid=uuid).first_or_404()
         server_details = murmur.get_server(server.mumble_host, server.mumble_instance)
-        name = murmur.get_host_by_hostname(server.mumble_host)['name']
+        host = murmur.get_host_by_hostname(server.mumble_host)
 
-        return render_template('admin/server.html', server=server, details=server_details, name=name, title="Server: %s" % server.id)
+        return render_template('admin/server.html', server=server, details=server_details, host=host, title="Server: %s" % server.id)
 
     @login_required
     @admin_required
@@ -167,7 +167,7 @@ class AdminPortsView(FlaskView):
         region = request.args.get('region')
 
         hosts = Host.query.all()
-        if region is not None:
+        if region:
             host = Host.query.filter_by(region=region).first()
             stats = murmur.get_server_stats(host.region)
             ports = murmur.list_all_servers(host.region)
