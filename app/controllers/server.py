@@ -22,6 +22,9 @@ class ServerView(FlaskView):
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
 
         server = Server.query.filter_by(uuid=uuid).first_or_404()
+        if server.status == 'queued':
+            return render_template('server_queued.html')
+
         rating = Rating.query.filter_by(server_uuid=uuid, ip=ip).first()
         name = murmur.get_host_by_hostname(server.mumble_host)['name']
 
