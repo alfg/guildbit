@@ -114,11 +114,12 @@ class AdminServersView(FlaskView):
                 s.password = form.password.data
                 s.uuid = gen_uuid
                 s.mumble_instance = server_id
+                s.status = 'active'
                 s.type = 'custom'
                 db.session.add(s)
                 db.session.commit()
 
-                return redirect('/admin/servers/%s' % s.id)
+                return redirect('/admin/servers/%s' % s.uuid)
 
             except:
                 import traceback
