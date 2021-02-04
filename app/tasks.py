@@ -22,7 +22,7 @@ def create_server(uuid, region, payload):
     """
 
     try:
-        print('Creating server: ', uuid, payload)
+        print('Creating server: ', uuid)
         server_id = murmur.create_server_by_region(region, payload)
 
         server = Server.query.filter_by(uuid=uuid).first_or_404()

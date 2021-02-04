@@ -10,17 +10,11 @@
     <div class="pure-menu pure-menu-open pure-menu-horizontal">
         <ul>
             <li {% if filter == "active" or filter == None %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=active">Active</a></li>
+            <li {% if filter == "queued" or filter == None %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=queued">Queued</a></li>
             <li {% if filter == "expired" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=expired">Expired</a></li>
             <li {% if filter == "upgrade" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=upgrade">Upgrade</a></li>
             <li {% if filter == "all" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=all">All</a></li>
             <li {% if filter == "custom" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=custom">Custom Servers</a></li>
-            <li>
-                <form class="pure-form">
-                    <select>
-                        <option>All Hosts</option>
-                    </select>
-                </form>
-            </li>
         </ul>
     </div>
     <table class="pure-table pure-table-horizontal pure-table-striped servers">
