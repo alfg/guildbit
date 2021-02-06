@@ -44,6 +44,7 @@ class HomeView(FlaskView):
                 s.mumble_instance = None
                 s.mumble_host = None
                 s.status = "queued"
+                s.mumble_host = murmur.get_murmur_hostname(form.region.data)
                 s.ip = ip
                 db.session.add(s)
                 db.session.commit()

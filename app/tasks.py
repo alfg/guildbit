@@ -10,8 +10,6 @@ import settings
 app = Celery('tasks',
              broker=settings.BROKER_URL,
              backend=settings.CELERY_RESULT_BACKEND,
-             task_time_limit=30,
-             task_soft_time_limit=10
 )
 
 @app.task(bind=True, default_retry_delay=30, max_retries=3)
@@ -30,8 +28,8 @@ def create_server(self, uuid, region, payload):
 
         server = Server.query.filter_by(uuid=uuid).first_or_404()
         server.mumble_instance = server_id
-        server.mumble_host = murmur.get_murmur_hostname(region)
         server.status = 'active'
+        server.created_date = datetime.utcnow()
         db.session.add(server)
         db.session.commit()
 
@@ -91,10 +89,10 @@ def delete_server(uuid):
 
     return
 
-# app.conf.update(
-#     task_time_limit=30,
-#     task_soft_time_limit=10
-# )
+app.conf.update(
+    task_time_limit=30,
+    task_soft_time_limit=10
+)
 
 
 if __name__ == '__main__':

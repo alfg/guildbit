@@ -150,7 +150,7 @@ def get_server(hostname, instance_id):
     """
     host = get_host_by_hostname(hostname)
 
-    if not host:
+    if not host or not instance_id:
         return None
 
     if host['uri']:
