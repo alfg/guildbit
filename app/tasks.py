@@ -9,10 +9,13 @@ import settings
 
 app = Celery('tasks',
              broker=settings.BROKER_URL,
-             backend=settings.CELERY_RESULT_BACKEND)
+             backend=settings.CELERY_RESULT_BACKEND,
+             task_time_limit=30,
+             task_soft_time_limit=10
+)
 
-@app.task
-def create_server(uuid, region, payload):
+@app.task(bind=True, default_retry_delay=30, max_retries=3)
+def create_server(self, uuid, region, payload):
     """
     Celery task to create a server. Also queues delete_server task.
     @param uuid: server uuid
@@ -33,11 +36,12 @@ def create_server(uuid, region, payload):
         db.session.commit()
 
         delete_server.apply_async([uuid], eta=server.expiration)
-    except:
+    except Exception as exc:
         import traceback
         print("ERROR creating server: %s" % uuid)
         db.session.rollback()
         traceback.print_exc()
+        raise self.retry(exc=exc, countdown=30)
     finally:
         db.session.close()
 
@@ -86,6 +90,11 @@ def delete_server(uuid):
         db.session.close()
 
     return
+
+# app.conf.update(
+#     task_time_limit=30,
+#     task_soft_time_limit=10
+# )
 
 
 if __name__ == '__main__':

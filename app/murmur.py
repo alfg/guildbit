@@ -13,6 +13,9 @@ from app.models import Host
 ## Helper functions to load configs from settings
 ##
 
+# Request timeouts.
+CONNECT_TIMEOUT, READ_TIMEOUT = 5.0, 30.0
+
 
 def get_host_by_region(region):
     """
@@ -108,7 +111,9 @@ def create_server(hostname, payload):
     """
     host = get_host_by_hostname(hostname)
     auth = get_murmur_credentials(host['region'])
-    r = requests.post(host + "/servers/", data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
+    r = requests.post(host + "/servers/",
+                      data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']),
+                      timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
     server_id = r.json()['id']
     return server_id
 
@@ -125,7 +130,10 @@ def create_server_by_region(region, payload):
         payload["port"] = port_check
 
     try:
-        r = requests.post(host['uri'] + "/servers/", data=payload, auth=HTTPDigestAuth(host['username'], host['password']))
+        r = requests.post(host['uri'] + "/servers/",
+                         data=payload,
+                         auth=HTTPDigestAuth(host['username'], host['password']),
+                         timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
         if r.ok:
             server_id = r.json()['id']
             return server_id
@@ -148,8 +156,8 @@ def get_server(hostname, instance_id):
     if host['uri']:
         try:
             r = requests.get("%s/servers/%i" % (host['uri'], instance_id),
-                                                auth=HTTPDigestAuth(host['username'],
-                                                                    host['password']))
+                            auth=HTTPDigestAuth(host['username'], host['password']),
+                            timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
             if r.ok:
                 return r.json()
         except requests.exceptions.ConnectionError as e:
@@ -169,8 +177,9 @@ def delete_server(hostname, instance_id):
         return None
 
     try:
-        r = requests.delete("%s/servers/%i" % (host['uri'], instance_id), auth=HTTPDigestAuth(host['username'],
-                                                                                      host['password']))
+        r = requests.delete("%s/servers/%i" % (host['uri'], instance_id),
+                            auth=HTTPDigestAuth(host['username'], host['password']),
+                            timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
         if r.ok:
             return r.json()
     except requests.exceptions.ConnectionError as e:
@@ -187,8 +196,9 @@ def get_server_stats(region):
     host = get_host_by_region(region)
 
     try:
-        r = requests.get("%s/stats/" % host['uri'], auth=HTTPDigestAuth(host['username'],
-                                                                        host['password']))
+        r = requests.get("%s/stats/" % host['uri'],
+                        auth=HTTPDigestAuth(host['username'], host['password']),
+                        timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
         if r.ok:
             stats = {
                 'servers_online': r.json()['booted_servers'],
@@ -236,8 +246,8 @@ def get_server_logs(hostname, instance_id):
     if host['uri']:
         try:
             r = requests.get("%s/servers/%s/logs" % (host['uri'], instance_id),
-                            auth=HTTPDigestAuth(host['username'],
-                                                host['password']))
+                            auth=HTTPDigestAuth(host['username'], host['password']),
+                            timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
             if r.ok:
                 logs = r.json()
                 return logs
@@ -261,7 +271,8 @@ def send_message_all_channels(host, message):
         try:
             r = requests.post("%s/servers/%s/sendmessage" % (host['uri'], i),
                               data={'message': message},
-                              auth=HTTPDigestAuth(host['username'], host['password']))
+                              auth=HTTPDigestAuth(host['username'], host['password']),
+                              timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
         except requests.exceptions.ConnectionError as e:
             import traceback
             traceback.print_exc()
@@ -279,7 +290,9 @@ def list_all_servers(region):
 
     if uri:
         try:
-            r = requests.get("%s/servers/" % uri, auth=HTTPDigestAuth(auth['username'], auth['password']))
+            r = requests.get("%s/servers/" % uri,
+                            auth=HTTPDigestAuth(auth['username'], auth['password']),
+                            timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
             if r.ok:
                 return r.json()
         except requests.exceptions.ConnectionError as e:
@@ -303,7 +316,10 @@ def set_superuser_password(region, password, instance_id):
     payload = {'password': password}
 
     try:
-        r = requests.post(host + "/servers/%i/setsuperuserpw" % instance_id, data=payload, auth=HTTPDigestAuth(auth['username'], auth['password']))
+        r = requests.post(host + "/servers/%i/setsuperuserpw" % instance_id,
+                          data=payload,
+                          auth=HTTPDigestAuth(auth['username'], auth['password']),
+                          timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
         if r.ok:
             return "SuperUser password set."
     except requests.exceptions.ConnectionError as e:
@@ -325,8 +341,9 @@ def cleanup_expired_servers(region, expired_ids):
     expired_ids = ','.join(str(x) for x in expired_ids)
 
     try:
-        r = requests.delete("%s/servers/delete?id=%s" % (host, expired_ids), auth=HTTPDigestAuth(auth['username'],
-                                                                                      auth['password']))
+        r = requests.delete("%s/servers/delete?id=%s" % (host, expired_ids),
+                            auth=HTTPDigestAuth(auth['username'], auth['password']),
+                            timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
         if r.ok:
             return r.json()
     except requests.exceptions.ConnectionError as e:

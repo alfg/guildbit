@@ -49,10 +49,9 @@
                 <td><span class="{{ 'label label-blue' if s.type == 'upgrade' }}">{{ s.type }}</span></td>
                 <td>{{ s.mumble_instance }}</td>
             </tr>
+            {% else %}
+            <tr><td class="text-center" colspan="9">No Servers</td></tr>
             {% endfor %}
-            {% if servers == [] %}
-                <tr><td class="text-center" colspan="9">No Servers</td></tr>
-            {% endif %}
 
         </tbody>
     </table>
