@@ -173,7 +173,7 @@ def delete_server(hostname, instance_id):
     Deletes a server by hostname and instance_id.
     """
     host = get_host_by_hostname(hostname)
-    if not host:
+    if not host or not instance_id:
         return None
 
     try:
