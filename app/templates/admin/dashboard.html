@@ -47,6 +47,7 @@
                 <th>Active</th>
                 <th>Servers</th>
                 <th>Users</th>
+                <th>Status</th>
             </tr>
         </thead>
 
@@ -59,6 +60,7 @@
                 <td>{{ '✔️' if host.active else '❌' }}</td>
                 <td><span class="servers label">-</span></td>
                 <td><span class="users label">-</span></td>
+                <td><span class="status label"></span></td>
             </tr>
             {% endfor %}
         </tbody>
@@ -100,6 +102,12 @@
                 // // Update total stats.
                 $('#total-servers').text(total_servers + data.servers_online);
                 $('#total-users').text(total_users + data.users_online);
+            });
+
+            $.get('/admin/hosts/' + region + '/status', function(data) {
+                var s = $('.host[data-region=' + region + ']');
+                $(s).find('.status').text(data.status);
+                $(s).find('.status').addClass(data.status === "OK" ? 'label-green' : 'label-red');
             });
         });
     });

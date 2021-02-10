@@ -28,7 +28,7 @@ class AdminView(FlaskView):
     def index(self):
         users_count = User.query.count()
         servers_count = Server.query.count()
-        hosts = Host.query.order_by(Host.type.desc()).all()
+        hosts = Host.query.order_by(Host.type.asc()).all()
         feedback_count = Rating.query.count()
         feedback_avg = Rating.get_rating_average()
         tokens_count = Token.query.count()
@@ -295,7 +295,6 @@ class AdminHostsView(FlaskView):
             return redirect('/admin/hosts/%s' % host.id)
         return render_template('admin/host.html', host=host, form=form, title="Host: %s" % host.hostname)
 
-
     @login_required
     @admin_required
     @route('/<hostname>/stats', methods=['GET'])
@@ -305,6 +304,17 @@ class AdminHostsView(FlaskView):
         stats = {
             'servers_online': s.get('servers_online', 0),
             'users_online': s.get('users_online', 0)
+        }
+        return jsonify(stats)
+
+    @login_required
+    @admin_required
+    @route('/<hostname>/status', methods=['GET'])
+    def status(self, hostname):
+        s = murmur.get_server_status(hostname)
+
+        stats = {
+            'status': s.get('status', "NOTOK"),
         }
         return jsonify(stats)
 

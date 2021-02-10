@@ -215,6 +215,29 @@ def get_server_stats(region):
     }
     return stats
 
+def get_server_status(region):
+    """
+    Get server stats for one host.
+    """
+    host = get_host_by_region(region)
+
+    try:
+        r = requests.get("%s/health-check" % host['uri'],
+                        timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
+        if r.ok:
+            resp = {
+                'status': r.json()['status']
+            }
+            return resp
+    except requests.exceptions.ConnectionError as e:
+        import traceback
+        traceback.print_exc()
+        pass
+    stats = {
+        'status': "NOTOK",
+    }
+    return stats
+
 
 def get_all_server_stats():
     """
