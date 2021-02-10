@@ -28,7 +28,7 @@ class AdminView(FlaskView):
     def index(self):
         users_count = User.query.count()
         servers_count = Server.query.count()
-        hosts = Host.query.all()
+        hosts = Host.query.order_by(Host.type.desc()).all()
         feedback_count = Rating.query.count()
         feedback_avg = Rating.get_rating_average()
         tokens_count = Token.query.count()
