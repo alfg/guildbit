@@ -16,7 +16,6 @@
               <th>URI</th>
               <th>Type</th>
               <th>Active</th>
-              <th>Servers</th>
           </tr>
       </thead>
 
@@ -29,7 +28,6 @@
               <td><a href="{{ host.uri }}">{{ host.uri }}</a></td>
               <td>{{ 'Upgraded ⚡️' if host.type == 1 else 'Free' }}</td>
               <td>{{ '✔️' if host.active else '❌' }}</td>
-              <td>{{ host.booted_servers }}</td>
           </tr>
           {% endfor %}
       </tbody>

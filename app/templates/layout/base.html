@@ -70,10 +70,11 @@
 
     <div class="footer-links">
         <ul class="text-center">
+            <li><a href="https://status.guildbit.com" target="_blank">{{ _('Status') }}</a></li>
             <li><a href="{{ url_for('HomeView:terms') }}">{{ _('Terms') }}</a></li>
             <li><a href="{{ url_for('HomeView:privacy') }}">{{ _('Privacy') }}</a></li>
             <li><a href="{{ url_for('HomeView:contact') }}">{{ _('Contact') }}</a></li>
-            <li><a href="https://github.com/alfg/guildbit"><i class="fa fa-github-alt"></i> {{ _('Source') }}</a></li>
+            <li><a href="https://github.com/alfg/guildbit" target="_blank"><i class="fa fa-github-alt"></i> {{ _('Source') }}</a></li>
         </ul>
 
         {% if g.user.is_authenticated() %}

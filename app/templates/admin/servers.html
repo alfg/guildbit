@@ -10,7 +10,7 @@
     <div class="pure-menu pure-menu-open pure-menu-horizontal">
         <ul>
             <li {% if filter == "active" or filter == None %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=active">Active</a></li>
-            <li {% if filter == "queued" or filter == None %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=queued">Queued</a></li>
+            <li {% if filter == "queued" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=queued">Queued</a></li>
             <li {% if filter == "expired" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=expired">Expired</a></li>
             <li {% if filter == "upgrade" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=upgrade">Upgrade</a></li>
             <li {% if filter == "all" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=all">All</a></li>
@@ -46,7 +46,7 @@
                 <td>{{ s.password }}</td>
                 <td>{{ s.status }}</td>
                 <td>{{ s.mumble_host }}</td>
-                <td><span class="{{ 'label label-blue' if s.type == 'upgrade' }}">{{ s.type }}</span></td>
+                <td><span class="{{ 'label label-blue' if s.type != 'temp' }}">{{ s.type }}</span></td>
                 <td>{{ s.mumble_instance }}</td>
             </tr>
             {% else %}

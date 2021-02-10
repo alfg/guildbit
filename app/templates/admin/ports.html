@@ -1,114 +1,31 @@
 {% extends"layout/admin_base.html" %}
-{% set region = request.args.get('region') %}
 
-{% block title %}Admin Home{% endblock %}
+{% block title %}Admin Ports{% endblock %}
 
 {% block body %}
-    <form class="pure-form" method="get">
-        <select id="select-host" name="region">
-            {% for host in hosts %}
-                <option value="{{ host.region }}" {% if request.args.get('region') == host.region %}selected="selected"{% endif %}>{{ host.region }}</option>
-            {% endfor %}
-        </select>
-    </form>
-    <h1>{{ ctx.host.hostname }}</h1>
-    <div class="pure-u-1-3 spacer">
-        <table class="pure-table pure-table-horizontal pure-table-striped">
-            <tbody>
-                <tr>
-                    <td>Hostname</td>
-                    <td>{{ ctx.host.hostname }}</td>
-                </tr>
-                <tr>
-                    <td>Region</td>
-                    <td>{{ ctx.host.region }}</td>
-                </tr>
-                <tr>
-                    <td>Active</td>
-                    <td>{{ '✔️' if ctx.host.active else '❌' }}</td>
-                </tr>
-                <tr>
-                    <td>Type</td>
-                    <td>{{ 'Upgraded ⚡️' if ctx.host.type == 1 else 'Free' }}</td>
-                </tr>
-                <tr>
-                    <td>Total Servers Online</td>
-                    <td>{{ ctx.servers_online }}</td>
-                </tr>
-                <tr>
-                    <td>Total Users Online</td>
-                    <td>{{ ctx.users_online }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <br />
-    <div>
-    <table class="pure-table pure-table-horizontal pure-table-striped servers">
-        <thead>
-            <tr>
-                <th width="5%">Port</th>
-                <th width="5%">ID</th>
-                <th width="20%">Uptime</th>
-                <th>Logs</th>
-                <th>Channels</th>
-                <th>Max Users</th>
-                <th>Users Online</th>
-                <th>Action</th>
-            </tr>
-        </thead>
+  <table class="pure-table pure-table-horizontal pure-table-striped servers">
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Hostname</th>
+              <th>Region</th>
+              <th>URI</th>
+              <th>Type</th>
+              <th>Active</th>
+          </tr>
+      </thead>
 
-        <tbody>
-            {% for s in ctx.ports|sort(attribute='port') %}
-            <tr>
-                <td>{{ s.port }}</td>
-                <td>{{ s.id }}</td>
-                <td><span class="{{ 'label label-blue' if s.uptime_seconds|int > 18000 }}">{{ s.uptime }}</span></td>
-                <td>{{ s.log_length }}</td>
-                <td>{{ s.channels }}</td>
-                <td><span class="{{ 'label label-blue' if s.maxusers|int >= 50 }}">{{ s.maxusers }}</span></td>
-                <td><span class="{{ 'label label-blue' if s.users|int > 0 }}">{{ s.users }}</span></td>
-                <td>
-                    <button
-                        class="delete-server pure-button button-error button-small"
-                        data-id="{{ s.id }}"
-                        {{ 'disabled=disabled' if s.maxusers|int >= 50 }}>Delete</button>
-                </td>
-            </tr>
-            {% endfor %}
-            {% if ports == [] %}
-                <tr><td class="text-center" colspan="9">No Open Ports</td></tr>
-            {% endif %}
-
-        </tbody>
-    </table>
-    </div>
-{% endblock %}
-
-{% block scripts %}
-    <script src="/static/js/admin.js"></script>
-    <script src="/static/js/libs/moment.min.js"></script>
-    <script>
-        $(function() {
-            // Update Bandwidth Info on select change
-            $('#select-host').change(function() {
-                this.form.submit();
-            });
-
-            $(".delete-server").on('click', function(event) {
-                if (confirm('Are you sure you want to delete this server?')) {
-                    var btn = $(this);
-                    var id = btn.data('id');
-                    $.ajax({
-                        url: '/admin/ports/{{ ctx.host.hostname }}/' + id,
-                        type: 'DELETE',
-                        success: function(result) {
-                            btn.html('Deleted');
-                            btn.prop('disabled', true);
-                        }
-                    });
-                }
-            });
-        })
-    </script>
+      <tbody>
+          {% for host in hosts %}
+          <tr>
+              <td>{{ host.name }}</td>
+              <td><a href="/admin/ports/{{ host.id }}">{{ host.hostname }}</a></td>
+              <td>{{ host.region }}</td>
+              <td><a href="{{ host.uri }}">{{ host.uri }}</a></td>
+              <td>{{ 'Upgraded ⚡️' if host.type == 1 else 'Free' }}</td>
+              <td>{{ '✔️' if host.active else '❌' }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
 {% endblock %}
