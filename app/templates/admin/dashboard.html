@@ -3,19 +3,24 @@
 {% block title %}Admin Home{% endblock %}
 
 {% block body %}
+    <h3>Stats</h3>
     <table class="pure-table pure-table-horizontal pure-table-striped">
         <tbody>
             <tr>
                 <td>Total Servers Online:</td>
-                <td>{{ ctx.servers_online }}</td>
+                <td id="total-servers">0</td>
             </tr>
             <tr>
                 <td>Total Users Online:</td>
-                <td>{{ ctx.users_online }}</td>
+                <td id="total-users">0</td>
             </tr>
             <tr>
                 <td>Servers (database):</td>
                 <td>{{ ctx.servers }}</td>
+            </tr>
+            <tr>
+                <td>Hosts:</td>
+                <td>{{ ctx.hosts|count }}</td>
             </tr>
             <tr>
                 <td>Users (database):</td>
@@ -32,7 +37,34 @@
         </tbody>
     </table>
 
-    <h3>System Information (Guildbit App Server)</h3>
+    <h3>Hosts</h3>
+    <table class="pure-table pure-table-horizontal pure-table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Hostname</th>
+                <th>Type</th>
+                <th>Active</th>
+                <th>Servers</th>
+                <th>Users</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for host in ctx.hosts %}
+            <tr class="host" data-region="{{ host.region }}">
+                <td>{{ host.id }}</td>
+                <td><a href="/admin/ports/{{ host.id }}">{{ host.hostname }}</a></td>
+                <td>{{ 'Upgraded ⚡️' if host.type == 1 else 'Free' }}</td>
+                <td>{{ '✔️' if host.active else '❌' }}</td>
+                <td><span class="servers label">-</span></td>
+                <td><span class="users label">-</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>System Information (App Server)</h3>
     <table class="pure-table pure-table-horizontal pure-table-striped" style="width:20%;">
         <tbody>
         <tr>
@@ -53,10 +85,23 @@
     <script src="/static/js/admin.js"></script>
     <script>
     $(function() {
-        // Update Bandwidth Info on select change
-        $('#select-host').change(function() {
-            this.form.submit();
-        })
-    })
+        // Get host stats.
+        $('.host').each(function(i) {
+            var region = $(this).data('region');
+
+            $.get('/admin/hosts/' + region + '/stats', function(data) {
+                var s = $('.host[data-region=' + region + ']');
+                $(s).find('.servers').text(data.servers_online);
+                $(s).find('.users').text(data.users_online);
+
+                var total_servers = parseInt($('#total-servers').text());
+                var total_users = parseInt($('#total-users').text());
+
+                // // Update total stats.
+                $('#total-servers').text(total_servers + data.servers_online);
+                $('#total-users').text(total_users + data.users_online);
+            });
+        });
+    });
     </script>
 {% endblock %}

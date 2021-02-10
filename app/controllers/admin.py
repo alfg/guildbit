@@ -26,9 +26,9 @@ class AdminView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-        stats = murmur.get_all_server_stats()
         users_count = User.query.count()
         servers_count = Server.query.count()
+        hosts = Host.query.all()
         feedback_count = Rating.query.count()
         feedback_avg = Rating.get_rating_average()
         tokens_count = Token.query.count()
@@ -36,10 +36,9 @@ class AdminView(FlaskView):
         ps = psutil
 
         ctx = {
-            'servers_online': stats['servers_online'],
-            'users_online': stats['users_online'],
             'users': users_count,
             'servers': servers_count,
+            'hosts': hosts,
             'feedback': feedback_count,
             'feedback_avg': feedback_avg,
             'tokens': tokens_count,
@@ -299,14 +298,15 @@ class AdminHostsView(FlaskView):
 
     @login_required
     @admin_required
-    @route('/<hostname>/server-count', methods=['GET'])
+    @route('/<hostname>/stats', methods=['GET'])
     def server_count(self, hostname):
         s = murmur.get_server_stats(hostname)
 
-        server = {
-            'servers_online': s.get('servers_online', 0)
+        stats = {
+            'servers_online': s.get('servers_online', 0),
+            'users_online': s.get('users_online', 0)
         }
-        return jsonify(server)
+        return jsonify(stats)
 
 
 class AdminToolsView(FlaskView):
