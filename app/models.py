@@ -115,7 +115,7 @@ class Rating(db.Model):
 
     @staticmethod
     def get_rating_average():
-        avg = Rating.query.with_entities(func.avg(Rating.stars).label('avg')).scalar()
+        avg = Rating.query.with_entities(func.avg(Rating.stars).label('avg')).scalar() or 0
         return round(avg, 2)
 
     def __repr__(self):
