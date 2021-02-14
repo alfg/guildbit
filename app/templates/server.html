@@ -131,6 +131,10 @@
 
     {% include 'partials/_dont_have_mumble.html' %}
 
+    {% if server.type == "temp" %}
+        {% include 'partials/_adspace.html' %}
+    {% endif %}
+
 {% endblock %}
 
 {% block scripts %}
