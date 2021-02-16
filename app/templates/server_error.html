@@ -1,0 +1,14 @@
+{% extends"layout/base.html" %}
+
+{% block title %}{{ _('Oops!') }}{% endblock %}
+
+{% block body %}
+    <div class="content server">
+        <div class="title">
+            <h1>{{ _('Something went wrong! :(') }}</h1>
+            <p>{{ _('Go back to the <a href="/">homepage</a> and try creating
+                your server again or select another region.') }}</p>
+        </div>
+    </div>
+
+{% endblock %}

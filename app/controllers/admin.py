@@ -69,6 +69,8 @@ class AdminServersView(FlaskView):
             servers = Server.query.filter_by(status="queued").order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
         elif filter == "expired":
             servers = Server.query.filter_by(status="expired").order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
+        elif filter == "error":
+            servers = Server.query.filter_by(status="error").order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
         elif filter == "upgrade":
             servers = Server.query.filter_by(type="upgrade").order_by(Server.id.desc()).paginate(page, ITEMS_PER_PAGE, False)
         elif filter == "custom":

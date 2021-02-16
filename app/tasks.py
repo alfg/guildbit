@@ -22,6 +22,10 @@ def create_server(self, uuid, region, payload):
     @return:
     """
 
+    if self.request.retries >= self.max_retries:
+        server_error.apply_async([uuid]) # Send to server error queue.
+        return
+
     try:
         print('Creating server: ', uuid)
         server_id = murmur.create_server_by_region(region, payload)
@@ -89,9 +93,35 @@ def delete_server(uuid):
 
     return
 
+@app.task
+def server_error(uuid):
+    """
+    Celery task to set server status as 'error'.
+    @param uuid:
+    @return:
+    """
+
+    try:
+        print("Running server_error task: %s" % uuid)
+        s = Server.query.filter_by(uuid=uuid).first_or_404()
+        s.status = 'error'
+        db.session.commit()
+
+    except:
+        import traceback
+        print("ERROR setting server error: %s" % uuid)
+        db.session.rollback()
+        traceback.print_exc()
+    finally:
+        db.session.close()
+    return
+
 app.conf.update(
     task_time_limit=30,
-    task_soft_time_limit=10
+    task_soft_time_limit=10,
+    task_annotations = {
+        'tasks.create_server': {'rate_limit': '10/s'}
+    }
 )
 
 

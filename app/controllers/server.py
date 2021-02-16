@@ -20,10 +20,13 @@ class ServerView(FlaskView):
     def get(self, uuid):
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+        ip = ip.split(',')[0]
 
         server = Server.query.filter_by(uuid=uuid).first_or_404()
         if server.status == 'queued':
             return render_template('server_queued.html')
+        elif server.status == 'error':
+            return render_template('server_error.html')
 
         rating = Rating.query.filter_by(server_uuid=uuid, ip=ip).first()
         host = murmur.get_host_by_hostname(server.mumble_host)
@@ -38,6 +41,7 @@ class ServerView(FlaskView):
     def expired(self, uuid):
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+        ip = ip.split(',')[0]
 
         server = Server.query.filter_by(uuid=uuid).first_or_404()
         rating = Rating.query.filter_by(server_uuid=uuid, ip=ip).first()
@@ -63,6 +67,7 @@ class ServerView(FlaskView):
     def rating(self, id):
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+        ip = ip.split(',')[0]
 
         stars = request.form['stars']
 
@@ -94,6 +99,7 @@ class ServerView(FlaskView):
     def feedback(self, id):
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+        ip = ip.split(',')[0]
 
         feedback = request.form['feedback']
 
@@ -188,6 +194,7 @@ class ServerView(FlaskView):
         """
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+        ip = ip.split(',')[0]
 
         server = Server.query.filter_by(uuid=uuid, ip=ip).first_or_404()
 
@@ -216,6 +223,7 @@ class ServerView(FlaskView):
 
         x_forwarded_for = request.headers.getlist('X-Forwarded-For');
         ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+        ip = ip.split(',')[0]
 
         server = Server.query.filter_by(uuid=uuid, ip=ip).first_or_404()
 
