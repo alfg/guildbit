@@ -11,7 +11,7 @@
         <ul>
             <li {% if filter == "active" or filter == None %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=active">Active</a></li>
             <li {% if filter == "queued" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=queued">Queued</a></li>
-            <li {% if filter == "expired" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=expired">Expired</a></li>
+            <li {% if filter == "expired" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=error">Expired</a></li>
             <li {% if filter == "error" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=expired">Error</a></li>
             <li {% if filter == "upgrade" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=upgrade">Upgrade</a></li>
             <li {% if filter == "all" %}class="pure-menu-selected"{% endif %}><a href="/admin/servers/?filter=all">All</a></li>
