@@ -5,13 +5,12 @@ from flask_classy import FlaskView, route
 from flask_login import login_required
 import psutil
 
-import settings
 from app.util import admin_required
 from app import db
 from app.forms import UserAdminForm, DeployCustomServerForm, NoticeForm, SuperuserPasswordForm
-from app.forms import SendChannelMessageForm, CreateTokenForm, CleanupExpiredServersForm, get_all_hosts
-from app.forms import CreateHostForm, HostAdminForm, CreatePackageForm, get_active_hosts_by_type, build_packages_list
-from app.models import Server, User, Notice, Rating, Token, Host, Package
+from app.forms import SendChannelMessageForm, CreateTokenForm, CleanupExpiredServersForm
+from app.forms import CreateHostForm, HostAdminForm, CreatePackageForm, CreateBanForm, get_active_hosts_by_type, build_packages_list
+from app.models import Server, User, Notice, Rating, Token, Host, Package, Ban
 import app.murmur as murmur
 
 ITEMS_PER_PAGE = 50
@@ -536,3 +535,46 @@ class AdminPackagesView(FlaskView):
             db.session.commit()
             return redirect('/admin/packages/%s' % package.id)
         return render_template('admin/package.html', package=package, form=form, title="Package: %s" % package.name)
+
+class AdminBansView(FlaskView):
+    @login_required
+    @admin_required
+    def index(self):
+        page = int(request.args.get('page', 1))
+        banned = Ban.query.order_by(Ban.last_accessed.desc()).paginate(page, ITEMS_PER_PAGE, False)
+        form = CreateBanForm(request.form)
+        return render_template('admin/bans.html', banned=banned, form=form, title="Bans")
+
+    @login_required
+    @admin_required
+    def post(self):
+        page = int(request.args.get('page', 1))
+        form = CreateBanForm()
+        banned = Ban.query.order_by(Ban.last_accessed.desc()).paginate(page, ITEMS_PER_PAGE, False)
+        if form.validate_on_submit():
+            try:
+                # Create database entry
+                b = Ban()
+                b.ip = form.ip.data or None
+                b.reason = form.reason.data or None
+                b.note = form.note.data or None
+
+                db.session.add(b)
+                db.session.commit()
+                return redirect('/admin/bans/')
+
+            except:
+                import traceback
+                db.session.rollback()
+                traceback.print_exc()
+                return redirect('/admin/bans/')
+
+        return render_template('admin/bans.html', form=form, banned=banned)
+
+    @login_required
+    @admin_required
+    def delete(self, id):
+        ban = Ban.query.filter_by(id=id).first_or_404()
+        db.session.delete(ban)
+        db.session.commit()
+        return jsonify({ id: id })

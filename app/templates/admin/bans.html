@@ -1,0 +1,123 @@
+{% extends"layout/admin_base.html" %}
+
+{% block title %}Banned IPs{% endblock %}
+
+{% block body %}
+  <div class="spacer">
+    <a class="pure-button button-secondary" data-toggle="modal" data-target="#add-ban">Add Ban</a>
+  </div>
+    <table class="pure-table pure-table-horizontal pure-table-striped servers">
+        <thead>
+            <tr>
+                <th>IP</th>
+                <th>Last Accessed</th>
+                <th>Reason</th>
+                <th>Note</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i in banned.items %}
+            <tr>
+                <td>{{ i.ip }}</td>
+                <td class="last-accessed">{{ i.last_accessed }}</td>
+                <td>{{ i.reason }}</td>
+                <td>{{ i.note }}</td>
+                <td>
+                    <button
+                        class="delete-ban pure-button button-error button-small"
+                        data-id="{{ i.id }}">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if banned == [] %}
+                <tr><td class="text-center" colspan="9">No Banned Users</td></tr>
+            {% endif %}
+
+        </tbody>
+    </table>
+    <ul class="pagination">
+      {%- for page in banned.iter_pages() %}
+        {% if page %}
+          {% if page != banned.page %}
+            <li><a href="{{ url_for('AdminBansView:index', page=page) }}">{{ page }}</a></li>
+          {% else %}
+            <li class="active"><a href="{{ url_for('AdminBansView:index', page=page) }}">{{ page }}</a></li>
+          {% endif %}
+        {% else %}
+          <li class="disabled"><a href="#">…</a></li>
+        {% endif %}
+      {%- endfor %}
+    </ul>
+    <p>({{ banned.total }} total)</p>
+
+  <!-- Create Host Modal -->
+  <div class="modal fade" id="add-ban" tabindex="-1" role="dialog" aria-labelledby="add-ban" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="" method="post" name="role" class="pure-form pure-form-aligned">
+          <div class="modal-header">
+            <h4 class="modal-title">Create a Host</h4>
+          </div>
+          <div class="modal-body">
+            {{ form.csrf_token }}
+            <div class="pure-control-group">
+              <label for="role">IP</label>
+              {{ form.ip }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Reason</label>
+              {{ form.reason }}
+            </div>
+            <div class="pure-control-group">
+              <label for="role">Note</label>
+              {{ form.note }}
+            </div>
+            {% if form.errors %}
+                <ul>
+                    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                        {% for error in field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="pure-button" data-dismiss="modal">Close</button>
+            <button type="submit" class="pure-button button-secondary">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/admin.js"></script>
+    <script src="/static/js/libs/moment.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            // Moment.js time formatting
+            $(".last-accessed").text(function(index, value) {
+                return moment.utc(value).local().format("MM/DD h:mm:ss a");
+            });
+
+            $(".delete-ban").on('click', function(event) {
+                if (confirm('Are you sure you want to delete this ban?')) {
+                    var btn = $(this);
+                    var id = btn.data('id');
+                    $.ajax({
+                        url: '/admin/bans/' + id,
+                        type: 'DELETE',
+                        success: function(result) {
+                            btn.html('Deleted');
+                            btn.prop('disabled', true);
+                        }
+                    });
+                }
+            });
+        })
+    </script>
+{% endblock %}
