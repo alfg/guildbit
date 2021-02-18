@@ -516,7 +516,7 @@ class AdminPackagesView(FlaskView):
             order=package.order,
             active=package.active
             )
-        return render_template('admin/package.html', package=package, form=form, title="Pacakge: %s" % package.name)
+        return render_template('admin/package.html', package=package, form=form, title="Package: %s" % package.name)
 
     @login_required
     @admin_required
