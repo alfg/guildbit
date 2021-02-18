@@ -43,19 +43,19 @@ $(document).ready(function() {
     else if (os.indexOf("Win") !== -1) {
         $('#os-download #os-text').text(_WindowsDownload);
         $('#os-download #download-link i').addClass('fa-windows');
-        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.3.3/mumble-1.3.3.msi');
+        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.3.4/mumble-1.3.4.msi');
         }
     else if (os.indexOf("MacOS") !== -1 || os.indexOf("MacIntel") !== -1) {
         $('#os-download #os-text').text(_OSXDownload);
         $('#os-download #download-link i').removeClass('fa-windows');
         $('#os-download #download-link i').addClass('fa-apple');
-        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.3.3/Mumble-1.3.3.dmg');
+        $('#os-download #download-link').attr('href', 'https://github.com/mumble-voip/mumble/releases/download/1.3.4/Mumble-1.3.4.dmg');
         }
     else if (ua.indexOf("android") > -1) {
         $('#os-download #os-text').text(_AndroidDownload);
         $('#os-download #download-link i').removeClass('fa-windows');
         $('#os-download #download-link i').addClass('fa-android');
-        $('#os-download #download-link').attr('href', 'https://play.google.com/store/apps/details?id=com.morlunk.mumbleclient');
+        $('#os-download #download-link').attr('href', 'https://play.google.com/store/apps/details?id=se.lublin.mumla');
         }
     else if (os === 'iPad' || os == 'iPhone' || os === 'iPod') {
         $('#os-download #os-text').text(_iOSDownload);
