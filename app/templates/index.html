@@ -20,6 +20,16 @@
             <a id="generate-password" href="#">Generate Password</a>
         </div>
 
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class="errors text-center">
+              {% for message in messages %}
+                <li class="warning alert">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
         {% if form.errors %}
             <ul class="errors text-center">
                 {% for field_name, field_errors in form.errors|dictsort if field_errors %}

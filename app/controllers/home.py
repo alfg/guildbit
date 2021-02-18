@@ -8,7 +8,7 @@ import settings
 from app import db, cache, tasks, mail
 from app.forms import DeployServerForm, ContactForm
 from app.forms import duration_choices, get_active_hosts_by_type
-from app.models import Server, Package
+from app.models import Server, Package, Ban
 from app import murmur
 
 
@@ -23,6 +23,19 @@ class HomeView(FlaskView):
         return render_template('index.html', form=form)
 
     def post(self):
+        # Set admin's IP.
+        x_forwarded_for = request.headers.getlist('X-Forwarded-For');
+        ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
+        ip = ip.split(',')[0]
+
+        # Flash message if user is on banlist.
+        banned = Ban.query.filter_by(ip=ip).first()
+        if banned:
+            flash("User banned! Reason: %s" % banned.reason)
+            return redirect('/')
+
+
+
         form = DeployServerForm()
         form.duration.choices = duration_choices()
         form.region.choices = get_active_hosts_by_type('free')
@@ -31,10 +44,6 @@ class HomeView(FlaskView):
             try:
                 # Generate UUID
                 gen_uuid = str(uuid.uuid4())
-
-                # Set admin's IP
-                x_forwarded_for = request.headers.getlist('X-Forwarded-For');
-                ip = x_forwarded_for[0] if x_forwarded_for else request.remote_addr
 
                 # Create database entry
                 s = Server()
