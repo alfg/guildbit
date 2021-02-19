@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from flask import render_template, redirect, url_for, g, flash, request, make_response
 from flask_classy import FlaskView, route
@@ -31,10 +32,11 @@ class HomeView(FlaskView):
         # Flash message if user is on banlist.
         banned = Ban.query.filter_by(ip=ip).first()
         if banned:
+            banned.last_accessed = datetime.utcnow()
+            db.session.add(banned)
+            db.session.commit()
             flash("User banned! Reason: %s" % banned.reason)
             return redirect('/')
-
-
 
         form = DeployServerForm()
         form.duration.choices = duration_choices()
