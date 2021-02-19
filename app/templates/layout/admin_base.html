@@ -6,7 +6,7 @@
     <meta name="description" content="A layout example that shows off a responsive product landing page.">
 
     <title>{% block title %}{% endblock %} | GuildBit Admin</title>
-    <link rel="shortcut icon" href="/static/img/guildbit_ico.png" type="image/x-icon" />
+	<link rel="shortcut icon" href="/static/img/favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="/static/css/pure-min.css">
     <link rel="stylesheet" href="/static/css/grids-responsive-min.css">
     <link rel="stylesheet" href="/static/css/admin.css">
@@ -35,6 +35,7 @@
                     <li {% if title == "Tokens" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/tokens/">Tokens</a></li>
                     <li {% if title == "Packages" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/packages/">Packages</a></li>
                     <li {% if title == "Feedback" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/feedback/">Feedback</a></li>
+                    <li {% if title == "Bans" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/bans/">Bans</a></li>
                     <li {% if title == "Tools" %}class="menu-item-divided pure-menu-selected"{% endif %}><a href="/admin/tools/">Tools</a></li>
                     <hr />
                     <li><a href="http://flower.guildbit.com" target="_blank">Celery Tasks</a></li>

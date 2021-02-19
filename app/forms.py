@@ -129,6 +129,11 @@ class CreatePackageForm(FlaskForm):
     active = BooleanField('active', default=False)
     order = IntegerField('duration', default=0)
 
+class CreateBanForm(FlaskForm):
+    ip = TextField('ip')
+    reason = TextField('reason')
+    note = TextField('note')
+
 class LoginForm(FlaskForm):
     openid = TextField('openid', validators=[Required()])
     remember_me = BooleanField('remember_me', default=False)

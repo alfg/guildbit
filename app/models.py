@@ -188,3 +188,11 @@ class Package(db.Model):
     duration = db.Column(db.Integer)
     active = db.Column(db.Boolean, default=False)
     order = db.Column(db.Integer, default=0)
+
+
+class Ban(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ip = db.Column(db.String(64))
+    reason = db.Column(db.String)
+    note = db.Column(db.String)
+    last_accessed = db.Column(db.DateTime, default=datetime.datetime.utcnow)

@@ -24,6 +24,7 @@
                 <th>ID</th>
                 <th>UUID</th>
                 <th>Created Date</th>
+                <th>IP</th>
                 <th>Duration</th>
                 <th>Password</th>
                 <th>Status</th>
@@ -39,6 +40,7 @@
                 <td>{{ s.id }}</td>
                 <td><a href="/admin/servers/{{ s.uuid }}">{{ s.uuid }}</a></td>
                 <td class="created-date">{{ s.created_date }}</td>
+                <td>{{ s.ip }}</td>
                 {% if s.extensions > 0 %}
                     <td>{{ s.duration - s.extensions }} <span class="text-green">+{{ s.extensions }}</span></td>
                 {% else %}
@@ -51,7 +53,7 @@
                 <td>{{ s.mumble_instance }}</td>
             </tr>
             {% else %}
-            <tr><td class="text-center" colspan="9">No Servers</td></tr>
+            <tr><td class="text-center" colspan="10">No Servers</td></tr>
             {% endfor %}
 
         </tbody>

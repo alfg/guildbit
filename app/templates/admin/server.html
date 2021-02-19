@@ -26,12 +26,16 @@
                 <td>{{ server.uuid }}</td>
             </tr>
             <tr>
+                <td>IP</td>
+                <td>{{ server.ip }}</td>
+            </tr>
+            <tr>
                 <td>Type</td>
                 <td><span class="label {{ 'label-blue' if server.type == 'upgrade' }}">{{ server.type }}</span></td>
             </tr>
             <tr>
                 <td>Created</td>
-                <td>{{ server.created_date }}</td>
+                <td id="created-date">{{ server.created_date }}</td>
             </tr>
             <tr>
                 <td>Duration Hours</td>
@@ -148,6 +152,7 @@
         var base_url = '/server/{{ server.uuid }}'
         var base_url_id = '/admin/servers/{{ server.uuid }}'
         var expire_date = '{{ server.expiration }}';
+        $("#created-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
         $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
         $("#expires").text(moment.utc(expire_date).fromNow());
         $("#kill-server").on('submit', function() {
