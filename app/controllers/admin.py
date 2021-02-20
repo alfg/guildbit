@@ -27,7 +27,7 @@ class AdminView(FlaskView):
     def index(self):
         users_count = User.query.count()
         servers_count = Server.query.count()
-        hosts = Host.query.order_by(Host.type.asc()).all()
+        hosts = Host.query.order_by(Host.type.asc(), Host.name.asc()).all()
         feedback_count = Rating.query.count()
         feedback_avg = Rating.get_rating_average()
         tokens_count = Token.query.count()
@@ -167,7 +167,7 @@ class AdminPortsView(FlaskView):
     @login_required
     @admin_required
     def index(self):
-        hosts = Host.query.all()
+        hosts = Host.query.order_by(Host.type.asc(), Host.name.asc()).all()
         return render_template('admin/ports.html', hosts=hosts, title="Ports")
 
     @login_required
@@ -230,14 +230,14 @@ class AdminHostsView(FlaskView):
     @admin_required
     def index(self):
         form = CreateHostForm()
-        hosts = Host.query.order_by(Host.id.desc()).all()
+        hosts = Host.query.order_by(Host.type.asc(), Host.name.asc()).all()
         return render_template('admin/hosts.html', hosts=hosts, form=form, title="Hosts")
 
     @login_required
     @admin_required
     def post(self):
         form = CreateHostForm()
-        hosts = Host.query.order_by(Host.id.desc()).all()
+        hosts = Host.query.order_by(Host.type.asc(), Host.name.asc()).all()
         if form.validate_on_submit():
             try:
                 # Create database entry

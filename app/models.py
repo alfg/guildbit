@@ -167,12 +167,12 @@ class Host(db.Model):
             type = HOST_TYPE_FREE
         elif type == "upgrade":
             type = HOST_TYPE_UPGRADE
-        hosts = Host.query.filter_by(type=type).all()
+        hosts = Host.query.filter_by(type=type).order_by(Host.name.asc()).all()
         return hosts
 
     @staticmethod
     def get_all_hosts():
-        hosts = Host.query.all()
+        hosts = Host.query.order_by(Host.type.desc(), Host.name.asc()).all()
         return hosts
 
     def __repr__(self):

@@ -3,6 +3,19 @@
 {% block title %}Admin Home{% endblock %}
 
 {% block body %}
+    <h3>System Information (App Server)</h3>
+    <table class="pure-table pure-table-horizontal pure-table-striped" style="width:20%;">
+        <tbody>
+        <tr>
+            <td colspan="1"><strong>Memory</strong></td>
+            <td colspan="1"><strong>Disk</strong></td>
+        </tr>
+        <tr>
+            <td>{{ ctx.memory.percent }}%</td>
+            <td>{{ ctx.disk.percent }}%</td>
+        </tr>
+        </tbody>
+    </table>
     <h3>Stats</h3>
     <table class="pure-table pure-table-horizontal pure-table-striped">
         <tbody>
@@ -41,8 +54,9 @@
     <table class="pure-table pure-table-horizontal pure-table-striped">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Name</th>
                 <th>Hostname</th>
+                <th>Region</th>
                 <th>Type</th>
                 <th>Active</th>
                 <th>Servers</th>
@@ -54,8 +68,9 @@
         <tbody>
             {% for host in ctx.hosts %}
             <tr class="host" data-region="{{ host.region }}">
-                <td>{{ host.id }}</td>
+                <td><a href="/admin/ports/{{ host.id }}">{{ host.name }}</a></td>
                 <td><a href="/admin/ports/{{ host.id }}">{{ host.hostname }}</a></td>
+                <td><a href="/admin/ports/{{ host.id }}">{{ host.region }}</a></td>
                 <td>{{ 'Upgraded ⚡️' if host.type == 1 else 'Free' }}</td>
                 <td>{{ '✔️' if host.active else '❌' }}</td>
                 <td><span class="servers label">-</span></td>
@@ -66,19 +81,6 @@
         </tbody>
     </table>
 
-    <h3>System Information (App Server)</h3>
-    <table class="pure-table pure-table-horizontal pure-table-striped" style="width:20%;">
-        <tbody>
-        <tr>
-            <td colspan="1"><strong>Memory</strong></td>
-            <td colspan="1"><strong>Disk</strong></td>
-        </tr>
-        <tr>
-            <td>{{ ctx.memory.percent }}%</td>
-            <td>{{ ctx.disk.percent }}%</td>
-        </tr>
-        </tbody>
-    </table>
     <br />
 
 {% endblock %}
