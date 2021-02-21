@@ -36,6 +36,6 @@ EXPOSE 8081
 
 # Set version from CI build.
 ARG BUILD_VERSION
-ENV BUILD_VERSION=$BUILD_VERSION
+ENV BUILD_VERSION=$DOCKER_TAG
 
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
