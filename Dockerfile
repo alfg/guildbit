@@ -6,6 +6,8 @@ ENV FLASK_APP=app
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
+ARG BUILD_VERSION
+ENV BUILD_VERSION=$BUILD_VERSION
 
 # Install system dependencies.
 RUN apt-get update && apt-get install -y \
@@ -33,9 +35,5 @@ ADD . /opt/guildbit
 RUN venv/bin/pybabel compile -f -d app/translations
 
 EXPOSE 8081
-
-# Set version from CI build.
-ARG BUILD_VERSION
-ENV BUILD_VERSION=$BUILD_VERSION
 
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]

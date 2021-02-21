@@ -6,11 +6,11 @@
     <div class="content how-it-works">
         <h1>{{ _('How It Works') }}</h1>
 
-        <p>{{ _('Traditional VOIP hosts offer subscription-based and persistent servers, so generally a premium
-        is charged. <strong>GuildBit</strong> works on the idea of temporary servers to preserve system
+        <p>{{ _('<strong>GuildBit</strong> works on the idea of free, temporary servers to preserve system
         resources, opening up more server slots which aren&apos;t being occupied. This helps lower hosting,
-        resources and bandwidth costs. Also, VPS hosting nowadays are much cheaper than they used to be. The
-        rest is supported by donations and upgrades.') }}</p>
+        resources and bandwidth costs. We are supported by donations and upgrades. Check out some of
+        our <a href="/upgrade">upgrade options</a> for more slots and durations.') }}</p>
+        <p>GuildBit has been operating and providing free Mumble servers since 2013!</p>
         <hr>
 
         <div class="pure-g text-center">
@@ -20,13 +20,12 @@
             </div>
             <div class="pure-u-1-1 pure-u-md-1-3">
               <h2><i class="fa fa-clock-o"></i> {{ _('Set a duration') }}</h2>
-              <h4>{{ ('Choose a duration for the server. From 1-4 hours. The
+              <h4>{{ ('Choose a duration for the server. From 1 to 4 hours. The
               less hours you use, the more resources open up for others. :)') }}</h4>
             </div>
             <div class="pure-u-1-1 pure-u-md-1-3">
               <h2><i class="fa fa-lock"></i> {{ _('Set a password') }}</h2>
-              <h4>{{ _('Password protected servers are required, due to the fact the server may be
-              reused in the future.') }}</h4>
+              <h4>{{ _('Password protected servers are required as servers are reused.') }}</h4>
             </div>
         </div>
         <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_home.png">
@@ -36,7 +35,8 @@
 
         <h2 class="text-center"><i class="fa fa-signal"></i> Connection Details</h2>
         <h4>{{ _('Share the connection details, or use the copy feature to copy/paste the credentials
-            directly. The server page also monitors users in room (including subchannels) and displays the expiration countdown.') }}</h4>
+            directly. The server page also lists users in room and displays the expiration countdown. You may
+            also extend the server duration up to 3 times!') }}</h4>
         <a class="fancybox" rel="group" href="../static/img/screenshots/howitworks_connection_details.png">
           <img class="pure-img lazy" data-original="../static/img/screenshots/howitworks_connection_details.png" alt="{{ _('Share the connection details, or use the copy feature to copy/paste the credentials
             directly. The server page also monitors users in room (including subchannels) and displays the expiration countdown.') }}" width="800" />
@@ -71,8 +71,7 @@
         <h2>{{ _('FAQs') }}</h2>
         <dl class="faqs">
             <dt>{{ _('How is it free?') }}</dt>
-            <dd>{{ _('Donations, paid upgrades and low server/bandwidth costs. Remainders
-                are paid of out pocket. :)') }}</dd>
+            <dd>{{ _('Donations and paid upgrades. Thanks for your support!') }}</dd>
 
             <dt>{{ _('Why temporary servers?') }}</dt>
             <dd>{{ _('The idea is targeted towards gamers who need a quick Mumble server for their group or raid
@@ -96,10 +95,10 @@
 
             <dt>{{ _('What is a SuperUser?') }}</dt>
             <dd>{{ _('A SuperUser is an admin account on your Mumble server to grant permissions and roles to users and
-            groups as well as setting up channels.') }}</dd>
+            groups as well as setting up channels. This feature is only available on <a href="/upgrade">upgraded servers.</a>') }}</dd>
 
             <dt>{{ _('Do you plan on offering other methods of payment?') }}</dt>
-            <dd>{{ _('We&apos;re looking into Stripe or Balanced Payments integration. :)') }}</dd>
+            <dd>{{ _('We&apos;re looking into alternate payment options.') }}</dd>
 
             <dt>{{ _('How can I contribute?') }}</dt>
             <dd>
