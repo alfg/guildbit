@@ -34,4 +34,8 @@ RUN venv/bin/pybabel compile -f -d app/translations
 
 EXPOSE 8081
 
+# Set version from CI build.
+ARG BUILD_VERSION
+ENV BUILD_VERSION=$BUILD_VERSION
+
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
