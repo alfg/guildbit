@@ -151,8 +151,9 @@
         // Format expiration date into human friendly
         var base_url = '/server/{{ server.uuid }}'
         var base_url_id = '/admin/servers/{{ server.uuid }}'
+        var created_date = '{{ server.created_date }}';
         var expire_date = '{{ server.expiration }}';
-        $("#created-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
+        $("#created-date").text(moment.utc(created_date).local().format("ddd, MMM Do, h:mm:ss a"));
         $("#expires-date").text(moment.utc(expire_date).local().format("ddd, MMM Do, h:mm:ss a"));
         $("#expires").text(moment.utc(expire_date).fromNow());
         $("#kill-server").on('submit', function() {
