@@ -115,7 +115,7 @@ class HomeView(FlaskView):
 
                 msg = Message(
                     form.subject.data,
-                    sender=form.email.data,
+                    sender=settings.DEFAULT_MAIL_SENDER,
                     recipients=settings.EMAIL_RECIPIENTS)
 
                 msg.body = template
@@ -124,7 +124,7 @@ class HomeView(FlaskView):
                 import traceback
 
                 traceback.print_exc()
-                flash("Something went wrong!")
+                flash("Something went wrong submitting this form! Please send an email to alf.g.jr+guildbit@gmail.com for support.")
                 return redirect('/contact')
 
             return render_template('contact_thankyou.html')
