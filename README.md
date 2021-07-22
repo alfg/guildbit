@@ -75,7 +75,7 @@ Starting guildbit_db_1      ... done
 Starting guildbit_flower_1  ... done
 Starting guildbit_murmur-rest_1 ... done
 Starting guildbit_guildbit_1    ... done
-Starting guildbit_celery_1      ... done
+Starting guildbit_guildbit-tasks_1  ... done
 Starting guildbit_nginx_1       ... done
 
 guildbit_1 | [1] [INFO] Starting gunicorn 19.5.0
