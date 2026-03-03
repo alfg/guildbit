@@ -23,6 +23,7 @@ app.config.last_updated = datetime.now()
 lm = LoginManager()
 lm.init_app(app)
 lm.login_view = 'login'
+app.config['LOGIN_DISABLED'] = settings.LOGIN_DISABLED
 oid = OpenID(app, os.path.join(settings.BASE_DIR, 'tmp'))
 
 # Configure database
