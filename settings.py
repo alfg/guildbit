@@ -6,6 +6,7 @@ APP_HOST = '0.0.0.0'
 APP_PORT = 5000
 APP_DEBUG = True
 APP_SESSION_KEY = 'super-secret'
+LOGIN_DISABLED = False  # Set to True to disable login in development. Never enable in production.
 CSRF_ENABLED = True
 ASSETS_DEBUG = True
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))

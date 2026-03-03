@@ -7,7 +7,7 @@ from flask_login import current_user
 import requests
 from requests import ConnectionError
 
-from settings import STEAM_API_KEY
+from settings import STEAM_API_KEY, LOGIN_DISABLED
 
 
 def admin_required(fn):
@@ -16,7 +16,7 @@ def admin_required(fn):
     """
     @wraps(fn)
     def decorated_view(*args, **kwargs):
-        if current_user.get_role() != 1:
+        if not LOGIN_DISABLED and current_user.get_role() != 1:
             return redirect("/")
         return fn(*args, **kwargs)
     return decorated_view
