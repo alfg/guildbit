@@ -1,9 +1,9 @@
-version: "2"
+version: "3.8"
 
 services:
   guildbit:
     build: .
-    links:
+    depends_on:
       - redis
       - murmur-rest
       - db
@@ -20,10 +20,12 @@ services:
       - ".:/opt/guildbit"
       # - "./settings.py:/opt/guildbit/settings.py"
     command: /opt/guildbit/venv/bin/gunicorn -n guildbit -w 1 -b 0.0.0.0:8081 wsgi:app
+    networks:
+      - guildbit
 
   guildbit-tasks:
     build: .
-    links:
+    depends_on:
       - redis
       - murmur-rest
       - db
@@ -33,16 +35,19 @@ services:
     volumes:
       - ".:/opt/guildbit"
     command: /opt/guildbit/venv/bin/celery -A app.tasks worker --concurrency=2 -n guildbit-tasks -l info
+    networks:
+      - guildbit
 
   flower:
-    image: mher/flower:0.9.7
-    links:
+    image: mher/flower:2.0.1
+    depends_on:
       - redis
     environment:
-      - REDIS_HOST=redis:6379
+      - CELERY_BROKER_URL=redis://redis:6379/0
     ports:
       - "5555:5555"
-    command: ["--app guildbit-tasks", "--broker=redis://redis:6379/0"]
+    networks:
+      - guildbit
 
   nginx:
     image: nginx
@@ -51,15 +56,17 @@ services:
       - ./etc/static:/opt/static
     ports:
       - "8082:80"
-    links:
+    depends_on:
       - guildbit
     environment:
       - NGINX_HOST=guildbit.com
       - NGINX_PORT=80
     command: /bin/bash -c "exec nginx -g 'daemon off;'"
+    networks:
+      - guildbit
 
   db:
-    image: postgres
+    image: postgres:15
     ports:
       - "5432:5432"
     environment:
@@ -67,13 +74,17 @@ services:
       POSTGRES_DB: 'guildbit'
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - guildbit
 
   redis:
-    image: redis
+    image: redis:7
     ports:
       - "6379:6379"
     volumes:
       - redisdata:/data
+    networks:
+      - guildbit
 
   murmur-rest:
     image: alfg/murmur-rest:latest
@@ -87,8 +98,10 @@ services:
       - USERS=admin:password,admin2:password2
     ports:
       - "8080:8080"
-    links:
+    depends_on:
       - murmurd
+    networks:
+      - guildbit
 
   murmurd:
     image: alfg/murmur
@@ -98,8 +111,13 @@ services:
     volumes:
       - ./etc/murmur.ini:/etc/murmur/murmur.ini
       - murmurdb:/var/lib/murmur/
+    networks:
+      - guildbit
 
 volumes:
   pgdata:
   redisdata:
   murmurdb:
+
+networks:
+  guildbit:

@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 WORKDIR /opt/guildbit
 
@@ -10,15 +10,16 @@ ARG BUILD_VERSION
 ENV BUILD_VERSION=$BUILD_VERSION
 
 # Install system dependencies.
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
     python3-venv \
     python3-psycopg2 \
-    sqlite3
+    sqlite3 \
+ && rm -rf /var/lib/apt/lists/*
 
 # Install supervisor to system.
-RUN pip3 install supervisor
+RUN pip3 install --upgrade pip && pip3 install supervisor
 
 # Create virtual env and setup Python app.
 ADD requirements.txt /opt/guildbit/requirements.txt
